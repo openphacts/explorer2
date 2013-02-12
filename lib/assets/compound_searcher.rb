@@ -1,3 +1,5 @@
+require 'compound'
+
 module Searcher
   class CompoundSearcher
 
@@ -51,7 +53,7 @@ module Searcher
       chemblValue != nil ? chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblUri.split('/').pop() : chemblLinkOut = nil
       drugBankData != nil ? drugbankLinkOut = 'http://www.drugbank.ca/drugs/' + drugbankUrl.split('/').pop() : drugbankLinkOut = nil
 
-      compound = Compound.new(:cw_uri =>pt[CompoundSearcher::LDA_ABOUT],
+      compound = Searcher::Compound.new(:cw_uri =>pt[CompoundSearcher::LDA_ABOUT],
             :cs_uri => chemspiderValue != nil ? chemspiderValue[CompoundSearcher::LDA_ABOUT] : nil,
             :chembl_uri => chemblValue != nil ? chemblValue[CompoundSearcher::LDA_ABOUT] : nil,
             :drugbank_uri => drugBankData != nil ? drugBankData[CompoundSearcher::LDA_ABOUT] : nil,

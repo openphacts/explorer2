@@ -1,6 +1,7 @@
 <div>
   <%= form_tag search_url, :method => "get" do %>
     <%= text_field_tag(:query) %>
+    <%= hidden_field_tag "limit", "5" %>
     <%= submit_tag("Search") %>
   <% end %>
 </div>

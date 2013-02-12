@@ -1,10 +1,12 @@
+require 'concept_wiki_result'
+
 module Searcher
   class ConceptWikiSearcher
 
-    def search query, branch, type
+    def search query, branch, type, limit
       domain = "ops.conceptwiki.org"
       path = "/web-ws/concept/search/byTag"
-      params = "q=" + CGI::escape(query) + "&branch=" + branch + "&uuid=" + type + "&limit=10&start=0&page=1"
+      params = "q=" + CGI::escape(query) + "&branch=" + branch + "&uuid=" + type + "&limit=#{limit}&start=0&page=1"
       url_path = "#{path}?".concat(params)
       response = Net::HTTP.get(domain, url_path)
       json = JSON.parse(response)
@@ -38,7 +40,7 @@ module Searcher
         end
         highlight = item["match"].gsub("<em>","").gsub("</em>","")
         # constructing the data record
-        record = ConceptWikiResult.new(:match => highlight, :uuid => item["uuid"], :ops_uri => "http://www.conceptwiki.org/concept/" + item["uuid"],
+        record = Searcher::ConceptWikiResult.new(:match => highlight, :uuid => item["uuid"], :ops_uri => "http://www.conceptwiki.org/concept/" + item["uuid"],
           :pref_label => pref_label, :alt_labels => alt_labels.join("; "), :pref_url => pref_url, :type => "compound")
         
         records.push(record)
