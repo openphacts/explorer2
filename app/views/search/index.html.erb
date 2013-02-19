@@ -1,0 +1,12 @@
+<div>
+  <% @concepts.each do |concept| %>
+    <b><%= concept.ops_uri %></b><br>
+    <div id="result_<%= concept.uuid %>"></div>
+    <div id="result"></div>
+    <script type="text/javascript">
+      $.get('/search/compound_info', { uri: "<%= concept.ops_uri %>"}, function(data) {
+        $('#result_<%= concept.uuid %>').html(data);
+      });
+    </script>  
+  <% end %>
+</div>
