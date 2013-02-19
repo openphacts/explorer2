@@ -5,3 +5,14 @@ Explorer 2 is a complimentary application to the original OpenPHACTS Core GUI (h
 == Technology
 
 Ruby 1.8.7/1.9.3, Ruby on Rails 3.2.x 
+
+== Setup
+
+Run ruby -v to check your Ruby version and install if required.
+Run bundle install to grab any required gems.
+Copy config/database.yml_example to config/database.yml and uncomment/configure your database of choice
+Copy config/environments/development.rb_example to config/environments/development.rb (and production/test)
+Run rake db:create:all
+Run rake db:migrate
+
+Run rails s to start the server and navigate your browser to localhost:3000

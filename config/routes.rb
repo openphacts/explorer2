@@ -4,6 +4,12 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'search#index'
 
+  resources :search do
+    collection do
+      get 'compound_info'
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
