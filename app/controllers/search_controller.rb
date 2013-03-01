@@ -6,12 +6,21 @@ class SearchController < ApplicationController
     @concepts = find_compounds query, limit
     #@targets = find_targets query
     #@enzymes = find_enzymes query
+    puts "concepts " + @concepts.size.to_s
+    respond_to do |format|
+      format.html
+      format.json { render :json => @concepts}
+    end
+
   end
 
   def compound_info
     searcher = Searcher::CompoundSearcher.new
     @compound = searcher.parse_compound(searcher.search params[:uri])
-    render :partial => "compounds/compound.html.erb"
+    respond_to do |format|
+      format.html { render :partial => "compounds/compound.html.erb" }
+      format.json { render :json => @compound }
+    end
   end
 
   def find_compounds query, limit

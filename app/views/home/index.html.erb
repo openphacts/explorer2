@@ -1,7 +1,60 @@
 <div>
+ <input id="e6"type="hidden"style="width:600px"></input>
+</select>
+</div>
+<div>
   <%= form_tag search_url, :method => "get" do %>
     <%= text_field_tag(:query) %>
     <%= hidden_field_tag "limit", "5" %>
     <%= submit_tag("Search") %>
   <% end %>
 </div>
+<script>
+
+    function cwResult(result) {
+        $.getJSON(compound_info_search_url, { format: "json", uri: result.ops_uri}, function(data) {
+          data.cs_uri.split('/').pop();
+          data.cw_uri.split('/').pop();
+        });
+        var csid = result.inchi_item;
+        var markup = "<table><tr>";
+        markup += "<td rowspan='2'><div id='image_{result.uuid}'><img width='40' height='40' src='assets/target_placeholder.png' alt='loading structure image for {result.pref_label}'/></div></td><td><div>" + result.pref_label + "</div></td></tr>";
+        markup += "<tr><div><td>" + result.ops_uri + "</td></div></tr>";
+        markup += "</table>";
+        return markup;
+    }
+
+    function cwSelection(result) {
+        return result.pref_label;
+    }
+
+</script>
+
+<script type="text/javascript">
+    $("#e6").select2({
+    placeholder: "Search for a compound",
+    minimumInputLength: 3,
+    ajax: {
+    url: search_url,
+    dataType: 'json',
+    quietMillis: 100,
+    data: function (term, page) {
+    return {
+    query: term,
+    limit: 10,
+    page: page
+    };
+    },
+    results: function (data, page) {
+     
+    // notice we return the value of more so Select2 knows if more results can be loaded
+    return {results: data, more: true};
+    }
+    },
+    formatResult: cwResult,
+    formatSelection: cwSelection,
+    dropdownCssClass: "bigdrop",
+    escapeMarkup: function (m) { return m; },
+    id: function(data) { return data.pref_label; }
+    });
+</script>
