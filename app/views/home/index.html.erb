@@ -3,14 +3,65 @@
 </select>
 </div>
 <div>
+  <input type='text' class='ajax-typeahead'/>
+</div>
+<div id="result">
+</div>
+<script type="text/javascript">
+var selected_item, all_items;
+$('.ajax-typeahead').typeahead({minLength: 3,
+    source: function(query, process) {
+        request = $.ajax({
+            url: search_url,
+            type: 'get',
+            data: {query: query, limit: 5},
+            dataType: 'json',
+            success: function(json) {
+	            all_items = json;
+	            matchers = [];
+				$.each(json, function (i, match) {
+						//$.get('/search/compound_info', { uri: match.ops_uri}, function(data) {
+					    //    $('#result').append(data);
+					    //  });
+				        matchers.push(match.pref_label);
+				    });
+                return process(matchers);
+            }
+        });
+        return request;
+    }, updater: function(item){
+	   return item;
+	}//, matcher: function (item) {
+	    //if (item.toLowerCase() == this.query.trim().toLowerCase()) {
+	    //    return true;
+	    //}
+	//}
+	, highlighter: function (item) {
+	    var regex = new RegExp( '(' + this.query + ')', 'gi' );
+	    return item.replace( regex, "<strong>$1</strong>" );
+	}, 	updater: function (item) {
+		    selecteditem = item;
+		    $.each(all_items, function (i, match) {
+			    if(item == match.pref_label) {
+					$.get('/search/compound_info', { uri: match.ops_uri}, function(data) {
+				        $('#result').append(data);
+				      });
+			    }
+			});
+		    return item;
+	}
+});
+</script>
+<div>
   <%= form_tag search_url, :method => "get" do %>
     <%= text_field_tag(:query) %>
     <%= hidden_field_tag "limit", "5" %>
     <%= submit_tag("Search") %>
   <% end %>
 </div>
+<div id="result"></div>
 <script>
-
+    //create the markup for each search result in the dropdown
     function cwResult(result) {
         $.getJSON(compound_info_search_url, { format: "json", uri: result.ops_uri}, function(data) {
           data.cs_uri.split('/').pop();
@@ -18,12 +69,13 @@
         });
         var csid = result.inchi_item;
         var markup = "<table><tr>";
-        markup += "<td rowspan='2'><div id='image_{result.uuid}'><img width='40' height='40' src='assets/target_placeholder.png' alt='loading structure image for {result.pref_label}'/></div></td><td><div>" + result.pref_label + "</div></td></tr>";
+        markup += "<td rowspan='2'><div id='image_" + result.uuid + "'><img width='40' height='40' src='assets/target_placeholder.png' alt='loading structure image for " + result.pref_label + "'/></div></td><td><div>" + result.pref_label + "</div></td></tr>";
         markup += "<tr><div><td>" + result.ops_uri + "</td></div></tr>";
         markup += "</table>";
         return markup;
     }
-
+    //return the preferred label for the search result for use in the 
+    //search box when an item is clicked
     function cwSelection(result) {
         return result.pref_label;
     }
@@ -47,7 +99,7 @@
     },
     results: function (data, page) {
      
-    // notice we return the value of more so Select2 knows if more results can be loaded
+    // cw does not tell us how many results there are in total so more is always true
     return {results: data, more: true};
     }
     },

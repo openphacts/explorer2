@@ -10,5 +10,8 @@
  *
  *= require_self
  *= require select2
+ *= require bootstrap
+ *= require bootstrap-responsive
+ *= require explorer
  *= require_tree .
  */
