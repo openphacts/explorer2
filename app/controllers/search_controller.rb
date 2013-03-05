@@ -1,9 +1,9 @@
 class SearchController < ApplicationController
 
   def index
-    query = params[:query]
+    @query = params[:query]
     limit = params[:limit]
-    @concepts = find_compounds query, limit
+    @concepts = find_compounds @query, limit
     #@targets = find_targets query
     #@enzymes = find_enzymes query
     puts "concepts " + @concepts.size.to_s

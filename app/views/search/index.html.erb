@@ -1,6 +1,17 @@
 <div>
+    <%= form_tag search_url, :method => "get", :class=>"form-search" do %>
+    <%= text_field_tag 'query', @query, :class=>'input-medium search-query' %>
+    <%= hidden_field_tag "limit", "5" %>
+    <%= submit_tag("Search", :class=>"btn") %>
+    <% end %>
+</div>
+<script type="text/javascript">
+    var query = "<%= @query %>";
+</script>
+<div>
   <% @concepts.each do |concept| %>
     <b><%= concept.ops_uri %></b><br>
+    <div id="exact-match"></div>
     <div id="result_<%= concept.uuid %>"></div>
     <div id="result"></div>
     <script type="text/javascript">

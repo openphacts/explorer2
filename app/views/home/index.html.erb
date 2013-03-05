@@ -59,6 +59,13 @@ $('.ajax-typeahead').typeahead({minLength: 3,
     <%= submit_tag("Search") %>
   <% end %>
 </div>
+<div>
+    <%= form_tag search_url, :method => "get", :class=>"form-search" do %>
+    <%= text_field_tag 'query', nil, :class=>'input-medium search-query' %>
+    <%= hidden_field_tag "limit", "5" %>
+    <%= submit_tag("Search", :class=>"btn") %>
+    <% end %>
+</div>
 <div id="result"></div>
 <script>
     //create the markup for each search result in the dropdown
