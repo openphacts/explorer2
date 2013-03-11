@@ -80,3 +80,8 @@
     text-align: center;
 }
 /* end of Floats and Layout */
+#searching-message {
+    position: fixed;
+    top:40%;
+    left: 35%;
+}

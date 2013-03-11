@@ -14,7 +14,6 @@ App.searchResultsController = Ember.ArrayController.create({
     },
 
     search: function (query) {
-        
         var me = this;
         var q = query;
 
@@ -82,6 +81,8 @@ App.searchResultsController = Ember.ArrayController.create({
                 });
             });
             me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
         });
     }
 });

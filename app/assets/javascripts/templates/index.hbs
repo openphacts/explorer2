@@ -2,9 +2,9 @@
     {{view App.SearchBox
            placeholder="Search for a compound" id="search_box"}}
 </div>
-<div class="row span12">
+<div class="row span12 huge-font" id="searching-message">
   {{#if App.searchResultsController.isSearching}}
-    Searching. Please wait…
+    ...Searching. Please wait...
   {{/if}}
 </div>
     {{#each App.compoundsController}}
