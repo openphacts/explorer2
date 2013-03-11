@@ -1,0 +1,22 @@
+<div>
+    {{view App.SearchBox
+           placeholder="Search for a compound" id="search_box"}}
+</div>
+<div>
+  {{#if App.searchResultsController.isSearching}}
+    Searching. Please wait…
+  {{/if}}
+</div>
+<div>
+    {{#each App.compoundsController}}
+{{#if exactMatch}}
+
+  {{view App.SearchMatch}}
+
+{{else}}
+
+  {{view App.SearchResult}}
+
+{{/if}}
+    {{/each}}
+</div>

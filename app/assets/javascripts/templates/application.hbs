@@ -1,0 +1,19 @@
+<div class='navbar navbar-inverse navbar-fixed-top'>
+  <div class='navbar-inner'>
+    <div class='container'>
+      <div class='nav-collapse collapse'>
+        <ul class='nav'>
+          <li {{bindAttr class="isHome:active"}}>{{#linkTo 'index'}}Home{{/linkTo}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='container' id='main'>
+  <div class='content'>
+    <div class='row'>
+      <div class='span12'>
+        {{outlet}}
+    </div>
+  </div>
+</div>
