@@ -1,13 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
-
-gem 'rails', '3.2.11'
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+gem 'rails', '3.2.12'
 
 group :development, :test do
-  gem 'debugger'
   gem 'sqlite3'
 end
 
