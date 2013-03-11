@@ -23,8 +23,8 @@ module Searcher
     def search uri
       domain = "api.openphacts.org"
       path = "/compound"
-      params = "uri=" + CGI::escape(uri) + "&_format=json"
-      url_path = "#{path}?".concat(params)
+      params = {"uri"=> uri,"_format" => "json"}
+      url_path = "#{path}?".concat(params.to_param)
       puts url_path
       response = Net::HTTP.get(domain, url_path)
       json = JSON.parse(response)

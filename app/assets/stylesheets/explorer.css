@@ -1,8 +1,82 @@
-/* Padding */
-.small-padding-left {
-	padding-left: 5px;
+.search-exact-match {
+    background-color: #CDE6FF;
 }
-.small-padding-right {
-	padding-right: 5px;
+.search-result {
+    background-color: #CDE6FF;
 }
-/* End of Padding */
+.compound-label {
+    font-weight: bold;
+}
+.compound-smiles {
+    background-color: white;
+}
+.big-font {
+   font-size: 20px;
+}
+.huge-font {
+    font-size: 30px;
+}
+/* CSS effects */
+.medium-border-radius {
+    border-radius: 15px;
+}
+/* end of CSS effects */
+
+/* Padding and Margins */
+/* small 5px */
+.small-padding {
+    padding: 5px;
+}
+.big-padding {
+    padding:20px;
+}
+.small-margin {
+    margin: 5px;
+}
+.small-margin-top {
+    margin-top:5px;
+}
+.small-margin-left {
+    margin-left: 5px;
+}
+.small-margin-bottom {
+    margin-bottom: 5px;
+}
+/* medium 10px */
+.medium-padding {
+    padding: 10px;
+}
+.medium-margin {
+    margin: 10px;
+}
+.medium-margin-top {
+    margin-top: 10px;
+}
+.medium-margin-right {
+    margin-top: 10px;
+}
+/* big 20px */
+.big-margin-top {
+    margin-top: 20px;
+}
+.big-margin-left {
+    margin-left: 20px;
+}
+.big-margin-right {
+    margin-right: 20px;
+}
+/* end of padding and Margins */
+/* Floats and Layout */
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+.clear {
+    clear: both;
+}
+.center {
+    text-align: center;
+}
+/* end of Floats and Layout */

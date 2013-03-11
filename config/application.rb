@@ -59,5 +59,6 @@ module Explorer2
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    ActiveRecord::Base.include_root_in_json = false
   end
 end

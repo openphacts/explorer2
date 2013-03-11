@@ -10,8 +10,19 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require modernizr
 //= require jquery
-//= require jquery_ujs
-//= require select2
+//= require handlebars
+//= require ember-1.0.0-rc.1
+//= require ember-data
 //= require bootstrap
-//= require_tree .
+//= require_self
+//= require store
+//= require routes
+//= require helpers
+//= require_tree ./controllers
+//= require_tree ./models
+//= require_tree ./templates
+//= require_tree ./views
+
+window.App = Ember.Application.create()
