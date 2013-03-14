@@ -1,7 +1,9 @@
 App.searchResultsController = Ember.ArrayController.create({
     isSearching: false,
 
-    currentPage: 1,
+    currentPage: 0,
+
+    total_results: 0,
 
     current_query: '',
 
@@ -13,13 +15,113 @@ App.searchResultsController = Ember.ArrayController.create({
         return this.current_query;
     },
 
-    search: function (query) {
+    parseSolrResponse: function(response) {
+        var results = {};
+        this.total_results = response.response.numFound;
+        $.each(response.response.docs, function(i, doc) {
+            var result = {};
+            var id = doc.id;
+            result["uri"] = doc.cw_uri[0];
+            result["label"] = doc.prefLabel[0];
+            result["biotrans"] = doc.db_biotran[0];
+            result["description"] = doc.db_description[0];
+            results[id] = result;
+        });
+        return results;
+    },
+
+    resetPageCount: function(query) {
+        this.total_results = 0;
+        this.currentPage = 0;
+        //this.search(query);
+        this.conceptWikiSearch(query);
+    },
+
+    search: function(query) {
+        var me = this;
+        var q = query;
+        //only search if there are more results than currently shown
+        if (me.total_results > me.currentPage * 10 || me.currentPage == 0) {
+        this.set('isSearching', true);
+        this.set('content', []);
+
+        var solr_search = $.ajax({
+            dataType: "jsonp",
+            // will not be localhost on deployment, actual url required
+            url: "http://localhost:8080/solr/select?json.wrf=?",
+            cache: true,
+            data: {
+                q: "prefLabel:" + q + " OR db_biotran:" + q + " OR db_description:" + q,
+                wt: "json",
+                rows: 10,
+                start: me.currentPage * 10
+            }
+        });
+
+        solr_search.success(function (data) {
+            me.currentPage++;
+            var search_results = me.parseSolrResponse(data);
+            $.each(search_results, function(i, search_result){
+            var compound_query = $.ajax({
+                dataType: "jsonp",
+                url: compound_info_search_url,
+                cache: true,
+                data: {
+                    _format: "json",
+                    uri: search_result["uri"]
+                }
+            });
+                            compound_query.success(function (data) {
+                    var drugbankData, csid, smiles;
+                    $.each(data.result.primaryTopic.exactMatch, function (i, exactMatch) {
+                        if (exactMatch["_about"]) {
+                            if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
+                                drugbankData = exactMatch;
+                            } else if(exactMatch["_about"].indexOf("http://linkedlifedata.com/resource/drugbank") !== -1) {
+                                drugbankData = exactMatch;
+                            } else if (exactMatch["_about"].indexOf("http://www.chemspider.com") !== -1) {
+                                csid = exactMatch["_about"].split('/').pop();
+                                smiles = exactMatch.smiles;
+                            } else if (exactMatch["_about"].indexOf("http://rdf.chemspider.com") !== -1) {
+                                csid = exactMatch["_about"].split('/').pop();
+                                smiles = exactMatch.smiles;
+                            }
+                        }
+                    });
+                    this_compound = App.Compound.create({
+                        description: drugbankData ? drugbankData.description : null,
+                        biotransformation: drugbankData ? drugbankData.biotransformation : null,
+                        toxicity: drugbankData ? drugbankData.toxicity : null,
+                        proteinbinding: drugbankData ? drugbankData.proteinBinding : null,
+                        label: data.result.primaryTopic.prefLabel,
+                        exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
+                        csid: csid,
+                        smiles: smiles
+                    });
+                    if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
+                        App.compoundsController.addExactMatch(this_compound);
+                    } else {
+                        App.compoundsController.addCompound(this_compound);
+                    }
+                });
+            });
+            me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
+        });
+        } else {
+            // always enable the scroll before returning
+            pageScrolling = false;
+            enable_scroll();
+        }
+    },
+
+    conceptWikiSearch: function(query) {
         var me = this;
         var q = query;
 
         this.set('isSearching', true);
         this.set('content', []);
-
         var c = $.ajax({
             dataType: "jsonp",
             url: search_url,
@@ -69,11 +171,11 @@ App.searchResultsController = Ember.ArrayController.create({
                         toxicity: drugbankData ? drugbankData.toxicity : null,
                         proteinbinding: drugbankData ? drugbankData.proteinBinding : null,
                         label: data.result.primaryTopic.prefLabel,
-                        exactMatch: data.result.primaryTopic.prefLabel == q ? true : false,
+                        exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
                         csid: csid,
                         smiles: smiles
                     });
-                    if (data.result.primaryTopic.prefLabel == q) {
+                    if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
                         App.compoundsController.addExactMatch(this_compound);
                     } else {
                         App.compoundsController.addCompound(this_compound);
@@ -84,5 +186,5 @@ App.searchResultsController = Ember.ArrayController.create({
             pageScrolling = false;
             enable_scroll();
         });
-    }
+   }
 });

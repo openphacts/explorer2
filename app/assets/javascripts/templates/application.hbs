@@ -1,6 +1,6 @@
 <div class='navbar navbar-inverse navbar-fixed-top'>
   <div class='navbar-inner'>
-    <div class='container'>
+    <div class='row offset1'>
       <div class='nav-collapse collapse'>
         <ul class='nav'>
           <li {{bindAttr class="isHome:active"}}>{{#linkTo 'index'}}Home{{/linkTo}}</li>
@@ -9,7 +9,7 @@
     </div>
   </div>
 </div>
-<div class='container' id='main'>
+<div class='row offset1' id='main'>
   <div class='content'>
         {{outlet}}
   </div>

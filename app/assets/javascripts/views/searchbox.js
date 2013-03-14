@@ -5,7 +5,8 @@ App.SearchBox = Em.TextField.extend({
       // remove all current results before searching
       App.compoundsController.set('content', []);
       App.searchResultsController.setCurrentQuery(query);
-      App.searchResultsController.search(query);
+      // it is a new query so reset all the pagination and result details
+      App.searchResultsController.resetPageCount(query);
     }
 
   });

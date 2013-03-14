@@ -1,20 +1,25 @@
-<div class="row span12">
+<div class="row">
+<div class="span8">
     {{view App.SearchBox
            placeholder="Search for a compound" id="search_box"}}
+</div>
 </div>
 <div class="row span12 huge-font" id="searching-message">
   {{#if App.searchResultsController.isSearching}}
     ...Searching. Please wait...
   {{/if}}
 </div>
+<div class="row offset8 hidden" id="info_popup">
+  {{view App.CompoundView}}
+</div>
     {{#each App.compoundsController}}
+<div class="row">
+<div class="span8">
 {{#if exactMatch}}
-<div class="row span12">
   {{view App.SearchMatch}}
-</div>
 {{else}}
-<div class="row span12">
   {{view App.SearchResult}}
-</div>
 {{/if}}
-    {{/each}}
+</div>
+</div>
+{{/each}}

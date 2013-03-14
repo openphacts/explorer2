@@ -80,8 +80,17 @@
     text-align: center;
 }
 /* end of Floats and Layout */
+.hidden {
+    display: none;
+}
+/* id specific styling */
 #searching-message {
     position: fixed;
     top:40%;
     left: 35%;
 }
+#info_popup {
+    position: fixed;
+    top: 30;
+}
+/* end of id specific styling */
