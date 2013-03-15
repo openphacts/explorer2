@@ -1,5 +1,7 @@
-App.Compound = Em.Object.extend({
+App.Compound = DS.Model.extend({
+    id: null,
     exactMatch: false,
+    uuid: null,
     description: null,
     label: null,
     biotransformation: null,

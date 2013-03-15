@@ -12,10 +12,10 @@
 <div class="row offset8 hidden" id="info_popup">
   {{view App.CompoundView}}
 </div>
-    {{#each App.compoundsController}}
+    {{#each compound in App.compoundsController}}
 <div class="row">
 <div class="span8">
-{{#if exactMatch}}
+{{#if compound.exactMatch}}
   {{view App.SearchMatch}}
 {{else}}
   {{view App.SearchResult}}

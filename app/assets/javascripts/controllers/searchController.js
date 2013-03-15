@@ -1,4 +1,5 @@
 App.searchResultsController = Ember.ArrayController.create({
+
     isSearching: false,
 
     currentPage: 0,
@@ -150,6 +151,8 @@ App.searchResultsController = Ember.ArrayController.create({
 
                 compound_query.success(function (data) {
                     var drugbankData, csid, smiles;
+                    var cw_uri = data.result.primaryTopic["_about"];
+                    var uuid = cw_uri.split("/").pop();
                     $.each(data.result.primaryTopic.exactMatch, function (i, exactMatch) {
                         if (exactMatch["_about"]) {
                             if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
@@ -165,7 +168,9 @@ App.searchResultsController = Ember.ArrayController.create({
                             }
                         }
                     });
-                    this_compound = App.Compound.create({
+                    this_compound = App.Compound.createRecord({
+                        id: uuid,
+                        uuid: uuid,
                         description: drugbankData ? drugbankData.description : null,
                         biotransformation: drugbankData ? drugbankData.biotransformation : null,
                         toxicity: drugbankData ? drugbankData.toxicity : null,
