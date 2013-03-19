@@ -10,6 +10,11 @@ App.Router.map(function() {
 
 App.CompoundRoute = Ember.Route.extend({
   setupController: function(controller, compound) {
+    console.log('compound controller');
     controller.set('content', compound);
+  },
+  model: function(params) {
+    compound = App.Compound.find(params.compound_id);
+    return compound;
   }
 });

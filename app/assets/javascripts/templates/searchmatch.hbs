@@ -1,14 +1,14 @@
 <div class="search-exact-match big-padding medium-margin-top medium-border-radius">
-    <div class="small-margin-left small-margin-top left"><img width="128" height="128" src="{{cs_image_src compound}}"></div>
-    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding right">{{compound.smiles}}</div>
-    <div class="huge-font big-margin-top center">{{#linkTo compound compound}}{{compound.label}}{{/linkTo}}</div>
+    <div class="small-margin-left small-margin-top left"><img width="128" height="128" src="{{cs_image_src compound.cs_uri}}"></div>
+    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding right">{{compound.compound_smiles}}</div>
+    <div class="huge-font big-margin-top center">{{#linkTo compound compound}}{{compound.compound_pref_label}}{{/linkTo}}</div>
     <div class="clear"></div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">description</div>
     <div class="big-margin-left big-margin-right">{{compound.description}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">toxicity</div>
     <div class="medium-margin-top big-margin-left big-margin-right">{{compound.toxicity}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">protein binding</div>
-    <div class="big-margin-left big-margin-right">{{compound.proteinbinding}}</div>
+    <div class="big-margin-left big-margin-right">{{compound.protein_binding}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">bio-transformation</div>
-    <div class="big-margin-left big-margin-right">{{compound.biotransformation}}</div>
+    <div class="big-margin-left big-margin-right">{{compound.biotransformation_item}}</div>
 </div>

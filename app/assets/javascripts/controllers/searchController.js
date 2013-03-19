@@ -73,7 +73,9 @@ App.searchResultsController = Ember.ArrayController.create({
                 }
             });
                             compound_query.success(function (data) {
-                    var drugbankData, csid, smiles;
+                    var drugbankData, cs_uri, smiles;
+                    var cw_uri = data.result.primaryTopic["_about"];
+                    var id = cw_uri.split("/").pop();
                     $.each(data.result.primaryTopic.exactMatch, function (i, exactMatch) {
                         if (exactMatch["_about"]) {
                             if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
@@ -81,23 +83,25 @@ App.searchResultsController = Ember.ArrayController.create({
                             } else if(exactMatch["_about"].indexOf("http://linkedlifedata.com/resource/drugbank") !== -1) {
                                 drugbankData = exactMatch;
                             } else if (exactMatch["_about"].indexOf("http://www.chemspider.com") !== -1) {
-                                csid = exactMatch["_about"].split('/').pop();
+                                cs_uri = exactMatch["_about"];
                                 smiles = exactMatch.smiles;
                             } else if (exactMatch["_about"].indexOf("http://rdf.chemspider.com") !== -1) {
-                                csid = exactMatch["_about"].split('/').pop();
+                                cs_uri = exactMatch["_about"];
                                 smiles = exactMatch.smiles;
                             }
                         }
                     });
-                    this_compound = App.Compound.create({
+                    this_compound = App.Compound.createRecord({
+                        id: id,
+                        cw_uri: cw_uri,
                         description: drugbankData ? drugbankData.description : null,
-                        biotransformation: drugbankData ? drugbankData.biotransformation : null,
+                        biotransformation_item: drugbankData ? drugbankData.biotransformation : null,
                         toxicity: drugbankData ? drugbankData.toxicity : null,
-                        proteinbinding: drugbankData ? drugbankData.proteinBinding : null,
-                        label: data.result.primaryTopic.prefLabel,
+                        protein_binding: drugbankData ? drugbankData.proteinBinding : null,
+                        compound_pref_label: data.result.primaryTopic.prefLabel,
                         exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
-                        csid: csid,
-                        smiles: smiles
+                        cs_uri: cs_uri,
+                        compound_smiles: smiles
                     });
                     if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
                         App.compoundsController.addExactMatch(this_compound);
@@ -150,9 +154,9 @@ App.searchResultsController = Ember.ArrayController.create({
                 });
 
                 compound_query.success(function (data) {
-                    var drugbankData, csid, smiles;
+                    var drugbankData, cs_uri, smiles;
                     var cw_uri = data.result.primaryTopic["_about"];
-                    var uuid = cw_uri.split("/").pop();
+                    var id = cw_uri.split("/").pop();
                     $.each(data.result.primaryTopic.exactMatch, function (i, exactMatch) {
                         if (exactMatch["_about"]) {
                             if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
@@ -160,25 +164,25 @@ App.searchResultsController = Ember.ArrayController.create({
                             } else if(exactMatch["_about"].indexOf("http://linkedlifedata.com/resource/drugbank") !== -1) {
                                 drugbankData = exactMatch;
                             } else if (exactMatch["_about"].indexOf("http://www.chemspider.com") !== -1) {
-                                csid = exactMatch["_about"].split('/').pop();
+                                cs_uri = exactMatch["_about"];
                                 smiles = exactMatch.smiles;
                             } else if (exactMatch["_about"].indexOf("http://rdf.chemspider.com") !== -1) {
-                                csid = exactMatch["_about"].split('/').pop();
+                                cs_uri = exactMatch["_about"];
                                 smiles = exactMatch.smiles;
                             }
                         }
                     });
                     this_compound = App.Compound.createRecord({
-                        id: uuid,
-                        uuid: uuid,
+                        id: id,
+                        cw_uri: cw_uri,
                         description: drugbankData ? drugbankData.description : null,
-                        biotransformation: drugbankData ? drugbankData.biotransformation : null,
+                        biotransformation_item: drugbankData ? drugbankData.biotransformation : null,
                         toxicity: drugbankData ? drugbankData.toxicity : null,
-                        proteinbinding: drugbankData ? drugbankData.proteinBinding : null,
-                        label: data.result.primaryTopic.prefLabel,
+                        protein_binding: drugbankData ? drugbankData.proteinBinding : null,
+                        compound_pref_label: data.result.primaryTopic.prefLabel,
                         exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
-                        csid: csid,
-                        smiles: smiles
+                        cs_uri: cs_uri,
+                        compound_smiles: smiles
                     });
                     if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
                         App.compoundsController.addExactMatch(this_compound);

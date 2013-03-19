@@ -100,7 +100,7 @@ module Searcher
             :description => drugBankData != nil ? drugBankData['description'] : nil,
             :description_src => drugBankData != nil ? drugBankData[Searcher::CompoundSearcher::LDA_IN_DATASET] : nil,
             :description_item => drugbankLinkOut,
-            :proteinBinding => drugBankData != nil ? drugBankData['proteinBinding'] : nil,
+            :protein_binding => drugBankData != nil ? drugBankData['proteinBinding'] : nil,
             :proteinBinding_src => drugBankData != nil ? drugBankData[Searcher::CompoundSearcher::LDA_IN_DATASET] : nil,
             :proteinBinding_item => drugbankLinkOut,
             :toxicity => drugBankData != nil ? drugBankData['toxicity'] : nil,

@@ -1,14 +1,14 @@
 Handlebars.registerHelper('cs_image_src', function(compound, options) {
   //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
-  if (options) {
-      return "http://www.chemspider.com/ImagesHandler.ashx?id=" + Ember.Handlebars.get(options.contexts[0], compound,options).csid + "&amp;w=128&amp;h=128";
+  if (options &&  Ember.Handlebars.get(options.contexts[0], compound,options)) {
+      return "http://www.chemspider.com/ImagesHandler.ashx?id=" + Ember.Handlebars.get(options.contexts[0], compound,options).split("/").pop() + "&amp;w=128&amp;h=128";
   }
 });
 
 Handlebars.registerHelper('image_from_csid', function(csid, options) {
   //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
-  if (options) {
-      return "http://www.chemspider.com/ImagesHandler.ashx?id=" + Ember.Handlebars.get(options.contexts[0], csid ,options) + "&amp;w=128&amp;h=128";
+  if (options && Ember.Handlebars.get(options.contexts[0], csid ,options)) {
+      return "http://www.chemspider.com/ImagesHandler.ashx?id=" + Ember.Handlebars.get(options.contexts[0], csid ,options).split('/').pop() + "&amp;w=128&amp;h=128";
   }
 });
 
