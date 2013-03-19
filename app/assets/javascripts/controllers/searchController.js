@@ -176,13 +176,13 @@ App.searchResultsController = Ember.ArrayController.create({
                         id: id,
                         cw_uri: cw_uri,
                         description: drugbankData ? drugbankData.description : null,
-                        biotransformation_item: drugbankData ? drugbankData.biotransformation : null,
+                        biotransformationItem: drugbankData ? drugbankData.biotransformation : null,
                         toxicity: drugbankData ? drugbankData.toxicity : null,
-                        protein_binding: drugbankData ? drugbankData.proteinBinding : null,
-                        compound_pref_label: data.result.primaryTopic.prefLabel,
+                        proteinBinding: drugbankData ? drugbankData.proteinBinding : null,
+                        compoundPrefLabel: data.result.primaryTopic.prefLabel,
                         exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
-                        cs_uri: cs_uri,
-                        compound_smiles: smiles
+                        csUri: cs_uri,
+                        compoundSmiles: smiles
                     });
                     if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
                         App.compoundsController.addExactMatch(this_compound);

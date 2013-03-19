@@ -1,19 +1,23 @@
 <div class="row">
 <div class="span8 search-exact-match big-padding medium-margin-top medium-border-radius">
-    <div class="small-margin-left small-margin-top left"><img width="128" height="128" src="{{image_from_csid cs_uri}}"></div>
-    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding right">{{compound_smiles}}</div>
-    <div class="huge-font big-margin-top center">{{compound_pref_label}}</div>
+    <div class="small-margin-left small-margin-top left"><img width="128" height="128" src="{{image_from_csid csUri}}"></div>
+    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding right">{{compoundSmiles}}</div>
+    <div class="huge-font big-margin-top center">{{compoundPrefLabel}}</div>
     <div class="clear"></div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">description</div>
     <div class="big-margin-left big-margin-right">{{description}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">toxicity</div>
     <div class="medium-margin-top big-margin-left big-margin-right">{{toxicity}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">protein binding</div>
-    <div class="big-margin-left big-margin-right">{{protein_binding}}</div>
+    <div class="big-margin-left big-margin-right">{{proteinBinding}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">bio-transformation</div>
-    <div class="big-margin-left big-margin-right">{{biotransformation}}</div>
+    <div class="big-margin-left big-margin-right">{{biotransformationItem}}</div>
 </div>
 </div>
 <div class="row span8">
 {{#linkTo 'index'}}Back to Search{{/linkTo}}
 </div>
+
+<script type="text/javascript">
+scrollOnThisPage = false;
+</script>

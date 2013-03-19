@@ -12,6 +12,8 @@ Handlebars.registerHelper('image_from_csid', function(csid, options) {
   }
 });
 
+var scrollOnThisPage = false;
+
 var pageScrolling = false;
 $(window).scroll(function() {
     var s = $(window).scrollTop(),
@@ -19,11 +21,11 @@ $(window).scroll(function() {
         c = $(window).height();
         scrollPercent = (s / (d-c)) * 100;
         console.log("page scrolling is " + pageScrolling);
-    if (scrollPercent >= 100 && pageScrolling != true) {
+    if (scrollPercent >= 100 && pageScrolling != true && scrollOnThisPage == true) {
         disable_scroll();
         pageScrolling = true;
         console.log("Fetching results for scroll " + pageScrolling);
-        App.searchResultsController.search(App.searchResultsController.getCurrentQuery());
+        App.searchResultsController.conceptWikiSearch(App.searchResultsController.getCurrentQuery());
     }
 });
 
