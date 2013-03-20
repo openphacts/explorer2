@@ -7,7 +7,10 @@ App.compoundsController = Ember.ArrayController.create({
     },
     addExactMatch: function(compound) {
         this.insertAt(0, compound);
-    }
+    },
+  contract: function() {
+    this.set('isExpanded', false);
+  }
 
 });
     

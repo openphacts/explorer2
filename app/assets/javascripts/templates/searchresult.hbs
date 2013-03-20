@@ -1,10 +1,21 @@
-<div class="search-result small-padding medium-margin-top">
-    <div>{{compound.compoundPrefLabel}}</div>
-    {{#if compound.description}}
-      <div>description</div>
-      <div>{{compound.description}}</div>
-    {{/if}}
-    {{#if compound.compoundSmiles}}
-      <div>{{compound.compoundSmiles}}</div>
-    {{/if}}
+<div class="search-exact-match big-padding medium-margin-top medium-border-radius">
+    <div class="small-margin-left small-margin-top left cs-image">{{cs_image_src compound.csUri}}</div>
+    <div class="huge-font big-margin-top right compound-label">{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</div>
+    <div class="clear"></div>
+<!-- The views are rendered in the index template and it looks like you cannot add actions to
+     the IndexController (ember complains if you try to create your own IndexController -->
+{{#if compound.isExpanded}}
+    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding">{{compound.compoundSmiles}}</div>
+    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">description</div>
+    <div class="big-margin-left big-margin-right">{{compound.description}}</div>
+    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">toxicity</div>
+    <div class="medium-margin-top big-margin-left big-margin-right">{{compound.toxicity}}</div>
+    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">protein binding</div>
+    <div class="big-margin-left big-margin-right">{{compound.proteinBinding}}</div>
+    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">bio-transformation</div>
+    <div class="big-margin-left big-margin-right">{{compound.biotransformationItem}}</div>
+    <div class="big-margin"><button {{action contract target="view"}}>Hide details...</button></div>
+{{else}}
+    <div class="big-margin"><button {{action expand target="view"}}>More details...</button></div>
+{{/if}}
 </div>

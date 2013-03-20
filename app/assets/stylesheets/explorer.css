@@ -30,6 +30,9 @@
 .big-padding {
     padding:20px;
 }
+.big-padding-left {
+    padding:20px;
+}
 .small-margin {
     margin: 5px;
 }
@@ -54,6 +57,9 @@
 }
 .medium-margin-right {
     margin-top: 10px;
+}
+.big-margin {
+    margin: 20px;
 }
 /* big 20px */
 .big-margin-top {
@@ -82,6 +88,12 @@
 /* end of Floats and Layout */
 .hidden {
     display: none;
+}
+.compound-label {
+    width:60%;
+}
+.cs-image {
+    width: 30%
 }
 /* id specific styling */
 #searching-message {

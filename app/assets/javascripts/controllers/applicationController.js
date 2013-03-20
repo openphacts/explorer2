@@ -4,5 +4,8 @@ App.ApplicationController = Ember.Controller.extend({
   }).property('currentRoute'),
   isUsers: (function() {
     return this.get('currentRoute') === 'users';
-  }).property('currentRoute')
+  }).property('currentRoute'),
+  contract: function() {
+    this.set('isExpanded', false);
+  }
 });

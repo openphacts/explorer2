@@ -18,3 +18,6 @@ App.CompoundRoute = Ember.Route.extend({
     return compound;
   }
 });
+App.IndexRoute = Ember.Route.extend({
+
+});

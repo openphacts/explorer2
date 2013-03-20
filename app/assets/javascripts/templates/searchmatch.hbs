@@ -1,8 +1,8 @@
 <div class="search-exact-match big-padding medium-margin-top medium-border-radius">
-    <div class="small-margin-left small-margin-top left">{{cs_image_src compound.csUri}}</div>
-    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding right">{{compound.compoundSmiles}}</div>
-    <div class="huge-font big-margin-top center">{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</div>
+    <div class="small-margin-left small-margin-top left cs-image">{{cs_image_src compound.csUri}}</div>
+    <div class="huge-font big-margin-top right compound-label">{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</div>
     <div class="clear"></div>
+    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding">{{compound.compoundSmiles}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">description</div>
     <div class="big-margin-left big-margin-right">{{compound.description}}</div>
     <div class="big-font medium-margin-top small-margin-left small-margin-bottom">toxicity</div>
