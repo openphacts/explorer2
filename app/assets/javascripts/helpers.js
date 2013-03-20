@@ -18,7 +18,7 @@ $(window).scroll(function() {
         disable_scroll();
         pageScrolling = true;
         console.log("Fetching results for scroll " + pageScrolling);
-        App.searchResultsController.conceptWikiSearch(App.searchResultsController.getCurrentQuery());
+        App.searchController.conceptWikiSearch(App.searchController.getCurrentQuery());
     }
 });
 
