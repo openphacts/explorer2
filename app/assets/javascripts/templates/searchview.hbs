@@ -1,0 +1,29 @@
+<div class="row">
+<div class="span8">
+    {{view App.SearchBox
+           placeholder="Search for a compound" valueBinding="App.searchController.query" id="search_box"}}
+</div>
+</div>
+<div class="row span12 huge-font" id="searching-message">
+  {{#if App.searchResultsController.isSearching}}
+    ...Searching. Please wait...
+  {{/if}}
+</div>
+<div class="row offset8 hidden" id="info_popup">
+  {{view App.CompoundView}}
+</div>
+    {{#each compound in App.compoundsController}}
+<div class="row">
+<div class="span8">
+{{#if compound.exactMatch}}
+  {{view App.SearchMatch}}
+{{else}}
+  {{view App.SearchResult compoundBinding=compound}}
+{{/if}}
+</div>
+</div>
+{{/each}}
+
+<script type="text/javascript">
+scrollOnThisPage = true;
+</script>
