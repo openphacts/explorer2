@@ -25,4 +25,4 @@
 //= require_tree ./templates
 //= require_tree ./views
 
-window.App = Ember.Application.create()
+App = Ember.Application.create()

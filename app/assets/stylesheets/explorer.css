@@ -1,8 +1,8 @@
 .search-exact-match {
-    background-color: #CDE6FF;
+/*    background-color: #CDE6FF;*/
 }
 .search-result {
-    background-color: #CDE6FF;
+/*    background-color: #CDE6FF;*/
 }
 .compound-label {
     font-weight: bold;
@@ -82,7 +82,7 @@
 .clear {
     clear: both;
 }
-.center {
+.centre {
     text-align: center;
 }
 /* end of Floats and Layout */
