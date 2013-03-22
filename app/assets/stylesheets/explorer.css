@@ -49,6 +49,12 @@
 .medium-padding {
     padding: 10px;
 }
+.medium-padding-bottom {
+	padding-bottom: 10px;
+}
+.medium-padding-top {
+	padding-top: 10px;
+}
 .medium-margin {
     margin: 10px;
 }

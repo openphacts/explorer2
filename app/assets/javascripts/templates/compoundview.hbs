@@ -3,19 +3,21 @@
     <div class="small-margin-left small-margin-top left cs-image">{{cs_image_src csUri}}</div>
     <div class="huge-font big-margin-top centre compound-label">{{compoundPrefLabel}}</div>
     <div class="clear"></div>
-    <div class="compound-smiles big-font big-margin-right big-margin-top medium-padding">{{compoundSmiles}}</div>
-    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">description</div>
-    <div class="big-margin-left big-margin-right">{{description}}</div>
-    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">toxicity</div>
-    <div class="medium-margin-top big-margin-left big-margin-right">{{toxicity}}</div>
-    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">protein binding</div>
-    <div class="big-margin-left big-margin-right">{{proteinBinding}}</div>
-    <div class="big-font medium-margin-top small-margin-left small-margin-bottom">bio-transformation</div>
-    <div class="big-margin-left big-margin-right">{{biotransformationItem}}</div>
+    <div class="compound-smiles big-font big-margin-right big-margin-top">{{compoundSmiles}}</div>
+    <dl class="big-margin-top">
+    <dt class="big-font medium-padding-bottom">description</dt>
+    <dd>{{description}}</dd>
+    <dt class="big-font medium-padding-bottom medium-padding-top">toxicity</dt>
+    <dd>{{toxicity}}</dd>
+    <dt class="big-font medium-padding-bottom medium-padding-top">protein binding</dt>
+    <dd>{{proteinBinding}}</dd>
+    <dt class="big-font medium-padding-bottom medium-padding-top">bio-transformation</dt>
+    <dd>{{biotransformationItem}}</d>
+    </dl>
 </div>
-</div>
-<div class="row span8">
+<div>
 {{#linkTo 'search'}}Back to Search{{/linkTo}}
+</div>
 </div>
 
 <script type="text/javascript">
