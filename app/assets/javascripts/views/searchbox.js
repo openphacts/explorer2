@@ -1,4 +1,6 @@
 App.SearchBox = Em.TextField.extend({
+	
+    classNames:["search-query"],
 
     insertNewline: function() {
       var query = this.get('value');
