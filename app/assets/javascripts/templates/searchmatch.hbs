@@ -1,16 +1,16 @@
 <div class="search-exact-match big-margin-top">
-    <div class="big-margin-right left">{{cs_image_src compound.csUri}}</div>
-    <div class="huge-font big-margin-top big-padding-top">{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</div>
+    <div class="big-margin-right thumbnail left">{{cs_image_src compound.csUri}}</div>
+    <h1>{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</h1>
     <div class="clear"></div>
-    <div class="compound-smiles big-font big-margin-right big-margin-top">{{compound.compoundSmiles}}</div>
+    <h3 class="compound-smiles big-margin-right big-margin-top">{{compound.compoundSmiles}}</h3>
     <dl class="big-margin-top">
-    <dt class="big-font medium-padding-bottom">description</dt>
+    <dt class="medium-padding-bottom"><h3>description</h3></dt>
     <dd>{{compound.description}}</dd>
-    <dt class="big-font medium-padding-bottom medium-padding-top">toxicity</dt>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>toxicity</h3></dt>
     <dd>{{compound.toxicity}}</dd>
-    <dt class="big-font medium-padding-bottom medium-padding-top">protein binding</dt>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>protein binding</h3></dt>
     <dd>{{compound.proteinBinding}}</dd>
-    <dt class="big-font medium-padding-bottom medium-padding-top">bio-transformation</dt>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>bio-transformation</h3></dt>
     <dd>{{compound.biotransformationItem}}</d>
     </dl>
 </div>
