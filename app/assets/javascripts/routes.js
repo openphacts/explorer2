@@ -24,5 +24,7 @@ App.CompoundRoute = Ember.Route.extend({
   }
 });
 App.IndexRoute = Ember.Route.extend({
-
+  setupController: function(controller, model) {
+    App.searchController.set('query', '');
+  }
 });
