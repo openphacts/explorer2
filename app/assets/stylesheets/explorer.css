@@ -82,9 +82,6 @@
 .clear {
     clear: both;
 }
-.centre {
-    text-align: center;
-}
 /* end of Floats and Layout */
 .hidden {
     display: none;
