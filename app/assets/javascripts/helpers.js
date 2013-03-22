@@ -14,7 +14,7 @@ $(window).scroll(function() {
         c = $(window).height();
         scrollPercent = (s / (d-c)) * 100;
         console.log("page scrolling is " + pageScrolling);
-    if (scrollPercent >= 100 && pageScrolling != true && scrollOnThisPage == true) {
+    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
         disable_scroll();
         pageScrolling = true;
         console.log("Fetching results for scroll " + pageScrolling);

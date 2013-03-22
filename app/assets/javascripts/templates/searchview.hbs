@@ -5,13 +5,11 @@
 </div>
     {{#each compound in App.compoundsController}}
 <div class="row">
-<div>
 {{#if compound.exactMatch}}
   {{view App.SearchMatch}}
 {{else}}
   {{view App.SearchResult compoundBinding=compound}}
 {{/if}}
-</div>
 </div>
 {{/each}}
 
