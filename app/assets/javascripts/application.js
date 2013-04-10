@@ -13,7 +13,7 @@
 //= require modernizr
 //= require jquery
 //= require handlebars
-//= require ember-1.0.0-rc.1
+//= require ember
 //= require ember-data
 //= require bootstrap
 //= require_self
@@ -25,4 +25,4 @@
 //= require_tree ./templates
 //= require_tree ./views
 
-App = Ember.Application.create()
+window.App = Ember.Application.create()
