@@ -16,6 +16,7 @@
 //= require ember
 //= require ember-data
 //= require bootstrap
+//= require openphacts-min
 //= require_self
 //= require store
 //= require routes

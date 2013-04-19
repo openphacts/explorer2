@@ -11,6 +11,8 @@ end
 
 module Explorer2
   class Application < Rails::Application
+    #load library that handles application specific settings
+    require File.expand_path(File.join(File.dirname(__FILE__), '../lib/app_settings'))
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -60,5 +62,8 @@ module Explorer2
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     ActiveRecord::Base.include_root_in_json = false
+    
+    #application specific settings
+    AppSettings.config = YAML.load_file("config/app_settings.yml")[Rails.env]
   end
 end

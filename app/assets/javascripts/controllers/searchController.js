@@ -135,73 +135,52 @@ App.searchController = Ember.ArrayController.create({
 
         this.set('isSearching', true);
         this.set('content', []);
-        var c = $.ajax({
-            dataType: "jsonp",
-            url: search_url,
-            cache: true,
-            data: {
-                q: query,
-                limit: 20,
-                branch: 4,
-                uuid: "07a84994-e464-4bbf-812a-a4b96fa3d197"
-            }
-        });
-        c.success(function (data) {
-            this.currentPage++;
-
-            $.each(data, function (i, match) {
-
-                var compound_query = $.ajax({
-                    dataType: "jsonp",
-                    url: compound_info_search_url,
-                    cache: true,
-                    data: {
-                        _format: "json",
-                        uri: "http://www.conceptwiki.org/concept/" + match.uuid
-                    }
-                });
-
-                compound_query.success(function (data) {
-                    var drugbankData, cs_uri, smiles;
-                    var cw_uri = data.result.primaryTopic["_about"];
-                    var id = cw_uri.split("/").pop();
-                    $.each(data.result.primaryTopic.exactMatch, function (i, exactMatch) {
-                        if (exactMatch["_about"]) {
-                            if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
-                                drugbankData = exactMatch;
-                            } else if(exactMatch["_about"].indexOf("http://linkedlifedata.com/resource/drugbank") !== -1) {
-                                drugbankData = exactMatch;
-                            } else if (exactMatch["_about"].indexOf("http://www.chemspider.com") !== -1) {
-                                cs_uri = exactMatch["_about"];
-                                smiles = exactMatch.smiles;
-                            } else if (exactMatch["_about"].indexOf("http://rdf.chemspider.com") !== -1) {
-                                cs_uri = exactMatch["_about"];
-                                smiles = exactMatch.smiles;
-                            }
+        var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl); 
+        var callback=function(success, status, response){
+            if(success) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, compoundURI) {
+                    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl);  
+                    var compoundCallback=function(success, status, response){
+                        var compound = compoundSearcher.parseCompoundResponse(response); 
+                        this_compound = App.Compound.createRecord({
+                            id: compound.id,
+                            cwURI: compound.cwUri,
+                            description: compound.description,
+                            biotransformationItem: compound.biotransformationItem,
+                            toxicity: compound.toxicity,
+                            proteinBinding: compound.proteinBinding,
+                            prefLabel: compound.prefLabel,
+                            exactMatch: compound.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
+                            csUri: compound.csUri,
+                            compoundSmiles: compound.smiles,
+                            chemblURI: compound.chemblURI,
+                            fullMWT: compound.fullMWT,
+                            hba: compound.hba,
+                            hbd: compound.hbd,
+                            inchi: compound.inchi,
+                            logp: compound.logp,
+                            molform: compound. molform,
+                            mwFreebase: compound.mwFreebase,
+                            psa: compound.psa,
+                            ro5Violations: compound.ro5Violations,
+                            rtb: compound.rtb
+                        });
+                        if (this_compound.prefLabel.toLowerCase() === q.toLowerCase()) {
+                            App.compoundsController.addExactMatch(this_compound);
+                        } else {
+                           App.compoundsController.addCompound(this_compound);
                         }
-                    });
-                    this_compound = App.Compound.createRecord({
-                        id: id,
-                        cw_uri: cw_uri,
-                        description: drugbankData ? drugbankData.description : null,
-                        biotransformationItem: drugbankData ? drugbankData.biotransformation : null,
-                        toxicity: drugbankData ? drugbankData.toxicity : null,
-                        proteinBinding: drugbankData ? drugbankData.proteinBinding : null,
-                        compoundPrefLabel: data.result.primaryTopic.prefLabel,
-                        exactMatch: data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
-                        csUri: cs_uri,
-                        compoundSmiles: smiles
-                    });
-                    if (data.result.primaryTopic.prefLabel.toLowerCase() === q.toLowerCase()) {
-                        App.compoundsController.addExactMatch(this_compound);
-                    } else {
-                        App.compoundsController.addCompound(this_compound);
-                    }
+                    };    
+                    compoundSearcher.fetchCompound(appID, appKey, compoundURI, compoundCallback);
                 });
-            });
+            } else {
+                // an error in the response, ignore for now
+            }
             me.set('isSearching', false);
             pageScrolling = false;
             enable_scroll();
-        });
+        };  
+        searcher.byTag(appID, appKey, 'Aspirin', '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', callback);
    }
 });

@@ -1,8 +1,8 @@
 <div class="search-exact-match big-margin-top">
     <div class="big-margin-right thumbnail left">{{cs_image_src compound.csUri}}</div>
-    <h1>{{#linkTo compound compound}}{{compound.compoundPrefLabel}}{{/linkTo}}</h1>
+    <h1>{{#linkTo compound compound}}{{compound.prefLabel}}{{/linkTo}}</h1>
     <div class="clear"></div>
-    <h3 class="compound-smiles big-margin-right big-margin-top">{{compound.compoundSmiles}}</h3>
+    <h3 class="compound-smiles big-margin-right big-margin-top">{{compound.smiles}}</h3>
     <dl class="big-margin-top">
     <dt class="medium-padding-bottom"><h3>description</h3></dt>
     <dd>{{compound.description}}</dd>
@@ -11,6 +11,26 @@
     <dt class="medium-padding-bottom medium-padding-top"><h3>protein binding</h3></dt>
     <dd>{{compound.proteinBinding}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>bio-transformation</h3></dt>
-    <dd>{{compound.biotransformationItem}}</d>
+    <dd>{{compound.biotransformationItem}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>full molecular weight</h3></dt>
+    <dd>{{compound.fullMWT}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>hba</h3></dt>
+    <dd>{{compound.hba}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>hbd</h3></dt>
+    <dd>{{compound.hbd}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>inchi</h3></dt>
+    <dd>{{compound.inchi}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>mw freebase</h3></dt>
+    <dd>{{compound.mwFreebase}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>ro5 violations</h3></dt>
+    <dd>{{compound.ro5Violations}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>rtb</h3></dt>
+    <dd>{{compound.rtb}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>logp</h3></dt>
+    <dd>{{compound.logp}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>molform</h3></dt>
+    <dd>{{compound.molform}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>psa</h3></dt>
+    <dd>{{compound.psa}}</dd>
     </dl>
 </div>

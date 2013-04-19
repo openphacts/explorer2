@@ -8,6 +8,9 @@
   <script type="text/javascript">
     var compound_info_search_url = "http://api.openphacts.org/compound?_callback=?";
     var search_url = "http://ops.conceptwiki.org/web-ws/concept/search/byTag?callback=?";
+    var ldaBaseUrl = '<%= "https://" + AppSettings.config["api"]["url"] -%>';
+    var appID = '<%= AppSettings.config["keys"]["app_id"] -%>';
+    var appKey = '<%= AppSettings.config["keys"]["app_key"] -%>';
   </script>
   </head>
   <body>
