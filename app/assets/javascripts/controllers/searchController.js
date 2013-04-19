@@ -160,6 +160,6 @@ App.searchController = Ember.ArrayController.create({
             pageScrolling = false;
             enable_scroll();
         };  
-        searcher.byTag(appID, appKey, 'Aspirin', '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', callback);
+        searcher.byTag(appID, appKey, q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', callback);
    }
 });
