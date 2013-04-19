@@ -11,16 +11,26 @@ App.Router.map(function() {
     this.route("search", { path: "/search" });
     this.resource('compounds'); 
     this.resource('compound', { path: '/compound/:compound_id' });
+    this.resource('targets'); 
+    this.resource('target', { path: '/compound/:target_id' });
 });
 
 App.CompoundRoute = Ember.Route.extend({
   setupController: function(controller, compound) {
-    console.log('compound controller');
     controller.set('content', compound);
   },
   model: function(params) {
     compound = App.Compound.find(params.compound_id);
     return compound;
+  }
+});
+App.TargetRoute = Ember.Route.extend({
+  setupController: function(controller, target) {
+    controller.set('content', target);
+  },
+  model: function(params) {
+    target = App.Target.find(params.target_id);
+    return target;
   }
 });
 App.IndexRoute = Ember.Route.extend({

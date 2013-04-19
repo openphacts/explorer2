@@ -5,6 +5,7 @@ Ember.Handlebars.registerBoundHelper('cs_image_src', function(compound, options)
   }
 });
 
+// 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
 var pageScrolling = false;
