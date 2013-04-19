@@ -153,7 +153,7 @@ App.searchController = Ember.ArrayController.create({
                             prefLabel: compound.prefLabel,
                             exactMatch: compound.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
                             csUri: compound.csUri,
-                            compoundSmiles: compound.smiles,
+                            smiles: compound.smiles,
                             chemblURI: compound.chemblURI,
                             fullMWT: compound.fullMWT,
                             hba: compound.hba,

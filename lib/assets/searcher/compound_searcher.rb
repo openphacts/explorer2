@@ -67,7 +67,7 @@ module Searcher
             :inchi_key => chemspiderValue != nil ? chemspiderValue['inchikey'] : nil,
             :inchi_key_item => chemspiderLinkOut,
             :inchi_key_src => chemspiderValue != nil ? chemspiderValue[Searcher::CompoundSearcher::LDA_IN_DATASET] : nil,
-            :compound_smiles => chemspiderValue != nil ? chemspiderValue['smiles'] : nil,
+            :smiles => chemspiderValue != nil ? chemspiderValue['smiles'] : nil,
             :compound_smiles_src => chemspiderValue != nil ? chemspiderValue[Searcher::CompoundSearcher::LDA_IN_DATASET] : nil,
             :compound_smiles_item => chemspiderLinkOut,
             :logp => chemspiderValue != nil ? chemspiderValue['logp'] : nil,

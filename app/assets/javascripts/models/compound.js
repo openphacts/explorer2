@@ -8,7 +8,7 @@ App.Compound = DS.Model.extend({
     prefLabel: DS.attr('string'),
     exactMatch: DS.attr('boolean'),
     csUri: DS.attr('string'),
-    compoundSmiles: DS.attr('string'),
+    smiles: DS.attr('string'),
     chemblURI: DS.attr('string'),
     fullMWT: DS.attr('string'),
     hba: DS.attr('string'),
