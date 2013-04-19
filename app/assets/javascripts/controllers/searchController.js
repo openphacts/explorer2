@@ -166,7 +166,7 @@ App.searchController = Ember.ArrayController.create({
                             ro5Violations: compound.ro5Violations,
                             rtb: compound.rtb
                         });
-                        if (this_compound.prefLabel.toLowerCase() === q.toLowerCase()) {
+                        if (this_compound.get('prefLabel').toLowerCase() === q.toLowerCase()) {
                             App.compoundsController.addExactMatch(this_compound);
                         } else {
                            App.compoundsController.addCompound(this_compound);
