@@ -143,29 +143,8 @@ App.searchController = Ember.ArrayController.create({
                     var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl);  
                     var compoundCallback=function(success, status, response){
                         var compound = compoundSearcher.parseCompoundResponse(response); 
-                        this_compound = App.Compound.createRecord({
-                            id: compound.id,
-                            cwURI: compound.cwUri,
-                            description: compound.description,
-                            biotransformationItem: compound.biotransformationItem,
-                            toxicity: compound.toxicity,
-                            proteinBinding: compound.proteinBinding,
-                            prefLabel: compound.prefLabel,
-                            exactMatch: compound.prefLabel.toLowerCase() === q.toLowerCase() ? true : false,
-                            csUri: compound.csUri,
-                            smiles: compound.smiles,
-                            chemblURI: compound.chemblURI,
-                            fullMWT: compound.fullMWT,
-                            hba: compound.hba,
-                            hbd: compound.hbd,
-                            inchi: compound.inchi,
-                            logp: compound.logp,
-                            molform: compound. molform,
-                            mwFreebase: compound.mwFreebase,
-                            psa: compound.psa,
-                            ro5Violations: compound.ro5Violations,
-                            rtb: compound.rtb
-                        });
+                        compound.prefLabel.toLowerCase() === q.toLowerCase() ? compound['exactMatch'] = true : compound['exactMatch'] = false;
+                        this_compound = App.Compound.createRecord(compound);
                         if (this_compound.get('prefLabel').toLowerCase() === q.toLowerCase()) {
                             App.compoundsController.addExactMatch(this_compound);
                         } else {
