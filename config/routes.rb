@@ -8,6 +8,8 @@ Explorer2::Application.routes.draw do
 
   resources :compounds, :only => :show
 
+  match 'target/:id' => 'home#index'
+
 #  resources :search do
 #    collection do
 #      get 'compound_info'
