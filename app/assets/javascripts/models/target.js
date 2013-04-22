@@ -1,5 +1,4 @@
-App.Target = DS.Model.extend({
-    id: null,
+App.Target = App.SearchResult.extend({
     exactMatch: DS.attr('boolean'),
     cellularLocation: DS.attr('string'),
     molecularWeight: DS.attr('string'),

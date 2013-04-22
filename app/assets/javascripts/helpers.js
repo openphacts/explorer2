@@ -4,7 +4,13 @@ Ember.Handlebars.registerBoundHelper('cs_image_src', function(compound, options)
       return new Handlebars.SafeString('<img width="128" height="128" src="http://www.chemspider.com/ImagesHandler.ashx?id=' + compound.split("/").pop() + '"&amp;w=128&amp;h=128/>');
   }
 });
-
+Ember.Handlebars.registerBoundHelper('isCompound', function(type, options) {
+  //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
+  if (result instanceof App.Compound) {
+      return true;
+  };
+  return false;
+});
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 

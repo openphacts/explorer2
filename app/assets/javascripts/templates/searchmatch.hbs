@@ -1,36 +1,38 @@
 <div class="search-exact-match big-margin-top">
-    <div class="big-margin-right thumbnail left">{{cs_image_src compound.csUri}}</div>
-    <h1>{{#linkTo compound compound}}{{compound.prefLabel}}{{/linkTo}}</h1>
+{{#if result.isCompound}}
+    <div class="big-margin-right thumbnail left">{{cs_image_src result.csUri}}</div>
+    <h1>{{#linkTo compound result}}{{result.prefLabel}}{{/linkTo}}</h1>
     <div class="clear"></div>
-    <h3 class="compound-smiles big-margin-right big-margin-top">{{compound.smiles}}</h3>
+    <h3 class="result-smiles big-margin-right big-margin-top">{{result.smiles}}</h3>
     <dl class="big-margin-top">
     <dt class="medium-padding-bottom"><h3>Description</h3></dt>
-    <dd>{{compound.description}}</dd>
+    <dd>{{result.description}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Toxicity</h3></dt>
-    <dd>{{compound.toxicity}}</dd>
+    <dd>{{result.toxicity}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Protein Binding</h3></dt>
-    <dd>{{compound.proteinBinding}}</dd>
+    <dd>{{result.proteinBinding}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Bio-transformation</h3></dt>
-    <dd>{{compound.biotransformationItem}}</dd>
+    <dd>{{result.biotransformationItem}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
-    <dd>{{compound.fullMWT}}</dd>
+    <dd>{{result.fullMWT}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3># H-Bond Acceptors</h3></dt>
-    <dd>{{compound.hba}}</dd>
+    <dd>{{result.hba}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3># H-Bond Donors</h3></dt>
-    <dd>{{compound.hbd}}</dd>
+    <dd>{{result.hbd}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Inchi</h3></dt>
-    <dd>{{compound.inchi}}</dd>
+    <dd>{{result.inchi}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>MW Freebase</h3></dt>
-    <dd>{{compound.mwFreebase}}</dd>
+    <dd>{{result.mwFreebase}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>ro5 violations</h3></dt>
-    <dd>{{compound.ro5Violations}}</dd>
+    <dd>{{result.ro5Violations}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Rotatable Bonds</h3></dt>
-    <dd>{{compound.rtb}}</dd>
+    <dd>{{result.rtb}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>AlogP</h3></dt>
-    <dd>{{compound.logp}}</dd>
+    <dd>{{result.logp}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular form</h3></dt>
-    <dd>{{compound.molform}}</dd>
+    <dd>{{result.molform}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Polar Surface Area</h3></dt>
-    <dd>{{compound.psa}}</dd>
+    <dd>{{result.psa}}</dd>
     </dl>
+{{/if}}
 </div>

@@ -1,5 +1,4 @@
-App.Compound = DS.Model.extend({
-    id: null,
+App.Compound = App.SearchResult.extend({
     cwURI: DS.attr('string'),
     description: DS.attr('string'),
     biotransformationItem: DS.attr('string'),

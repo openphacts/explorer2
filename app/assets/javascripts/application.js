@@ -16,13 +16,13 @@
 //= require ember
 //= require ember-data
 //= require bootstrap
-//= require openphacts-min
+//= require combined
 //= require_self
 //= require store
 //= require routes
 //= require helpers
 //= require_tree ./controllers
-//= require_tree ./models
+//= require models
 //= require_tree ./templates
 //= require_tree ./views
 

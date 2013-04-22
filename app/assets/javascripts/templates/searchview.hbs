@@ -3,12 +3,12 @@
     ...Searching. Please wait...
   {{/if}}
 </div>
-    {{#each compound in App.compoundsController}}
+    {{#each result in App.searchController}}
 <div class="row">
-{{#if compound.exactMatch}}
+{{#if result.exactMatch}}
   {{view App.SearchMatch}}
 {{else}}
-  {{view App.SearchResult compoundBinding=compound}}
+  {{view App.SearchResult}}
 {{/if}}
 </div>
 {{/each}}

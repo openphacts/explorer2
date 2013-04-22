@@ -10,9 +10,17 @@ App.searchController = Ember.ArrayController.create({
 
     query: '',
 
-  contract: function() {
-    this.set('isExpanded', false);
-  },
+    contract: function() {
+      this.set('isExpanded', false);
+    },
+
+    addSearchResult: function(searchResult) {
+        this.pushObject(searchResult);
+    },
+
+    addExactMatch: function(compound) {
+        this.insertAt(0, compound);
+    },
 
     setCurrentQuery: function(query) {
         this.current_query=query;
@@ -53,22 +61,48 @@ App.searchController = Ember.ArrayController.create({
         this.set('isSearching', true);
         this.set('content', []);
         var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl); 
-        var callback=function(success, status, response){
+        var cwCompoundCallback=function(success, status, response){
             if(success) {
                 var results = searcher.parseResponse(response);
-                $.each(results, function(index, compoundURI) {
+                $.each(results, function(index, result) {
                     var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl);  
                     var compoundCallback=function(success, status, response){
-                        var compound = compoundSearcher.parseCompoundResponse(response); 
+                        var compound = compoundSearcher.parseCompoundResponse(response);
+                        !compound.prefLabel ? compound.prefLabel = result.prefLabel : '';  
                         compound.prefLabel.toLowerCase() === q.toLowerCase() ? compound['exactMatch'] = true : compound['exactMatch'] = false;
                         this_compound = App.Compound.createRecord(compound);
-                        if (this_compound.get('prefLabel').toLowerCase() === q.toLowerCase()) {
-                            App.compoundsController.addExactMatch(this_compound);
+                        if (this_compound.get('exactMatch')) {
+                            me.addExactMatch(this_compound);
                         } else {
-                           App.compoundsController.addCompound(this_compound);
+                           me.addSearchResult(this_compound);
                         }
                     };    
-                    compoundSearcher.fetchCompound(appID, appKey, compoundURI, compoundCallback);
+                    compoundSearcher.fetchCompound(appID, appKey, result.uri, compoundCallback);
+                });
+            } else {
+                // an error in the response, ignore for now
+            }
+            me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
+        }; 
+        var cwTargetCallback=function(success, status, response){
+            if(success) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, result) {
+                    var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl);  
+                    var targetCallback=function(success, status, response){
+                        var target = targetSearcher.parseTargetResponse(response);
+                        !target.description ? target.description = result.prefLabel : ''; 
+                        target.description.toLowerCase() === q.toLowerCase() ? target['exactMatch'] = true : target['exactMatch'] = false;
+                        this_target = App.Target.createRecord(target);
+                        if (this_target.get('exactMatch')) {
+                            me.addExactMatch(this_target);
+                        } else {
+                            me.addSearchResult(this_target);
+                        }
+                    };    
+                    targetSearcher.fetchTarget(appID, appKey, result.uri, targetCallback);
                 });
             } else {
                 // an error in the response, ignore for now
@@ -77,6 +111,9 @@ App.searchController = Ember.ArrayController.create({
             pageScrolling = false;
             enable_scroll();
         };  
-        searcher.byTag(appID, appKey, q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', callback);
+        //compounds
+        searcher.byTag(appID, appKey, q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
+        //targets
+        //searcher.byTag(appID, appKey, q, '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
    }
 });
