@@ -42,11 +42,11 @@
     <div class="big-margin"><button {{action expand target="view"}}>More details...</button></div>
 {{/if}}
 {{else}}
+    <div class="big-margin-right thumbnail left">{{target_image_src result.seeAlso}}</div>
     <h1>{{#linkTo target result}}{{result.description}}{{/linkTo}}</h1>
+    <div class="clear"></div>
 {{#if result.isExpanded}}
     <dl class="big-margin-top">
-    <dt class="medium-padding-bottom"><h3>Description</h3></dt>
-    <dd>{{result.description}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Cellular Location</h3></dt>
     <dd>{{result.cellularLocation}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
