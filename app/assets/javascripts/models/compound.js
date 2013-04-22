@@ -19,5 +19,16 @@ App.Compound = App.SearchResult.extend({
     psa: DS.attr('string'),
     ro5Violations: DS.attr('string'),
     rtb: DS.attr('string'),
-    isCompound: true
+    isCompound: true,
+
+    find: function(uri) {
+        // use the lda api to fetch compounds rather than the default behaviour of rails side
+        var searcher = new Openphacts.CompoundSearch("https://ops2.few.vu.nl");  
+        var callback=function(success, status, response){  
+            var compoundResult = searcher.parseCompoundResponse(response); 
+            var compound = App.Compound.createRecord(compoundResult); 
+            return compound;
+        };  
+        searcher.fetchCompound(appID, appKey, 'http://www.conceptwiki.org/concept/' + params.compound_id, callback);
+    }
 });
