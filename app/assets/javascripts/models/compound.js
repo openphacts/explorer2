@@ -18,5 +18,6 @@ App.Compound = App.SearchResult.extend({
     mwFreebase: DS.attr('string'),
     psa: DS.attr('string'),
     ro5Violations: DS.attr('string'),
-    rtb: DS.attr('string')
+    rtb: DS.attr('string'),
+    isCompound: true
 });

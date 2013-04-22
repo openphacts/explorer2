@@ -14,5 +14,6 @@ App.Target = App.SearchResult.extend({
     organism: DS.attr('string'),
     sequence: DS.attr('string'),
     classifiedWith: DS.attr('array'),
-    seeAlso: DS.attr('string')
+    seeAlso: DS.attr('string'),
+    isCompound: false
 });

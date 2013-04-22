@@ -111,9 +111,9 @@ App.searchController = Ember.ArrayController.create({
             pageScrolling = false;
             enable_scroll();
         };  
+        //targets
+        searcher.byTag(appID, appKey, q, '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
         //compounds
         searcher.byTag(appID, appKey, q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
-        //targets
-        //searcher.byTag(appID, appKey, q, '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
    }
 });

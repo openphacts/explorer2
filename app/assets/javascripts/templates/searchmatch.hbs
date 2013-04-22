@@ -34,5 +34,29 @@
     <dt class="medium-padding-bottom medium-padding-top"><h3>Polar Surface Area</h3></dt>
     <dd>{{result.psa}}</dd>
     </dl>
+{{else}}
+    <h1>{{#linkTo target result}}{{result.description}}{{/linkTo}}</h1>
+    <dl class="big-margin-top">
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Cellular Location</h3></dt>
+    <dd>{{result.cellularLocation}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
+    <dd>{{result.molecularWeight}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Number of Residues</h3></dt>
+    <dd>{{result.numberOfResidues}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Theoretical Pi</h3></dt>
+    <dd>{{result.theoreticalPi}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Sub-class of</h3></dt>
+    <dd>{{result.subClassOf}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Function Annotation</h3></dt>
+    <dd>{{result.functionAnnotation}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Alternative Name</h3></dt>
+    <dd>{{result.alternativeName}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Existence</h3></dt>
+    <dd>{{result.existence}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Organism</h3></dt>
+    <dd>{{result.organism}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Sequence</h3></dt>
+    <dd>{{result.sequence}}</dd>
+    </dl>
 {{/if}}
 </div>

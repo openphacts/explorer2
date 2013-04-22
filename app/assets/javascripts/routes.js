@@ -12,7 +12,7 @@ App.Router.map(function() {
     this.resource('compounds'); 
     this.resource('compound', { path: '/compound/:compound_id' });
     this.resource('targets'); 
-    this.resource('target', { path: '/compound/:target_id' });
+    this.resource('target', { path: '/target/:target_id' });
 });
 
 App.CompoundRoute = Ember.Route.extend({

@@ -8,7 +8,7 @@
 {{#if result.exactMatch}}
   {{view App.SearchMatch}}
 {{else}}
-  {{view App.SearchResult}}
+  {{view App.SearchResult resultBinding=result}}
 {{/if}}
 </div>
 {{/each}}
