@@ -21,13 +21,22 @@ App.Target.reopenClass({
     find: function(uri) {
         // use the lda api to fetch compounds rather than the default behaviour of rails side
         var target = App.Target.createRecord();
-        var searcher = new Openphacts.TargetSearch(ldaBaseUrl);  
+        var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl);
         var callback=function(success, status, response){  
-            var targetResult = searcher.parseTargetResponse(response); 
+            var targetResult = targetSearcher.parseTargetResponse(response);
             target.setProperties(targetResult);
+            if (!target.description) {
+	            // the ops lda target response has no description so try concept wiki
+				var cwSearcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl);
+				var callback=function(success, status, response){
+				    var findConceptResult = cwSearcher.parseFindConceptResponse(response);
+				    target.set("description", findConceptResult.prefLabel);
+				};
+				cwSearcher.findConcept(appID, appKey, target.id, callback);
+            }
             return target;
         };  
-        searcher.fetchTarget(appID, appKey, 'http://www.conceptwiki.org/concept/' + uri, callback);
+        targetSearcher.fetchTarget(appID, appKey, 'http://www.conceptwiki.org/concept/' + uri, callback);
         target.set("id", uri);
         return target;
     }
