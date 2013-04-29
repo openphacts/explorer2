@@ -16,7 +16,11 @@ Explorer2::Application.routes.draw do
 
   #resources :compounds, :only => :show
 
-  match 'target/:id' => 'home#index'
+  match 'targets' => 'home#index'
+
+  match 'targets/:id' => 'home#index'
+
+  match 'targets/:id/pharmacology' => 'home#index'
 
 #  resources :search do
 #    collection do

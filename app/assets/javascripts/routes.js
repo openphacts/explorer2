@@ -14,7 +14,7 @@ App.Router.map(function() {
         this.route('pharmacology');
     });
     this.resource('targets'); 
-    this.resource('target', { path: '/target/:target_id' }, function() {
+    this.resource('target', { path: '/targets/:target_id' }, function() {
         this.route('pharmacology');
     });
 });
@@ -32,6 +32,12 @@ App.CompoundPharmacologyRoute = Ember.Route.extend({
 });
 
 App.TargetIndexRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.modelFor('target');
+  }
+});
+
+App.TargetPharmacologyRoute = Ember.Route.extend({
   model: function(params) {
     return this.modelFor('target');
   }
