@@ -13,8 +13,8 @@
 //= require modernizr
 //= require jquery
 //= require handlebars
-//= require ember
-//= require ember-data
+//= require ember-latest
+//= require ember-data-latest
 //= require bootstrap
 //= require combined
 //= require_self
@@ -26,4 +26,6 @@
 //= require_tree ./templates
 //= require_tree ./views
 
-window.App = Ember.Application.create()
+window.App = Ember.Application.create({
+    LOG_TRANSITIONS: true
+})

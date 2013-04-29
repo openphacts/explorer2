@@ -9,7 +9,7 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
   if (options && target && target.length >= 1) {
       return new Handlebars.SafeString('<img width="128" height="128" src="http://www.rcsb.org/pdb/images/' + target[0].split('/').pop() + '_asr_r_250.jpg"&amp;w=128&amp;h=128/>');
   } else {
-      // return empty image
+      return new Handlebars.SafeString('<img width="128" height="128" src="/assets/target_placeholder.png"/>');
   }
 });
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page

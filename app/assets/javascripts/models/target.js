@@ -1,4 +1,5 @@
 App.Target = App.SearchResult.extend({
+    prefLabel: DS.attr('string'),
     exactMatch: DS.attr('boolean'),
     cellularLocation: DS.attr('string'),
     molecularWeight: DS.attr('string'),

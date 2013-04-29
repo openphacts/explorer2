@@ -4,9 +4,17 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
+  match 'compounds' => 'home#index'
+
+  match 'compounds/:id' => 'home#index'
+
+  match 'compounds/:id/pharmacology' => 'home#index'
+
   match 'compound/:id' => 'home#index'
 
-  resources :compounds, :only => :show
+  match 'compound/:id/pharmacology' => 'home#index'
+
+  #resources :compounds, :only => :show
 
   match 'target/:id' => 'home#index'
 

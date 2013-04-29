@@ -95,6 +95,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var keywords = [];
     var classifiedWith = [];
     var seeAlso = [];
+    var prefLabel = response.prefLabel;
     $.each(response.exactMatch, function (i, exactMatch) {
         if (exactMatch["_about"]) {
             if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
@@ -108,21 +109,28 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 });
             } else if (exactMatch["_about"].indexOf("http://purl.uniprot.org") !== -1) {
                 uniprotData = exactMatch;
-                if (uniprotData.classifiedWith) {
+                if (uniprotData.classifiedWith && uniprotData.classifiedWith instanceof Array) {
                     $.each(uniprotData.classifiedWith, function(j, classified) {
                         classifiedWith.push(classified);
                     });
+                } else if (uniprotData.classifiedWith) {
+                    console.log('classified with is a singleton');
+                    classifiedWith.push(uniprotData.classifiedWith);
                 }
-                if (uniprotData.seeAlso) {
+                if (uniprotData.seeAlso && uniprotData.seeAlso instanceof Array) {
                     $.each(uniprotData.seeAlso, function(j, see) {
                         seeAlso.push(see);
                     });
+                } else if (uniprotData.seeAlso){
+                    console.log('see also is a singleton');
+                    seeAlso.push(uniprotData.seeAlso);
                 }
             }
         }
     });
     return {
         id: id,
+        prefLabel: prefLabel,
         cellularLocation: drugbankData ? drugbankData.cellularLocation : null,
         molecularWeight: drugbankData ? drugbankData.molecularWeight : null,
         numberOfResidues: drugbankData ? drugbankData.numberOfResidues : null,

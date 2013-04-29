@@ -10,29 +10,33 @@ App.Router.reopen({
 App.Router.map(function() { 
     this.route("search", { path: "/search" });
     this.resource('compounds'); 
-    this.resource('compound', { path: '/compound/:compound_id' });
+    this.resource('compound', { path: '/compounds/:compound_id' }, function() {
+        this.route('pharmacology');
+    });
     this.resource('targets'); 
-    this.resource('target', { path: '/target/:target_id' });
+    this.resource('target', { path: '/target/:target_id' }, function() {
+        this.route('pharmacology');
+    });
 });
 
-App.CompoundRoute = Ember.Route.extend({
-  setupController: function(controller, compound) {
-    controller.set('content', compound);
-  },
+App.CompoundIndexRoute = Ember.Route.extend({
   model: function(params) {
-    compound = App.Compound.find(params.compound_id);
-    return compound;
+    return this.modelFor('compound');
   }
 });
-App.TargetRoute = Ember.Route.extend({
-  setupController: function(controller, target) {
-    controller.set('content', target);
-  },
+
+App.CompoundPharmacologyRoute = Ember.Route.extend({
   model: function(params) {
-    target = App.Target.find(params.target_id);
-    return target;
+    return this.modelFor('compound');
   }
 });
+
+App.TargetIndexRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.modelFor('target');
+  }
+});
+
 App.IndexRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     App.searchController.set('query', '');
