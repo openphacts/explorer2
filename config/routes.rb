@@ -4,23 +4,33 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
-  match 'compounds' => 'home#index'
+#  match 'compounds' => 'home#index'
 
-  match 'compounds/:id' => 'home#index'
+#  match 'compounds/:id' => 'home#index'
 
-  match 'compounds/:id/pharmacology' => 'home#index'
+#  match 'compounds/:id/pharmacology' => 'home#index'
 
-  match 'compound/:id' => 'home#index'
+#  match 'compound/:id' => 'home#index'
 
-  match 'compound/:id/pharmacology' => 'home#index'
+#  match 'compound/:id/pharmacology' => 'home#index'
 
-  #resources :compounds, :only => :show
+  resources :compounds, :only => :show do
+    member do
+      get 'pharmacology'
+    end
+  end
 
-  match 'targets' => 'home#index'
+  resources :targets, :only => :show do
+    member do
+      get 'pharmacology'
+    end
+  end
 
-  match 'targets/:id' => 'home#index'
+#  match 'targets' => 'home#index'
 
-  match 'targets/:id/pharmacology' => 'home#index'
+#  match 'targets/:id' => 'home#index'
+
+#  match 'targets/:id/pharmacology' => 'home#index'
 
 #  resources :search do
 #    collection do
