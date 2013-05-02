@@ -60,12 +60,12 @@ App.searchController = Ember.ArrayController.create({
 
         this.set('isSearching', true);
         this.set('content', []);
-        var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl); 
+        var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
         var cwCompoundCallback=function(success, status, response){
             if(success) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl);  
+                    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
                     var compoundCallback=function(success, status, response){
                         var compound = compoundSearcher.parseCompoundResponse(response);
                         !compound.prefLabel ? compound.prefLabel = result.prefLabel : '';  
@@ -77,7 +77,7 @@ App.searchController = Ember.ArrayController.create({
                            me.addSearchResult(this_compound);
                         }
                     };    
-                    compoundSearcher.fetchCompound(appID, appKey, result.uri, compoundCallback);
+                    compoundSearcher.fetchCompound(result.uri, compoundCallback);
                 });
             } else {
                 // an error in the response, ignore for now
@@ -90,7 +90,7 @@ App.searchController = Ember.ArrayController.create({
             if(success) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl);  
+                    var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
                     var targetCallback=function(success, status, response){
                         var target = targetSearcher.parseTargetResponse(response);
                         !target.description ? target.description = result.prefLabel : ''; 
@@ -102,7 +102,7 @@ App.searchController = Ember.ArrayController.create({
                             me.addSearchResult(this_target);
                         }
                     };    
-                    targetSearcher.fetchTarget(appID, appKey, result.uri, targetCallback);
+                    targetSearcher.fetchTarget(result.uri, targetCallback);
                 });
             } else {
                 // an error in the response, ignore for now
@@ -112,8 +112,8 @@ App.searchController = Ember.ArrayController.create({
             enable_scroll();
         };  
         //targets
-        searcher.byTag(appID, appKey, q, '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
+        searcher.byTag(q, '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
         //compounds
-        searcher.byTag(appID, appKey, q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
+        searcher.byTag(q, '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
    }
 });
