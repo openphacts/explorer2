@@ -1,127 +1,4 @@
 var Openphacts = Openphacts || {};
-Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
-	this.baseURL = baseURL;
-	this.appID = appID;
-	this.appKey = appKey;
-}
-
-Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: type,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: '07a84994-e464-4bbf-812a-a4b96fa3d197',
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1',
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
-	var uris = [];
-	//response can be either array or singleton.
-	if (response instanceof Array) {
-		$.each(response, function(i, match) {
-			uris.push({
-				'uri': match["_about"],
-				'prefLabel': match["prefLabel"],
-				'match': match["match"]
-			});
-		});
-	} else {
-		uris.push({
-			'uri': response["_about"],
-			'prefLabel': response["prefLabel"],
-			'match': response["match"]
-		});
-	}
-	return uris;
-}
-
-Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/getConceptDescription",
-		cache: true,
-		data: {
-			uuid: uuid,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(response) {
-	var prefLabel = response.prefLabel_en;
-	var definition = response.definition;
-	var altLabels = [];
-	if (response.altLabel_en) {
-		$.each(response.altLabel_en, function(index, altLabel) {
-			altLabels.push(altLabel);
-		});
-	}
-	return {
-		prefLabel: prefLabel,
-		definition: definition,
-		altLabels: altLabels
-	};
-}
 Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -325,59 +202,182 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 		activity_relation_item = chemblActivityLink;
 		records.push({
 			//for compound
-			compound_inchikey: compound_inchikey,
-			compound_drug_type: compound_drug_type,
-			compound_generic_name: compound_generic_name,
+			compoundInchikey: compound_inchikey,
+			compoundDrugType: compound_drug_type,
+			compoundGenericName: compound_generic_name,
 			targets: targets,
-			compound_inchikey_src: cs_src,
-			compound_drug_type_src: drugbank_src,
-			compound_generic_name_src: drugbank_src,
-			target_title_src: chembl_src,
+			compoundInchikeySrc: cs_src,
+			compoundDrugTypeSrc: drugbank_src,
+			compoundGenericNameSrc: drugbank_src,
+			targetTitleSrc: chembl_src,
 			//for target
-			chembl_activity_uri: chembl_activity_uri,
-			chembl_compound_uri: chembl_compound_uri,
-			compound_full_mwt: compound_full_mwt,
-			cw_compound_uri: cw_compound_uri,
-			compound_pref_label: compound_pref_label,
-			cs_compound_uri: cs_compound_uri,
+			chemblActivityUri: chembl_activity_uri,
+			chemblCompoundUri: chembl_compound_uri,
+			compoundFullMwt: compound_full_mwt,
+			cwCompoundUri: cw_compound_uri,
+			compoundPrefLabel: compound_pref_label,
+			csCompoundUri: cs_compound_uri,
 			csid: csid,
-			compound_inchi: compound_inchi,
-			compound_smiles: compound_smiles,
-			chembl_assay_uri: chembl_assay_uri,
-			target_organisms: target_organisms,
-			assay_organism: assay_organism,
-			assay_description: assay_description,
-			activity_relation: activity_relation,
-			activity_standard_units: activity_standard_units,
-			activity_standard_value: activity_standard_value,
-			activity_activity_type: activity_activity_type,
+			compoundInchi: compound_inchi,
+			compoundSmiles: compound_smiles,
+			chemblAssayUri: chembl_assay_uri,
+			targetOrganisms: target_organisms,
+			assayOrganism: assay_organism,
+			assayDescription: assay_description,
+			activity_Relation: activity_relation,
+			activityStandardUnits: activity_standard_units,
+			activityStandardValue: activity_standard_value,
+			activityActivityType: activity_activity_type,
 
-			compound_full_mwt_src: chembl_src,
-			compound_pref_label_src: cw_src,
-			compound_inchi_src: cs_src,
-			compound_smiles_src: cs_src,
-			target_organism_src: chembl_src,
-			assay_organism_src: chembl_src,
-			assay_description_src: chembl_src,
-			activity_relation_src: chembl_src,
-			activity_standard_units_src: chembl_src,
-			activity_standard_value_src: chembl_src,
-			activity_activity_type_src: chembl_src,
-			activity_pubmed_id: activity_pubmed_id,
-			assay_description_item: assay_description_item,
-			assay_organism_item: assay_organism_item,
-			activity_activity_type_item: activity_activity_type_item,
-			activity_relation_item: activity_relation_item,
-			activity_standard_value_item: activity_standard_value_item,
-			activity_standard_units_item: activity_standard_units_item,
-			compound_full_mwt_item: compound_full_mwt_item,
-			compound_smiles_item: compound_smiles_item,
-			compound_inchi_item: compound_inchi_item,
-			compound_inchikey_item: compound_inchikey_item,
-			compound_pref_label_item: compound_pref_label_item
+			compoundFullMwtSrc: chembl_src,
+			compoundPrefLabel_src: cw_src,
+			compoundInchiSrc: cs_src,
+			compoundSmilesSrc: cs_src,
+			targetOrganismSrc: chembl_src,
+			assayOrganismSrc: chembl_src,
+			assayDescriptionSrc: chembl_src,
+			activityRelationSrc: chembl_src,
+			activityStandardUnitsSrc: chembl_src,
+			activityStandardValueSrc: chembl_src,
+			activityActivityTypeSrc: chembl_src,
+			activityPubmedId: activity_pubmed_id,
+			assayDescriptionItem: assay_description_item,
+			assayOrganismItem: assay_organism_item,
+			activityActivityTypeItem: activity_activity_type_item,
+			activityRelationItem: activity_relation_item,
+			activityStandardValueItem: activity_standard_value_item,
+			activityStandardUnitsItem: activity_standard_units_item,
+			compoundFullMwtItem: compound_full_mwt_item,
+			compoundSmilesItem: compound_smiles_item,
+			compoundInchiItem: compound_inchi_item,
+			compoundInchikeyItem: compound_inchikey_item,
+			compoundPrefLabelItem: compound_pref_label_item
 		});
 	});
 	return records;
+}
+Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
+	this.baseURL = baseURL;
+	this.appID = appID;
+	this.appKey = appKey;
+}
+
+Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: type,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: '07a84994-e464-4bbf-812a-a4b96fa3d197',
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1',
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
+	var uris = [];
+	//response can be either array or singleton.
+	if (response instanceof Array) {
+		$.each(response, function(i, match) {
+			uris.push({
+				'uri': match["_about"],
+				'prefLabel': match["prefLabel"],
+				'match': match["match"]
+			});
+		});
+	} else {
+		uris.push({
+			'uri': response["_about"],
+			'prefLabel': response["prefLabel"],
+			'match': response["match"]
+		});
+	}
+	return uris;
+}
+
+Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/getConceptDescription",
+		cache: true,
+		data: {
+			uuid: uuid,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(response) {
+	var prefLabel = response.prefLabel_en;
+	var definition = response.definition;
+	var altLabels = [];
+	if (response.altLabel_en) {
+		$.each(response.altLabel_en, function(index, altLabel) {
+			altLabels.push(altLabel);
+		});
+	}
+	return {
+		prefLabel: prefLabel,
+		definition: definition,
+		altLabels: altLabels
+	};
 }
 Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;

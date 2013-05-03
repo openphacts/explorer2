@@ -1,0 +1,15 @@
+<h1>Pharmacology for {{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h1>
+<table class="table table-striped">
+  <tr><th>Name</th><th>Inchi Key</th><th>Drug Type</th><th>Generic Name</th><th>Full MWT</th><th>Inchi</th><th>Smiles</th><th>Pubmed ID</th></tr>
+  {{#each compoundPharma in pharmacology}}
+  <tr><td>{{compoundPharma.compoundPrefLabel}}</td>
+  <td>{{compoundPharma.compoundInchikey}}</td>
+  <td>{{compoundPharma.compoundDrugType}}</td>
+  <td>{{compoundPharma.compoundGenericName}}</td>
+  <td>{{compoundPharma.compoundFullMwt}}</td>
+  <td>{{compoundPharma.compoundInchi}}</td>
+  <td>{{compoundPharma.compoundSmiles}}</td>
+  <td>{{compoundPharma.activityPubmedId}}</td></tr>
+  {{/each}}
+</table>
+

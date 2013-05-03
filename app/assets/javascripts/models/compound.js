@@ -19,19 +19,28 @@ App.Compound = App.SearchResult.extend({
     psa: DS.attr('string'),
     ro5Violations: DS.attr('string'),
     rtb: DS.attr('string'),
+    pharmacology: DS.hasMany('App.CompoundPharmacology'),
     isCompound: true
 });
 App.Compound.reopenClass({
     find: function(uri) {
         var compound = App.Compound.createRecord();
         // use the lda api to fetch compounds rather than the default behaviour of rails side
-        var searcher = new Openphacts.CompoundSearch("https://ops2.few.vu.nl");  
+        var searcher = new Openphacts.CompoundSearch("https://ops2.few.vu.nl", appID, appKey);  
         var callback=function(success, status, response){  
             var compoundResult = searcher.parseCompoundResponse(response); 
             compound.setProperties(compoundResult); 
         };  
-        searcher.fetchCompound(appID, appKey, 'http://www.conceptwiki.org/concept/' + uri, callback);
+        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, callback);
         compound.set("id", uri);
+        var pharmaCallback=function(success, status, response){
+            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+	    $.each(pharmaResults, function(index, pharma) {
+                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+	        compound.get('pharmacology').pushObject(pharmaRecord);
+	    });
+        };
+        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
         return compound;
     }
 });

@@ -11,11 +11,11 @@ App.Router.map(function() {
     this.route("search", { path: "/search" });
     this.resource('compounds'); 
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
-        this.route('pharmacology');
+        this.resource('pharmacology', function(){});
     });
     this.resource('targets'); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
-        this.route('pharmacology');
+        //this.resource('pharmacology');
     });
 });
 
@@ -27,16 +27,23 @@ App.CompoundIndexRoute = Ember.Route.extend({
 
 App.CompoundPharmacologyRoute = Ember.Route.extend({
 	
-  setupController: function(controller, compound) {
-      console.log('comp pharma route setup controller');
-      controller.getPharmacology(compound.get('id'));
-      //controller.set('content', compound.getPharmacology(this.get('currentPage')));
-  },
+//  setupController: function(controller, compoundPharmacology) {
+//      console.log('comp pharma route setup controller');
+//      controller.set('content', compoundPharmacology);
+//  },
 
   model: function(params) {
     console.log('comp pharma route');
     return this.modelFor('compound');
   }
+});
+
+App.PharmacologyIndexRoute = Ember.Route.extend({
+  model: function(params) {
+    console.log('comp pharma index route');
+    return this.modelFor('compound');
+  }
+
 });
 
 App.TargetIndexRoute = Ember.Route.extend({

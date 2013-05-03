@@ -1,4 +1,5 @@
 App.CompoundPharmacology = DS.Model.extend({
+  compound: DS.belongsTo('App.Compound'),
   compoundInchikey: DS.attr('string'),
   compoundDrugType: DS.attr('string'),
   compoundGenericName: DS.attr('string'),
@@ -29,22 +30,37 @@ App.CompoundPharmacology = DS.Model.extend({
   compoundInchiSrc: DS.attr('string'),
   compoundSmilesSrc: DS.attr('string'),
   targetOrganismSrc: DS.attr('string'),
-assay_organism_src: chembl_src,
-assay_description_src: chembl_src,
-activity_relation_src: chembl_src,
-activity_standard_units_src: chembl_src,
-activity_standard_value_src: chembl_src,
-activity_activity_type_src: chembl_src,
-activity_pubmed_id: activity_pubmed_id,
-assay_description_item: assay_description_item,
-assay_organism_item: assay_organism_item,
-activity_activity_type_item: activity_activity_type_item,
-activity_relation_item: activity_relation_item,
-activity_standard_value_item: activity_standard_value_item,
-activity_standard_units_item: activity_standard_units_item,
-compound_full_mwt_item: compound_full_mwt_item,
-compound_smiles_item: compound_smiles_item,
-compound_inchi_item: compound_inchi_item,
-compound_inchikey_item: compound_inchikey_item,
-compound_pref_label_item: compound_pref_label_item
-})
+  assayOrganismSrc: DS.attr('string'),
+  assayDescriptionSrc: DS.attr('string'),
+  activityRelationSrc: DS.attr('string'),
+  activityStandardUnitsSrc: DS.attr('string'),
+  activityStandardValueSrc: DS.attr('string'),
+  activityActivityTypeSrc: DS.attr('string'),
+  activityPubmedId: DS.attr('number'),
+  assayDescriptionItem: DS.attr('string'),
+  assayOrganismItem: DS.attr('string'),
+  activityActivityTypeItem: DS.attr('string'),
+  activityRelationItem: DS.attr('string'),
+  activityStandardValueItem: DS.attr('string'),
+  activityStandardUnitsItem: DS.attr('string'),
+  compoundFullMwtItem: DS.attr('string'),
+  compoundSmilesItem: DS.attr('string'),
+  compoundInchiItem: DS.attr('string'),
+  compoundInchikeyItem: DS.attr('string'),
+  compoundPrefLabelItem: DS.attr('string')
+});
+App.CompoundPharmacology.reopenClass({
+    find: function(uri, page, pageSize) {
+        // use the lda api to fetch compounds rather than the default behaviour of rails side
+        var compoundPharmacology = App.CompoundPharmacology.createRecord();
+        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
+        var callback=function(success, status, response){  
+            var compoundPharmacologyResult = searcher.parseCompoundPharmacologyResponse(response); 
+            compoundPharmacology.setProperties(compoundPharmacologyResult);
+            //return compoundPharmacologyResult;
+        };  
+        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, page, pageSize, callback);
+        compoundPharmacology.set("id", uri);
+        return compoundPharmacology;
+    }
+});
