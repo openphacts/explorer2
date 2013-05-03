@@ -39,6 +39,20 @@ App.CompoundPharmacologyRoute = Ember.Route.extend({
 });
 
 App.PharmacologyIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, compound) {
+    console.log('pharma index route setup controller');
+      var thisCompound = compound;
+      var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+      var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+      $.each(pharmaResults, function(index, pharma) {
+        var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+	thisCompound.get('pharmacology').pushObject(pharmaRecord);
+      });
+    };
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
+  },
   model: function(params) {
     console.log('comp pharma index route');
     return this.modelFor('compound');

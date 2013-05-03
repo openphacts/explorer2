@@ -33,14 +33,14 @@ App.Compound.reopenClass({
         };  
         searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, callback);
         compound.set("id", uri);
-        var pharmaCallback=function(success, status, response){
-            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-	    $.each(pharmaResults, function(index, pharma) {
-                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	        compound.get('pharmacology').pushObject(pharmaRecord);
-	    });
-        };
-        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
+//        var pharmaCallback=function(success, status, response){
+//            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+//	    $.each(pharmaResults, function(index, pharma) {
+//                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+//	        compound.get('pharmacology').pushObject(pharmaRecord);
+//	    });
+//        };
+//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
         return compound;
     }
 });
