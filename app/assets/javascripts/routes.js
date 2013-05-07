@@ -15,7 +15,7 @@ App.Router.map(function() {
     });
     this.resource('targets'); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
-        this.resource('target.pharmacology', function(){});
+        this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
     });
 });
 
@@ -70,6 +70,28 @@ App.TargetPharmacologyRoute = Ember.Route.extend({
   model: function(params) {
     return this.modelFor('target');
   }
+});
+
+App.TargetPharmacologyIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, target) {
+    console.log('target index route setup controller');
+      var thisTarget = target;
+      var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+      var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
+      $.each(pharmaResults, function(index, pharma) {
+        var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
+	thisTarget.get('pharmacology').pushObject(pharmaRecord);
+      });
+    };
+    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
+  },
+  model: function(params) {
+    console.log('target pharma index route');
+    return this.modelFor('target');
+  }
+
 });
 
 App.IndexRoute = Ember.Route.extend({
