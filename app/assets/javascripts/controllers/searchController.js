@@ -30,21 +30,6 @@ App.searchController = Ember.ArrayController.create({
         return this.current_query;
     },
 
-    parseSolrResponse: function(response) {
-        var results = {};
-        this.total_results = response.response.numFound;
-        $.each(response.response.docs, function(i, doc) {
-            var result = {};
-            var id = doc.id;
-            result["uri"] = doc.cw_uri[0];
-            result["label"] = doc.prefLabel[0];
-            result["biotrans"] = doc.db_biotran[0];
-            result["description"] = doc.db_description[0];
-            results[id] = result;
-        });
-        return results;
-    },
-
     resetPageCount: function(query) {
         this.total_results = 0;
         this.currentPage = 0;
@@ -62,7 +47,7 @@ App.searchController = Ember.ArrayController.create({
         this.set('content', []);
         var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
         var cwCompoundCallback=function(success, status, response){
-            if(success) {
+            if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
                     var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
@@ -87,7 +72,7 @@ App.searchController = Ember.ArrayController.create({
             enable_scroll();
         }; 
         var cwTargetCallback=function(success, status, response){
-            if(success) {
+            if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
                     var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
