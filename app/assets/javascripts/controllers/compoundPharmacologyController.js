@@ -1,4 +1,4 @@
-App.CompoundPharmacologyController = Ember.ObjectController.extend({
+App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
 
   needs: "compound"
 
