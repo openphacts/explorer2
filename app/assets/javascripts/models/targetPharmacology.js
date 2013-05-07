@@ -51,13 +51,11 @@ App.TargetPharmacology = DS.Model.extend({
 });
 App.TargetPharmacology.reopenClass({
     find: function(uri, page, pageSize) {
-        // use the lda api to fetch targets rather than the default behaviour of rails side
         var targetPharmacology = App.TargetPharmacology.createRecord();
         var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
         var callback=function(success, status, response){  
             var targetPharmacologyResult = searcher.parseTargetPharmacologyResponse(response); 
             targetPharmacology.setProperties(targetPharmacologyResult);
-            //return compoundPharmacologyResult;
         };  
         searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + uri, page, pageSize, callback);
         targetPharmacology.set("id", uri);

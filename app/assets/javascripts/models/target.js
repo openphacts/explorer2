@@ -16,6 +16,7 @@ App.Target = App.SearchResult.extend({
     sequence: DS.attr('string'),
     classifiedWith: DS.attr('array'),
     seeAlso: DS.attr('string'),
+    pharmacology: DS.hasMany('App.TargetPharmacology'),
     isCompound: false
 });
 App.Target.reopenClass({

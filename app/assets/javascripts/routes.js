@@ -25,19 +25,6 @@ App.CompoundIndexRoute = Ember.Route.extend({
   }
 });
 
-App.CompoundPharmacologyRoute = Ember.Route.extend({
-	
-//  setupController: function(controller, compoundPharmacology) {
-//      console.log('comp pharma route setup controller');
-//      controller.set('content', compoundPharmacology);
-//  },
-
-  model: function(params) {
-    console.log('comp pharma route');
-    return this.modelFor('compound');
-  }
-});
-
 App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, compound) {
@@ -61,12 +48,6 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 });
 
 App.TargetIndexRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.modelFor('target');
-  }
-});
-
-App.TargetPharmacologyRoute = Ember.Route.extend({
   model: function(params) {
     return this.modelFor('target');
   }

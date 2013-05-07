@@ -12,6 +12,12 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
       return new Handlebars.SafeString('<img width="128" height="128" src="/assets/target_placeholder.png"/>');
   }
 });
+Ember.Handlebars.registerBoundHelper('compoundSource', function(targetPharma, options) {
+  if (targetPharma.compoundPrefLabelSrc) {
+    return new Handlebars.SafeString('<a href="/compounds/' + targetPharma.compoundPrefLabelSrc.split('/').pop() + '">' + targetPharma.compoundPrefLabel + '</a>');
+  }
+});
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
