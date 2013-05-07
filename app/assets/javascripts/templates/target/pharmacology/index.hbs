@@ -2,7 +2,7 @@
 <table class="table table-striped">
   <tr><th>Compound Name</th><th>Target Organism</th><th>Assay Organism</th><th>Compound Inchi</th><th>Compound Inchi Key</th><th>Activity Type</th><th>Activity Relation</th><th>Activity Value</th><th>Activity Units</th><th>Compound Full Mwt</th><th>Compound Smiles</th><th>Pubmed ID</th></tr>
   {{#each targetPharma in pharmacology}}
-  <td>{{targetPharma.compoundPrefLabel}}</td>
+  <td>{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
   <td>Target Organism</td>
   <td>{{targetPharma.assayOrganism}}</td>
   <td>{{targetPharma.compoundInchi}}</td>

@@ -12,9 +12,9 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
       return new Handlebars.SafeString('<img width="128" height="128" src="/assets/target_placeholder.png"/>');
   }
 });
-Ember.Handlebars.registerBoundHelper('compoundSource', function(targetPharma, options) {
-  if (targetPharma.compoundPrefLabelSrc) {
-    return new Handlebars.SafeString('<a href="/compounds/' + targetPharma.compoundPrefLabelSrc.split('/').pop() + '">' + targetPharma.compoundPrefLabel + '</a>');
+Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, compoundPrefLabel) {
+  if (cwCompoundUri && compoundPrefLabel) {
+    return new Handlebars.SafeString('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
   }
 });
 
