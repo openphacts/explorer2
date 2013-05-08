@@ -22,19 +22,20 @@ Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, c
 var scrollOnThisPage = false;
 
 var pageScrolling = false;
-$(window).scroll(function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-        console.log("page scrolling is " + pageScrolling);
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        disable_scroll();
-        pageScrolling = true;
-        console.log("Fetching results for scroll " + pageScrolling);
-        App.searchController.conceptWikiSearch(App.searchController.getCurrentQuery());
-    }
-});
+var scrollHandler;
+//$(window).scroll(function() {
+//    var s = $(window).scrollTop(),
+//        d = $(document).height(),
+//        c = $(window).height();
+//        scrollPercent = (s / (d-c)) * 100;
+//        console.log("page scrolling is " + pageScrolling);
+//    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
+//        disable_scroll();
+//        pageScrolling = true;
+//        console.log("Fetching results for scroll " + pageScrolling);
+//        App.searchController.conceptWikiSearch(App.searchController.getCurrentQuery());
+//    }
+//});
 
 // left: 37, up: 38, right: 39, down: 40,
 // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36

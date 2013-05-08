@@ -14,5 +14,23 @@
 {{/each}}
 
 <script type="text/javascript">
-scrollOnThisPage = true;
+
+$(window).off("scroll", scrollHandler);
+//TODO add scrolling back in when cw can handle pagination etc
+scrollOnThisPage = false;
+pageScrolling = false;
+
+scrollHandler = function() {
+    var s = $(window).scrollTop(),
+        d = $(document).height(),
+        c = $(window).height();
+        scrollPercent = (s / (d-c)) * 100;
+    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
+        alert('Search scroll');
+//        disable_scroll();
+//        pageScrolling = true;
+//TODO fetch from search controller
+    }
+};
+$(window).scroll(scrollHandler);
 </script>

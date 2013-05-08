@@ -29,14 +29,17 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, compound) {
     console.log('pharma index route setup controller');
+    controller.set('content', compound);
       var thisCompound = compound;
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
-      var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-      $.each(pharmaResults, function(index, pharma) {
-        var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	thisCompound.get('pharmacology').pushObject(pharmaRecord);
-      });
+      if (success && response) {
+        var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+	  thisCompound.get('pharmacology').pushObject(pharmaRecord);
+        });
+      }
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
   },
@@ -57,14 +60,17 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, target) {
     console.log('target index route setup controller');
+    controller.set('content', target);
       var thisTarget = target;
       var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
-      var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
-      $.each(pharmaResults, function(index, pharma) {
-        var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
-	thisTarget.get('pharmacology').pushObject(pharmaRecord);
-      });
+      if (success && response) {
+        var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
+	  thisTarget.get('pharmacology').pushObject(pharmaRecord);
+        });
+      }
     };
     searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
   },
