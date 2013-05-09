@@ -73,11 +73,28 @@ App.searchController = Ember.ArrayController.create({
                 $.each(results, function(index, result) {
                     var this_target = App.Target.find(result.uri.split('/').pop());
                     this_target.on('didLoad', function() {
-                        if (this.get('description') !== null && this.get('description').toLowerCase() === q.toLowerCase()) {
-		            this.set('exactMatch', true);
-			    me.addExactMatch(this);
-			} else {
-			    me.addSearchResult(this);
+			var that_target = this;
+                        if (this.get('description') === null) {
+                            var targetCallback=function(success, status, response){  
+                                var description = searcher.parseFindConceptResponse(response).prefLabel;
+                                if (description) {
+                                    that_target.set('description', description);
+                                    if(description.toLowerCase() === q.toLowerCase()) {
+                                        that_target.set('exactMatch', true);
+	                                me.addExactMatch(that_target);
+                                    } else {
+                                        me.addSearchResult(that_target);
+                                    }
+                                }
+                            };  
+                            searcher.findConcept(that_target.id, targetCallback);
+                        } else {
+                            if (this.get('description') !== null && this.get('description').toLowerCase() === q.toLowerCase()) {
+		                this.set('exactMatch', true);
+			        me.addExactMatch(this);
+			    } else {
+			        me.addSearchResult(this);
+			    }
 			}
                     });
                 });
