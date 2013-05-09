@@ -27,7 +27,7 @@ App.Target.reopenClass({
         var callback=function(success, status, response){  
             var targetResult = searcher.parseTargetResponse(response); 
             target.setProperties(targetResult);
-            return target;
+	    target.trigger('didLoad');
         };  
         searcher.fetchTarget('http://www.conceptwiki.org/concept/' + uri, callback);
         target.set("id", uri);

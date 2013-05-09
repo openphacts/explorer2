@@ -29,7 +29,8 @@ App.Compound.reopenClass({
         var searcher = new Openphacts.CompoundSearch("https://ops2.few.vu.nl", appID, appKey);  
         var callback=function(success, status, response){  
             var compoundResult = searcher.parseCompoundResponse(response); 
-            compound.setProperties(compoundResult); 
+            compound.setProperties(compoundResult);
+	    compound.trigger('didLoad');
         };  
         searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, callback);
         compound.set("id", uri);
@@ -41,6 +42,7 @@ App.Compound.reopenClass({
 //	    });
 //        };
 //        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
+        console.log('compound load');
         return compound;
     }
 });

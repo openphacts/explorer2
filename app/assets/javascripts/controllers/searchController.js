@@ -46,23 +46,19 @@ App.searchController = Ember.ArrayController.create({
         this.set('isSearching', true);
         this.set('content', []);
         var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
-        var cwCompoundCallback=function(success, status, response){
+	var cwCompoundCallback=function(success, status, response){
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
-                    var compoundCallback=function(success, status, response){
-                        var compound = compoundSearcher.parseCompoundResponse(response);
-                        !compound.prefLabel ? compound.prefLabel = result.prefLabel : '';  
-                        compound.prefLabel.toLowerCase() === q.toLowerCase() ? compound['exactMatch'] = true : compound['exactMatch'] = false;
-                        this_compound = App.Compound.createRecord(compound);
-                        if (this_compound.get('exactMatch')) {
-                            me.addExactMatch(this_compound);
+                    var this_compound = App.Compound.find(result.uri.split('/').pop());
+                    this_compound.on('didLoad', function() {
+		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === q.toLowerCase()) {
+                            this.set('exactMatch', true);
+      			    me.addExactMatch(this);
                         } else {
-                           me.addSearchResult(this_compound);
-                        }
-                    };    
-                    compoundSearcher.fetchCompound(result.uri, compoundCallback);
+                            me.addSearchResult(this);
+                        } 
+                    });
                 });
             } else {
                 // an error in the response, ignore for now
@@ -75,19 +71,15 @@ App.searchController = Ember.ArrayController.create({
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
-                    var targetCallback=function(success, status, response){
-                        var target = targetSearcher.parseTargetResponse(response);
-                        !target.description ? target.description = result.prefLabel : ''; 
-                        target.description.toLowerCase() === q.toLowerCase() ? target['exactMatch'] = true : target['exactMatch'] = false;
-                        this_target = App.Target.createRecord(target);
-                        if (this_target.get('exactMatch')) {
-                            me.addExactMatch(this_target);
-                        } else {
-                            me.addSearchResult(this_target);
-                        }
-                    };    
-                    targetSearcher.fetchTarget(result.uri, targetCallback);
+                    var this_target = App.Target.find(result.uri.split('/').pop());
+                    this_target.on('didLoad', function() {
+                        if (this.get('description') !== null && this.get('description').toLowerCase() === q.toLowerCase()) {
+		            this.set('exactMatch', true);
+			    me.addExactMatch(this);
+			} else {
+			    me.addSearchResult(this);
+			}
+                    });
                 });
             } else {
                 // an error in the response, ignore for now
