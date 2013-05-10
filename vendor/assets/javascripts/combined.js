@@ -8,6 +8,7 @@ Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
 Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
 		cache: true,
 		data: {
 			q: query,
@@ -29,6 +30,7 @@ Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, ty
 Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
 		cache: true,
 		data: {
 			q: query,
@@ -50,6 +52,7 @@ Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, br
 Openphacts.ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
 	var conceptWikiSearcher = $.ajax({
 		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
 		cache: true,
 		data: {
 			q: query,
@@ -91,6 +94,7 @@ Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
 
 Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
 	var conceptWikiSearcher = $.ajax({
+                dataType: 'json',
 		url: this.baseURL + "/getConceptDescription",
 		cache: true,
 		data: {
@@ -131,6 +135,7 @@ Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, callback) {
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound',
+                dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
@@ -150,6 +155,7 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, callba
 Openphacts.CompoundSearch.prototype.compoundPharmacology = function(compoundURI, page, pageSize, callback) {
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/pages',
+                dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
@@ -171,6 +177,7 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(compoundURI,
 Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(compoundURI, callback) {
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/count',
+                dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
@@ -411,6 +418,7 @@ Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 Openphacts.TargetSearch.prototype.fetchTarget = function(targetURI, callback) {
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target',
+                dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
@@ -430,6 +438,7 @@ Openphacts.TargetSearch.prototype.fetchTarget = function(targetURI, callback) {
 Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page, pageSize, callback) {
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target/pharmacology/pages',
+                dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
