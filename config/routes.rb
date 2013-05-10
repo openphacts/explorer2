@@ -4,6 +4,8 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
+  match 'search/typeahead' => 'search#typeahead'
+
 #  match 'compounds' => 'home#index'
 
 #  match 'compounds/:id' => 'home#index'
