@@ -1,16 +1,9 @@
 App.SearchBox = Em.TextField.extend({
-   typeaheadPath: '/search/typeahead',
     didInsertElement: function() {
       return this.$().typeahead({
-        source: function (query, process) {
-            $.json(typeaheadPath, { query: query }, function (data) {
-                return process(data);
-            })
-        },
-        typeaheadPath: this.typeaheadPath
+        source: ["aspirin", "aspirina", "clavaspirin"]
       });
     },
-    
     classNames:["search-query"],
 
     insertNewline: function() {

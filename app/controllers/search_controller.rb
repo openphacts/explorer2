@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
 
   def typeahead
-    results = { "prefLabel" => "Aspirin", "prefLabel" => "Clavaspirin", "prefLabel" => "aspirina" }
+    results = ["Aspirin", "Clavaspirin", "aspirina"]
     respond_to do |format|
       format.json { render :json => results }
     end
