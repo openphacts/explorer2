@@ -1,22 +1,48 @@
-<div class='navbar navbar-inverse navbar-fixed-top'>
-  <div class='navbar-inner' style='padding: 0 20px;'>
-    <a class="brand" href="#">Open PHACTS</a>
-      <div class='nav-collapse collapse'>
-        <ul class='nav'>
-          <li {{bindAttr class="isHome:active"}}>{{#linkTo 'index'}}Home{{/linkTo}}</li>
-        </ul>
-		<div class="navbar-search pull-left">
-	    {{view App.SearchBox
-	           placeholder="Search for compounds and targets" valueBinding="App.searchController.query" id="search_box"}}		
-	    </div>
-      </div>
-  </div>
-</div>
-<div class='row offset1' id='main'>
-  <div class='content'>
-<div class="row">
-</div>
-        {{outlet}}
-  </div>
-</div>
+<div class='navbar navbar-inverse'>
+	<div class='navbar-inner'>
+		<div class="container">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+            	<span class="icon-bar"></span>
+          	</button>
+          	
+			<a class="brand" href="#">
+				<img src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer</a>
+		  	
+		  	<div class="nav-collapse collapse">
+		  		<!-- search bar -->
+		  		<div class="navbar-search pull-left" action="">
+						{{view App.SearchBox
+	           placeholder="Search" valueBinding="App.searchController.query" id="search_box" class="search-query span5" data-provide="typeahead" autocomplete="off"}}
+          		</div>	
+		  		
+		  		<ul class="nav pull-right">
+              		<li class="active"><a href="#about">Search</a></li>
+              		<li><a href="#compound">Compound</a></li>
+              		<li><a href="#target">Target</a></li>
+              		<li class="dropdown">
+                		<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pharmacology <b class="caret"></b></a>
+                	<ul class="dropdown-menu">
+                  		<li><a href="#pharmByCompound">by Compound</a></li>
+                  		<li><a href="#pharmByTarget">by Target</a></li>
+                  		<li><a href="#pharmByEnzyme">by Enzyme</a></li>
+                	</ul>
+              		</li>
+            	</ul>
+		  		
+		  	</div> <!--/.nav-collapse -->
+	  
+		</div> <!--/.container-inner -->
+	      
+	</div> <!--/.navbar-inner -->
+   <img class="pull-left" src="/assets/incandescent_gradient_strip.png" height="1px" width="500">
 
+</div> <!--/.navbar -->
+
+<div class='row' id='main'>
+	<div class='content'>
+		<div class="row"></div>
+        	{{outlet}}
+		</div>
+	</div>

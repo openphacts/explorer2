@@ -1,7 +1,11 @@
 App.SearchBox = Em.TextField.extend({
     didInsertElement: function() {
       return this.$().typeahead({
-        source: ["aspirin", "aspirina", "clavaspirin"]
+        source: function (query, process) {
+            $.getJSON(typeaheadUrl, { query: query }, function (data) {
+                return process(data);
+            })
+        }
       });
     },
     classNames:["search-query"],
