@@ -15,7 +15,7 @@
 		  		<div class="navbar-search pull-left" action="">
           			<!--<input id="compound_search" type="text" class="search-query span5" placeholder="Search" data-provide="typeahead" autocomplete="off"> -->
 						{{view App.SearchBox
-	           placeholder="Search" valueBinding="App.searchController.query" id="search_box" class="search-query span5"}}
+	           placeholder="Search" valueBinding="App.searchController.query" id="search_box" class="search-query span5" data-provide="typeahead" autocomplete="off"}}
           		</div>	
 		  		
 		  		<ul class="nav pull-right">
@@ -41,9 +41,41 @@
 
 </div> <!--/.navbar -->
 
-<div class='row offset1' id='main'>
+<div class='row' id='main'>
 	<div class='content'>
 		<div class="row"></div>
         	{{outlet}}
 		</div>
 	</div>
+
+<script>
+		 $('#search_box').typeahead({
+            source: function(query, process) {
+ 
+    			var data;
+    			compounds = [];
+				
+ 				var json = (function () {
+    				var json = null;
+    				$.ajax({
+        				'async': false,
+        				'global': false,
+        				'url': "/assets/compound_data.json",
+        				'dataType': "json",
+        				'success': function (data) {
+            				json = data;
+        				}
+    				});
+    				return json;
+				})(); 
+ 				
+    			$.each(json, function (i, comp) {
+        			compounds.push(comp.prefLabel);
+    			});
+ 
+    			process(compounds);	 
+            	
+            
+            }
+        });
+</script>
