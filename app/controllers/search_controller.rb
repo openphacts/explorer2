@@ -1,7 +1,25 @@
+require 'csv'
+
 class SearchController < ApplicationController
 
+  # Given a query string search the list of compounds
+  # and targets for matches. Only matches the start of
+  # the prefLabel
   def typeahead
-    results = ["Aspirin", "Clavaspirin", "aspirina"]
+    results = []
+    File.open(File.join(Rails.root, "filestore", "compounds.txt")).each do |row|
+       if row.downcase.starts_with? params[:query].downcase
+         results.push(row) 
+       end
+    end
+    File.open(File.join(Rails.root, "filestore", "targets.txt")).each do |row|
+       if row.downcase.starts_with? params[:query].downcase
+         results.push(row) 
+       end
+    end
+    # shuffle the results so that compounds and targets get mixed up since we
+    # are not doing any relevancy matches
+    results.shuffle
     respond_to do |format|
       format.json { render :json => results }
     end
