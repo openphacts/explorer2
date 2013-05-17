@@ -13,7 +13,7 @@
 			<div id="formula1" class="lead" style="padding:5px 0px 0px 0px;max-height:15px">{{result.molform}}</div>
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<a href="#pharmByCompound">Pharmacology</a>
+				{{#linkTo 'compound.pharmacology' result}}Pharmacology{{/linkTo}}
 			</div>
 		</div>
 	
