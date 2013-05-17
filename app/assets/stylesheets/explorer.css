@@ -112,3 +112,22 @@
     top: 30;
 }
 /* end of id specific styling */
+
+.single-search-result {
+	padding: 1em;
+	background: #f8f8ff;
+	border: 1px solid #556;
+	border-radius: 16px;
+	border-color: #eee9e9;
+	min-height: 112px;
+	position: relative;
+	margin-top: 1em;
+	padding-right: 5%;
+}
+
+/* molecula formula */
+sub {
+	font-size: xx-small;
+	position: relative;
+	bottom: -0.3em;
+}
