@@ -131,3 +131,47 @@ sub {
 	position: relative;
 	bottom: -0.3em;
 }
+
+ /* MARKETING CONTENT */
+.marketing .span4 {
+	text-align: center;
+}
+
+.marketing h2 {
+	font-weight: normal;
+}
+
+.marketing .span4 p {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+/* Featurettes */
+.featurette-divider {
+	margin: 80px 0; 
+}
+
+.featurette {
+	padding-top: 120px; 
+	overflow: hidden; 
+}
+
+.featurette-image {
+	margin-top: -120px; 
+}
+
+.featurette-image.pull-left {
+	margin-right: 40px;
+}
+
+.featurette-image.pull-right {
+	margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+	font-size: 50px;
+	font-weight: 300;
+	line-height: 1;
+	letter-spacing: -1px;
+}
