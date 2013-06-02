@@ -1,18 +1,147 @@
-<h1>Pharmacology for {{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h1>
-<table class="table table-striped">
-  <tr><th>Name</th><th>Inchi Key</th><th>Drug Type</th><th>Generic Name</th><th>Full MWT</th><th>Inchi</th><th>Smiles</th><th>Pubmed ID</th></tr>
-  {{#each compoundPharma in pharmacology}}
-  <tr><td>{{compoundPharma.compoundPrefLabel}}</td>
-  <td>{{compoundPharma.compoundInchikey}}</td>
-  <td>{{compoundPharma.compoundDrugType}}</td>
-  <td>{{compoundPharma.compoundGenericName}}</td>
-  <td>{{compoundPharma.compoundFullMwt}}</td>
-  <td>{{compoundPharma.compoundInchi}}</td>
-  <td>{{compoundPharma.compoundSmiles}}</td>
-  <td>{{compoundPharma.activityPubmedId}}</td></tr>
-  {{/each}}
-</table>
+<style>
+.compound_summary {
+	background: #f8f8ff;
+	border: 1px solid #556;
+	border-radius: 2;
+	border-color: #eee9e9;
+}
+		
+.gridCellAlign {
+	vertical-align: middle;
+}
+		
+.mytable {
+	background: #f5f5f5;
+	border-collapse:separate;
+	border-spacing:1px 7px;
+}
+		
+.record-deco {
+	background: white;
+}
+		
+.cell-basictext {
+	text-align:center;
+	vertical-align:middle;
+}
+		
+.cell-longtext {
+	text-align:left;
+	vertical-align:middle;
+	font-size:12px;
+	padding: 10px;	
+}
+		
+.cell-enhancedtext {
+	text-align:center;
+	vertical-align:middle;
+}
+		
+.headingstyle {
+	background: #f5f5f5;
+}
+		
+</style>	
 
+<div>
+		<ul class="breadcrumb">
+  			<li><a href="/">Home</a> <span class="divider">/</span></li>
+  			<li>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <span class="divider">/</span></li>
+  			<li class="active">{{controllers.compound.prefLabel}} Phamacology</li>
+			
+			<div class="row pull-right"> 
+				<div class="span1" style="padding:5px 5px 0px 0px;">Provenance</div>
+  				<div class="span2 btn-group" data-toggle="buttons-radio">
+  					<button class="btn">On</button>
+  					<button class="btn active">Off</button>
+  				</div>
+			</div>
+		</ul>
+		
+		<div>  
+		
+		<!-- actual results -->
+		<div id="summary" class="compound_summary collapse in" style="max-width:100%;height:140px;">
+			
+			<div class="span1" style="padding:40px 0px 0px 0px"><img src="http://www.chemspider.com/ImagesHandler.ashx?id=1906" height="120" width="120"></div>
+			<div class="row">
+				<div class="span8">
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
+   					<div class="row">
+      					<div id="formula" class="span2 lead" style="text-align:center">C8H9NO2</div>
+      					<div class="span6" style="text-align:justify;padding:0px 0px 0px 0px;font-size:13px;">Analgesic antipyretic derivative of acetanilide. It has weak 
+					anti-inflammatory properties and is used as a common analgesic, but may 
+					cause liver, blood cell, and kidney damage. [PubChem]</div>
+    				</div>
+  				</div>
+  				<div class="span6" style="padding:5px 0px 0px 0px">
+  					<a href="#pharmByCompound" data-toggle="collapse" data-target="#demo">
+  					SMILES and InChls</a>
+					<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
+						<dl>
+  							<dt>SMILES</dt>
+  							<dd>CC(=O)Nc1ccc(cc1)O</dd>
+  							<dt>Standard InChl</dt>
+  							<dd>InChI=1S/C8H9NO2/c1-6(10)9-7-2-4-8(11)5-3-7/h2-5,11H,1H3,(H,9,10)</dd>
+  							<dt>Standard InChlKey</dt>
+  							<dd>RZVAJINKPMORJF-UHFFFAOYSA-N</dd>
+						</dl>
+					</div>
+  				</div>
+  				
+			</div> 		
+
+		</div>
+					<a class="pull-right" href="#pharmByCompound" data-toggle="collapse" data-target="#summary">
+  					hide</a>
+		
+	</div>
+	
+	<!-- RESULT LISTING -->
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead class="headingstyle">
+			<tr>
+				<th class="lead" style="padding:0px 0px 0px 160px;">Target</th>
+				<th></th>
+				<th class="lead" style="padding:0px 0px 0px 150px;">Assay</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			<tr>
+			<tr>
+				<th align="left">Name</th>
+				<th width="10%">Organism</th>
+				<th width="10%">Organism</th>
+				<th align="left" width="300px">Description</th>
+				<th>Type</th>
+			 	<th>Relation</th>
+				<th>Value</th>
+				<th>Units</th>
+				<th>PubMed Article</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each compoundPharma in pharmacology}}
+			<tr class="record-deco">
+				<td style="vertical-align:middle;" height="70"><a href="#">{{compoundPharma.targets}}</a></td>
+				<td class="cell-basictext">{{compoundPharma.targetOrganisms}}</td>
+				<td class="cell-basictext">{{compoundPharma.assayOrganism}}</td>
+				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>
+				<td class="lead cell-basictext">{{compoundPharma.activityActivityType}}</td>
+				<td class="lead cell-basictext">{{compoundPharma.activityRelation}}</td>
+				<td class="lead cell-basictext">{{compoundPharma.activityStandardValue}}</td>
+				<td class="lead cell-basictext">{{compoundPharma.activityStandardUnits}}</td>
+				<td class="cell-basictext"><a href="#pubmed">8145237<a/></td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	</div>
+	
 <script type="text/javascript">
 $(window).off("scroll", scrollHandler);
 scrollOnThisPage = true;
@@ -31,4 +160,18 @@ scrollHandler = function() {
     }
 };
 $(window).scroll(scrollHandler);
+
+// format molecula formula
+	$("div").each(function (index, domEle) {
+	
+		if ($(this).is("#formula")) {
+			
+			var formula = $(this).text();
+			formula = formula.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
+			$(this).html(formula);
+		}	
+	
+	});
+
+
 </script>
