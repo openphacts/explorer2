@@ -315,10 +315,20 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			var target_organisms = new Array();
 
 			$.each(target, function(index, target_item) {
-
+				
+						
 				// For Target
 				var target_inner = {};
-				target_inner['title'] = target_item['title'] ? target_item['title'] : '';
+				//console.log(" TARGET " + target_item + " index " + index);
+				
+				if ($.isArray(target)) {
+					target_inner['title'] = target_item['title'] ? target_item['title'] : '';
+					console.log('is an array');
+				} else {
+					target_inner['title'] = index == 'title' ? target_item : '';
+					console.log('is not an array');
+				}
+
 				target_inner['src'] = onAssay["inDataset"] ? onAssay["inDataset"] : '';
 				if (target_item["_about"]) {
 					var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item["_about"].split('/').pop();
@@ -373,7 +383,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			targetOrganisms: target_organisms,
 			assayOrganism: assay_organism,
 			assayDescription: assay_description,
-			activity_Relation: activity_relation,
+			activityRelation: activity_relation,
 			activityStandardUnits: activity_standard_units,
 			activityStandardValue: activity_standard_value,
 			activityActivityType: activity_activity_type,
