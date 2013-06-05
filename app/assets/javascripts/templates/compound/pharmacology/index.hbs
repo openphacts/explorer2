@@ -5,7 +5,7 @@
   			<li class="active">{{controllers.compound.prefLabel}} Phamacology</li>
 			
 			<div class="row pull-right"> 
-				<div class="span1" style="padding:5px 5px 0px 0px;">Provenance</div>
+				<div class="span1 small-padding-top small-padding-right">Provenance</div>
   				<div class="span2 btn-group" data-toggle="buttons-radio">
   					<button class="btn">On</button>
   					<button class="btn active">Off</button>
@@ -16,29 +16,29 @@
 		<div>  
 		
 		<!-- actual results -->
-		<div id="summary" class="compound_summary collapse in" style="max-width:100%;height:140px;">
+		<div id="summary" class="compound_summary collapse in full-width">
 			
-			<div class="span1" style="padding:40px 0px 0px 0px"><img src="http://www.chemspider.com/ImagesHandler.ashx?id=1906" height="120" width="120"></div>
+			<div class="span1 huge-padding-top"><img src="http://www.chemspider.com/ImagesHandler.ashx?id=1906" height="120" width="120"></div>
 			<div class="row">
 				<div class="span8">
     				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
    					<div class="row">
-      					<div id="formula" class="span2 lead" style="text-align:center">C8H9NO2</div>
-      					<div class="span6" style="text-align:justify;padding:0px 0px 0px 0px;font-size:13px;">Analgesic antipyretic derivative of acetanilide. It has weak 
+      					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
+      					<div class="span6 justify normal-font">Analgesic antipyretic derivative of acetanilide. It has weak 
 					anti-inflammatory properties and is used as a common analgesic, but may 
 					cause liver, blood cell, and kidney damage. [PubChem]</div>
     				</div>
   				</div>
-  				<div class="span6" style="padding:5px 0px 0px 0px">
+  				<div class="span6 small-padding-top">
   					<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button>
 					<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
 						<dl>
   							<dt>SMILES</dt>
-  							<dd>CC(=O)Nc1ccc(cc1)O</dd>
-  							<dt>Standard InChl</dt>
-  							<dd>InChI=1S/C8H9NO2/c1-6(10)9-7-2-4-8(11)5-3-7/h2-5,11H,1H3,(H,9,10)</dd>
-  							<dt>Standard InChlKey</dt>
-  							<dd>RZVAJINKPMORJF-UHFFFAOYSA-N</dd>
+  							<dd>{{controllers.compound.smiles}}</dd>
+  							<dt>Standard InChi</dt>
+  							<dd>{{controllers.compound.inchi}}</dd>
+  							<dt>Standard InChiKey</dt>
+  							<dd>{{controllers.compound.inchiKey}}</dd>
 						</dl>
 					</div>
   				</div>
@@ -54,9 +54,9 @@
 	<table class="mytable">
 		<thead class="headingstyle">
 			<tr>
-				<th class="lead" style="padding:0px 0px 0px 160px;">Target</th>
+				<th class="lead lead-target">Target</th>
 				<th></th>
-				<th class="lead" style="padding:0px 0px 0px 150px;">Assay</th>
+				<th class="lead lead-assay">Assay</th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -112,18 +112,4 @@ scrollHandler = function() {
     }
 };
 $(window).scroll(scrollHandler);
-
-// format molecula formula
-	$("div").each(function (index, domEle) {
-	
-		if ($(this).is("#formula")) {
-			
-			var formula = $(this).text();
-			formula = formula.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
-			$(this).html(formula);
-		}	
-	
-	});
-
-
 </script>

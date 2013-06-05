@@ -17,6 +17,11 @@ Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, c
     return new Handlebars.SafeString('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
   }
 });
+Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform) {
+  if (molform) {
+    return new Handlebars.SafeString(molform.replace(/(\d+)?\s*/g, "<sub>$1</sub>"));
+  }
+});
 
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;

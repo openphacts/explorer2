@@ -22,65 +22,6 @@
 }
 /* end of CSS effects */
 
-/* Padding and Margins */
-/* small 5px */
-.small-padding {
-    padding: 5px;
-}
-.big-padding {
-    padding:20px;
-}
-.big-padding-left {
-    padding:20px;
-}
-.big-padding-top {
-	padding-top: 20px;
-}
-.small-margin {
-    margin: 5px;
-}
-.small-margin-top {
-    margin-top:5px;
-}
-.small-margin-left {
-    margin-left: 5px;
-}
-.small-margin-bottom {
-    margin-bottom: 5px;
-}
-/* medium 10px */
-.medium-padding {
-    padding: 10px;
-}
-.medium-padding-bottom {
-	padding-bottom: 10px;
-}
-.medium-padding-top {
-	padding-top: 10px;
-}
-.medium-margin {
-    margin: 10px;
-}
-.medium-margin-top {
-    margin-top: 10px;
-}
-.medium-margin-right {
-    margin-top: 10px;
-}
-.big-margin {
-    margin: 20px;
-}
-/* big 20px */
-.big-margin-top {
-    margin-top: 20px;
-}
-.big-margin-left {
-    margin-left: 20px;
-}
-.big-margin-right {
-    margin-right: 20px;
-}
-/* end of padding and Margins */
 /* Floats and Layout */
 .left {
     float: left;
@@ -90,6 +31,18 @@
 }
 .clear {
     clear: both;
+}
+.centre {
+    text-align: center;
+}
+.justify {
+    text-align: justify;
+}
+.normal-font {
+    font-size: 13px;
+}
+.full-width {
+    width: 100%;
 }
 /* end of Floats and Layout */
 .hidden {
@@ -217,5 +170,12 @@ sub {
 		
 .headingstyle {
 	background: #f5f5f5;
+}
+
+.lead-target {
+    padding-left: 160px;
+}
+.lead-assay {
+    padding-left: 150px;
 }
 /* end of Pharmacology styles */
