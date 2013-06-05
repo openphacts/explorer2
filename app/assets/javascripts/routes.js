@@ -28,23 +28,30 @@ App.CompoundIndexRoute = Ember.Route.extend({
 App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, compound) {
-    console.log('pharma index route setup controller');
     controller.set('content', compound);
       var thisCompound = compound;
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
+        if (success && response) {
+          var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+          $.each(pharmaResults, function(index, pharma) {
+            var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+	    thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+          });
+          controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+        }
+    };
+    var countCallback=function(success, status, response){
       if (success && response) {
-        var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-        $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	  thisCompound.get('pharmacology').pushObject(pharmaRecord);
-        });
+        var count = searcher.parseCompoundPharmacologyCountResponse(response);
+        thisCompound.set('pharmacologyCount', count);
+        controller.set('totalCount', count);
       }
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
+    searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + compound.id, countCallback);
   },
   model: function(params) {
-    console.log('comp pharma index route');
     return this.modelFor('compound');
   }
 
