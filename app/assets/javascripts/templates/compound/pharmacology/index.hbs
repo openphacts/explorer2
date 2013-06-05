@@ -24,9 +24,7 @@
     				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
-      					<div class="span6 justify normal-font">Analgesic antipyretic derivative of acetanilide. It has weak 
-					anti-inflammatory properties and is used as a common analgesic, but may 
-					cause liver, blood cell, and kidney damage. [PubChem]</div>
+      					<div class="span6 justify normal-font">{{controllers.compound.description}}</div>
     				</div>
   				</div>
   				<div class="span6 small-padding-top">
@@ -80,7 +78,7 @@
 			{{#each compoundPharma in pharmacology}}
 			<tr class="record-deco">
 				<td style="vertical-align:middle;" height="70">{{#each compoundPharma.targets}}<p><a href="#">{{this.title}}</a></p>{{/each}}</td>
-				<td class="cell-basictext">{{compoundPharma.targetOrganisms}}</td>
+				<td class="cell-basictext">{{#each compoundPharma.targetOrganisms}} {{this.title}} {{/each}}</td>
 				<td class="cell-basictext">{{compoundPharma.assayOrganism}}</td>
 				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityActivityType}}</td>
