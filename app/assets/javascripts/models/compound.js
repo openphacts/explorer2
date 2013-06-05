@@ -21,6 +21,7 @@ App.Compound = App.SearchResult.extend({
     ro5Violations: DS.attr('string'),
     rtb: DS.attr('string'),
     pharmacology: DS.hasMany('App.CompoundPharmacology'),
+    pharmacologyRecords: DS.attr('number'),
     isCompound: true
 });
 App.Compound.reopenClass({
