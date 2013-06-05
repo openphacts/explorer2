@@ -1,131 +1,4 @@
 var Openphacts = Openphacts || {};
-Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
-	this.baseURL = baseURL;
-	this.appID = appID;
-	this.appKey = appKey;
-}
-
-Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-                dataType: 'json',
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: type,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-                dataType: 'json',
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: '07a84994-e464-4bbf-812a-a4b96fa3d197',
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
-	var conceptWikiSearcher = $.ajax({
-		url: this.baseURL + "/search/byTag",
-                dataType: 'json',
-		cache: true,
-		data: {
-			q: query,
-			limit: limit,
-			branch: branch,
-			uuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1',
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic.result);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
-	var uris = [];
-	//response can be either array or singleton.
-	if (response instanceof Array) {
-		$.each(response, function(i, match) {
-			uris.push({
-				'uri': match["_about"],
-				'prefLabel': match["prefLabel"],
-				'match': match["match"]
-			});
-		});
-	} else {
-		uris.push({
-			'uri': response["_about"],
-			'prefLabel': response["prefLabel"],
-			'match': response["match"]
-		});
-	}
-	return uris;
-}
-
-Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
-	var conceptWikiSearcher = $.ajax({
-                dataType: 'json',
-		url: this.baseURL + "/getConceptDescription",
-		cache: true,
-		data: {
-			uuid: uuid,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
-		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic);
-		},
-		error: function(request, status, error) {
-			callback.call(this, false, request.status);
-		}
-	});
-}
-
-Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(response) {
-	var prefLabel = response.prefLabel_en;
-	var definition = response.definition;
-	var altLabels = [];
-	if (response.altLabel_en) {
-		$.each(response.altLabel_en, function(index, altLabel) {
-			altLabels.push(altLabel);
-		});
-	}
-	return {
-		prefLabel: prefLabel,
-		definition: definition,
-		altLabels: altLabels
-	};
-}
 Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -234,7 +107,8 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		fullMWT: chemblData ? chemblData.full_mwt : null,
 		molform: chemblData ? chemblData.molform : null,
 		mwFreebase: chemblData ? chemblData.mw_freebase : null,
-		rtb: chemblData ? chemblData.rtb : null
+		rtb: chemblData ? chemblData.rtb : null,
+                inchiKey: chemspiderData ? chemspiderData.inchikey : null
 	};
 }
 
@@ -419,6 +293,133 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyCountResponse = function(response) {
     return response.primaryTopic.compoundPharmacologyTotalResults;
 }
+Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
+	this.baseURL = baseURL;
+	this.appID = appID;
+	this.appKey = appKey;
+}
+
+Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: type,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: '07a84994-e464-4bbf-812a-a4b96fa3d197',
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/byTag",
+                dataType: 'json',
+		cache: true,
+		data: {
+			q: query,
+			limit: limit,
+			branch: branch,
+			uuid: 'eeaec894-d856-4106-9fa1-662b1dc6c6f1',
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
+	var uris = [];
+	//response can be either array or singleton.
+	if (response instanceof Array) {
+		$.each(response, function(i, match) {
+			uris.push({
+				'uri': match["_about"],
+				'prefLabel': match["prefLabel"],
+				'match': match["match"]
+			});
+		});
+	} else {
+		uris.push({
+			'uri': response["_about"],
+			'prefLabel': response["prefLabel"],
+			'match': response["match"]
+		});
+	}
+	return uris;
+}
+
+Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
+	var conceptWikiSearcher = $.ajax({
+                dataType: 'json',
+		url: this.baseURL + "/getConceptDescription",
+		cache: true,
+		data: {
+			uuid: uuid,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(response) {
+	var prefLabel = response.prefLabel_en;
+	var definition = response.definition;
+	var altLabels = [];
+	if (response.altLabel_en) {
+		$.each(response.altLabel_en, function(index, altLabel) {
+			altLabels.push(altLabel);
+		});
+	}
+	return {
+		prefLabel: prefLabel,
+		definition: definition,
+		altLabels: altLabels
+	};
+}
 Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -454,6 +455,26 @@ Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page,
 			_format: "json",
 			_page: page,
 			_pageSize: pageSize,
+			uri: targetURI,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(targetURI, callback) {
+	var targetQuery = $.ajax({
+		url: this.baseURL + '/target/pharmacology/count',
+                dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
 			uri: targetURI,
 			app_id: this.appID,
 			app_key: this.appKey
@@ -709,4 +730,72 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		});
 	});
 	return records;
+}
+
+Openphacts.TargetSearch.prototype.parseTargetPharmacologyCountResponse = function(response) {
+    return response.primaryTopic.targetPharmacologyTotalResults;
+}
+Openphacts.StructureSearch = function StructureSearch(baseURL, appID, appKey) {
+	this.baseURL = baseURL;
+	this.appID = appID;
+	this.appKey = appKey;
+}
+
+Openphacts.StructureSearch.prototype.exact = function(smiles, matchType, limit, start, length, callback) {
+        params={};
+        params['_format'] = "json";
+        params['app_key'] = this.appKey;
+        params['app_id'] = this.appID;
+        params['searchOptions.Molecule'] = smiles;
+        matchType != null ? params['searchOptions.MatchType'] = matchType : '';
+        limit != null ? params['resultOptions.Limit'] = limit : '';
+        start != null ? params['resultOptions.Start'] = start : '';
+        length != null ? params['resultOptions.Length'] = length : '';
+	var exactQuery = $.ajax({
+		url: this.baseURL + '/structure/exact',
+                dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.StructureSearch.prototype.substructure = function(smiles, limit, start, length, callback) {
+        params={};
+        params['_format'] = "json";
+        params['app_key'] = this.appKey;
+        params['app_id'] = this.appID;
+        params['searchOptions.Molecule'] = smiles;
+        limit != null ? params['resultOptions.Limit'] = limit : '';
+        start != null ? params['resultOptions.Start'] = start : '';
+        length != null ? params['resultOptions.Length'] = length : '';
+	var exactQuery = $.ajax({
+		url: this.baseURL + '/structure/substructure',
+                dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result.primaryTopic);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.StructureSearch.prototype.parseExactResponse = function(response) {
+	return {
+                type: response.type,
+                molecule: response.Molecule,
+                csURI: response.result
+        };
+}
+
+Openphacts.StructureSearch.prototype.parseSubstructureResponse = function(response) {
+	return response.result;
 }

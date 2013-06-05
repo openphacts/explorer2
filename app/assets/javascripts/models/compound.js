@@ -13,6 +13,7 @@ App.Compound = App.SearchResult.extend({
     hba: DS.attr('string'),
     hbd: DS.attr('string'),
     inchi: DS.attr('string'),
+    inchiKey: DS.attr('string'),
     logp: DS.attr('string'),
     molform: DS.attr('string'),
     mwFreebase: DS.attr('string'),
