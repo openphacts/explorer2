@@ -79,7 +79,7 @@
 		<tbody>
 			{{#each compoundPharma in pharmacology}}
 			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70"><a href="#">{{compoundPharma.targets}}</a></td>
+				<td style="vertical-align:middle;" height="70">{{#each compoundPharma.targets}}<p><a href="#">{{this.title}}</a></p>{{/each}}</td>
 				<td class="cell-basictext">{{compoundPharma.targetOrganisms}}</td>
 				<td class="cell-basictext">{{compoundPharma.assayOrganism}}</td>
 				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>
