@@ -188,21 +188,11 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			var targets = new Array();
 			var target_organisms = new Array();
 
-			$.each(target, function(index, target_item) {
-				
-						
+                        if ($.isArray(target)) {
+			    $.each(target, function(index, target_item) {	
 				// For Target
 				var target_inner = {};
-				//console.log(" TARGET " + target_item + " index " + index);
-				
-				if ($.isArray(target)) {
-					target_inner['title'] = target_item['title'] ? target_item['title'] : '';
-					console.log('is an array');
-				} else {
-					target_inner['title'] = index == 'title' ? target_item : '';
-					console.log('is not an array');
-				}
-
+			        target_inner['title'] = target_item['title']
 				target_inner['src'] = onAssay["inDataset"] ? onAssay["inDataset"] : '';
 				if (target_item["_about"]) {
 					var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target_item["_about"].split('/').pop();
@@ -223,7 +213,32 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 					organism_inner['item'] = '';
 				}
 				target_organisms.push(organism_inner);
-			});
+			    });
+                        } else {	
+		            // For Target
+			    var target_inner = {};
+			    target_inner['title'] = target['title']
+			    target_inner['src'] = onAssay["inDataset"] ? onAssay["inDataset"] : '';
+			    if (target["_about"]) {
+				var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
+				target_inner['item'] = targetLink;
+			     } else {
+				target_inner['item'] = '';
+			     }
+			     targets.push(target_inner);
+
+			     // For Organism
+			     var organism_inner = {};
+			     organism_inner['organism'] = target['organism'] ? target['organism'] : '';
+			     organism_inner['src'] = onAssay["inDataset"] ? onAssay["inDataset"] : '';
+			     if (target["_about"]) {
+				var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
+				organism_inner['item'] = organismLink;
+			     } else {
+				organism_inner['item'] = '';
+			     }
+			     target_organisms.push(organism_inner);
+                        }
 		}
 
 		var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' + chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
@@ -257,7 +272,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			targetOrganisms: target_organisms,
 			assayOrganism: assay_organism,
 			assayDescription: assay_description,
-			activityRelation: activity_relation,
+			activity_Relation: activity_relation,
 			activityStandardUnits: activity_standard_units,
 			activityStandardValue: activity_standard_value,
 			activityActivityType: activity_activity_type,
