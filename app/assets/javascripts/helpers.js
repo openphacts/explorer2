@@ -22,7 +22,11 @@ Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform)
     return new Handlebars.SafeString(molform.replace(/(\d+)?\s*/g, "<sub>$1</sub>"));
   }
 });
-
+Ember.Handlebars.registerBoundHelper('linkablePubmedId', function(pubmedId) {
+	if (pubmedId) {
+		return new Handlebars.SafeString('<a href="http://www.ncbi.nlm.nih.gov/pubmed?term=' + pubmedId + '" target="_blank">' + pubmedId + '</a>');
+	}
+});
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
