@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row span12">
 <div class="search-exact-match big-margin-top">
     <div class="big-margin-right thumbnail left">{{cs_image_src csUri}}</div>
     <h1>{{prefLabel}}</h1>
@@ -21,6 +21,8 @@
     <dd>{{hbd}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Inchi</h3></dt>
     <dd>{{inchi}}</dd>
+    <dt class="medium-padding-bottom medium-padding-top"><h3>Inchi Key</h3></dt>
+    <dd>{{inchiKey}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>MW Freebase</h3></dt>
     <dd>{{mwFreebase}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>ro5 violations</h3></dt>
@@ -30,7 +32,7 @@
     <dt class="medium-padding-bottom medium-padding-top"><h3>AlogP</h3></dt>
     <dd>{{logp}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Formula</h3></dt>
-    <dd>{{molform}}</dd>
+    <dd>{{formatMolecularFormula molform}}</dd>
     <dt class="medium-padding-bottom medium-padding-top"><h3>Polar Surface Area</h3></dt>
     <dd>{{psa}}</dd>
     </dl>
