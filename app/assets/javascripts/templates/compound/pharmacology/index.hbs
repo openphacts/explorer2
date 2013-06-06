@@ -51,6 +51,7 @@
 	<table class="mytable">
 
 		<thead class="headingstyle">
+	
 			<tr>
 				<th class="lead lead-target">Target</th>
 				<th></th>
@@ -78,7 +79,7 @@
 			{{#each compoundPharma in pharmacology}}
 			<tr class="record-deco">
 				<td style="vertical-align:middle;" height="70">{{#each compoundPharma.targets}}<p><a href="#">{{this.title}}</a></p>{{/each}}</td>
-				<td class="cell-basictext">{{#each compoundPharma.targetOrganisms}} {{this.title}} {{/each}}</td>
+				<td class="cell-basictext">{{#each compoundPharma.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{compoundPharma.assayOrganism}}</td>
 				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityActivityType}}</td>
