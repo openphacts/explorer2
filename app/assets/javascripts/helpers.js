@@ -27,6 +27,23 @@ Ember.Handlebars.registerBoundHelper('linkablePubmedId', function(pubmedId) {
 		return new Handlebars.SafeString('<a href="http://www.ncbi.nlm.nih.gov/pubmed?term=' + pubmedId + '" target="_blank">' + pubmedId + '</a>');
 	}
 });
+Ember.Handlebars.registerBoundHelper('expandableDescription', function(description) {
+	if (description) {
+	 	var words = new Array();
+		words = description.split(" ");
+		
+		if (words.length > 48) {
+			var readmore = '<span class="read-more-content">';
+			var position = 230;
+			var end = '</span>'
+			var output = [description.slice(0, position), readmore, description.slice(position), end].join('');
+			//console.log(output);
+			return new Handlebars.SafeString(output);
+		} else {
+			return new Handlebars.SafeString(description);
+		}
+	}
+});
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
