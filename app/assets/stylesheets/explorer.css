@@ -178,4 +178,9 @@ sub {
 .lead-assay {
     padding-left: 150px;
 }
+
+.hide {
+  display: none;
+}
+
 /* end of Pharmacology styles */
