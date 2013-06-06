@@ -2,7 +2,7 @@
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
   			<li>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <span class="divider">/</span></li>
-  			<li class="active">{{controllers.compound.prefLabel}} Phamacology</li>
+  			<li class="active">Phamacology</li>
 			
 			<div class="row pull-right"> 
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -16,7 +16,7 @@
 		<div>  
 		
 		<!-- actual results -->
-		<div id="summary" class="compound_summary collapse in full-width">
+		<div id="summary" class="compound_summary collapse in">
 			
 			<div class="span2 big-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csUri}}</div>
 			<div class="row">
@@ -24,10 +24,10 @@
     				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
-      					<div class="span6 justify normal-font">{{controllers.compound.description}}</div>
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
     				</div>
   				</div>
-  				<div class="span6 small-padding-top">
+			<div class="span5 small-padding-top">
   					<button type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button>
 					<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
 						<dl>
@@ -39,17 +39,17 @@
   							<dd>{{controllers.compound.inchiKey}}</dd>
 						</dl>
 					</div>
-  				</div>
-  				
-			</div> 		
+  				</div> 
+			</div>
 
 		</div>
-                <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#summary">hide</button>
+        <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#summary">hide</button>
 	</div>
 	
 	<!-- RESULT LISTING -->
 	<div style="padding:30px">	
 	<table class="mytable">
+
 		<thead class="headingstyle">
 			<tr>
 				<th class="lead lead-target">Target</th>
@@ -110,4 +110,26 @@ scrollHandler = function() {
     }
 };
 $(window).scroll(scrollHandler);
+
+// Hide the extra content initially, using JS so that if JS is disabled, no problemo:
+$('.read-more-content').addClass('hide')
+
+// Set up a link to expand the hidden content:
+.before('<a class="read-more-show" href="#"> more</a>')
+  
+// Set up a link to hide the expanded content.
+.append(' <a class="read-more-hide" href="#"> less</a>');
+
+// Set up the toggle effect:
+$('.read-more-show').on('click', function(e) {
+  $(this).next('.read-more-content').removeClass('hide');
+  $(this).addClass('hide');
+  e.preventDefault();
+});
+
+$('.read-more-hide').on('click', function(e) {
+  $(this).parent('.read-more-content').addClass('hide').parent().children('.read-more-show').removeClass('hide');
+  e.preventDefault();
+});
+
 </script>
