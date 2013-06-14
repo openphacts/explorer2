@@ -5,6 +5,7 @@
 	<div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
 			<h2>{{#linkTo compound result}}{{result.prefLabel}}{{/linkTo}}</h2>
+			<p><small><em>Compound</em></small></p>
 		</div>
 		
 		<div class="span2" style="padding:0px 30px 10px 20px">
@@ -19,43 +20,30 @@
 		</div>
 	
 	</div>
- 
 
 <!-- The views are rendered in the index template and it looks like you cannot add actions to
      the IndexController (ember complains if you try to create your own IndexController -->
 
 {{else}}
-    <div class="big-margin-right thumbnail left">{{target_image_src result.seeAlso}}</div>
-    <h1>{{#linkTo target result}}{{result.description}}{{/linkTo}}</h1>
-    <div class="clear"></div>
-{{#if result.isExpanded}}
-    <dl class="big-margin-top">
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Cellular Location</h3></dt>
-    <dd>{{result.cellularLocation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
-    <dd>{{result.molecularWeight}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Number of Residues</h3></dt>
-    <dd>{{result.numberOfResidues}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Theoretical Pi</h3></dt>
-    <dd>{{result.theoreticalPi}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sub-class of</h3></dt>
-    <dd>{{result.subClassOf}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Function Annotation</h3></dt>
-    <dd>{{result.functionAnnotation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Alternative Name</h3></dt>
-    <dd>{{result.alternativeName}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Existence</h3></dt>
-    <dd>{{result.existence}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Organism</h3></dt>
-    <dd>{{result.organism}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sequence</h3></dt>
-    <dd>{{result.sequence}}</dd>
-    </dl>
-    <div class="big-margin"><button {{action contract target="view"}}>Hide details...</button></div>
-{{else}}
-    <div class="big-margin"><button {{action expand target="view"}}>More details...</button></div>
+<div class="single-search-result row" style="max-width:800px">
+		<div class="span9">
+			<h2>{{#linkTo target result}}{{result.prefLabel}}{{/linkTo}}</h2>
+			<p><small><em>Target</em></small></p>
+		</div>
+		
+		<div class="span2" style="padding:0px 30px 10px 20px">
+			<div class="thumbnail">{{target_image_src result.seeAlso}}</div>
+		</div>
+		<div class="row span7">
+			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
+			<div class="pull-right" style="padding:5px 0px 0px 0px">
+				{{#linkTo 'target.pharmacology' result}}Pharmacology{{/linkTo}}
+			</div>
+		</div>
+	
+	</div>
 {{/if}}
-{{/if}}
+    
 </div>
 
 <script type="text/javascript">
