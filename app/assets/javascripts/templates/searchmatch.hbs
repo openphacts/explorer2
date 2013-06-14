@@ -4,6 +4,8 @@
 	<div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
 			<h2>{{#linkTo compound result}}{{result.prefLabel}}{{/linkTo}}</h2>
+			<p><small><em>Compound</em></small></p>
+
 		</div>
 		
 		<div class="span2" style="padding:0px 30px 10px 20px">
@@ -20,7 +22,23 @@
 	</div>
 
 {{else}}
-
+	<div class="single-search-result row" style="max-width:800px">
+		<div class="span9">
+			<h2>{{#linkTo target result}}{{result.prefLabel}}{{/linkTo}}</h2>
+			<p><small><em>Target</em></small></p>
+		</div>
+		
+		<div class="span2" style="padding:0px 30px 10px 20px">
+			<div class="thumbnail">{{target_image_src result.seeAlso}}</div>
+		</div>
+		<div class="row span7">
+			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
+			<div class="pull-right" style="padding:5px 0px 0px 0px">
+				{{#linkTo 'target.pharmacology' result}}Pharmacology{{/linkTo}}
+			</div>
+		</div>
+	
+	</div>
 {{/if}}
 </div>
 
