@@ -1,37 +1,123 @@
-<div class="row">
-<div class="search-exact-match big-margin-top">
-    <div class="big-margin-right thumbnail left">{{target_image_src seeAlso}}</div>
-    <h1>{{description}}</h1>
-    <div class="clear"></div>
-    <dl class="big-margin-top">
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Cellular Location</h3></dt>
-    <dd>{{cellularLocation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
-    <dd>{{molecularWeight}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Number of Residues</h3></dt>
-    <dd>{{numberOfResidues}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Theoretical Pi</h3></dt>
-    <dd>{{theoreticalPi}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sub-class of</h3></dt>
-    <dd>{{subClassOf}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Function Annotation</h3></dt>
-    <dd>{{functionAnnotation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Alternative Name</h3></dt>
-    <dd>{{alternativeName}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Existence</h3></dt>
-    <dd>{{existence}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Organism</h3></dt>
-    <dd>{{organism}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sequence</h3></dt>
-    <dd>{{sequence}}</dd>
-    </dl>
-</div>
+<style>
+	dt { 
+		padding: 20px 0 0 0;
+	}
+	dd { 
+		padding: 20px 0 0 0; 
+		}
+</style>
 <div>
-{{#linkTo 'target.pharmacology'}}Pharmacology{{/linkTo}}
-{{#linkTo 'search'}}Back to Search{{/linkTo}}
-</div>
+
+	<!-- breadcrumb	-->
+	<ul class="breadcrumb">
+  		<li><a href="/">Home</a></li>
+		<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
+  		<li class="active">Target Information</li>
+
+		<div class="row pull-right"> 
+			<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  			<div class="span2 btn-group" data-toggle="buttons-radio">
+  				<button class="btn">On</button>
+  				<button class="btn active">Off</button>
+  			</div>
+		</div>
+	</ul>
+	
+	
+    			<div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
+  		
+	
+	<!-- main -->
+	<div class="container">
+	<div class="container-fluid large-top-spacing">
+  		<div class="row-fluid">
+  			
+  			<!--Sidebar content-->
+    		<div class="span3" style="min-height:800px;">
+      			<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}</div>
+      			
+      			<!--box properties-->
+      			<div id="boxes" class="small-top-spacing">
+      			
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small>Molecular Weight</small></p>
+  							<p class="lead">{{molecularWeight}}</p>
+  						</div>
+      				</div>
+      				
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small># of Residues</small></p>
+  							<p class="lead">{{numberOfResidues}}</p>
+  						</div>
+      				</div>
+      				
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small>Theoretical Pi</small></p>
+  							<p class="lead">{{theoreticalPi}}</p>
+  						</div>
+      				</div>
+      				
+      			</div>
+    		</div>
+    		
+    		<!--Body content-->
+    		<div class="span9" style="padding:30px 0 0 0;">
+     			
+				<!--title and formula-->
+				<div>
+					<div class="span9">
+						<h1>{{description}}</h1>
+					</div>
+				</div>
+				
+				<div style="padding:80px 0 0 0;text-align:left;">
+					{{#linkTo 'target.pharmacology'}}Pharmacology Data{{/linkTo}}
+					</div>
+							
+			
+				
+				<!--biotransformation-->
+				<div class="summary-descriptive-text large-top-spacing">
+					<dl>
+  						<dt>Alternative Name</dt>
+  						<dd>{{alternativeName}}</dd>
+  					</dl>
+				</div>
+				
+				<!--details-->
+				<div class="dl-horizontal" style="font-size:13px;">
+					<dl>
+  						<dt>Organism</dt>
+  						<dd>{{organism}}</dd>
+  						<dt>Existence</dt>
+  						<dd>{{existence}}</dd>
+  						<dt>Specific Function</dt>
+  						<dd>{{functionAnnotation}}</dd>
+  						<dt>Cellular Location</dt>
+  						<dd>{{cellularLocation}}</dd>
+  						<dt>Keywords</dt>
+  						<dd>{{keywords}}</dd>
+  						<dt>PDB</dt>
+  						<dd>{{seeAlso}}</dd>
+  						<dt>Sequence</dt>
+  						<dd>{{sequence}}</dd>
+					</dl>
+     			</div>
+     			
+     			
+    		</div>
+  		</div>
+	</div>
+	</div>
+	
+
+	
+	
 </div>
 
 <script type="text/javascript">
-scrollOnThisPage = false;
+  $(window).off("scroll", scrollHandler);
 </script>
