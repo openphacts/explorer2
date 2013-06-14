@@ -184,3 +184,26 @@ sub {
 }
 
 /* end of Pharmacology styles */
+
+/* summary pages */
+.centersummary {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
+}
+
+.summary-descriptive-text {
+	text-align: justify;
+}
+
+.summary-box {
+	border: 1px solid #556;
+	height: 90px;
+	width: 142px;
+	background: #f8f8ff;
+	border-color: #eee9e9;
+	text-align:center;
+	margin: 20px;
+}
+/* end summary pages */
+
