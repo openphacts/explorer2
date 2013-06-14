@@ -44,6 +44,15 @@ Ember.Handlebars.registerBoundHelper('expandableDescription', function(descripti
 		}
 	}
 });
+Ember.Handlebars.registerBoundHelper('linkableChemspiderID', function(chemspiderId) {
+	if (chemspiderId) {
+		var id = chemspiderId.split("/").pop();
+		//console.log(" ID " + id);
+		var fullLink = '<a href="http://www.chemspider.com/' + id +'" target="_blank">' + id +'</a>'
+		return new Handlebars.SafeString(fullLink);;
+	}
+});
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
