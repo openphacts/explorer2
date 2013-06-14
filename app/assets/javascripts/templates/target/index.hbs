@@ -38,28 +38,34 @@
       			
       			<!--box properties-->
       			<div id="boxes" class="small-top-spacing">
-      			
+      				
+					{{#if molecularWeight}}
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small>Molecular Weight</small></p>
   							<p class="lead">{{molecularWeight}}</p>
   						</div>
       				</div>
+      				{{/if}}
       				
+					{{#if numberOfResidues}}
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small># of Residues</small></p>
   							<p class="lead">{{numberOfResidues}}</p>
   						</div>
       				</div>
-      				
+					{{/if}}
+					
+					{{#if theoreticalPi}}
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small>Theoretical Pi</small></p>
   							<p class="lead">{{theoreticalPi}}</p>
   						</div>
       				</div>
-      				
+					{{/if}}
+
       			</div>
     		</div>
     		
@@ -80,30 +86,50 @@
 			
 				
 				<!--biotransformation-->
+				{{#if alternativeName}}
 				<div class="summary-descriptive-text large-top-spacing">
 					<dl>
   						<dt>Alternative Name</dt>
   						<dd>{{alternativeName}}</dd>
   					</dl>
 				</div>
+				{{/if}}
 				
 				<!--details-->
 				<div class="dl-horizontal" style="font-size:13px;">
 					<dl>
-  						<dt>Organism</dt>
-  						<dd>{{organism}}</dd>
+						<dt>Organism</dt>
+  						<dd>{{organism}}</dd> 
+  						
   						<dt>Existence</dt>
   						<dd>{{existence}}</dd>
+
+  						{{#if functionAnnotation}}
   						<dt>Specific Function</dt>
   						<dd>{{functionAnnotation}}</dd>
+						{{/if}}
+  						
+  						{{#if cellularLocation}} 
   						<dt>Cellular Location</dt>
   						<dd>{{cellularLocation}}</dd>
+  						{{/if}}
+  						 
+  						{{#if keywords}}
   						<dt>Keywords</dt>
-  						<dd>{{keywords}}</dd>
+  						<dd>{{keywords}}</dd> 
+	  					{{/if}}
+	  					
+	  					{{#if seeAlso}}
   						<dt>PDB</dt>
   						<dd>{{seeAlso}}</dd>
-  						<dt>Sequence</dt>
+  						{{/if}}	
+  						
+	  					{{#if sequence}}
+	  					<dt>Sequence</dt>
   						<dd>{{sequence}}</dd>
+  						{{/if}}	
+
+  						
 					</dl>
      			</div>
      			
