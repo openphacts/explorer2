@@ -205,5 +205,21 @@ sub {
 	text-align:center;
 	margin: 20px;
 }
+
+.small-top-spacing {
+	padding:10px 0 0 0;
+}
+
+.medium-top-spacing {
+	padding:15px 0 0 0;
+}
+
+.large-top-spacing {
+	padding:20px 0 0 0;
+}
+
+.inner-property-content {
+	padding: 15px;
+}
 /* end summary pages */
 
