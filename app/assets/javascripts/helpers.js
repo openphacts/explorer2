@@ -53,6 +53,23 @@ Ember.Handlebars.registerBoundHelper('linkableChemspiderID', function(chemspider
 	}
 });
 
+Ember.Handlebars.registerBoundHelper('linkableOrganism', function(organism) {
+	if (organism) {
+	var id = organism.split("/").pop();
+	var fullLink = '<a href="' + organism +'" target="_blank">' + id +'</a>'
+	return new Handlebars.SafeString(fullLink);;
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('linkableExistence', function(existence) {
+	if (existence) {
+	var id = existence.split("/").pop();
+	id = id.replace(/_/g, " ");
+	var fullLink = '<a href="' + existence +'" target="_blank">' + id +'</a>'
+	return new Handlebars.SafeString(fullLink);;
+	}
+});
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
