@@ -70,6 +70,19 @@ Ember.Handlebars.registerBoundHelper('linkableExistence', function(existence) {
 	}
 });
 
+Ember.Handlebars.registerBoundHelper('pdbLinkouts', function(pdb) {
+	if (pdb) {
+		var url = new String();
+		
+		$.each(pdb, function(i, item) {
+			var id = item.split("/").pop();
+			var aLink = '<a href="' + item +'" target="_blank">' + id +'</a>   '
+			url += aLink;
+		});
+		return new Handlebars.SafeString(url);
+	}
+});
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
