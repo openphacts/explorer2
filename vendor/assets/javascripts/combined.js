@@ -512,6 +512,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	var keywords = [];
 	var classifiedWith = [];
 	var seeAlso = [];
+        var label = response.prefLabel;
 	$.each(response.exactMatch, function(i, exactMatch) {
 		if (exactMatch["_about"]) {
 			if (exactMatch["_about"].indexOf("http://www4.wiwiss.fu-berlin.de/drugbank") !== -1) {
@@ -539,6 +540,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                           // if using a chembl id to search then the about would be a chembl id rather than the
                           // cw one which we want
                           id = exactMatch["_about"].split("/").pop();
+                          label = exactMatch["prefLabel"];
                         }
 		}
 	});
@@ -558,7 +560,8 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 		organism: uniprotData ? uniprotData.organism : null,
 		sequence: uniprotData ? uniprotData.sequence : null,
 		classifiedWith: classifiedWith,
-		seeAlso: seeAlso
+		seeAlso: seeAlso,
+                prefLabel: label
 	};
 }
 
