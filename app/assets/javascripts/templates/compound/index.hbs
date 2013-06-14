@@ -32,7 +32,7 @@
   		<div class="row-fluid">
   			
   			<!--Sidebar content-->
-    		<div class="span3" style="min-height:800px;">
+    		<div class="span3">
       			<div style="padding:0 0 0 20px;" >{{cs_image_src csUri}}</div>
       			
       			<!--box properties-->
@@ -122,16 +122,32 @@
 					<dl>
   						<dt>ChemSpider ID</dt>
   						<dd>{{linkableChemspiderID csUri}}</dd>
-  						<dt>SMILES</dt>
-  						<dd>{{smiles}}</dd>
-  						<dt>Standard InChi</dt>
-  						<dd>{{inchi}}</dd>
-  						<dt>Standard InChiKey</dt>
-  						<dd>{{inchiKey}}</dd>
-  						<dt>Protien Binding</dt>
-  						<dd>{{proteinBinding}}</dd>
-  						<dt>Toxicity</dt>
-  						<dd>{{toxicity}}</dd>
+  						
+  						{{#if smiles}}
+  							<dt>SMILES</dt>
+  							<dd>{{smiles}}</dd>
+  						{{/if}}
+  						
+						{{#if inchi}}
+							<dt>Standard InChi</dt>
+  							<dd>{{inchi}}</dd>
+  						{{/if}}
+
+  						{{#if inchiKey}}
+  							<dt>Standard InChiKey</dt>
+  							<dd>{{inchiKey}}</dd>
+  						{{/if}}
+
+						{{#if proteinBinding}}
+  							<dt>Protien Binding</dt>
+  							<dd>{{proteinBinding}}</dd>
+						{{/if}}
+
+						{{#if toxicity}}
+  							<dt>Toxicity</dt>
+  							<dd>{{toxicity}}</dd>
+						{{/if}}
+
 					</dl>
      			</div>
      			
