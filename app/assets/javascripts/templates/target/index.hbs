@@ -23,9 +23,7 @@
 		</div>
 	</ul>
 	
-	
-    			<div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
-  		
+    <div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
 	
 	<!-- main -->
 	<div class="container">
@@ -77,20 +75,18 @@
 					<div style="padding:20px 0 0 0">
 						<h1>{{prefLabel}}</h1>
 					</div>
+					{{#if alternativeName}}
+				<div class="summary-descriptive-text large-top-spacing">
+  						<em>{{alternativeName}}</em>
+				</div>
+				{{/if}}
 					<div style="padding:30px 0 0 0;text-align:left;">
 						{{#linkTo 'target.pharmacology'}}Pharmacology Data{{/linkTo}}
 					</div>
 				</div>
 				
 				<!--biotransformation-->
-				{{#if alternativeName}}
-				<div class="summary-descriptive-text large-top-spacing">
-					<dl>
-  						<dt>Alternative Name</dt>
-  						<dd>{{alternativeName}}</dd>
-  					</dl>
-				</div>
-				{{/if}}
+				
 				
 				<!--details-->
 				<div class="dl-horizontal" style="font-size:13px;">
