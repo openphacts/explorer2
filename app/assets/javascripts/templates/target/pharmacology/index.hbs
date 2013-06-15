@@ -1,38 +1,94 @@
-<h1>Pharmacology for {{#linkTo target.index controllers.target}}{{controllers.target.description}}{{/linkTo}}</h1>
-<table class="table table-striped">
-  <tr><th>Compound Name</th><th>Target Organism</th><th>Assay Organism</th><th>Compound Inchi</th><th>Compound Inchi Key</th><th>Activity Type</th><th>Activity Relation</th><th>Activity Value</th><th>Activity Units</th><th>Compound Full Mwt</th><th>Compound Smiles</th><th>Pubmed ID</th></tr>
-  {{#each targetPharma in pharmacology}}
-  <td>{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
-  <td>Target Organism</td>
-  <td>{{targetPharma.assayOrganism}}</td>
-  <td>{{targetPharma.compoundInchi}}</td>
-  <td>{{targetPharma.compoundInchikey}}</td>
-  <td>{{targetPharma.activityActivityType}}</td>
-  <td>{{targetPharma.activityRelation}}</td>
-  <td>{{targetPharma.activityStandardValue}}</td>
-  <td>{{targetPharma.activityStandardUnits}}</td>
-  <td>{{targetPharma.compoundFullMwt}}</td>
-  <td>{{targetPharma.compoundSmiles}}</td>
-  <td>{{targetPharma.activityPubmedId}}</td></tr>
-  {{/each}}
-</table>
+<div>
 
-<script type="text/javascript">
-$(window).off("scroll", scrollHandler);
-scrollOnThisPage = true;
-pageScrolling = false;
-scrollHandler = function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        disable_scroll();
-        pageScrolling = true;
-        console.log("Fetching results for scroll " + pageScrolling);
-        //this is not a very pleasant way to get the controller but can find no other method
-        App.__container__.lookup('controller:targetPharmacologyIndex').fetchMore();
-    }
-};
-$(window).scroll(scrollHandler);
-</script>
+		<ul class="breadcrumb">
+  			<li><a href="/">Home</a> <span class="divider">/</span></li>
+  			<li>{{#linkTo target.index controllers.target}}{{controllers.target.description}}{{/linkTo}}<span class="divider">/</span></li>
+  			<li class="active">Target Phamacology</li>
+			
+			<div class="row pull-right"> 
+				<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  				<div class="span2 btn-group" data-toggle="buttons-radio">
+  					<button class="btn">On</button>
+  					<button class="btn active">Off</button>
+  				</div>
+			</div>
+		</ul>
+		
+		<div>  
+		
+		<!-- actual results -->
+		<div id="summary" class="compound_summary collapse in">
+			
+			<div class="span2 big-padding-top big-padding-bottom">{{target_image_src controllers.compound.seeAlso}}</div>
+			<div class="row">
+				<div class="span8">
+    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}</h3>
+   					<div class="row">
+      					<!--<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>-->
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
+    				</div>
+  				</div>
+			</div>
+
+		</div>
+	
+        <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#summary">hide</button>
+	</div>
+	
+	<!-- RESULT LISTING -->
+	<div style="padding:30px">	
+	<table class="mytable">
+
+		<thead class="headingstyle">
+	
+			<tr>
+				<th class="lead">Compound</th>
+				<th class="lead">Target</th>
+				<th></th>
+				<th class="lead" style="text-align:left;">Assay</th>
+				<th></th>
+				<th></th>
+				<th class="lead">Activity</th>
+				<th></th>
+				<th></th>
+			<tr>
+			<tr>
+				<th align="center" style="min-width:300px;">Name</th>
+				<th style="min-width:100px;">Organism</th>
+				<th style="min-width:100px;">Organism</th>
+				<th style="min-width:250px;">Description</th>
+				<th>Type</th>
+			 	<th>Relation</th>
+				<th>Value</th>
+				<th>Units</th>
+				<th>Mol Weight</th>
+				<th style="width:150px;">SMILES</th>
+				<th style="width:150px;">InChl</th>
+				<th style="width:150px;">InChlKey</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			{{#each targetPharma in pharmacology}}
+			<tr class="record-deco">
+				<td class="cell-basictext">{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
+				<td class="cell-basictext">{{targetPharma.targetOrganism}}</td>
+				<td class="cell-basictext">{{targetPharma.assayOrganism}}</td>
+				<td class="cell-longtext">{{targetPharma.assayDescription}}</td>
+				<td class="lead cell-basictext">{{targetPharma.activityActivityType}}</td>
+				<td class="lead cell-basictext">{{targetPharma.activityRelation}}</td>
+				<td class="lead cell-basictext">{{targetPharma.activityStandardValue}}</td>
+				<td class="lead cell-basictext">{{targetPharma.activityStandardUnits}}</td>
+				<td class="cell-basictext">{{targetPharma.compoundFullMwt}}</td>
+				<td class="cell-basictext">{{targetPharma.compoundSmiles}}</td>
+				<td class="cell-basictext">{{targetPharma.compoundInchi}}</td>
+				<td class="cell-basictext">{{targetPharma.compoundInchikey}}</td>
+
+
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	</div>
+		
+</div>
