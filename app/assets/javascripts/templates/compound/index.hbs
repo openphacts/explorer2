@@ -37,54 +37,69 @@
       			
       			<!--box properties-->
       			<div id="boxes" class="small-top-spacing">
-      			
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>AlogP</small></p>
-  							<p class="lead">{{logp}}</p>
-  						</div>
-      				</div>
       				
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small># H-Bond Acceptors</small></p>
-  							<p class="lead">{{hba}}</p>
-  						</div>
-      				</div>
+      				{{#if logp}}
+      					<div class="summary-box">
+      						<div class="inner-property-content">
+  								<p><small>AlogP</small></p>
+  								<p class="lead">{{logp}}</p>
+  							</div>
+      					</div>
+      				{{/if}}
       				
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small># H-Bond Donors</small></p>
-  							<p class="lead">{{hbd}}</p>
-  						</div>
-      				</div>
+      				{{#if hba}}      				
+      					<div class="summary-box">
+      						<div class="inner-property-content">
+  								<p><small># H-Bond Acceptors</small></p>
+  								<p class="lead">{{hba}}</p>
+  							</div>
+    	  				</div>
+					{{/if}}
+
+      				{{#if hbd}}      				
+      					<div class="summary-box">
+    	  					<div class="inner-property-content">
+  								<p><small># H-Bond Donors</small></p>
+  								<p class="lead">{{hbd}}</p>
+  							</div>
+      					</div>
+      				{{/if}}
       				
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Mol Weight</small></p>
-  							<p class="lead">{{fullMWT}}</p>
-  						</div>
-      				</div>
-      				
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Mol Weight Freebase</small></p>
-  							<p class="lead">{{mwFreebase}}</p>
-  						</div>
-      				</div>
-      				
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Polar Surface Area</small></p>
-  							<p class="lead">{{psa}}</p>
-  						</div>
-      				</div>
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small># Rotatable Bonds</small></p>
-  							<p class="lead">{{rtb}}</p>
-  						</div>
-      				</div>
+       				{{#if fullMWT}}      				
+      					<div class="summary-box">
+      						<div class="inner-property-content">
+  								<p><small>Mol Weight</small></p>
+  								<p class="lead">{{fullMWT}}</p>
+  							</div>
+      					</div>
+      				{{/if}}
+
+       				{{#if mwFreebase}}      				
+      					<div class="summary-box">
+      						<div class="inner-property-content">
+  								<p><small>Mol Weight Freebase</small></p>
+  								<p class="lead">{{mwFreebase}}</p>
+  							</div>
+      					</div>
+      				{{/if}}
+
+       				{{#if psa}}      				
+ 	     				<div class="summary-box">
+  	 	   					<div class="inner-property-content">
+  								<p><small>Polar Surface Area</small></p>
+  								<p class="lead">{{psa}}</p>
+  							</div>
+   		   				</div>
+      				{{/if}}
+
+      				{{#if rtb}}      				
+      					<div class="summary-box">
+    	  					<div class="inner-property-content">
+  								<p><small># Rotatable Bonds</small></p>
+  								<p class="lead">{{rtb}}</p>
+  							</div>
+      					</div>
+      				{{/if}}
       				
       			</div>
     		</div>
@@ -121,9 +136,11 @@
 				<!--details-->
 				<div class="dl-horizontal" style="font-size:13px;">
 					<dl>
-  						<dt>ChemSpider ID</dt>
-  						<dd>{{linkableChemspiderID csUri}}</dd>
-  						
+						{{#if csUri}}
+  							dt>ChemSpider ID</dt>
+  							<dd>{{linkableChemspiderID csUri}}</dd>
+						{{/if}}
+
   						{{#if smiles}}
   							<dt>SMILES</dt>
   							<dd>{{smiles}}</dd>
