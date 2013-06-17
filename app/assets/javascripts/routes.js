@@ -17,6 +17,10 @@ App.Router.map(function() {
     this.resource('target', { path: '/targets/:target_id' }, function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
     });
+    this.resource('enzymes', function(){}); 
+    this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
+        this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
+    });
 });
 
 App.CompoundIndexRoute = Ember.Route.extend({
@@ -84,6 +88,50 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
   model: function(params) {
     console.log('target pharma index route');
     return this.modelFor('target');
+  }
+
+});
+
+App.EnzymesIndexRoute = Ember.Route.extend({
+    setupController: function(controller) {
+	    console.log('enzymes index route setup controller');
+	    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+	    var callback = function(success, status, response) {
+		    if (success && response) {
+			    var root = searcher.parseClassificationRootClasses(response);
+			}
+		}
+	    searcher.getClassificationRootClasses(callback);
+   }	
+});
+
+App.EnzymeIndexRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.modelFor('enzyme');
+  }
+});
+
+App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, enzyme) {
+    console.log('enzyme index route setup controller');
+    controller.set('content', enzyme);
+      var thisEnzyme = enzyme;
+      var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+      if (success && response) {
+        var pharmaResults = searcher.parseEnzymePharmacologyResponse(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = App.EnzymePharmacology.createRecord(pharma);
+	  thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
+        });
+      }
+    };
+    searcher.enzymePharmacology(enzyme.id, 1, 50, pharmaCallback);
+  },
+  model: function(params) {
+    console.log('enzyme pharma index route');
+    return this.modelFor('enzyme');
   }
 
 });
