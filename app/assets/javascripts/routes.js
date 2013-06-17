@@ -17,7 +17,7 @@ App.Router.map(function() {
     this.resource('target', { path: '/targets/:target_id' }, function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
     });
-    this.resource('enzymes', function(){}); 
+    this.resource('enzymes'); 
     this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
         this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
     });
@@ -92,13 +92,18 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
 
 });
 
-App.EnzymesIndexRoute = Ember.Route.extend({
+App.EnzymesRoute = Ember.Route.extend({
     setupController: function(controller) {
 	    console.log('enzymes index route setup controller');
+	    controller.set('content', []);
 	    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
 		    if (success && response) {
 			    var root = searcher.parseClassificationRootClasses(response);
+			    $.each(root, function(index,enzymeResult) {
+				    var enzyme = App.Enzyme.createRecord(enzymeResult);
+				    controller.addObject(enzyme);				    
+			    });
 			}
 		}
 	    searcher.getClassificationRootClasses(callback);
