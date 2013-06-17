@@ -51,20 +51,23 @@
 				<th class="lead">Activity</th>
 				<th></th>
 				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
 			<tr>
 			<tr>
 				<th align="center" style="min-width:300px;">Name</th>
 				<th style="min-width:100px;">Organism</th>
 				<th style="min-width:100px;">Organism</th>
 				<th style="min-width:250px;">Description</th>
-				<th>Type</th>
-			 	<th>Relation</th>
-				<th>Value</th>
+				<th style="width:100px;">Type</th>
+			 	<th style="width:100px;">Relation</th>
+				<th style="width:100px;">Value</th>
 				<th>Units</th>
-				<th>Mol Weight</th>
-				<th style="width:150px;">SMILES</th>
-				<th style="width:150px;">InChl</th>
-				<th style="width:150px;">InChlKey</th>
+				<th style="min-width:80px;">Mol Weight</th>
+				<th>SMILES</th>
+				<th>InChl</th>
+				<th>InChlKey</th>
 
 			</tr>
 		</thead>
@@ -79,12 +82,10 @@
 				<td class="lead cell-basictext">{{targetPharma.activityRelation}}</td>
 				<td class="lead cell-basictext">{{targetPharma.activityStandardValue}}</td>
 				<td class="lead cell-basictext">{{targetPharma.activityStandardUnits}}</td>
-				<td class="cell-basictext">{{targetPharma.compoundFullMwt}}</td>
-				<td class="cell-basictext">{{targetPharma.compoundSmiles}}</td>
-				<td class="cell-basictext">{{targetPharma.compoundInchi}}</td>
-				<td class="cell-basictext">{{targetPharma.compoundInchikey}}</td>
-
-
+				<td class="cell-basictext" >{{targetPharma.compoundFullMwt}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundSmiles}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchi}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchikey}}</td>
 			</tr>
 			{{/each}}
 		</tbody>
