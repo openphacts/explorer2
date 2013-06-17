@@ -1,0 +1,85 @@
+/* Padding and Margins */
+$small: 5px;
+$medium: 10px;
+$big: 20px;
+$huge: 40px;
+
+/* small 5px */
+.small-padding {
+    padding: $small;
+}
+.small-padding-top {
+    padding-top: $small;
+}
+.small-padding-left {
+    padding-left: $small;
+}
+.small-padding-right {
+    padding-right: $small;
+}
+.small-padding-bottom {
+    padding-bottom: $small;
+}
+.small-margin {
+    margin: $small;
+}
+.small-margin-top {
+    margin-top:$small;
+}
+.small-margin-left {
+    margin-left: $small;
+}
+.small-margin-bottom {
+    margin-bottom: $small;
+}
+
+/* medium 10px */
+.medium-padding {
+    padding: $medium;
+}
+.medium-padding-bottom {
+	padding-bottom: $medium;
+}
+.medium-padding-top {
+	padding-top: $medium;
+}
+.medium-margin {
+    margin: $medium;
+}
+.medium-margin-top {
+    margin-top: $medium;
+}
+.medium-margin-right {
+    margin-top: $medium;
+}
+.big-margin {
+    margin: $big;
+}
+
+/* big 20px */
+.big-padding {
+    padding:$big;
+}
+.big-padding-left {
+    padding:$big;
+}
+.big-padding-top {
+	padding-top: $big;
+}
+.big-padding-bottom {
+	padding-bottom: $big;
+}
+.big-margin-top {
+    margin-top: $big;
+}
+.big-margin-left {
+    margin-left: $big;
+}
+.big-margin-right {
+    margin-right: $big;
+}
+
+/* huge 40px */
+.huge-padding-top {
+    padding-top: 40px;
+}
