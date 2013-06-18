@@ -7,15 +7,28 @@ App.TreeNodeView = Ember.View.extend({
   }.property(),
   subBranch: undefined,
   fetchedData: false,
-  tagName: 'li',
+  indentLevel: function(){
+	uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+	var enzyme = uri.split('/')[uri.split('/').length -1];
+	var levels = enzyme.split('.');
+	var totalLevels = 0;
+	$.each(levels, function(index, level) {
+		if (level !== '-') {
+			totalLevels += 1;
+		}
+	});
+	return 'indentLevel' + totalLevels;
+  }.property(),
+  tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['opened: tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
+  classNameBindings: ['opened: tree-branch-open', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel'],
   //templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
-  template: Ember.Handlebars.compile('{{view.content.name}} {{view.content.uri}}'),
+  template: Ember.Handlebars.compile('<div class="enzymeURI" style="width: 150px; display: inline-block;">{{enzymeECNumber view.content.uri}}</div><div class="enzymeName" style="width: 400px; display: inline-block; padding-left:10px;">{{view.content.name}}</div>'),
   //classNames: ['treenode'],
   click: function(evt) {
+	console.log('click');
 	// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 	// hence the need to get the data slightly differently. Sure it's a fudge but.....
 	if (this.get('opened')) {
@@ -57,5 +70,19 @@ App.TreeNodeView = Ember.View.extend({
 		    searcher.getClassificationClassMembers(uri, callback);
 	    }
 	}
+  },
+  mouseEnter: function(evt) {
+		var name, uri;
+		var me = this;
+		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
+		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+	    console.log("Mouse Enter " + name + " " + uri);
+  },
+  mouseLeave: function(evt) {
+		var name, uri;
+		var me = this;
+		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
+		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+	    console.log("Mouse leave " + name + " " + uri);
   }
 });

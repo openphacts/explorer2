@@ -1,5 +1,5 @@
 App.TreeBranchView = Ember.CollectionView.extend({
-  tagName: 'ul',
+  tagName: 'div',
   //templateName: 'treebranch',
   classNames: ['treebranch'],
   itemViewClass: 'App.TreeNodeView'

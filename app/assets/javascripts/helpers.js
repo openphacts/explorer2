@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
+  if (uri) {
+    return uri.split('/')[uri.split('/').length - 1];	
+  }	
+});
 Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, options) {
   //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
   if (options && csURL) {
