@@ -223,3 +223,29 @@ sub {
 }
 /* end summary pages */
 
+.tree-branch-icon
+{
+list-style-type: none;
+padding: 0px 0px 0px 20px;
+margin: 0px;
+background-image: url(/assets/folder.png);
+background-repeat: no-repeat;
+}
+
+.tree-branch-open
+{
+list-style-type: none;
+padding: 0px 0px 0px 20px;
+margin: 0px;
+background-image: url(/assets/folder_go.png);
+background-repeat: no-repeat;
+}
+
+.tree-node-icon
+{
+list-style-type: none;
+padding: 0px 0px 0px 20px;
+margin: 0px;
+background-image: url(/assets/table.png);
+background-repeat: no-repeat;
+}

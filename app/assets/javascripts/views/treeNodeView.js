@@ -1,13 +1,20 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
+  branch: function(){
+	var name, uri;
+	uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+    if(uri.match(/-$/)){ return true; }
+  }.property(),
   subBranch: undefined,
   fetchedData: false,
   tagName: 'li',
+  // class names that determine what icons are used beside the node
+  classNameBindings: ['opened: tree-branch-open', 'branch:tree-branch-icon:tree-node-icon'],
   //templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
   template: Ember.Handlebars.compile('{{view.content.name}} {{view.content.uri}}'),
-  classNames: ['treenode'],
+  //classNames: ['treenode'],
   click: function(evt) {
 	// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 	// hence the need to get the data slightly differently. Sure it's a fudge but.....
@@ -48,7 +55,7 @@ App.TreeNodeView = Ember.View.extend({
 			    }
 		    }
 		    searcher.getClassificationClassMembers(uri, callback);
-	    }	
+	    }
 	}
   }
 });
