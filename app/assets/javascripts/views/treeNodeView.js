@@ -6,7 +6,7 @@ App.TreeNodeView = Ember.View.extend({
   //templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
-  template: Ember.Handlebars.compile('{{view.content.name}}{{view.content.uri}}'),
+  template: Ember.Handlebars.compile('{{view.content.name}} {{view.content.uri}}'),
   classNames: ['treenode'],
   click: function(evt) {
 	// the initial treebranch is loaded with data from the controller, sub branches are given data directly
@@ -24,17 +24,31 @@ App.TreeNodeView = Ember.View.extend({
 	} else {
 		// user wants to open the branch for the first time
 		var name, uri;
+		var me = this;
 		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
 		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 	    console.log("Clicked on " + name + " " + uri);
-	    var index = this.get('parentView').indexOf(this) + 1;
-	    var treeBranchView = App.TreeBranchView.create();
-	    treeBranchView.set('content', [{'name': 'a', 'uri': 'sdgdfg'}, {'name': 'b', 'uri': 'ertwe'}]);
-	    //this.get('parentView').insertAt(index, App.TreeBranchView.create(content: [{'name': 'a', 'uri': 'sdgdfg'}, {'name': 'b', 'uri': 'ertwe'}]));
-	    this.get('parentView').insertAt(index, treeBranchView);
-	    this.set('opened', true);
-	    this.set('subBranch', treeBranchView);
-	    this.set('fetchedData', true);	
+	    if (uri.match(/-$/)) {
+		    // only fetch for uris which end with a '-' eg http://purl.uniprot.org/enzyme/5.3.-.-
+		    var treeBranchView = App.TreeBranchView.create();
+		    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+	        var callback = function(success, status, response) {
+		        if (success && response) {
+			        var members = searcher.parseClassificationClassMembers(response);
+			        var membersWithSingleName = [];
+			        $.each(members, function(index, member) {
+				        membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
+			        });
+			        treeBranchView.set('content', membersWithSingleName);
+				    var index = me.get('parentView').indexOf(me) + 1;
+				    me.get('parentView').insertAt(index, treeBranchView);
+				    me.set('opened', true);
+				    me.set('subBranch', treeBranchView);
+				    me.set('fetchedData', true);
+			    }
+		    }
+		    searcher.getClassificationClassMembers(uri, callback);
+	    }	
 	}
   }
 });

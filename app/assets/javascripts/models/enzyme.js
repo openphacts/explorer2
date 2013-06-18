@@ -4,7 +4,7 @@ App.Enzyme = App.SearchResult.extend({
 });
 App.Enzyme.reopenClass({
     find: function(enzymeID) {
-        var compound = App.Enzyme.createRecord();
+        var enzyme = App.Enzyme.createRecord();
         // use the lda api to fetch enzymes rather than the default behaviour of rails side
         var searcher = new Openphacts.EnzymeSearch('http://beta.openphacts.org', appID, appKey);  
         var callback=function(success, status, response){  
@@ -14,6 +14,6 @@ App.Enzyme.reopenClass({
         };  
         searcher.Enzyme(enzymeID, callback);
         enzyme.set("id", enzymeID);
-        return compound;
+        return enzyme;
     }
 });
