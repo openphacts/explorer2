@@ -7,9 +7,9 @@
 	           placeholder="Search" valueBinding="App.searchController.query" id="search_box" class="search-query span4" data-provide="typeahead" autocomplete="off"}}
     </div>	
     <ul class="nav pull-right">
-        <li class="active"><a href="#about">Search</a></li>
-    	<li><a href="#compound">Compound</a></li>
-        <li><a href="#target">Target</a></li>
+        <li id="search-only" class="active"><a href="#about">Search</a></li>
+    	<li id="compound-only"><a href="#compound">Compound</a></li>
+        <li id="target-only"><a href="#target">Target</a></li>
         <li class="dropdown">
         	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pharmacology <b class="caret"></b></a>
             <ul class="dropdown-menu">
@@ -26,3 +26,49 @@
 <div class='content'>
 	{{outlet}}
 </div>
+
+<script> 
+
+	$('#compound-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeaheadCompounds';
+		
+		$('#search_box').attr('placeholder', 'Search for Compounds');
+		
+		$('#compound-only').addClass('active');
+		$('#search-only').removeClass('active');
+		$('#target-only').removeClass('active');
+
+	});
+	
+	$('#target-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeaheadTargets';
+		
+		$('#search_box').attr('placeholder', 'Search for Targets');
+		
+		$('#target-only').addClass('active');
+		$('#search-only').removeClass('active');
+		$('#compound-only').removeClass('active');
+
+	});
+	
+	$('#search-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeahead';
+		$('#search_box').attr('placeholder', 'Search');
+		
+		$('#search-only').addClass('active');
+		$('#compound-only').removeClass('active');
+		$('#target-only').removeClass('active');
+
+	});
+	
+	
+</script>
