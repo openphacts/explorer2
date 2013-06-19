@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('getIndentLevel', function(view) {
+  if (view) {
+    console.log('getIndentLevel');
+  }	
+});
 Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
   if (uri) {
     return uri.split('/')[uri.split('/').length - 1];	
