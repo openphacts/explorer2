@@ -28,7 +28,7 @@ Explorer2::Application.routes.draw do
     end
   end
   
-  resources :enzymes,  :only => [ :show, :index ] do
+  resources :enzymes, :id => /[^\/]+/, :only => [ :show, :index ] do
     member do
       get 'pharmacology'
     end

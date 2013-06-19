@@ -125,14 +125,14 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
       var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
-        var pharmaResults = searcher.parseEnzymePharmacologyResponse(response);
+        var pharmaResults = searcher.parsePharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
           var pharmaRecord = App.EnzymePharmacology.createRecord(pharma);
-	  thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
+	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
         });
       }
     };
-    searcher.enzymePharmacology(enzyme.id, 1, 50, pharmaCallback);
+    searcher.getPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
   },
   model: function(params) {
     console.log('enzyme pharma index route');

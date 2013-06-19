@@ -1393,9 +1393,11 @@ Openphacts.EnzymeSearch.prototype.parsePharmacologyPaginated = function(response
             targetURI = item.target["_about"];
             targetTitle = item.target.title;
             targetOrganism = item.target.organism;
-            $.each(item.target.exactMatch, function(j, match) {
-                targets.push(match);
-            });
+            if (item.target.exactMatch) {
+                $.each(item.target.exactMatch, function(j, match) {
+                    targets.push(match);
+                });
+            }
             assayURI = item.onAssay["_about"];
             assayDescription = item.onAssay.description;
             records.push({
