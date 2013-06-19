@@ -1,0 +1,89 @@
+/* Tree View CSS */
+div.indentLevel1 {
+	width: 500px;
+}
+div.indentLevel2 {
+	width: 480px;
+}	
+div.indentLevel3 {
+	width: 460px;
+}
+div.indentLevel4 {
+	width: 440px;
+}
+div.indentLevel5 {
+	width: 420px;
+}
+
+div.indentLevel1 {
+/*	background-position-x: 20px;*/
+}
+div.indentLevel2 {
+	padding-left: 20px;
+}
+div.indentLevel3 {
+	padding-left: 40px;
+}
+div.indentLevel4 {
+	padding-left: 60px;
+}
+div.indentLevel5 {
+	padding-left: 80px;
+}
+
+div.indentLevel1 div.enzymeURI {
+/*	padding-left: 20px;*/
+}
+div.indentLevel2 div.enzymeURI {
+/*	padding-left: 20px;*/
+}
+div.indentLevel3 div.enzymeURI {
+/*	padding-left: 40px;*/
+}
+div.indentLevel4 div.enzymeURI {
+/*	padding-left: 60px;*/
+}
+div.indentLevel5 div.enzymeURI {
+/*	padding-left: 80px;*/
+}
+div.indentLevel1 a.enzymeName {
+/*	margin-left: -20px;*/
+}
+div.indentLevel2 a.enzymeName {
+	margin-left: -20px;
+}
+div.indentLevel3 a.enzymeName {
+	margin-left: -40px;
+}
+div.indentLevel4 a.enzymeName {
+	margin-left: -60px;
+}
+div.indentLevel5 a.enzymeName {
+	margin-left: -80px;
+}
+
+div.tree-branch-open img.folder-closed {
+	display: none;
+}
+div.tree-branch-closed img.folder-open {
+	display: none;
+}
+div.tree-branch-open img.single-enzyme-icon {
+	display: none;
+}
+div.tree-branch-closed img.single-enzyme-icon {
+	display: none;
+}
+div.tree-node-icon img.folder-closed {
+	display: none;
+}
+div.tree-node-icon img.folder-open {
+	display: none;
+}
+div.tree-node-icon img.single-enzyme-icon {
+	display: inline-block;
+}
+div.highlight-on {
+	background-color: LightBlue;
+}
+/* End of Tree View CSS */

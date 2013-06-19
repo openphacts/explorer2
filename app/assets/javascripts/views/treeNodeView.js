@@ -1,5 +1,6 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
+  highlighted: false,
   branch: function(){
 	var name, uri;
 	uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
@@ -21,8 +22,8 @@ App.TreeNodeView = Ember.View.extend({
   }.property(),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel'],
-  //classNameBindings: ['indentLevel'],
+  classNameBindings: ['opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
+  classNames: ['treerow'],
   //templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
@@ -34,6 +35,7 @@ App.TreeNodeView = Ember.View.extend({
 		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
 		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 	    console.log("Mouse Enter " + name + " " + uri);
+	    this.set('highlighted', true);
   },
   mouseLeave: function(evt) {
 		var name, uri;
@@ -41,6 +43,7 @@ App.TreeNodeView = Ember.View.extend({
 		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
 		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 	    console.log("Mouse leave " + name + " " + uri);
+	    this.set('highlighted', false);
   },
   expand: function() {
         console.log('expand');
