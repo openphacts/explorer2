@@ -27,7 +27,7 @@ App.TreeNodeView = Ember.View.extend({
   //templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
-  template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon" style="vertical-align: top; padding-right: 2px;"><img src="/assets/folder_go.png" class="folder-open" style="vertical-align: top; padding-right: 2px;" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" style="vertical-align: top; padding-right: 2px;" {{action expand target="view"}}></img><div class="enzymeURI" style="width: 150px; display: inline-block;">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
+  template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
 
   mouseEnter: function(evt) {
 		var name, uri;

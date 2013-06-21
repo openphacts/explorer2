@@ -1,18 +1,53 @@
 /* Tree View CSS */
+div.enzymeNameHeader {
+  width:170px;
+  border-bottom: 1px solid LightGray;
+  display: inline-block;
+  padding-left: 5px;
+}
+div.enzymeURIHeader {
+  width:300px;
+  border-bottom: 1px solid LightGray;
+  display: inline-block;
+  padding-left: 5px;
+  margin-left: 2px;
+}
+img.single-enzyme-icon {
+  vertical-align: top;
+  padding-right: 2px;
+}
+img.folder-open {
+  vertical-align: top;
+  padding-right: 2px;
+}
+img.folder-closed {
+  vertical-align: top;
+  padding-right: 2px;
+}
+a.enzymeName {
+  width: 350px;
+  display: inline-block;
+  padding-left:10px;
+}
+div.enzymeURI {
+  vertical-align: top;
+  width: 170px;
+  display: inline-block;
+}
 div.indentLevel1 {
-	width: 500px;
+	width: 550px;
 }
 div.indentLevel2 {
-	width: 480px;
+	width: 530px;
 }	
 div.indentLevel3 {
-	width: 460px;
+	width: 510px;
 }
 div.indentLevel4 {
-	width: 440px;
+	width: 490px;
 }
 div.indentLevel5 {
-	width: 420px;
+	width: 470px;
 }
 
 div.indentLevel1 {
