@@ -2,7 +2,7 @@
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
   			<li>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <span class="divider">/</span></li>
-  			<li class="active">Phamacology</li>
+  			<li class="active">Compound Phamacology</li>
 			
 			<div class="row pull-right"> 
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -28,6 +28,8 @@
       					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
     				</div>
   				</div>
+  				<button id="toggle-summary" type="button" class="btn btn-link pull-right" data-target="#summary">less</button>
+
 			<div id="structure" class="span5 small-padding-top">
   					<button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button>
 					<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
@@ -42,7 +44,6 @@
 					</div>
   			</div>
 	 		
-	 		<button id="toggle-summary" type="button" class="btn btn-link pull-right" data-target="#summary">less</button>
 
 			</div>
 		</div>
@@ -128,11 +129,19 @@ $('.read-more-show').on('click', function(e) {
   $(this).next('.read-more-content').removeClass('hide');
   $(this).addClass('hide');
   e.preventDefault();
+  	var s = $("#summary");
+        s.css({
+            height: "250px"
+        });
 });
 
 $('.read-more-hide').on('click', function(e) {
   $(this).parent('.read-more-content').addClass('hide').parent().children('.read-more-show').removeClass('hide');
   e.preventDefault();
+  var s = $("#summary");
+        s.css({
+            height: "135px"
+        });
 });
  var toggleSummary = true;
  
@@ -158,7 +167,7 @@ $('.read-more-hide').on('click', function(e) {
  	} else {
 		var s = $("#summary");
         s.css({
-            height: "auto",
+            height: "135px",
             width: "100%"
         });
         $('#structure').show();
@@ -210,7 +219,7 @@ function moveScroller() {
 			s.css({
             	position: "relative",
             	top: "",
-            	height: "auto",
+            	height: "135px",
             	width: "100%"
         	});
         	$('#structure').show();
