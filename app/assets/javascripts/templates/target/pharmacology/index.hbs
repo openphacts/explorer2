@@ -1,3 +1,5 @@
+<style>
+</style>
 <div>
 
 		<ul class="breadcrumb">
@@ -17,11 +19,12 @@
 		<div>  
 		
 		<!-- actual results -->
+		<div id="summary-anchor">
 		<div id="summary" class="compound_summary collapse in">
 			
-			<div class="span2 big-padding-top big-padding-bottom">{{target_image_src controllers.compound.seeAlso}}</div>
+			<div id="target-image" class="span2 big-padding-top big-padding-bottom">{{target_image_src controllers.target.seeAlso}}</div>
 			<div class="row">
-				<div class="span8">
+				<div class="span12">
     				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}</h3>
    					<div class="row">
       					<!--<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>-->
@@ -30,10 +33,10 @@
   				</div>
 			</div>
 
-		</div>
+			</div>
 	
-        <button type="button" class="btn btn-link pull-right" data-toggle="collapse" data-target="#summary">hide</button>
-	</div>
+		</div>
+		</div>
 	
 	<!-- RESULT LISTING -->
 	<div style="padding:30px">	
@@ -93,3 +96,56 @@
 	</div>
 		
 </div>
+
+<script>
+
+$(function() {
+	moveScroller();
+});
+
+var toggleSummary;
+//sticky
+function moveScroller() {
+    var move = function() {
+        var st = $(window).scrollTop();
+        var ot = $("#summary-anchor").offset().top;
+        var s = $("#summary");
+        if(st > ot) {
+            
+    		s.css({
+            	position: "fixed",
+            	top: "0px",
+            	height: "55px"
+        	});
+			
+    		var i = $('#target-image');
+				i.css({
+					visibility:"hidden"
+				});
+			toggleSummary = false;
+		
+    		
+    		
+    		
+        } else {
+            
+			s.css({
+            	position: "relative",
+            	top: "",
+            	height: "135px",
+            	width: "100%"
+        	});
+
+			var i = $('#target-image');
+				i.css({
+				visibility:"visible"
+			});
+		
+			toggleSummary = true;
+			        
+    	}
+    };
+    $(window).scroll(move);
+    move();
+}
+</script>
