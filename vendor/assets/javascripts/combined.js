@@ -1324,10 +1324,12 @@ Openphacts.EnzymeSearch.prototype.parseClassificationRootClasses = function(resp
 
 Openphacts.EnzymeSearch.prototype.parseClassificationClass = function(response) {
         var enzymeClasses = [];
+        var uri = response["_about"];
+        var name = response.name;
 	$.each(response.sibling, function(i, member) {
             enzymeClasses.push({uri: member["_about"], name: member.name});
 	});
-	return enzymeClasses;
+	return { uri: uri, name: name, siblings: enzymeClasses};
 }
 
 Openphacts.EnzymeSearch.prototype.parseClassificationClassMembers = function(response) {

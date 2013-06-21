@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('get_array', function(text) {
+	if (text) {
+		return [{"text": "1"}, {"text": "2"}];	
+	}
+});
 Ember.Handlebars.registerBoundHelper('enzymePharmaLink', function(uri, name) {
 	if (uri && name) {
 		return new Handlebars.SafeString('<a class="enzymeName" href="/enzymes/' + uri.split('/')[uri.split('/').length - 1] + '/pharmacology">' + name + '</a>');		
