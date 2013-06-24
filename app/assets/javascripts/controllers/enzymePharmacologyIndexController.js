@@ -22,7 +22,17 @@ App.EnzymePharmacologyIndexController = Ember.ObjectController.extend({
             alert("Could not find information about " + target.title);
         }
     };  
-    searcher.fetchTarget(target.about, callback);
+    var countCallback = function(success, status, response) {
+        if (success) {
+            var count = searcher.parsePharmacologyCount(response);
+            me.totalCount = count;
+            if (count > 0) {
+                searcher.fetchTarget(target.about, callback);        
+            }
+        }
+    };
+
+    searcher.getPharmacologyCount(target.about, countCallback);
   }
 
 });
