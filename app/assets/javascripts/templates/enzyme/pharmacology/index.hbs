@@ -1,7 +1,8 @@
 Enzyme pharmacology Index
-{{#if totalCount == 0}}
+{{#if empty}}
 There are no pharmacology results
-{{/if}}
+
+{{else}}
 
 <table>
 	<thead>
@@ -13,6 +14,8 @@ There are no pharmacology results
 {{/each}}
 </tbody>
 </table>
+
+{{/if}}
 
 <script type="text/javascript">
 $(window).off("scroll", scrollHandler);

@@ -12,7 +12,7 @@ App.Enzyme.reopenClass({
         var callback=function(success, status, response){  
             var enzymeResult = searcher.parseClassificationClass(response); 
             enzyme.setProperties(enzymeResult);
-	        enzyme.trigger('didLoad');
+	    enzyme.trigger('didLoad');
         };  
         searcher.getClassificationClass('http://purl.uniprot.org/enzyme/' + enzymeID, callback);
         enzyme.set("id", enzymeID);

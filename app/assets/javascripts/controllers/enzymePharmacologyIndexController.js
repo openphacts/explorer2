@@ -8,32 +8,7 @@ App.EnzymePharmacologyIndexController = Ember.ObjectController.extend({
 
   totalCount: 0,
 
-  navigateTo: function(target) {
-    var me = this;
-    console.log(target.about);
-    var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
-    var this_target = App.Target.createRecord();  
-    var callback=function(success, status, response){
-        if (success) {
-            var targetResult = searcher.parseTargetResponse(response);
-            this_target.setProperties(targetResult);
-            me.target.transitionTo('target', this_target);
-        } else {
-            alert("Could not find information about " + target.title);
-        }
-    };  
-    var countCallback = function(success, status, response) {
-        if (success) {
-            var count = searcher.parsePharmacologyCount(response);
-            me.totalCount = count;
-            if (count > 0) {
-                searcher.fetchTarget(target.about, callback);        
-            }
-        }
-    };
-
-    searcher.getPharmacologyCount(target.about, countCallback);
-  }
+  empty: true,
 
 });
 

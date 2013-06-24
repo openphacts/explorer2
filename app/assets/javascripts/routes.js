@@ -132,7 +132,19 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
         });
       }
     };
-    searcher.getPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
+    var countCallback = function(success, status, response) {
+        if (success) {
+            var count = searcher.parsePharmacologyCount(response);
+            controller.totalCount = count;
+            // are there any results?
+            controller.set('empty', count > 0 ? false : true);
+            if (count > 0) {
+                searcher.getPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
+            }
+        }
+    };
+
+    searcher.getPharmacologyCount('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, countCallback);
   },
   model: function(params) {
     console.log('enzyme pharma index route');

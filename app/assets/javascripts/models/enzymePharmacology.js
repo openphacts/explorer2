@@ -1,6 +1,6 @@
 App.EnzymePharmacology = DS.Model.extend({
-  enzyme: DS.belongsTo('App.Enzyme'),
-	targets: DS.attr('array'),
+   enzyme: DS.belongsTo('App.Enzyme'),
+   targets: DS.attr('array'),
    chemblActivityURI: DS.attr('string'),
    pubmedID: DS.attr('string'),
    activityRelationItem: DS.attr('string'),
