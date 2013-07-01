@@ -6,6 +6,10 @@ Explorer2::Application.routes.draw do
 
   match 'search/typeahead' => 'search#typeahead'
 
+  match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
+
+  match 'search/typeaheadTargets' => 'search#typeaheadTargets'
+
 #  match 'compounds' => 'home#index'
 
 #  match 'compounds/:id' => 'home#index'
