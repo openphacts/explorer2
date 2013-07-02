@@ -16,7 +16,8 @@ group :assets do
   gem 'compass-rails'
   gem 'uglifier'
   gem 'bootstrap-sass'
-  gem 'handlebars_assets'
+  # vendor ember doesn't understand that handlebars 1.0.0 is greater than 1.0.0.rc3, freeze it here for the moment
+  gem 'handlebars_assets', '0.12.0'
 end
 
 group :development do
