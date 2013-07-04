@@ -31,6 +31,12 @@ Explorer2::Application.routes.draw do
       get 'pharmacology'
     end
   end
+  
+  resources :enzymes, :id => /[^\/]+/, :only => [ :show, :index ] do
+    member do
+      get 'pharmacology'
+    end
+  end
 
 #  match 'targets' => 'home#index'
 

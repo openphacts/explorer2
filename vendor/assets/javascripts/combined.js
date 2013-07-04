@@ -1429,6 +1429,7 @@ Openphacts.EnzymeSearch.prototype.parsePharmacologyPaginated = function(response
         });
         return records;
 }
+
 Openphacts.PathwaySearch = function PathwaySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;

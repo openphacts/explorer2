@@ -1,3 +1,18 @@
+Ember.Handlebars.registerBoundHelper('enzymePharmaLink', function(uri, name) {
+	if (uri && name) {
+		return new Handlebars.SafeString('<a class="enzymeName" href="/enzymes/' + uri.split('/')[uri.split('/').length - 1] + '/pharmacology">' + name + '</a>');		
+	}
+});
+Ember.Handlebars.registerBoundHelper('getIndentLevel', function(view) {
+  if (view) {
+    console.log('getIndentLevel');
+  }	
+});
+Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
+  if (uri) {
+    return new Handlebars.SafeString(uri.split('/')[uri.split('/').length - 1]);	
+  }	
+});
 Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, options) {
   //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
   if (options && csURL) {
