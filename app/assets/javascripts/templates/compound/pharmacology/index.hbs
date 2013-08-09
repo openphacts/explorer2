@@ -22,7 +22,7 @@
 			<div id="compound-image" class="span2 big-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <button class="btn btn-primary btn-mini text-top" title="Create TSV file for download" {{action "tsvDownload" this}}><i class="icon-white icon-download"></i></button></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>

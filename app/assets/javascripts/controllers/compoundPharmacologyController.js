@@ -23,6 +23,28 @@ App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
         }
     };  
     searcher.fetchTarget(target.about, callback);
+  },
+
+  tsvDownload: function(compound) {
+    var me = this;
+    console.log("Create TSV file");
+	var tsvCreateRequest = $.ajax({
+		url: tsvCreateUrl,
+        dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+			uri: compound.id,
+            total_count: compound.pharmacologyCount
+		},
+		success: function(response, status, request) {
+			console.log('tsv create request success');
+		},
+		error: function(request, status, error) {
+			console.log('tsv create request success');
+		}
+	});
+
   }
 
 });

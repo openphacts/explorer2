@@ -28,7 +28,7 @@ App.Compound.reopenClass({
     find: function(uri) {
         var compound = App.Compound.createRecord();
         // use the lda api to fetch compounds rather than the default behaviour of rails side
-        var searcher = new Openphacts.CompoundSearch("https://ops2.few.vu.nl", appID, appKey);  
+        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
         var callback=function(success, status, response){  
             var compoundResult = searcher.parseCompoundResponse(response); 
             compound.setProperties(compoundResult);

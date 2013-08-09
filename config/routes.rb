@@ -38,6 +38,14 @@ Explorer2::Application.routes.draw do
     end
   end
 
+  resources :core_api_calls do
+    collection do
+      get :tab_separated_file
+      get :tsv_download
+      get :tsv_status
+    end
+  end
+
 #  match 'targets' => 'home#index'
 
 #  match 'targets/:id' => 'home#index'
