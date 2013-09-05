@@ -12,6 +12,7 @@ App.Router.map(function() {
     this.resource('compounds'); 
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
+        this.resource('compound.structure', { path: '/structure' }, function(){});
     });
     this.resource('targets'); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
