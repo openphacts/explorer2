@@ -23,6 +23,7 @@ Explorer2::Application.routes.draw do
   resources :compounds, :only => :show do
     member do
       get 'pharmacology'
+      get 'structure'
     end
   end
 
