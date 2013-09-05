@@ -87,7 +87,9 @@
 				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityActivityType}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityRelation}}</td>
-				<td class="lead cell-basictext">{{compoundPharma.activityStandardValue}}</td>
+				<!-- <td class="lead cell-basictext">{{compoundPharma.activityStandardValue}}</td> -->
+                <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
+                <td class="lead cell-basictext">{{compoundPharma.activityValue}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityStandardUnits}}</td>
 				<td class="cell-basictext">{{linkablePubmedId compoundPharma.activityPubmedId}}</td>
 			</tr>

@@ -43,6 +43,7 @@ App.CompoundPharmacology = DS.Model.extend({
   activityRelationItem: DS.attr('string'),
   activityStandardValueItem: DS.attr('string'),
   activityStandardUnitsItem: DS.attr('string'),
+  activityValue: DS.attr('string'),
   compoundFullMwtItem: DS.attr('string'),
   compoundSmilesItem: DS.attr('string'),
   compoundInchiItem: DS.attr('string'),

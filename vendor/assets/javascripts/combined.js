@@ -174,6 +174,8 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 		var activity_standard_units = item['standardUnits'] ? item['standardUnits'] : null;
 		var activity_standard_value = item['standardValue'] ? item['standardValue'] : null;
 		var activity_activity_type = item['activity_type'] ? item['activity_type'] : null;
+        //TODO seems to be some confusion about what the value is called
+        var activity_activity_value = item['activity_value'] ? item['activity_value'] : null;
         var pChembl = item['pChembl'] ? item['pChembl'] : null;
 
 		var compound_full_mwt_item = null;
@@ -322,6 +324,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			activityStandardUnits: activity_standard_units,
 			activityStandardValue: activity_standard_value,
 			activityActivityType: activity_activity_type,
+            activityValue: activity_activity_value,
 
 			compoundFullMwtSrc: chembl_src,
 			compoundPrefLabel_src: cw_src,
@@ -553,7 +556,7 @@ Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(targetURI, 
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
 	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null;
-	var cwUri = response[constants.ABOUT];
+	var cwUri = response.primaryTopic[constants.ABOUT];
 	var id = cwUri.split("/").pop();
 	var keywords = [];
 	var classifiedWith = [];
