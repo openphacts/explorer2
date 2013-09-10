@@ -12,7 +12,7 @@ App.EnzymePharmacology = DS.Model.extend({
    chemblActivityURI: DS.attr('string'),
    cwCompoundURI: DS.attr('string'),
    prefLabel: DS.attr('string'),
-   csCompoundURI: DS.attr('string'),
+   csURI: DS.attr('string'),
    inchi: DS.attr('string'),
    inchiKey: DS.attr('string'),
    smiles: DS.attr('string'),
