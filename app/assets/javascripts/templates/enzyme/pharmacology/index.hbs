@@ -58,7 +58,7 @@ There are no pharmacology results
 			{{#each enzymePharma in pharmacology}}
 			<tr class="record-deco">
 				
-				<td class="cell-basictext">Image</td>
+				<td class="cell-basictext">{{cs_image_src enzymePharma.csURI}}</td>
 				<td class="cell-basictext">{{enzymePharma.prefLabel}}</td>
 				<td class="cell-basictext">{{enzymePharma.targetTitle}}</td>
 				<td class="cell-basictext">{{enzymePharma.targetOrganism}}</td>
