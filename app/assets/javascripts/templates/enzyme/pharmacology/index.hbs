@@ -1,19 +1,84 @@
-Enzyme pharmacology Index
 {{#if empty}}
 There are no pharmacology results
-
 {{else}}
 
-<table>
-	<thead>
-<tr><th>a</th><th>b</th><th>c</th></tr>
-</thead>
-<tbody>
-{{#each enzymePharma in pharmacology}}
-<tr><td>stuff</td><td>more stuff</td><td>even more stuff</td></tr>
-{{/each}}
-</tbody>
-</table>
+<div>
+
+	<ul class="breadcrumb">
+  		<li><a href="/">Home</a> <span class="divider">/</span></li>
+  		<li>Enzyme X <span class="divider">/</span></li>
+  		<li class="active">Enzyme Phamacology</li>
+				
+		<div class="row pull-right"> 
+			<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  				<button class="btn">On</button>
+  				<button class="btn active">Off</button>
+  			</div>
+		</div>
+	</ul>	
+	
+</div>
+
+<!-- RESULT LISTING -->
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+	
+			<tr>
+				<th class="lead lead-target">Compound</th>
+				<th></th>
+				<th class="lead lead-assay">Target</th>
+				<th></th>
+				<th class="lead lead-assay">Assay</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th class="lead">Activity</th>
+			<tr>
+			<tr>
+				<th>Structure</th>
+				<th align="left">Name</th>
+				<th width="10%">Names</th>
+				<th width="10%">Organisms</th>
+				<th>Organisms</th>
+				<th>Description</th>
+				<th>Type</th>
+			 	<th>Relation</th>
+				<th>Value</th>
+				<th>Units</th>
+				<th>PubMed Article</th>
+				<th>Mol Weight</th>
+				<th>SMILES</th>
+				<th>InChI</th>
+				<th>InChIKey</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each enzymePharma in pharmacology}}
+			<tr class="record-deco">
+				
+				<td class="cell-basictext">Image</td>
+				<td class="cell-basictext">{{enzymePharma.prefLabel}}</td>
+				<td class="cell-basictext">{{enzymePharma.targetTitle}}</td>
+				<td class="cell-basictext">{{enzymePharma.targetOrganism}}</td>
+				<td class="cell-basictext">{{enzymePharma.assayOrganism}}</td>
+				<td class="cell-basictext">{{enzymePharma.assayDescription}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityType}}</td>
+				<td class="cell-basictext">{{enzymePharma.relation}}</td>
+				<td class="cell-basictext">{{enzymePharma.standardValue}}</td>
+			    <td class="cell-basictext">{{enzymePharma.standardUnits}}</td>
+			    <td class="cell-basictext">{{enzymePharma.pmid}}</td>
+			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
+			    <td class="cell-basictext">{{enzymePharma.smiles}}</td>
+			    <td class="cell-basictext">{{enzymePharma.inchi}}</td>
+			    <td class="cell-basictext">{{enzymePharma.inchiKey}}</td>
+
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	</div>
 
 {{/if}}
 
