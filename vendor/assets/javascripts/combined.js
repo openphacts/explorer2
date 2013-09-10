@@ -1370,7 +1370,7 @@ Openphacts.EnzymeSearch.prototype.parsePharmacologyPaginated = function(response
         var records = [];
         $.each(response.items, function(i, item) {
             var targets = [];
-            var chemblActivityURI, pmid, relation, standardUnits, standardValue, activityType, inDataset, fullMWT, chemblURI, cwURI, prefLabel, csURI, inchi, inchiKey, smiles, ro5Violations, targetURI, targetTitle, targetOrganism, assayURI, assayDescription;
+            var chemblActivityURI, pmid, relation, standardUnits, standardValue, activityType, inDataset, fullMWT, chemblURI, cwURI, prefLabel, csURI, inchi, inchiKey, smiles, ro5Violations, targetURI, targetTitle, targetOrganism, assayURI, assayDescription, assayOrganism;
             chemblActivityURI = item["_about"];
             pmid = item.pmid;
             relation = item.relation;
@@ -1402,6 +1402,7 @@ Openphacts.EnzymeSearch.prototype.parsePharmacologyPaginated = function(response
             }
             assayURI = item.onAssay["_about"];
             assayDescription = item.onAssay.description;
+            assayOrganism = item.onAssay.assay_organism;
             records.push({
                              targets: targets,
                              chemblActivityURI: chemblActivityURI,
@@ -1424,7 +1425,8 @@ Openphacts.EnzymeSearch.prototype.parsePharmacologyPaginated = function(response
                              targetTitle: targetTitle,
                              targetOrganism: targetOrganism,
                              assayURI: assayURI,
-                             assayDescription: assayDescription
+                             assayDescription: assayDescription,
+                             assayOrganism: assayOrganism
                          });
         });
         return records;
