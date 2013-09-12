@@ -66,9 +66,9 @@ There are no pharmacology results
 			<tr class="record-deco">
 				
 				<td class="cell-basictext">{{cs_image_src enzymePharma.csURI}}</td>
-				<td class="cell-basictext">{{enzymePharma.prefLabel}}</td>
-				<td class="cell-basictext">{{enzymePharma.targetTitle}}</td>
-				<td class="cell-basictext">{{enzymePharma.targetOrganism}}</td>
+				<td class="cell-basictext" style="min-width:300px;">{{enzymePharma.prefLabel}}</td>
+				<td class="cell-basictext"><button type="button" class="btn btn-link" {{action "navigateTo" enzymePharma.targetURI}}>{{enzymePharma.targetTitle}}</button></td>
+				<td class="cell-basictext" style="min-width:120px;">{{enzymePharma.targetOrganism}}</td>
 				<td class="cell-basictext">{{enzymePharma.assayOrganism}}</td>
 				<td class="cell-longtext" style="min-width:300px;">{{enzymePharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{enzymePharma.activityType}}</td>
