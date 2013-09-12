@@ -35,14 +35,21 @@ There are no pharmacology results
 				<th></th>
 				<th></th>
 				<th class="lead">Activity</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>Structure</th>
+				<th></th>
+
 			<tr>
 			<tr>
 				<th>Structure</th>
-				<th align="left">Name</th>
-				<th width="10%">Names</th>
-				<th width="10%">Organisms</th>
+				<th>Name</th>
+				<th>Names</th>
 				<th>Organisms</th>
-				<th>Description</th>
+				<th>Organisms</th>
+				<th align="left" width="300px">Description</th>
 				<th>Type</th>
 			 	<th>Relation</th>
 				<th>Value</th>
@@ -63,16 +70,16 @@ There are no pharmacology results
 				<td class="cell-basictext">{{enzymePharma.targetTitle}}</td>
 				<td class="cell-basictext">{{enzymePharma.targetOrganism}}</td>
 				<td class="cell-basictext">{{enzymePharma.assayOrganism}}</td>
-				<td class="cell-basictext">{{enzymePharma.assayDescription}}</td>
-				<td class="cell-basictext">{{enzymePharma.activityType}}</td>
-				<td class="cell-basictext">{{enzymePharma.relation}}</td>
-				<td class="cell-basictext">{{enzymePharma.standardValue}}</td>
-			    <td class="cell-basictext">{{enzymePharma.standardUnits}}</td>
-			    <td class="cell-basictext">{{enzymePharma.pmid}}</td>
+				<td class="cell-longtext" style="min-width:300px;">{{enzymePharma.assayDescription}}</td>
+				<td class="lead cell-basictext">{{enzymePharma.activityType}}</td>
+				<td class="lead cell-basictext">{{enzymePharma.relation}}</td>
+				<td class="lead cell-basictext">{{enzymePharma.standardValue}}</td>
+			    <td class="lead cell-basictext">{{enzymePharma.standardUnits}}</td>
+			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
 			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
-			    <td class="cell-basictext">{{enzymePharma.smiles}}</td>
-			    <td class="cell-basictext">{{enzymePharma.inchi}}</td>
-			    <td class="cell-basictext">{{enzymePharma.inchiKey}}</td>
+			    <td class="cell-longtext">{{enzymePharma.smiles}}</td>
+			    <td class="cell-longtext">{{enzymePharma.inchi}}</td>
+			    <td class="cell-longtext">{{enzymePharma.inchiKey}}</td>
 
 			</tr>
 			{{/each}}
