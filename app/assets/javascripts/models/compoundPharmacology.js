@@ -50,19 +50,3 @@ App.CompoundPharmacology = DS.Model.extend({
   compoundInchikeyItem: DS.attr('string'),
   compoundPrefLabelItem: DS.attr('string')
 });
-//App.CompoundPharmacology.reopen({
-//    find: function(uri, page, pageSize) {
-//        // use the lda api to fetch compounds rather than the default behaviour of rails side
-//       var compoundPharmacology = App.CompoundPharmacology.createRecord();
-//        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
-//        var callback=function(success, status, response){
-//	    if (response) {	
-//              var compoundPharmacologyResult = searcher.parseCompoundPharmacologyResponse(response); 
-//              compoundPharmacology.setProperties(compoundPharmacologyResult);
-//	    }
-//        };  
-//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, page, pageSize, callback);
-//        compoundPharmacology.set("id", uri);
-//        return compoundPharmacology;
-//    }
-//});

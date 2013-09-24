@@ -120,10 +120,11 @@ Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(compoun
 
 Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
     var constants = new Openphacts.Constants();
+    var id = null, prefLabel = null, cwURI = null, description = null, biotransformationItem = null, toxicity = null, proteinBinding = null, csURI = null, hba = null, hbd = null, inchi = null, logp = null, psa = null, ro5Violations = null, smiles = null, chemblURI = null, fullMWT = null, molform = null, mwFreebase = null,	rtb = null, inchiKey = null, drugbankURI = null;
 	var drugbankData, chemspiderData, chemblData;
-	var cwUri = response.primaryTopic[constants.ABOUT];
-	var id = cwUri.split("/").pop();
-	var prefLabel = response.primaryTopic.prefLabel;
+	cwUri = response.primaryTopic[constants.ABOUT];
+	id = cwUri.split("/").pop();
+	prefLabel = response.primaryTopic.prefLabel;
 	$.each(response.primaryTopic.exactMatch, function(i, match) {
         var src = match[constants.IN_DATASET];
 		if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
@@ -134,29 +135,54 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 			chemblData = match;
 		}
 	});
+    if (drugbankData) {
+		description =  drugbankData.description ? drugbankData.description : null;
+		biotransformationItem = drugbankData.biotransformation ? drugbankData.biotransformation : null;
+		toxicity =  drugbankData.toxicity ? drugbankData.toxicity : null;
+		proteinBinding =  drugbankData.proteinBinding ? drugbankData.proteinBinding : null;
+        drugbankURI =  drugbankData[constants.ABOUT] ? drugbankData[constants.ABOUT] : null;
+    }
+    if (chemspiderData) {
+		csURI =  chemspiderData["_about"] ? chemspiderData["_about"] : null;
+		hba =  chemspiderData ? chemspiderData.hba : null;
+		hbd =  chemspiderData.hbd ? chemspiderData.hbd : null;
+		inchi = chemspiderData.inchi ? chemspiderData.inchi : null;
+		logp =  chemspiderData.logp ? chemspiderData.logp : null;
+		psa = chemspiderData.psa ? chemspiderData.psa : null;
+		ro5Violations =  chemspiderData.ro5_violations ? chemspiderData.ro5_violations : null;
+		smiles =  chemspiderData.smiles ? chemspiderData.smiles : null;
+        inchiKey = chemspiderData.inchikey ? chemspiderData.inchikey : null;
+    }
+    if (chemblData) {
+		chemblURI =  chemblData["_about"] ? chemblData["_about"] : null;
+		fullMWT =  chemblData.full_mwt ? chemblData.full_mwt : null;
+		molform =  chemblData [constants.MOLFORM] ? chemblData[constants.MOLFORM] : null;
+		mwFreebase =  chemblData.mw_freebase ? chemblData.mw_freebase : null;
+		rtb =  chemblData.rtb ? chemblData.rtb : null;
+    }
 	return {
 		id: id,
 		prefLabel: prefLabel,
 		cwURI: cwUri,
-		description: drugbankData ? drugbankData.description : null,
-		biotransformationItem: drugbankData ? drugbankData.biotransformation : null,
-		toxicity: drugbankData ? drugbankData.toxicity : null,
-		proteinBinding: drugbankData ? drugbankData.proteinBinding : null,
-		csURI: chemspiderData ? chemspiderData["_about"] : null,
-		hba: chemspiderData ? chemspiderData.hba : null,
-		hbd: chemspiderData ? chemspiderData.hbd : null,
-		inchi: chemspiderData ? chemspiderData.inchi : null,
-		logp: chemspiderData ? chemspiderData.logp : null,
-		psa: chemspiderData ? chemspiderData.psa : null,
-		ro5Violations: chemspiderData ? chemspiderData.ro5_violations : null,
-		smiles: chemspiderData ? chemspiderData.smiles : null,
-		chemblURI: chemblData ? chemblData["_about"] : null,
-		fullMWT: chemblData ? chemblData.full_mwt : null,
-		molform: chemblData ? chemblData[constants.MOLFORM] : null,
-		mwFreebase: chemblData ? chemblData.mw_freebase : null,
-		rtb: chemblData ? chemblData.rtb : null,
-        inchiKey: chemspiderData ? chemspiderData.inchikey : null,
-        drugbankURI: drugbankData ? drugbankData[constants.ABOUT] : null
+		description: description,
+		biotransformationItem: biotransformationItem,
+		toxicity: toxicity,
+		proteinBinding: proteinBinding,
+		csURI: csURI,
+		hba: hba,
+		hbd: hbd,
+		inchi: inchi,
+		logp: logp,
+		psa: psa,
+		ro5Violations: ro5Violations,
+		smiles: smiles,
+		chemblURI: chemblURI,
+		fullMWT: fullMWT,
+		molform: molform,
+		mwFreebase: mwFreebase,
+		rtb: rtb,
+        inchiKey: inchiKey,
+        drugbankURI: drugbankURI
 	};
 }
 
@@ -582,7 +608,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 chemblLinkOut += chemblUri.split('/').pop();
                 chemblDataItem['linkOut'] = chemblLinkOut;
                 // synomnys
-                var synonmysData;
+                var synonymsData;
                 if (chemblData[constants.LABEL]) {
                     synonymsData = chemblData[constants.LABEL];
                 }
@@ -670,7 +696,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 
 		if (forMolecule != null) {
 			chembl_compound_uri = forMolecule["_about"];
-			compound_full_mwt = forMolecule['full_mwt'];
+			compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
 			chembleMoleculeLink += chembl_compound_uri.split('/').pop();
 			compound_full_mwt_item = chembleMoleculeLink;
 			em = forMolecule["exactMatch"];
@@ -723,7 +749,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		var target_pref_label;
 		var target_pref_label_item;
 		var targetMatch;
-		var target_title;
+		var target_title = null;
 		var target_organism;
 		var target_organism_item;
 		var target_concatenated_uris;
@@ -733,13 +759,15 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		if (target != null) {
 			chembl_target_uri = target["_about"];
 			//target_pref_label = target['prefLabel'];
-			targetMatch = target['exactMatch'];
-			if (targetMatch != null) {
-				var targetMatchURI = targetMatch["_about"];
-				target_pref_label = targetMatch['prefLabel'];
-				target_pref_label_item = targetMatchURI;
-				target_title = target_pref_label;
-			}
+            //TODO The exact match stuff does not seem to exist any more
+			//targetMatch = target['exactMatch'];
+            target_title = target.title;
+			//if (targetMatch != null) {
+			//	var targetMatchURI = targetMatch["_about"];
+			//	target_pref_label = targetMatch['prefLabel'];
+			//	target_pref_label_item = targetMatchURI;
+			//	target_title = target_pref_label ? target_pref_label : null;
+			//}
 
 			target_organism = target['targetOrganismName'];
 			target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
@@ -749,8 +777,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			target_organisms_inner['src'] = target_organism_item;
 			target_organisms.push(target_organisms_inner);
 			var targets_inner = {};
-			targets_inner['title'] = target_pref_label;
-			targets_inner['cw_uri'] = target_pref_label_item;
+			targets_inner['title'] = target_title;
+			targets_inner['cw_uri'] = target_pref_label_item ? target_pref_label_item : null;
 			targets.push(targets_inner);
 		}
 
@@ -1445,8 +1473,8 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       activityType = item.activity_type;
       inDataset = item[constants.IN_DATASET];
       forMolecule = item[constants.FOR_MOLECULE];
-      chemblURI = forMolecule[constants.ABOUT];
-      fullMWT = forMolecule[constants.FULL_MWT];
+      chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
+      fullMWT = forMolecule[constants.FULL_MWT] ? forMolecule[constants.FULL_MWT] : null;
       $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
         var src = match[constants.IN_DATASET];
 		if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {

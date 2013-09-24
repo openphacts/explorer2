@@ -14,7 +14,7 @@
     </ul>
 <div>
 <div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-    <button class="btn active">Exact</button>
-    <button class="btn ">Sub-structure</button>
-    <button class="btn ">Similarity</button>
+    <button class="btn active" {{action 'structureSearchType' 'exact'}}>Exact</button>
+    <button class="btn" {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
+    <button class="btn" {{action 'structureSearchType' 'similarity'}}>Similarity</button>
 </div>

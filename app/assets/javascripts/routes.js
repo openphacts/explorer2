@@ -159,3 +159,21 @@ App.IndexRoute = Ember.Route.extend({
     App.searchController.set('query', '');
   }
 });
+App.CompoundStructureIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, compound) {
+    controller.set('content', compound);
+    var structureSearchType = controller.get('structureSearchType');
+    if (structureSearchType == "exact") {
+
+    } else if (structureSearchType == "similarity") {
+
+    } else if (structureSearchType == "substructure") {
+
+    }
+  },
+  model: function(params) {
+    return this.modelFor('compound');
+  }
+
+});
