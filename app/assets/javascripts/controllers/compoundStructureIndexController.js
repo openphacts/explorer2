@@ -34,11 +34,13 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
       }
     };
     if (type == "exact") {
-        searcher.exact(thisCompound.smiles, null, null, null, null, callback);
+        searcher.exact(thisCompound.smiles, null, callback);
     } else if (type == "similarity") {
+        // TODO fix start and count at 1 and 100 for the moment
         searcher.similarity(thisCompound.smiles, null, null, null, null, 1, 100, callback);
     } else if (type == "substructure") {
-        searcher.substructure(thisCompound.smiles, null, null, null, callback);
+        // TODO fix start and count at 1 and 100 for the moment
+        searcher.substructure(thisCompound.smiles, null, 1, 100, callback);
     }
   }
  // }
