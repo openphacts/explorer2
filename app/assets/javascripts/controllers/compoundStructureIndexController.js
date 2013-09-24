@@ -12,18 +12,19 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
     var me = this;
     var thisCompound = this.get('content');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);   
     var callback=function(success, status, response){
       if (success && response) {
           var results = null;
           if (type == "exact") {
-              results = searcher.parseExactResponse(response);
+              results = compoundSearcher.parseExactResponse(response);
               $.each(results, function(index, pharma) {
                 // fetch each compound and add to records
                 //var structureRecord = App.CompoundStructure.createRecord(pharma);
                 //thisCompound.get('structure').pushObject(pharmaRecord);
               });
           } else if (type == "similarity") {
-              results = searcher.parseSimilarityResponse(response);
+              results = compoundSearcher.parseSimilarityResponse(response);
               $.each(results, function(index, pharma) {
                 // fetch each compound and add to records
                 //var structureRecord = App.CompoundStructure.createRecord(pharma);
@@ -37,12 +38,12 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
               $.each(results, function(index, result) {
                 var compound = App.Compound.createRecord();
                 var callback=function(success, status, response){  
-                  var compoundResult = searcher.parseCompoundResponse(response); 
-                  compound.set("id", compoundResult.cwURI.split("/").pop());
+                  var compoundResult = compoundSearcher.parseCompoundResponse(response); 
+                  //compound.set("id", compoundResult.id);
                   compound.setProperties(compoundResult);
-                  thisCompound.get('structure').pushObject(pharmaRecord)
+                  thisCompound.get('structure').pushObject(compound)
                 }
-                me.fetchCompound(result);
+                compoundSearcher.fetchCompound(result, callback);
               });
           }
       }
@@ -55,15 +56,7 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
     } else if (type == "substructure") {
         // TODO fix start and count at 1 and 100 for the moment
         searcher.substructure(thisCompound.get('smiles'), 100, null, null, callback);
-        }; 
     }
-  },
- // }
-  fetchCompound: function(compoundURI, calllback) {
-    console.log('fetch compound: ' + compoundURI);
-    var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);   
-    searcher.fetchCompound(compoundURI, callback);
   }
-
-
+ // }
 });

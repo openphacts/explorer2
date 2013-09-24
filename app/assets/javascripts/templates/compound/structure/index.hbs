@@ -26,3 +26,18 @@
         {{controllers.compound.smiles}}
     </div>
 </div>
+<div>
+    <table>
+        <thead>
+            <tr><th>Label</th><th>ID</th></tr>
+        </thead>
+        <tbody>
+			{{#each compoundStructure in structure}}
+			<tr>
+				<td>{{compoundStructure.prefLabel}}</td>
+				<td>{{compoundStructure.id}}</td>
+			</tr>
+			{{/each}}
+        </tbody>
+    </table>
+</div>

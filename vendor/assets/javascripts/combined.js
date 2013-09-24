@@ -84,7 +84,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 				chemspiderData = exactMatch;
 			} else if (exactMatch["_about"].indexOf("http://data.kasabi.com/dataset/chembl-rdf") !== -1) {
 				chemblData = exactMatch;
-			}
+			} else if (exactMatch["_about"].indexOf("http://www.conceptwiki.org") !== -1) {
+				id =  exactMatch["_about"].split("/").pop();
+                prefLabel = exactMatch.prefLabel ? exactMatch.prefLabel: prefLabel;
+            }
 		}
 	});
 	return {
