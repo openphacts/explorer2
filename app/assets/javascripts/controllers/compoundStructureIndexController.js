@@ -38,8 +38,10 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
               $.each(results, function(index, result) {
                 var callback=function(success, status, response){ 
                   var compound = App.Compound.createRecord(); 
+                  var csURI = response["_about"];
                   var compoundResult = compoundSearcher.parseCompoundResponse(response); 
                   //compound.set("id", compoundResult.id);
+                  compoundResult.csUri = csURI;
                   compound.setProperties(compoundResult);
                   thisCompound.get('structure').pushObject(compound)
                 }

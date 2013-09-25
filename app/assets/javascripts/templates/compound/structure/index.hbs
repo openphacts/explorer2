@@ -29,11 +29,12 @@
 <div>
     <table>
         <thead>
-            <tr><th>Label</th><th>ID</th></tr>
+            <tr><th>CS URI</th><th>Label</th><th>ID</th></tr>
         </thead>
         <tbody>
 			{{#each compoundStructure in structure}}
 			<tr>
+                                <td>{{compoundStructure.csUri}}</td>
 				<td>{{compoundStructure.prefLabel}}</td>
 				<td>{{compoundStructure.id}}</td>
 			</tr>
