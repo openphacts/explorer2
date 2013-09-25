@@ -6,7 +6,7 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
  //The ember docs now say that actions should be inside an action hash but this does not work depending
  //on what version of ember you are using - TODO upgrade required
  // actions: {
-  structureSearchType: function(type) {
+  structureSearch: function(type) {
     console.log("Set structure search type: " + type);
     this.set('structureSearchType', type);
     var me = this;
