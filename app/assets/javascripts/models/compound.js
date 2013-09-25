@@ -22,7 +22,7 @@ App.Compound = App.SearchResult.extend({
     rtb: DS.attr('string'),
     pharmacology: DS.hasMany('App.CompoundPharmacology'),
     pharmacologyRecords: DS.attr('number'),
-    structure: DS.hasMany('App.CompoundStructure'),
+    structure: DS.hasMany('App.Compound'),
     isCompound: true
 });
 App.Compound.reopenClass({
