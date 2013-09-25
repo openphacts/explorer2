@@ -163,14 +163,19 @@ App.CompoundStructureIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, compound) {
     controller.set('content', compound);
-    var structureSearchType = controller.get('structureSearchType');
-    if (structureSearchType == "exact") {
+    var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey); 
+    compound.on('didLoad', function() {
+      var structureSearchCallback=function(success, status, response){
+        if (success) {
+            var results = searcher.parseExactResponse(response);
+            $.each(results, function(index, result) {
 
-    } else if (structureSearchType == "similarity") {
-
-    } else if (structureSearchType == "substructure") {
-
-    }
+            });
+        }
+      };
+      searcher.exact(compound.get('smiles'), null, null, null, null, structureSearchCallback);
+    });
   },
   model: function(params) {
     return this.modelFor('compound');
