@@ -36,8 +36,8 @@ App.CompoundStructureIndexController = Ember.ObjectController.extend({
           } else if (type == "substructure") {
               results = searcher.parseSubstructureResponse(response);
               $.each(results, function(index, result) {
-                var compound = App.Compound.createRecord();
-                var callback=function(success, status, response){  
+                var callback=function(success, status, response){ 
+                  var compound = App.Compound.createRecord(); 
                   var compoundResult = compoundSearcher.parseCompoundResponse(response); 
                   //compound.set("id", compoundResult.id);
                   compound.setProperties(compoundResult);
