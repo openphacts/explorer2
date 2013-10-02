@@ -48,7 +48,7 @@ App.searchController = Ember.ArrayController.create({
         var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
 	var cwCompoundCallback=function(success, status, response){
             if(success && response) {
-                var results = searcher.parseResponse(response);
+                var results = searcher.parseByTagResponse(response);
                 $.each(results, function(index, result) {
                     var this_compound = App.Compound.find(result.uri.split('/').pop());
                     this_compound.on('didLoad', function() {
@@ -69,7 +69,7 @@ App.searchController = Ember.ArrayController.create({
         }; 
         var cwTargetCallback=function(success, status, response){
             if(success && response) {
-                var results = searcher.parseResponse(response);
+                var results = searcher.parseByTagResponse(response);
                 $.each(results, function(index, result) {
                     var this_target = App.Target.find(result.uri.split('/').pop());
                     this_target.on('didLoad', function() {

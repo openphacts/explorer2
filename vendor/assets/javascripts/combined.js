@@ -485,24 +485,26 @@ Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
 	});
 }
 
-Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
+Openphacts.ConceptWikiSearch.prototype.parseByTagResponse = function(response) {
 	var uris = [];
 	//response can be either array or singleton.
-	if (response.primaryTopic.result instanceof Array) {
-		$.each(response.primaryTopic.result, function(i, match) {
-			uris.push({
-				'uri': match["_about"],
-				'prefLabel': match["prefLabel"],
-				'match': match["match"]
-			});
-		});
-	} else {
-		uris.push({
-			'uri': response.primaryTopic.result["_about"],
-			'prefLabel': response.primaryTopic.result["prefLabel"],
-			'match': response.primaryTopic.result["match"]
-		});
-	}
+    if (response.primaryTopic.result) {
+	    if (response.primaryTopic.result instanceof Array) {
+		    $.each(response.primaryTopic.result, function(i, match) {
+			    uris.push({
+				   'uri': match["_about"],
+				   'prefLabel': match["prefLabel"],
+				   'match': match["match"]
+			    });
+		    });
+	    } else {
+            uris.push({
+			    'uri': response.primaryTopic.result["_about"],
+			    'prefLabel': response.primaryTopic.result["prefLabel"],
+			    'match': response.primaryTopic.result["match"]
+		    });
+        }
+    }
 	return uris;
 }
 
