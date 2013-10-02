@@ -204,8 +204,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 		var chembl_src = item[constants.IN_DATASET];
         // according to the API docs pmid can be an array but an array of what?
 		var activity_pubmed_id = item['pmid'] ? item['pmid'] : null;
-		var activity_relation = item['relation'] ? item['relation'] : null;
-		var activity_standard_units = item['standardUnits'] ? item['standardUnits'] : null;
+		var activity_relation = item['activity_relation'] ? item['activity_relation'] : null;
+        var activity_unit_block = item['activity_unit'];
+        var activity_standard_units = activity_unit_block ? activity_unit_block.prefLabel : null;
+		//var activity_standard_units = item['standardUnits'] ? item['standardUnits'] : null;
 		var activity_standard_value = item['standardValue'] ? item['standardValue'] : null;
 		var activity_activity_type = item['activity_type'] ? item['activity_type'] : null;
         //TODO seems to be some confusion about what the value is called
