@@ -485,7 +485,7 @@ Openphacts.ConceptWikiSearch.prototype.findConcept = function(uuid, callback) {
 	});
 }
 
-Openphacts.ConceptWikiSearch.prototype.parseByTagResponse = function(response) {
+Openphacts.ConceptWikiSearch.prototype.parseResponse = function(response) {
 	var uris = [];
 	//response can be either array or singleton.
     if (response.primaryTopic.result) {
