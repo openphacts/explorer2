@@ -728,13 +728,13 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 
 		if (forMolecule != null) {
 			chembl_compound_uri = forMolecule["_about"];
-			compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+			//compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
 			chembleMoleculeLink += chembl_compound_uri.split('/').pop();
 			compound_full_mwt_item = chembleMoleculeLink;
 			em = forMolecule["exactMatch"];
 		}
 
-		var cw_compound_uri = null, compound_pref_label = null, cw_src = null, cs_compound_uri = null, compound_inchi = null, compound_inchikey = null, compound_smiles = null, cs_src = null, drugbank_compound_uri = null, compound_drug_type = null, compound_generic_name = null, drugbank_src = null, csid = null, compound_pref_label_item = null, compound_inchi_item = null, compound_inchikey_item = null, compound_smiles_item = null, assay_description = null, assay_description_item = null;
+		var cw_compound_uri = null, compound_pref_label = null, cw_src = null, cs_compound_uri = null, compound_inchi = null, compound_inchikey = null, compound_smiles = null, cs_src = null, drugbank_compound_uri = null, compound_drug_type = null, compound_generic_name = null, drugbank_src = null, csid = null, compound_pref_label_item = null, compound_inchi_item = null, compound_inchikey_item = null, compound_smiles_item = null, assay_description = null, assay_description_item = null, compound_ro5_violations = null;
 
 		$.each(em, function(index, match) {
           var src = match[constants.IN_DATASET];
@@ -749,6 +749,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
               compound_inchi = match['inchi'];
               compound_inchikey = match['inchikey'];
               compound_smiles = match['smiles'];
+              compound_full_mwt = match.molweight;
+              compound_ro5_violations = match.ro5_violations;
               cs_src = match["inDataset"];
               var chemSpiderLink = 'http://www.chemspider.com/' + csid;
               compound_inchi_item = chemSpiderLink;
@@ -771,7 +773,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 
 		if (onAssay != null) {
 			chembl_assay_uri = onAssay[constants.ABOUT];
-			assay_organism = onAssay['assay_organism'] ? onAssay['assay_organism'] : null;
+			assay_organism = onAssay.assayOrganismName ? onAssay.assayOrganismName : null;
 			assay_organism_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
 			assay_description = onAssay['description'] ? onAssay['description'] : null;
 			//assay_description_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
@@ -811,6 +813,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			var targets_inner = {};
 			targets_inner['title'] = target_title;
 			targets_inner['cw_uri'] = target_pref_label_item ? target_pref_label_item : null;
+            targets_inner['URI'] = target[constants.ABOUT];
 			targets.push(targets_inner);
 		}
 
@@ -822,77 +825,80 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		activity_activity_type_item = chemblActivityLink;
 		var activity_standard_value = item['activity_value'] ? item['activity_value'] : null;
 		activity_standard_value_item = chemblActivityLink;
-		var activity_standard_units = item['standardUnits'] ? item['standardUnits'] : null;
+		var activity_standard_units = item.activity_unit ? item.activity_unit.prefLabel : null;
 		activity_standard_units_item = chemblActivityLink;
 		var activity_relation = item['activity_relation'] ? item['activity_relation'] : null;
 		activity_relation_item = chemblActivityLink;
 		var activity_pubmed_id = item['pmid'] ? item['pmid'] : null;
+        var pChembl = item.pChembl;
 		records.push({ //for compound
-			compoundInchikey: compound_inchikey,
+			'compoundInchikey': compound_inchikey,
 			//compoundDrugType: compound_drug_type,
 			//compoundGenericName: compound_generic_name,
-			targetTitle: target_title,
+			'targetTitle': target_title,
 			//targetConcatenatedUris: target_concatenated_uris,
 
-			compoundInchikeySrc: cs_src,
+			'compoundInchikeySrc': cs_src,
 			//compoundDrugTypeSrc: drugbank_src,
 			//compoundGenericNameSrc: drugbank_src,
-			targetTitleSrc: chembl_src,
+			'targetTitleSrc': chembl_src,
 			//targetConcatenatedUrisSrc: chembl_src,
 
 
 			//for target
-			chemblActivityUri: chembl_activity_uri,
-			chemblCompoundUri: chembl_compound_uri,
-			compoundFullMwt: compound_full_mwt,
-			cwCompoundUri: cw_compound_uri,
-			compoundPrefLabel: compound_pref_label,
-			csCompoundUri: cs_compound_uri,
-			csid: csid,
-			compoundInchi: compound_inchi,
-			compoundSmiles: compound_smiles,
-			chemblAssayUri: chembl_assay_uri,
-			chemblTargetUri: chembl_target_uri,
+			'chemblActivityUri': chembl_activity_uri,
+			'chemblCompoundUri': chembl_compound_uri,
+			'compoundFullMwt': compound_full_mwt,
+			'cwCompoundUri': cw_compound_uri,
+			'compoundPrefLabel': compound_pref_label,
+			'csCompoundUri': cs_compound_uri,
+			'csid': csid,
+			'compoundInchi': compound_inchi,
+			'compoundSmiles': compound_smiles,
+			'chemblAssayUri': chembl_assay_uri,
+			'chemblTargetUri': chembl_target_uri,
 
 			//targetOrganism: target_organism,
-			targetOrganisms: target_organisms,
+			'targetOrganisms': target_organisms,
 			//targetPrefLabel: target_pref_label,
 
-			assayOrganism: assay_organism,
-			assayDescription: assay_description,
-			activityRelation: activity_relation,
-			activityStandardUnits: activity_standard_units,
-			activityStandardValue: activity_standard_value,
-			activityActivityType: activity_activity_type,
-			activityPubmedId: activity_pubmed_id,
+			'assayOrganism': assay_organism,
+			'assayDescription': assay_description,
+			'activityRelation': activity_relation,
+			'activityStandardUnits': activity_standard_units,
+			'activityStandardValue': activity_standard_value,
+			'activityActivityType': activity_activity_type,
+			'activityPubmedId': activity_pubmed_id,
 
-			compoundFullMwtSrc: chembl_src,
-			compoundPrefLabelSrc: cw_src,
-			compoundInchiSrc: cs_src,
-			compoundSmilesSrc: cs_src,
+			'compoundFullMwtSrc': chembl_src,
+			'compoundPrefLabelSrc': cw_src,
+			'compoundInchiSrc': cs_src,
+			'compoundSmilesSrc': cs_src,
 			//targetOrganismSrc: chembl_src,
-			targetPrefLabelSrc: cw_src,
-			assayOrganismSrc: chembl_src,
-			assayDescriptionSrc: chembl_src,
-			activityRelationSrc: chembl_src,
-			activityStandardUnits_src: chembl_src,
-			activityStandardValue_src: chembl_src,
-			activityActivityType_src: chembl_src,
+			'targetPrefLabelSrc': cw_src,
+			'assayOrganismSrc': chembl_src,
+			'assayDescriptionSrc': chembl_src,
+			'activityRelationSrc': chembl_src,
+			'activityStandardUnits_src': chembl_src,
+			'activityStandardValue_src': chembl_src,
+			'activityActivityType_src': chembl_src,
 
-			compoundPrefLabelItem: compound_pref_label_item,
-			activityActivityTypeItem: activity_activity_type_item,
-			activityRelationItem: activity_relation_item,
-			activityStandardValueItem: activity_standard_value_item,
-			activityStandardUnitsItem: activity_standard_units_item,
-			compoundFullMwtItem: compound_full_mwt_item,
-			compoundSmilesItem: compound_smiles_item,
-			compoundInchiItem: compound_inchi_item,
-			compoundInchikeyItem: compound_inchikey_item,
+			'compoundPrefLabelItem': compound_pref_label_item,
+			'activityActivityTypeItem': activity_activity_type_item,
+			'activityRelationItem': activity_relation_item,
+			'activityStandardValueItem': activity_standard_value_item,
+			'activityStandardUnitsItem': activity_standard_units_item,
+			'compoundFullMwtItem': compound_full_mwt_item,
+			'compoundSmilesItem': compound_smiles_item,
+			'compoundInchiItem': compound_inchi_item,
+			'compoundInchikeyItem': compound_inchikey_item,
 			//targetPrefLabelItem: target_pref_label_item,
-			assayOrganismItem: assay_organism_item,
+			'assayOrganismItem': assay_organism_item,
 			//assayDescriptionItem: assay_description_item,
 		    //targetOrganismItem: target_organism_item,
-			targets: targets
+			'targets': targets,
+            'pChembl': pChembl,
+            'compoundRO5Violations': compound_ro5_violations
 		});
 	});
 	return records;

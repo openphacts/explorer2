@@ -78,7 +78,7 @@
 			{{#each targetPharma in pharmacology}}
 			<tr class="record-deco">
 				<td class="cell-basictext">{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
-				<td class="cell-basictext">{{targetPharma.targetOrganism}}</td>
+				<td class="cell-basictext">{{#each targetPharma.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{targetPharma.assayOrganism}}</td>
 				<td class="cell-longtext">{{targetPharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{targetPharma.activityActivityType}}</td>
