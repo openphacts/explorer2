@@ -35,7 +35,7 @@ App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
 		data: {
 			_format: "json",
 			uri: compound.id,
-            total_count: compound.pharmacologyCount
+            total_count: me.totalCount
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');

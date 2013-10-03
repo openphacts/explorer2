@@ -41,15 +41,15 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
           var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
           $.each(pharmaResults, function(index, pharma) {
             var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	    thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+	        thisCompound.get('pharmacology').pushObject(pharmaRecord);        
           });
           controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+          controller.set('page', controller.get('page') + 1);
         }
     };
     var countCallback=function(success, status, response){
       if (success && response) {
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
-        thisCompound.set('pharmacologyCount', count);
         controller.set('totalCount', count);
       }
     };
@@ -80,11 +80,20 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
         var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
         $.each(pharmaResults, function(index, pharma) {
           var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
-	  thisTarget.get('pharmacology').pushObject(pharmaRecord);
+	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
+        controller.set('page', controller.get('page') + 1);
+        controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+      }
+    };
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseTargetPharmacologyCountResponse(response);
+        controller.set('totalCount', count);
       }
     };
     searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
+    searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + target.id, countCallback);
   },
   model: function(params) {
     console.log('target pharma index route');

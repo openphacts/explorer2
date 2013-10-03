@@ -25,7 +25,7 @@
 			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src controllers.target.seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
-    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}</h3>
+    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
    					<div class="row">
       					<!--<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>-->
       					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
@@ -97,7 +97,25 @@
 		
 </div>
 
-<script>
+<script type="text/javascript">
+
+$(window).off("scroll", scrollHandler);
+scrollOnThisPage = true;
+pageScrolling = false;
+scrollHandler = function() {
+    var s = $(window).scrollTop(),
+        d = $(document).height(),
+        c = $(window).height();
+        scrollPercent = (s / (d-c)) * 100;
+    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
+        disable_scroll();
+        pageScrolling = true;
+        console.log("Fetching results for target scroll " + pageScrolling);
+        //this is not a very pleasant way to get the controller but can find no other method
+        App.__container__.lookup('controller:targetPharmacologyIndex').fetchMore();
+    }
+};
+$(window).scroll(scrollHandler);
 
 $(function() {
 	moveScroller();
