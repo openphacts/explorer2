@@ -22,5 +22,6 @@ App.EnzymePharmacology = DS.Model.extend({
    targetOrganism: DS.attr('string'),
    assayURI: DS.attr('string'),
    assayDescription: DS.attr('string'),
-   assayOrganism: DS.attr('string')
+   assayOrganism: DS.attr('string'),
+   pChembl: DS.attr('string')
 });

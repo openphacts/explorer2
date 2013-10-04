@@ -78,6 +78,7 @@
 				<th>Value</th>
 				<th>Units</th>
 				<th>PubMed Article</th>
+                <th>pChembl</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -94,6 +95,7 @@
                 <td class="lead cell-basictext">{{compoundPharma.activityValue}}</td>
 				<td class="lead cell-basictext">{{compoundPharma.activityStandardUnits}}</td>
 				<td class="cell-basictext">{{linkablePubmedId compoundPharma.activityPubmedId}}</td>
+                <td class="cell-basictext">{{compoundPharma.pChembl}}</td>
 			</tr>
 			{{/each}}
 		</tbody>

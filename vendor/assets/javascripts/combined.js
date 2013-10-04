@@ -1303,7 +1303,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     var records = [];
     $.each(response.items, function(i, item) {
       var targets = [];
-      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null;
+      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null;
       chemblActivityURI = item["_about"];
       pmid = item.pmid;
       relation = item.relation ? item.relation : null;
@@ -1314,6 +1314,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       forMolecule = item[constants.FOR_MOLECULE];
       chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
       fullMWT = forMolecule[constants.FULL_MWT] ? forMolecule[constants.FULL_MWT] : null;
+      pChembl = item.pChembl ? item.pChembl : null;
       $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
         var src = match[constants.IN_DATASET];
 		if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
@@ -1346,32 +1347,33 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       standardUnits = item.standardUnits ? item.standardUnits : null;
       records.push({
           //targets: targets,
-          chemblActivityURI: chemblActivityURI,
-          pmid: pmid,
-          relation: relation,
-          standardUnits: standardUnits,
-          standardValue: standardValue,
-          activityType: activityType,
-          inDataset: inDataset,
-          fullMWT: fullMWT,
-          chemblURI: chemblURI,
-          cwURI: cwURI,
-          prefLabel: prefLabel,
-          csURI: csURI,
-          inchi: inchi,
-          inchiKey: inchiKey,
-          smiles: smiles,
-          ro5Violations: ro5Violations,
+          'chemblActivityURI': chemblActivityURI,
+          'pmid': pmid,
+          'relation': relation,
+          'standardUnits': standardUnits,
+          'standardValue': standardValue,
+          'activityType': activityType,
+          'inDataset': inDataset,
+          'fullMWT': fullMWT,
+          'chemblURI': chemblURI,
+          'cwURI': cwURI,
+          'prefLabel': prefLabel,
+          'csURI': csURI,
+          'inchi': inchi,
+          'inchiKey': inchiKey,
+          'smiles': smiles,
+          'ro5Violations': ro5Violations,
           //targetURI: targetURI,
           //targetTitle: targetTitle,
           //targetOrganism: targetOrganism,
-          assayURI: assayURI,
-          assayDescription: assayDescription,
-          publishedRelation: publishedRelation,
-          publishedType: publishedType,
-          publishedUnits: publishedUnits,
-          publishedValue: publishedValue,
-          standardUnits: standardUnits
+          'assayURI': assayURI,
+          'assayDescription': assayDescription,
+          'publishedRelation': publishedRelation,
+          'publishedType': publishedType,
+          'publishedUnits': publishedUnits,
+          'publishedValue': publishedValue,
+          'standardUnits': standardUnits,
+          'pChembl': pChembl
       });
     });
     return records;

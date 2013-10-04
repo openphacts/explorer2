@@ -48,7 +48,8 @@ App.CompoundPharmacology = DS.Model.extend({
   compoundSmilesItem: DS.attr('string'),
   compoundInchiItem: DS.attr('string'),
   compoundInchikeyItem: DS.attr('string'),
-  compoundPrefLabelItem: DS.attr('string')
+  compoundPrefLabelItem: DS.attr('string'),
+  pChembl: DS.attr('string')
 });
 //App.CompoundPharmacology.reopen({
 //    find: function(uri, page, pageSize) {

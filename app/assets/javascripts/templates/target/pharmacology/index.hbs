@@ -71,6 +71,7 @@
 				<th>SMILES</th>
 				<th>InChl</th>
 				<th>InChlKey</th>
+                <th>pChembl</th>
 
 			</tr>
 		</thead>
@@ -89,6 +90,7 @@
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundSmiles}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchi}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchikey}}</td>
+				<td class="cell-basictext" >{{targetPharma.pChembl}}</td>
 			</tr>
 			{{/each}}
 		</tbody>
