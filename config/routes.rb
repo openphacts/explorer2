@@ -24,12 +24,14 @@ Explorer2::Application.routes.draw do
     member do
       get 'pharmacology'
       get 'structure'
+      get 'pathways'
     end
   end
 
   resources :targets, :only => :show do
     member do
       get 'pharmacology'
+      get 'pathways'
     end
   end
   

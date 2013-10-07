@@ -1,0 +1,91 @@
+<div>
+		<ul class="breadcrumb">
+  			<li><a href="/">Home</a> <span class="divider">/</span></li>
+  			<li>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <span class="divider">/</span></li>
+  			<li class="active">Pathways</li>
+			
+			<div class="row pull-right"> 
+				<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  				<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  					<button class="btn">On</button>
+  					<button class="btn active">Off</button>
+  				</div>
+			</div>
+		</ul>
+		
+		<div>  
+		
+		<!-- actual results -->
+		<div id="summary-anchor">
+		<div id="summary" class="compound_summary collapse in">
+			
+			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csUri}}</div>
+			<div class="row">
+				<div class="span8">
+                    {{#if notEmpty}}
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+                    {{else}}
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}}</h3>
+                    {{/if}}
+   					<div class="row">
+      					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
+    				</div>
+  				</div>
+  				<button id="toggle-summary" type="button" class="btn btn-link pull-right" data-target="#summary">less</button>
+
+			<div id="structure" class="span5 small-padding-top">
+  					<button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button>
+					<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
+						<dl>
+  							<dt>SMILES</dt>
+  							<dd>{{controllers.compound.smiles}}</dd>
+  							<dt>Standard InChi</dt>
+  							<dd>{{controllers.compound.inchi}}</dd>
+  							<dt>Standard InChiKey</dt>
+  							<dd>{{controllers.compound.inchiKey}}</dd>
+						</dl>
+					</div>
+  			</div>
+	 		
+
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<!-- RESULT LISTING -->
+    {{#if notEmpty}}
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+			<tr>
+				<th align="left">Title</th>
+				<th width="10%">Identifier</th>
+				<th align="left" width="300px">Description</th>
+				<th>Ontology</th>
+			 	<th>Organism</th>
+				<th>Organism Label</th>
+				<th>Gene Product</th>
+				<th>About</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each pathway in pathways}}
+			<tr class="record-deco">
+				<td class="cell-basictext">{{pathway.title}}</td>
+				<td class="cell-longtext">{{pathway.identifier}}</td>
+				<td class="lead cell-basictext">{{pathway.description}}</td>
+				<td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
+                <td class="lead cell-basictext">{{pathway.organism}}</td>
+				<td class="lead cell-basictext">{{pathway.organismLabel}}</td>
+				<td class="cell-basictext">{{pathway.geneProduct}}</td>
+                <td class="cell-basictext">{{pathway.about}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	</div>
+    {{else}}
+        <h2 class="centre">There are no pathways for {{controllers.compound.prefLabel}}</h2>
+    {{/if}}

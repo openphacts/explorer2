@@ -29,4 +29,10 @@ class CompoundsController < ApplicationController
     end
   end
 
+  def pathways
+    respond_to do |format|
+      format.html { render 'home/index' }
+    end
+  end
+
 end

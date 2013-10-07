@@ -15,6 +15,7 @@
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
 				<p>{{#linkTo 'compound.pharmacology' result}}Pharmacology{{/linkTo}}</p>
+                <p>{{#linkTo 'compound.pathways' result}}Pathway{{/linkTo}}</p>
                 <p>{{#linkTo 'compound.structure' result}}Structure Search{{/linkTo}}</p>
 			</div>
 		</div>
@@ -34,7 +35,8 @@
 		<div class="row span7">
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				{{#linkTo 'target.pharmacology' result}}Pharmacology{{/linkTo}}
+				<p>{{#linkTo 'target.pharmacology' result}}Pharmacology{{/linkTo}}</p>
+                <p>{{#linkTo 'target.pathways' result}}Pathway{{/linkTo}}</p>
 			</div>
 		</div>
 	

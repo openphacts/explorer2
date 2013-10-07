@@ -13,10 +13,12 @@ App.Router.map(function() {
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('compound.structure', { path: '/structure' }, function(){});
+        this.resource('compound.pathways', { path: '/pathways' }, function(){});
     });
     this.resource('targets'); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
+        this.resource('target.pathways', { path: '/pathways' }, function(){});
     });
     this.resource('enzymes'); 
     this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
@@ -55,6 +57,38 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
     searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + compound.id, countCallback);
+  },
+  model: function(params) {
+    return this.modelFor('compound');
+  }
+
+});
+
+App.CompoundPathwaysIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, compound) {
+    controller.set('content', compound);
+      var thisCompound = compound;
+      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+      var pathwaysByCompoundCallback=function(success, status, response){
+        if (success && response) {
+          var pathwayResults = searcher.parseByCompoundResponse(response);
+          $.each(pathwayResults, function(index, pharma) {
+            //var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+	        //thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+          });
+          controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
+          controller.set('page', controller.get('page') + 1);
+        }
+    };
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseCountPathwaysByCompoundResponse(response);
+        controller.set('totalCount', count);
+      }
+    };
+    searcher.byCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, countCallback);
   },
   model: function(params) {
     return this.modelFor('compound');
