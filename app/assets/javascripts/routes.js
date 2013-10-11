@@ -208,6 +208,7 @@ App.IndexRoute = Ember.Route.extend({
 
 App.PathwayIndexRoute = Ember.Route.extend({
   model: function(params) {
+    console.log('pathway index');
     return this.modelFor('pathway');
   }
 });

@@ -11,3 +11,18 @@ App.Pathway = DS.Model.extend({
   geneProductCWURI: DS.attr('string'),
   about: DS.attr('string')
 });
+App.Pathway.reopenClass({
+    find: function(id) {
+      var pathway = App.Pathway.createRecord();
+      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+      var pathwayInfoCallback=function(success, status, response){
+        if (success && response) {
+          var pathwayResult = searcher.parseInformationResponse(response);
+          pathway.setProperties(pathwayResult);
+	      pathway.trigger('didLoad');        
+        }
+    };
+    searcher.information('http://identifiers.org/wikipathways' + id, null, pathwayInfoCallback);
+    return pathway;
+    }
+});

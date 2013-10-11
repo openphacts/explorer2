@@ -49,6 +49,9 @@ Explorer2::Application.routes.draw do
     end
   end
 
+  resources :pathways, :only => :show do
+  end
+
 #  match 'targets' => 'home#index'
 
 #  match 'targets/:id' => 'home#index'
