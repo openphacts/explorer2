@@ -7,3 +7,4 @@
 //= require ./models/targetPharmacology.js
 //= require ./models/enzyme.js
 //= require ./models/enzymePharmacology.js
+//= require ./models/pathway.js

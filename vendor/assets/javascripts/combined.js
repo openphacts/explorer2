@@ -1198,7 +1198,7 @@ Openphacts.TreeSearch.prototype.getChildNodes = function(URI, callback) {
 	});
 }
 
-Openphacts.TreeSearch.prototype.getTargetClassPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, callback) {
+Openphacts.TreeSearch.prototype.getTargetClassPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
         params={};
         params['_format'] = "json";
         params['app_key'] = this.appKey;
@@ -1211,6 +1211,11 @@ Openphacts.TreeSearch.prototype.getTargetClassPharmacologyCount = function(URI, 
         activityUnit != null ? params['activity_unit'] = activityUnit : '';
         relation != null ? params['relation'] = relation : '';
         pChembl != null ? params['pChembl'] = pChembl : '';
+        minpChembl != null ? params['min-pChembl'] = minpChembl : '';
+        minExpChembl != null ? params['minEx-pChembl'] = minExpChembl : '';
+        maxpChembl != null ? params['max-pChembl'] = maxpChembl : '';
+        maxExpChembl != null ? params['maxEx-pChembl'] = maxExpChembl : '';
+        lens != null ? params['lens'] = lens : '';
 	var query = $.ajax({
 		url: this.baseURL + '/target/tree/pharmacology/count',
         dataType: 'json',
@@ -1225,7 +1230,7 @@ Openphacts.TreeSearch.prototype.getTargetClassPharmacologyCount = function(URI, 
 	});
 }
 
-Openphacts.TreeSearch.prototype.getTargetClassPharmacologyPaginated = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, page, pageSize, orderBy, callback) {
+Openphacts.TreeSearch.prototype.getTargetClassPharmacologyPaginated = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, page, pageSize, orderBy, callback) {
         params={};
         params['_format'] = "json";
         params['app_key'] = this.appKey;
@@ -1238,11 +1243,84 @@ Openphacts.TreeSearch.prototype.getTargetClassPharmacologyPaginated = function(U
         activityUnit != null ? params['activity_unit'] = activityUnit : '';
         relation != null ? params['relation'] = relation : '';
         pChembl != null ? params['pChembl'] = pChembl : '';
+        minpChembl != null ? params['min-pChembl'] = minpChembl : '';
+        minExpChembl != null ? params['minEx-pChembl'] = minExpChembl : '';
+        maxpChembl != null ? params['max-pChembl'] = maxpChembl : '';
+        maxExpChembl != null ? params['maxEx-pChembl'] = maxExpChembl : '';
+        lens != null ? params['lens'] = lens : '';
         page != null ? params['_page'] = page : '';
         pageSize != null ? params['_pageSize'] = pageSize : '';
         orderBy != null ? params['_orderBy'] = orderBy : '';
 	var query = $.ajax({
 		url: this.baseURL + '/target/tree/pharmacology/pages',
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.TreeSearch.prototype.getCompoundClassPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
+        params={};
+        params['_format'] = "json";
+        params['app_key'] = this.appKey;
+        params['app_id'] = this.appID;
+        params['uri'] = URI;
+        assayOrganism != null ? params['assay_organism'] = assayOrganism : '';
+        targetOrganism != null ? params['target_organism'] = targetOrganism : '';
+        activityType != null ? params['activity_type'] = activityType : '';
+        activityValue != null ? params['activity_value'] = activityValue : '';
+        activityUnit != null ? params['activity_unit'] = activityUnit : '';
+        relation != null ? params['relation'] = relation : '';
+        pChembl != null ? params['pChembl'] = pChembl : '';
+        minpChembl != null ? params['min-pChembl'] = minpChembl : '';
+        minExpChembl != null ? params['minEx-pChembl'] = minExpChembl : '';
+        maxpChembl != null ? params['max-pChembl'] = maxpChembl : '';
+        maxExpChembl != null ? params['maxEx-pChembl'] = maxExpChembl : '';
+        lens != null ? params['lens'] = lens : '';
+	var query = $.ajax({
+		url: this.baseURL + '/compound/tree/pharmacology/count',
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.TreeSearch.prototype.getCompoundClassPharmacologyPaginated = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, page, pageSize, orderBy, callback) {
+        params={};
+        params['_format'] = "json";
+        params['app_key'] = this.appKey;
+        params['app_id'] = this.appID;
+        params['uri'] = URI;
+        assayOrganism != null ? params['assay_organism'] = assayOrganism : '';
+        targetOrganism != null ? params['target_organism'] = targetOrganism : '';
+        activityType != null ? params['activity_type'] = activityType : '';
+        activityValue != null ? params['activity_value'] = activityValue : '';
+        activityUnit != null ? params['activity_unit'] = activityUnit : '';
+        relation != null ? params['relation'] = relation : '';
+        pChembl != null ? params['pChembl'] = pChembl : '';
+        minpChembl != null ? params['min-pChembl'] = minpChembl : '';
+        minExpChembl != null ? params['minEx-pChembl'] = minExpChembl : '';
+        maxpChembl != null ? params['max-pChembl'] = maxpChembl : '';
+        maxExpChembl != null ? params['maxEx-pChembl'] = maxExpChembl : '';
+        targetType != null ? params['target_type'] = targetType : '';
+        lens != null ? params['lens'] = lens : '';
+        page != null ? params['_page'] = page : '';
+        pageSize != null ? params['_pageSize'] = pageSize : '';
+        orderBy != null ? params['_orderBy'] = orderBy : '';
+	var query = $.ajax({
+		url: this.baseURL + '/compound/tree/pharmacology/pages',
         dataType: 'json',
 		cache: true,
 		data: params,
@@ -1411,13 +1489,13 @@ Openphacts.PathwaySearch.prototype.byCompound = function(URI, organism, lens, pa
         params['app_key'] = this.appKey;
         params['app_id'] = this.appID;
         params['uri'] = URI;
-        organism ? params['pathway_organism'] = organism : '';
+        organism ? params['organism'] = organism : '';
         lens ? params['lens'] = lens : '';
-        page ? page = params['_page'] : '';
-        pageSize ? pageSize = params['_pageSize'] : '';
+        page ? params['_page'] = page : '';
+        pageSize ? params['_pageSize'] = pageSize : '';
         //TODO order by neeeds an RDF like syntax to work eg ?cw_uri or DESC(?cw_uri), need to hide that
         //from users by having a descending flag and creating the correct syntax here
-        orderBy ? orderBy = params['_orderBy'] : '';
+        orderBy ? params['_orderBy'] = orderBy : '';
 	var pathwayQuery = $.ajax({
 		url: this.baseURL + '/pathways/byCompound',
         dataType: 'json',
@@ -1462,8 +1540,8 @@ Openphacts.PathwaySearch.prototype.byTarget = function(URI, organism, lens, page
         params['uri'] = URI;
         organism ? params['pathway_organism'] = organism : '';
         lens ? params['lens'] = lens : '';
-        page ? page = params['_page'] : '';
-        pageSize ? pageSize = params['_pageSize'] : '';
+        page ? params['_page'] = page : '';
+        pageSize ? params['_pageSize'] = pageSize : '';
         //TODO order by neeeds an RDF like syntax to work eg ?cw_uri or DESC(?cw_uri), need to hide that
         //from users by having a descending flag and creating the correct syntax here
         orderBy ? orderBy = params['_orderBy'] : '';
@@ -1553,8 +1631,8 @@ Openphacts.PathwaySearch.prototype.byReference = function(URI, organism, lens, p
         params['uri'] = URI;
         organism ? params['pathway_organism'] = organism : '';
         lens ? params['lens'] = lens : '';
-        page ? page = params['_page'] : '';
-        pageSize ? pageSize = params['_pageSize'] : '';
+        page ? params['_page'] = page : '';
+        pageSize ? params['_pageSize'] = pageSize : '';
         //TODO order by neeeds an RDF like syntax to work eg ?cw_uri or DESC(?cw_uri), need to hide that
         //from users by having a descending flag and creating the correct syntax here
         orderBy ? orderBy = params['_orderBy'] : '';
@@ -1643,8 +1721,8 @@ Openphacts.PathwaySearch.prototype.list = function(organism, lens, page, pageSiz
         params['app_id'] = this.appID;
         organism ? params['pathway_organism'] = organism : '';
         lens ? params['lens'] = lens : '';
-        page ? page = params['_page'] : '';
-        pageSize ? pageSize = params['_pageSize'] : '';
+        page ? params['_page'] = page : '';
+        pageSize ? params['_pageSize'] = pageSize : '';
         //TODO order by neeeds an RDF like syntax to work eg ?cw_uri or DESC(?cw_uri), need to hide that
         //from users by having a descending flag and creating the correct syntax here
         orderBy ? orderBy = params['_orderBy'] : '';
@@ -1668,8 +1746,8 @@ Openphacts.PathwaySearch.prototype.organisms = function(lens, page, pageSize, or
         params['app_key'] = this.appKey;
         params['app_id'] = this.appID;
         lens ? params['lens'] = lens : '';
-        page ? page = params['_page'] : '';
-        pageSize ? pageSize = params['_pageSize'] : '';
+        page ? params['_page'] = page : '';
+        pageSize ? params['_pageSize'] = pageSize : '';
         //TODO order by neeeds an RDF like syntax to work eg ?cw_uri or DESC(?cw_uri), need to hide that
         //from users by having a descending flag and creating the correct syntax here
         orderBy ? orderBy = params['_orderBy'] : '';
@@ -1718,16 +1796,15 @@ Openphacts.PathwaySearch.prototype.parseByCompoundResponse = function(response) 
         var items = response.items;
         var pathways = [];
         $.each(items, function(i, item) {
-          var title, identifier, organism, organismLabel, parts, about, type, prefLabel, description, pathwayOntology;
+          var title, identifier, organism, organismLabel, parts, about, type, prefLabel, description, pathwayOntology, geneProductLabel, geneProductURI, geneProductCWURI;
           title = item.title;
           identifier = item.identifier;
           parts = item.hasPart;
           about = parts[constants.ABOUT];
           type = parts.type;
-          var geneProduct = {};
-          geneProduct['prefLabel'] = parts.exactMatch.prefLabel;
-          geneProduct['URI'] = parts[constants.ABOUT];
-          geneProduct['cwURI'] = parts.exactMatch[constants.ABOUT];
+          geneProductLabel = parts.exactMatch.prefLabel;
+          geneProductURI = parts[constants.ABOUT];
+          geneProductCWURI = parts.exactMatch[constants.ABOUT];
           organism = item.pathway_organism[constants.ABOUT];
           organismLabel = item.pathway_organism.label;
           description = item.description ? item.description : null;
@@ -1739,7 +1816,9 @@ Openphacts.PathwaySearch.prototype.parseByCompoundResponse = function(response) 
                            'pathwayOntology': pathwayOntology,
                            'organism': organism, 
                            'organismLabel': organismLabel, 
-                           'geneProduct': geneProduct,
+                           'geneProductLabel': geneProductLabel,
+                           'geneProductURI': geneProductURI,
+                           'geneProductCWURI': geneProductCWURI,
                            'about': about
                         });
         });
@@ -1756,16 +1835,15 @@ Openphacts.PathwaySearch.prototype.parseByTargetResponse = function(response) {
         var items = response.items;
         var pathways = [];
         $.each(items, function(i, item) {
-          var title, identifier, organism, organismLabel, parts, about, type, prefLabel, description, pathwayOntology;
+          var title, identifier, organism, organismLabel, parts, about, type, prefLabel, description, pathwayOntology, geneProductLabel, geneProductURI, geneProductCWURI;
           title = item.title;
           identifier = item.identifier;
           parts = item.hasPart;
           about = parts[constants.ABOUT];
           type = parts.type;
-          var geneProduct = {};
-          geneProduct['prefLabel'] = parts.exactMatch.prefLabel;
-          geneProduct['URI'] = parts[constants.ABOUT];
-          geneProduct['cwURI'] = parts.exactMatch[constants.ABOUT];
+          geneProductLabel = parts.exactMatch.prefLabel;
+          geneProductURI = parts[constants.ABOUT];
+          geneProductCWURI = parts.exactMatch[constants.ABOUT];
           organism = item.pathway_organism[constants.ABOUT];
           organismLabel = item.pathway_organism.label;
           description = item.description ? item.description : null;
@@ -1777,7 +1855,9 @@ Openphacts.PathwaySearch.prototype.parseByTargetResponse = function(response) {
                            'pathwayOntology': pathwayOntology,
                            'organism': organism, 
                            'organismLabel': organismLabel, 
-                           'geneProduct': geneProduct,
+                           'geneProductLabel': geneProductLabel,
+                           'geneProductURI': geneProductURI,
+                           'geneProductCWURI': geneProductCWURI,
                            'about': about
                         });
         });

@@ -73,7 +73,7 @@
 		<tbody>
 			{{#each pathway in pathways}}
 			<tr class="record-deco">
-				<td class="cell-basictext">{{pathway.title}}</td>
+				<td class="cell-basictext">{{#linkTo pathway pathway}}{{pathway.title}}{{/linkTo}}</td>
 				<td class="cell-longtext">{{pathway.identifier}}</td>
 				<td class="lead cell-basictext">{{pathway.description}}</td>
 				<td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>

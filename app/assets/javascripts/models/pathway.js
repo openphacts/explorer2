@@ -6,6 +6,8 @@ App.Pathway = DS.Model.extend({
   pathwayOntology: DS.attr('array'),
   organism: DS.attr('string'),
   organismLabel: DS.attr('string'),
-  geneProduct: DS.attr('string'),
+  geneProductLabel: DS.attr('string'),
+  geneProductURI: DS.attr('string'),
+  geneProductCWURI: DS.attr('string'),
   about: DS.attr('string')
 });

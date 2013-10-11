@@ -9,7 +9,7 @@ App.Router.reopen({
 
 App.Router.map(function() { 
     this.route("search", { path: "/search" });
-    this.resource('compounds'); 
+    this.resource('compounds');
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('compound.structure', { path: '/structure' }, function(){});
@@ -24,6 +24,8 @@ App.Router.map(function() {
     this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
         this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
     });
+    this.resource('pathways');
+    this.resource('pathway', { path: '/pathways/:pathway_id' });
 });
 
 App.CompoundIndexRoute = Ember.Route.extend({
@@ -73,9 +75,10 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
       var pathwaysByCompoundCallback=function(success, status, response){
         if (success && response) {
           var pathwayResults = searcher.parseByCompoundResponse(response);
-          $.each(pathwayResults, function(index, pharma) {
-            //var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	        //thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+          $.each(pathwayResults, function(index, pathwayResult) {
+            var pathwayRecord = App.Pathway.createRecord(pathwayResult);
+            pathwayRecord.set("id", pathwayResult.identifier.split('/').pop());
+	        thisCompound.get('pathways').pushObject(pathwayRecord);        
           });
           controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
           controller.set('page', controller.get('page') + 1);
@@ -200,5 +203,11 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
 App.IndexRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     App.searchController.set('query', '');
+  }
+});
+
+App.PathwayIndexRoute = Ember.Route.extend({
+  model: function(params) {
+    return this.modelFor('pathway');
   }
 });
