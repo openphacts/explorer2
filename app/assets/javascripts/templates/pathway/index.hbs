@@ -1,1 +1,21 @@
-Pathway Index
+Pathway
+<p>title: {{title}}</p>
+<p>identifier: {{identifier}}</p>
+<p>description: {{description}}</p>
+{{#each ontology in pathwayOntologies}}
+Ontologies
+<p>reference: {{ontology.reference}}</p>
+<p>metabolite: {{ontology.metabolite}}</p>
+<p>gene product: {{ontology.gene_product}}</p>
+{{/each}}
+<p>organism: {{organism}}</p>
+<p>organism label: {{organismLabel}}</p>
+<p>gene product label: {{geneProductLabel}}</p>
+<p>gene product URI: {{geneProductURI}}</p>
+<p>gene product concept Wiki URI: {{geneProductCWURI}}</p>
+<p>about: {{about}}</p>
+Parts
+{{#each part in parts}}
+<p>about: {{part.about}}</p>
+<p>type: {{part.type}}</p>
+{{/each}}

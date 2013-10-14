@@ -3,13 +3,14 @@ App.Pathway = DS.Model.extend({
   title: DS.attr('string'),
   identifier: DS.attr('string'),
   description: DS.attr('string'),
-  pathwayOntology: DS.attr('array'),
+  pathwayOntologies: DS.attr('array'),
   organism: DS.attr('string'),
   organismLabel: DS.attr('string'),
   geneProductLabel: DS.attr('string'),
   geneProductURI: DS.attr('string'),
   geneProductCWURI: DS.attr('string'),
-  about: DS.attr('string')
+  about: DS.attr('string'),
+  parts: DS.attr('array')
 });
 App.Pathway.reopenClass({
     find: function(id) {
@@ -22,7 +23,7 @@ App.Pathway.reopenClass({
 	      pathway.trigger('didLoad');        
         }
     };
-    searcher.information('http://identifiers.org/wikipathways' + id, null, pathwayInfoCallback);
+    searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
     return pathway;
     }
 });

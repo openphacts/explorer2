@@ -25,7 +25,8 @@ App.Router.map(function() {
         this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
     });
     this.resource('pathways');
-    this.resource('pathway', { path: '/pathways/:pathway_id' });
+    this.resource('pathway', { path: '/pathways/:pathway_id' }, function() {
+    });
 });
 
 App.CompoundIndexRoute = Ember.Route.extend({
