@@ -57,17 +57,18 @@ Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 	this.appKey = appKey;
 }
 
-Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, callback) {
+Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = compoundURI;
+    lens ? params['lens'] = lens : '';
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound',
-                dataType: 'json',
+        dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			uri: compoundURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -126,7 +127,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 	cwUri = response.primaryTopic[constants.ABOUT];
     // this id is not strictly true since we could have searched using a chemspider id etc
 	id = cwUri.split("/").pop();
-	prefLabel = response.primaryTopic.prefLabel;
+	prefLabel = response.primaryTopic.prefLabel ? response.primaryTopic.prefLabel : null;
 	$.each(response.primaryTopic.exactMatch, function(i, match) {
         var src = match[constants.IN_DATASET];
 		if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
@@ -166,6 +167,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
     }
     if (conceptWikiData) {
         id =  conceptWikiData["_about"].split("/").pop();
+        prefLabel = conceptWikiData.prefLabel ? conceptWikiData.prefLabel : null;
     }
 
 	return {

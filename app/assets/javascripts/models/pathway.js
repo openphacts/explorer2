@@ -31,7 +31,7 @@ App.Pathway.reopenClass({
                           var compoundResponse = compoundSearcher.parseCompoundResponse(response);
                       };
                     };
-                    compoundSearcher.fetchCompound(compound, compoundInfoCallback);
+                    compoundSearcher.fetchCompound(compound, null, compoundInfoCallback);
                   });
               }
           };
