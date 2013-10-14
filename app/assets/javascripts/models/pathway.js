@@ -10,7 +10,9 @@ App.Pathway = DS.Model.extend({
   geneProductURI: DS.attr('string'),
   geneProductCWURI: DS.attr('string'),
   about: DS.attr('string'),
-  parts: DS.attr('array')
+  parts: DS.attr('array'),
+  compounds: DS.hasMany('App.Compound'),
+  targets: DS.hasMany('App.Target'),
 });
 App.Pathway.reopenClass({
     find: function(id) {
@@ -28,7 +30,10 @@ App.Pathway.reopenClass({
                   $.each(getCompoundsReponse.metabolites, function(i, compound) {  
                     var compoundInfoCallback = function(success, status, response) {
                       if (success && response) {   
-                          var compoundResponse = compoundSearcher.parseCompoundResponse(response);
+                          var compoundResult = compoundSearcher.parseCompoundResponse(response);
+                          var compound = App.Compound.createRecord(); 
+                          compound.setProperties(compoundResult);
+                          pathway.get('compounds').pushObject(compound);
                       };
                     };
                     compoundSearcher.fetchCompound(compound, null, compoundInfoCallback);
