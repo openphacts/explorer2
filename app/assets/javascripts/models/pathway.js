@@ -16,14 +16,30 @@ App.Pathway.reopenClass({
     find: function(id) {
       var pathway = App.Pathway.createRecord();
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+      var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pathwayInfoCallback=function(success, status, response){
         if (success && response) {
           var pathwayResult = searcher.parseInformationResponse(response);
           pathway.setProperties(pathwayResult);
-	      pathway.trigger('didLoad');        
+	      pathway.trigger('didLoad');
+          var getCompoundsCallback=function(success, status, response){
+              if (success && response) {   
+                  var getCompoundsReponse = searcher.parseGetCompoundsResponse(response);
+                  $.each(getCompoundsReponse.metabolites, function(i, compound) {  
+                    var compoundInfoCallback = function(success, status, response) {
+                      if (success && response) {   
+                          var compoundResponse = compoundSearcher.parseCompoundResponse(response);
+                      };
+                    };
+                    compoundSearcher.fetchCompound(compound, compoundInfoCallback);
+                  });
+              }
+          };
+          searcher.getCompounds('http://identifiers.org/wikipathways/' + id, null, getCompoundsCallback);
         }
-    };
-    searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
-    return pathway;
+      };
+
+      searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
+      return pathway;
     }
 });
