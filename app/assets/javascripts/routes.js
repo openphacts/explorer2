@@ -264,8 +264,8 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
 
 App.IndexRoute = Ember.Route.extend({
 	actions: {
-	submitInController: function() {
-		console.log('submitInController');
+	query: function() {
+		console.log('query');
     }
 },
   setupController: function(controller, model) {

@@ -25,7 +25,6 @@
 //= require models
 //= require URI
 //= require purl
-//= require typeahead
 //= require_tree ./templates
 //= require_tree ./views
 

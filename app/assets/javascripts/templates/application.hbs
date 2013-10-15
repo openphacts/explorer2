@@ -3,8 +3,8 @@
 <div class="navbar-inner">
     <a class="brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer</a>
     <div class="navbar-search pull-left" action="">
-			{{view App.SearchBox
-	           placeholder="Search" valueBinding="App.searchController.query" id="search_box" class="search-query span4" data-provide="typeahead" autocomplete="off"}}
+			  {{input type="text" placeholder="search" value=search action="query" id="search_box" class="search-query span4"}}
+	
     </div>	
     <ul class="nav pull-right">
         <li id="search-only" class="active"><a href="#about">Search</a></li>
@@ -27,7 +27,16 @@
 	{{outlet}}
 </div>
 
-<script> 
+<script type="text/javascript"> 
+$('#search_box').typeahead({
+    source: function (query, process) {
+        $.getJSON(typeaheadUrl, { query: query }, function (data) {
+            return process(data);
+        })
+    }
+  });
+</script>
+<script type="text/javascript"> 
 
 	$('#compound-only').click(function(){
 		
