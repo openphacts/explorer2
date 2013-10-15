@@ -20,7 +20,7 @@ Explorer2::Application.routes.draw do
 
 #  match 'compound/:id/pharmacology' => 'home#index'
 
-  resources :compounds, :only => :show do
+  resources :compounds, :only => [:show, :index] do
     member do
       get 'pharmacology'
       get 'structure'
@@ -28,7 +28,7 @@ Explorer2::Application.routes.draw do
     end
   end
 
-  resources :targets, :only => :show do
+  resources :targets, :only => [:show, :index] do
     member do
       get 'pharmacology'
       get 'pathways'
