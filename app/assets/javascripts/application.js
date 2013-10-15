@@ -13,7 +13,7 @@
 //= require modernizr
 //= require jquery
 //= require handlebars
-//= require ember-latest
+//= require ember
 //= require ember-data-latest
 //= require bootstrap
 //= require combined
