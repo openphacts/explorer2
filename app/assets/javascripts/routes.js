@@ -40,7 +40,13 @@ App.TargetsRoute = Ember.Route.extend({
 });
 
 App.CompoundIndexRoute = Ember.Route.extend({
+	
+  setupController: function() {
+    console.log('compound index controller');	
+  },
+
   model: function(params) {
+	console.log('compound index compound')
     return this.modelFor('compound');
   }
 });
@@ -257,8 +263,13 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
 });
 
 App.IndexRoute = Ember.Route.extend({
+	actions: {
+	submitInController: function() {
+		console.log('submitInController');
+    }
+},
   setupController: function(controller, model) {
-    App.searchController.set('query', '');
+    //App.searchController.set('query', '');
   }
 });
 

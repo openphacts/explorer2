@@ -14,7 +14,7 @@
 //= require jquery
 //= require handlebars
 //= require ember
-//= require ember-data-latest
+//= require ember-data.min
 //= require bootstrap
 //= require combined
 //= require_self
@@ -25,6 +25,7 @@
 //= require models
 //= require URI
 //= require purl
+//= require typeahead
 //= require_tree ./templates
 //= require_tree ./views
 

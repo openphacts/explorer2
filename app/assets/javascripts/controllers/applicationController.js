@@ -9,3 +9,13 @@ App.ApplicationController = Ember.Controller.extend({
     this.set('isExpanded', false);
   }
 });
+App.IndexController = Ember.Controller.extend({
+  //needs: 'search',
+});
+App.SearchBoxController = Ember.Controller.extend({
+	//actions: {
+		submitInController: function(number) {
+			console.log('submitInController');
+	  }
+	//}	
+});

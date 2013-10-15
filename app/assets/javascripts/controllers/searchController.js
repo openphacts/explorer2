@@ -1,4 +1,4 @@
-App.searchController = Ember.ArrayController.create({
+App.SearchController = Ember.ArrayController.extend({
 
     isSearching: false,
 
@@ -50,8 +50,28 @@ App.searchController = Ember.ArrayController.create({
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var this_compound = App.Compound.find(result.uri.split('/').pop());
-                    this_compound.on('didLoad', function() {
+                    //var this_compound = App.Compound.find(result.uri.split('/').pop());
+					var compound = me.store.createRecord('compound', {});
+					        // use the lda api to fetch compounds rather than the default behaviour of rails side
+					        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
+					        var callback=function(success, status, response){  
+					            var compoundResult = searcher.parseCompoundResponse(response); 
+					            compound.setProperties(compoundResult);
+						    compound.trigger('didLoad');
+					        };  
+					        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
+					        compound.set("id", uri);
+					//        var pharmaCallback=function(success, status, response){
+					//            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+					//	    $.each(pharmaResults, function(index, pharma) {
+					//                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+					//	        compound.get('pharmacology').pushObject(pharmaRecord);
+					//	    });
+					//        };
+					//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
+					        console.log('compound load');
+					        return compound;
+                    compound.on('didLoad', function() {
 		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === q.toLowerCase()) {
                             this.set('exactMatch', true);
       			    me.addExactMatch(this);
