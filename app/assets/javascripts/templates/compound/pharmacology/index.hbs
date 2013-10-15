@@ -84,7 +84,7 @@
 		<tbody>
 			{{#each compoundPharma in pharmacology}}
 			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70">{{#each compoundPharma.targets}}<p><button type="button" class="btn btn-link" {{action "navigateTo" this}}>{{this.title}}</button></p>{{/each}}</td>
+				<td style="vertical-align:middle;" height="70">{{#each target in compoundPharma.targets}}<p>{{target.title}}{{target.cwUUID}}</p>{{/each}}</td>
 				<td class="cell-basictext">{{#each compoundPharma.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{compoundPharma.assayOrganism}}</td>
 				<td class="cell-longtext">{{compoundPharma.assayDescription}}</td>

@@ -4,6 +4,8 @@ Openphacts.Constants = function() {};
 Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
   'http://www.conceptwiki.org': 'conceptWikiValue',
   'http://www.conceptwiki.org/': 'conceptWikiValue',
+  'http://ops.conceptwiki.org': 'conceptWikiValue',
+  'http://ops.conceptwiki.org/': 'conceptWikiValue',
   'http://data.kasabi.com/dataset/chembl-rdf': 'chemblValue',
   'http://rdf.ebi.ac.uk/resource/chembl/molecule' : 'chemblValue',
   'http://www.ebi.ac.uk/chembl' : 'chemblValue',
@@ -531,17 +533,18 @@ Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 	this.appKey = appKey;
 }
 
-Openphacts.TargetSearch.prototype.fetchTarget = function(targetURI, callback) {
+Openphacts.TargetSearch.prototype.fetchTarget = function(targetURI, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = targetURI;
+    lens ? params['lens'] = lens : '';
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target',
-                dataType: 'json',
+        dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			uri: targetURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -2032,4 +2035,46 @@ Openphacts.PathwaySearch.prototype.parseOrganismsResponse = function(response) {
                           });
         }
 	return organisms;
+}
+Openphacts.MapSearch = function MapSearch(baseURL, appID, appKey) {
+	this.baseURL = baseURL;
+	this.appID = appID;
+	this.appKey = appKey;
+}
+
+Openphacts.MapSearch.prototype.mapURL = function(URI, targetUriPattern, graph, lens, callback) {
+        params={};
+        params['_format'] = "json";
+        params['app_key'] = this.appKey;
+        params['app_id'] = this.appID;
+        params['Uri'] = URI;
+        targetUriPattern ? params['targetUriPattern'] = targetUriPattern : '';
+        graph ? params['graph'] = graph : '';
+        lens ? params['lens'] = lens : '';
+	var pathwayQuery = $.ajax({
+		url: this.baseURL + '/mapUri',
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.MapSearch.prototype.parseMapURLResponse = function(response) {
+        var constants = new Openphacts.Constants();
+        var items = response.primaryTopic[constants.EXACT_MATCH];
+        var urls = [];
+        if ($.isArray(items)) {
+	        $.each(items, function(i, item) {
+              urls.push(item);
+	        });
+        } else {
+            urls.push(items);
+        }
+	return urls;
 }

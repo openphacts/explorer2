@@ -29,7 +29,7 @@ App.Target.reopenClass({
             target.setProperties(targetResult);
 	    target.trigger('didLoad');
         };  
-        searcher.fetchTarget('http://www.conceptwiki.org/concept/' + uri, callback);
+        searcher.fetchTarget('http://www.conceptwiki.org/concept/' + uri, null, callback);
         target.set("id", uri);
         return target;
     }

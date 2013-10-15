@@ -23,6 +23,7 @@
 //= require helpers
 //= require_tree ./controllers
 //= require models
+//= require URI
 //= require_tree ./templates
 //= require_tree ./views
 

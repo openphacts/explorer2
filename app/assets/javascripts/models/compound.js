@@ -36,7 +36,7 @@ App.Compound.reopenClass({
             compound.setProperties(compoundResult);
 	    compound.trigger('didLoad');
         };  
-        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, callback);
+        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
         compound.set("id", uri);
 //        var pharmaCallback=function(success, status, response){
 //            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);

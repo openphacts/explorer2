@@ -40,13 +40,35 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
   setupController: function(controller, compound) {
     controller.set('content', compound);
       var thisCompound = compound;
+      var constants = new Openphacts.Constants();
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+      var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);  
       var pharmaCallback=function(success, status, response){
         if (success && response) {
           var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
           $.each(pharmaResults, function(index, pharma) {
             var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	        thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+	        thisCompound.get('pharmacology').pushObject(pharmaRecord);
+            $.each(pharmaRecord.get('targets'), function(i, target) {
+              var this_target = target;
+              var callback=function(success, status, response){  
+                if (success && response) {
+                var mapURLResult = mapSearcher.parseMapURLResponse(response);
+                $.each(mapURLResult, function(i, url) {
+                  var ourURL = new URI(url);
+                  var currentURL = ourURL.protocol() + '://' + ourURL.authority();
+                  if (constants.SRC_CLS_MAPPINGS[currentURL] == 'conceptWikiValue') {
+                      this_target['cwUUID'] = url.split('/').pop();
+                  }
+                });
+                } else {
+
+                }
+
+
+              };
+              mapSearcher.mapURL(target.about, null, null, null, callback);
+            });
           });
           controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
           controller.set('page', controller.get('page') + 1);
