@@ -9,13 +9,13 @@ App.Router.reopen({
 
 App.Router.map(function() { 
     this.route("search", { path: "/search" });
-    this.resource('compounds');
+    this.resource('compounds', {}, function() {});
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('compound.structure', { path: '/structure' }, function(){});
         this.resource('compound.pathways', { path: '/pathways' }, function(){});
     });
-    this.resource('targets'); 
+    this.resource('targets', {}, function() {}); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('target.pathways', { path: '/pathways' }, function(){});
@@ -29,10 +29,43 @@ App.Router.map(function() {
     });
 });
 
+App.TargetsRoute = Ember.Route.extend({
+
+	setupController: function(controller) {
+//	console.log('compounds index route');
+//	var compoundURL = $.url().param('uri');
+//	console.log('url is ' + compoundURL);
+  }
+
+});
+
 App.CompoundIndexRoute = Ember.Route.extend({
   model: function(params) {
     return this.modelFor('compound');
   }
+});
+
+App.CompoundsRoute = Ember.Route.extend({
+	
+  setupController: function(controller) {
+	console.log('compounds index route');
+	var compoundURL = $.url().param('uri');
+	console.log('url is ' + compoundURL);
+  }
+
+});
+
+App.CompoundsIndexRoute = Ember.Route.extend({
+	
+  setupController: function(controller, model) {
+	console.log('compounds index route');
+	var compoundURL = $.url().param('uri');
+	console.log('url is ' + compoundURL);
+  },
+  model: function() {
+    return [];	
+  }
+
 });
 
 App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
