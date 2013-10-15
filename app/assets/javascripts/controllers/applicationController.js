@@ -1,9 +1,11 @@
 App.ApplicationController = Ember.Controller.extend({
-  search: '',
+    needs: 'search',
+    searchQuery: '',
 	actions: {
 	query: function() {
 		console.log('app controller query');
 		var query = this.get('search');
+		this.set('searchQuery', query);
 		this.transitionToRoute('search', { query: query });
   }
 },

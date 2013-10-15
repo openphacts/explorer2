@@ -3,6 +3,8 @@ Explorer2::Application.routes.draw do
   root :to => 'home#index'
 
   match 'search' => 'home#index'
+  
+  match 'search/:query' => 'home#index'
 
   match 'search/typeahead' => 'search#typeahead'
 

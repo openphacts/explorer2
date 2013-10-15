@@ -32,11 +32,56 @@ App.Router.map(function() {
 App.SearchRoute = Ember.Route.extend({
 
   setupController: function(controller) {
-    console.log('search route setup');	
+    console.log('search route setup');
+    var me = controller;	
+    var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
+	var cwCompoundCallback=function(success, status, response){
+            if(success && response) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, result) {
+                    var compound = App.Compound.find(result.uri.split('/').pop());
+					//var compound = me.store.find('compound', {});
+					        // use the lda api to fetch compounds rather than the default behaviour of rails side
+					        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
+					        var callback=function(success, status, response){  
+					            var compoundResult = searcher.parseCompoundResponse(response); 
+					            compound.setProperties(compoundResult);
+						    compound.trigger('didLoad');
+					        };  
+					        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
+					        compound.set("id", uri);
+					//        var pharmaCallback=function(success, status, response){
+					//            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+					//	    $.each(pharmaResults, function(index, pharma) {
+					//                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
+					//	        compound.get('pharmacology').pushObject(pharmaRecord);
+					//	    });
+					//        };
+					//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
+					        console.log('compound load');
+					        return compound;
+                    compound.on('didLoad', function() {
+		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === q.toLowerCase()) {
+                            this.set('exactMatch', true);
+      			    me.addExactMatch(this);
+                        } else {
+                            me.addSearchResult(this);
+                        } 
+                    });
+                });
+            } else {
+                // an error in the response, ignore for now
+            }
+            me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
+        };
+        searcher.byTag(controller.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
   },
 
   model: function(params) {
     console.log('search route model');
+    this.controllerFor('search').setCurrentQuery(params.query);
     return [];	
   }
 	
