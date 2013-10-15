@@ -8,7 +8,7 @@ App.Router.reopen({
 });
 
 App.Router.map(function() { 
-    this.route("search", { path: "/search" });
+    this.route("search", { path: "/search/:query" });
     this.resource('compounds', {}, function() {});
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
@@ -29,6 +29,18 @@ App.Router.map(function() {
     });
 });
 
+App.SearchRoute = Ember.Route.extend({
+
+  setupController: function(controller) {
+    console.log('search route setup');	
+  },
+
+  model: function(params) {
+    console.log('search route model');
+    return [];	
+  }
+	
+});
 App.TargetsRoute = Ember.Route.extend({
 
 	setupController: function(controller) {
@@ -263,11 +275,13 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
 });
 
 App.IndexRoute = Ember.Route.extend({
-	actions: {
-	query: function() {
-		console.log('query');
-    }
-},
+	// actions: {
+	// query: function() {
+	// 	console.log('query');
+	// 	var query = this.get('search');
+	// 	this.transitionTo('search/' + query);
+	//     }
+// },
   setupController: function(controller, model) {
     //App.searchController.set('query', '');
   }
