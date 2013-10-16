@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
   		<li><a href="/">Home</a> <span class="divider">/</span></li>
   		<li>General Search<span class="divider">/</span></li>
-		<li class="active">{{App.searchController.length}} Search Results Found</li>
+		<li class="active">{{totalResults}} Search Results Found</li>
 	
 		<div class="row pull-right"> 
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
@@ -12,12 +12,12 @@
 </ul>
 
 <div class="row span12 huge-font" id="searching-message">
-  {{#if App.searchController.isSearching}}
+  {{#if isSearching}}
     ...Searching. Please wait...
   {{/if}}
 </div>
 	
-    {{#each result in App.searchController}}
+    {{#each result in controller}}
 		<div class="row">
 			{{#if result.exactMatch}}
   				{{view App.SearchMatch}}

@@ -20,9 +20,9 @@ App.Compound = App.SearchResult.extend({
     psa: DS.attr('string'),
     ro5Violations: DS.attr('string'),
     rtb: DS.attr('string'),
-    pharmacology: DS.hasMany('App.CompoundPharmacology'),
+    pharmacology: DS.hasMany('CompoundPharmacology'),
     pharmacologyRecords: DS.attr('number'),
-    pathways: DS.hasMany('App.Pathway'),
+    pathways: DS.hasMany('pathway'),
     pathwayRecords: DS.attr('number'),
     isCompound: true
 });

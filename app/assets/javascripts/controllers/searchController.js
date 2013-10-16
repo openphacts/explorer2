@@ -4,7 +4,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     currentPage: 0,
 
-    total_results: 0,
+    totalResults: 0,
 
     current_query: '',
 
@@ -31,7 +31,7 @@ App.SearchController = Ember.ArrayController.extend({
     },
 
     resetPageCount: function(query) {
-        this.total_results = 0;
+        this.totalResults = 0;
         this.currentPage = 0;
         //this.search(query);
         this.set('query', query);

@@ -8,7 +8,9 @@ App.Router.reopen({
 });
 
 App.Router.map(function() { 
-    this.route("search", { path: "/search/:query" });
+    this.route("search", { path: "/search/:query" }, function() {
+
+    });
     this.resource('compounds', {}, function() {});
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
@@ -33,39 +35,37 @@ App.SearchRoute = Ember.Route.extend({
 
   setupController: function(controller) {
     console.log('search route setup');
-    var me = controller;	
+    controller.set('totalResults', 0);
+    var me = controller;
+    var currentQuery = controller.getCurrentQuery();	
     var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
 	var cwCompoundCallback=function(success, status, response){
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var compound = App.Compound.find(result.uri.split('/').pop());
+                    var uuid = result.uri.split('/').pop();
+	                var compound = controller.store.createRecord('compound', {id: uuid});
+                    //var compound = App.Compound.find(uuid);
 					//var compound = me.store.find('compound', {});
 					        // use the lda api to fetch compounds rather than the default behaviour of rails side
 					        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
 					        var callback=function(success, status, response){  
 					            var compoundResult = searcher.parseCompoundResponse(response); 
 					            compound.setProperties(compoundResult);
-						    compound.trigger('didLoad');
-					        };  
-					        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
-					        compound.set("id", uri);
-					//        var pharmaCallback=function(success, status, response){
-					//            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-					//	    $.each(pharmaResults, function(index, pharma) {
-					//                var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-					//	        compound.get('pharmacology').pushObject(pharmaRecord);
-					//	    });
-					//        };
-					//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
+						        compound.trigger('didLoad');
+					        };
+					        searcher.fetchCompound(result.uri, null, callback);
+					        //compound.set("id", uuid);
 					        console.log('compound load');
-					        return compound;
+					        //return compound;
                     compound.on('didLoad', function() {
-		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === q.toLowerCase()) {
+		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === currentQuery.toLowerCase()) {
                             this.set('exactMatch', true);
-      			    me.addExactMatch(this);
+      			            me.addExactMatch(this);
+                            me.set('totalResults', me.get('totalResults') + 1);
                         } else {
                             me.addSearchResult(this);
+                            me.set('totalResults', me.get('totalResults') + 1);
                         } 
                     });
                 });

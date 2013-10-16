@@ -3,10 +3,8 @@ Explorer2::Application.routes.draw do
   root :to => 'home#index'
 
   match 'search' => 'home#index'
-  
-  match 'search/:query' => 'home#index'
 
-  match 'search/typeahead' => 'search#typeahead'
+#  match 'search/typeahead' => 'search#typeahead'
 
   match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
@@ -21,6 +19,14 @@ Explorer2::Application.routes.draw do
 #  match 'compound/:id' => 'home#index'
 
 #  match 'compound/:id/pharmacology' => 'home#index'
+
+  resources :search, :only => [:index] do
+    collection do
+      get 'typeahead'
+    end
+  end
+
+  match 'search/:query' => 'home#index'
 
   resources :compounds, :only => [:show, :index] do
     member do

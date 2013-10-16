@@ -14,7 +14,7 @@
 //= require jquery
 //= require handlebars
 //= require ember
-//= require ember-data.min
+//= require ember-data
 //= require bootstrap
 //= require combined
 //= require_self
