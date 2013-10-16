@@ -35,6 +35,7 @@ App.SearchRoute = Ember.Route.extend({
 
   setupController: function(controller) {
     console.log('search route setup');
+    controller.clear();
     controller.set('totalResults', 0);
     var me = controller;
     var currentQuery = controller.getCurrentQuery();	
@@ -43,40 +44,16 @@ App.SearchRoute = Ember.Route.extend({
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var uuid = result.uri.split('/').pop();
-	                //var compound = controller.store.createRecord('compound', {id: uuid});
-                    controller.store.push('compound', {id: uuid});
-                    var compound = controller.store.find('compound', uuid);
-					//var compound = me.store.find('compound', {});
-					        // use the lda api to fetch compounds rather than the default behaviour of rails side
-					        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
-					        var callback=function(success, status, response){  
-					            var compoundResult = searcher.parseCompoundResponse(response); 
-					            compound.setProperties(compoundResult);
-					//	        compound.trigger('didLoad');
-if (compoundResult.prefLabel != null && compoundResult.prefLabel.toLowerCase() === currentQuery.toLowerCase()) {
-                            compound.set('exactMatch', true);
-      			            me.addExactMatch(compound);
-                            me.set('totalResults', me.get('totalResults') + 1);
-                        } else {
-                            me.addSearchResult(compound);
-                            me.set('totalResults', me.get('totalResults') + 1);
-                        } 
-					        };
-					        searcher.fetchCompound(result.uri, null, callback);
-					        //compound.set("id", uuid);
-					        console.log('compound load');
-					        //return compound;
-                //    compound.on('didLoad', function() {
-		        //if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === currentQuery.toLowerCase()) {
-                //            this.set('exactMatch', true);
-      			//            me.addExactMatch(this);
-                //            me.set('totalResults', me.get('totalResults') + 1);
-                //        } else {
-                //            me.addSearchResult(this);
-                //            me.set('totalResults', me.get('totalResults') + 1);
-                //        } 
-                //    });
+                    var compound = controller.store.find('compound', result.uri.split('/').pop());
+                    //if (compoundResult.prefLabel != null && compoundResult.prefLabel.toLowerCase() === currentQuery.toLowerCase()) {
+                    //    compound.set('exactMatch', true);
+      			    //    me.addExactMatch(compound);
+                        me.set('totalResults', me.get('totalResults') + 1);
+                    //} else {
+                        me.addSearchResult(compound);
+                    //    me.set('totalResults', me.get('totalResults') + 1);
+                    //} 
+					console.log('compound load');
                 });
             } else {
                 // an error in the response, ignore for now
@@ -85,6 +62,35 @@ if (compoundResult.prefLabel != null && compoundResult.prefLabel.toLowerCase() =
             pageScrolling = false;
             enable_scroll();
         };
+        var cwTargetCallback=function(success, status, response){
+            if(success && response) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, result) {
+                    var uuid = result.uri.split('/').pop();
+	                //var compound = controller.store.createRecord('compound', {id: uuid});
+                    controller.store.push('target', {id: uuid});
+                    var target = controller.store.find('target', uuid);
+					//var compound = me.store.find('compound', {});
+					        // use the lda api to fetch compounds rather than the default behaviour of rails side
+					        var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
+					        var callback=function(success, status, response){  
+					          var targetResult = searcher.parseTargetResponse(response); 
+					          target.setProperties(targetResult);
+                              me.addSearchResult(target);
+                              me.set('totalResults', me.get('totalResults') + 1);
+					        };
+					        searcher.fetchTarget(result.uri, null, callback);
+					        console.log('target load');
+                });
+            } else {
+                // an error in the response, ignore for now
+            }
+            me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
+        }; 
+        //targets
+        searcher.byTag(controller.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
         searcher.byTag(controller.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
   },
 

@@ -26,18 +26,18 @@ App.Compound = App.SearchResult.extend({
     pathwayRecords: DS.attr('number'),
     isCompound: true
 });
-App.Compound.reopenClass({
-    find: function(uri) {
-        var compound = new App.Compound();
-        // use the lda api to fetch compounds rather than the default behaviour of rails side
-        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
-        var callback=function(success, status, response){  
-            var compoundResult = searcher.parseCompoundResponse(response); 
-            compound.setProperties(compoundResult);
-	    compound.trigger('didLoad');
-        };  
-        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
-        compound.set("id", uri);
+//App.Compound.reopenClass({
+//    find: function(uri) {
+//        var compound = new App.Compound();
+//        // use the lda api to fetch compounds rather than the default behaviour of rails side
+//        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
+//        var callback=function(success, status, response){  
+//            var compoundResult = searcher.parseCompoundResponse(response); 
+//            compound.setProperties(compoundResult);
+//	    compound.trigger('didLoad');
+//        };  
+//        searcher.fetchCompound('http://www.conceptwiki.org/concept/' + uri, null, callback);
+//        compound.set("id", uri);
 //        var pharmaCallback=function(success, status, response){
 //            var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
 //	    $.each(pharmaResults, function(index, pharma) {
@@ -46,7 +46,7 @@ App.Compound.reopenClass({
 //	    });
 //        };
 //        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, 1, 50, pharmaCallback);
-        console.log('compound load');
-        return compound;
-    }
-});
+//        console.log('compound load');
+//        return compound;
+//    }
+//});
