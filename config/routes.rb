@@ -16,7 +16,7 @@ Explorer2::Application.routes.draw do
 
 #  match 'compounds/:id/pharmacology' => 'home#index'
 
-#  match 'compound/:id' => 'home#index'
+  match 'compound/:id' => 'home#index'
 
 #  match 'compound/:id/pharmacology' => 'home#index'
 
