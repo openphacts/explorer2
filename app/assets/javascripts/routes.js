@@ -11,7 +11,7 @@ App.Router.map(function() {
     this.route("search", { path: "/search/:query" }, function() {
 
     });
-    this.resource('compounds', {}, function() {});
+    this.resource('compounds', { path: '/compounds' }, function() {});
     this.resource('compound', { path: '/compounds/:compound_id' }, function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('compound.structure', { path: '/structure' }, function(){});
@@ -44,30 +44,39 @@ App.SearchRoute = Ember.Route.extend({
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
                     var uuid = result.uri.split('/').pop();
-	                var compound = controller.store.createRecord('compound', {id: uuid});
-                    //var compound = App.Compound.find(uuid);
+	                //var compound = controller.store.createRecord('compound', {id: uuid});
+                    controller.store.push('compound', {id: uuid});
+                    var compound = controller.store.find('compound', uuid);
 					//var compound = me.store.find('compound', {});
 					        // use the lda api to fetch compounds rather than the default behaviour of rails side
 					        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
 					        var callback=function(success, status, response){  
 					            var compoundResult = searcher.parseCompoundResponse(response); 
 					            compound.setProperties(compoundResult);
-						        compound.trigger('didLoad');
+					//	        compound.trigger('didLoad');
+if (compoundResult.prefLabel != null && compoundResult.prefLabel.toLowerCase() === currentQuery.toLowerCase()) {
+                            compound.set('exactMatch', true);
+      			            me.addExactMatch(compound);
+                            me.set('totalResults', me.get('totalResults') + 1);
+                        } else {
+                            me.addSearchResult(compound);
+                            me.set('totalResults', me.get('totalResults') + 1);
+                        } 
 					        };
 					        searcher.fetchCompound(result.uri, null, callback);
 					        //compound.set("id", uuid);
 					        console.log('compound load');
 					        //return compound;
-                    compound.on('didLoad', function() {
-		        if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === currentQuery.toLowerCase()) {
-                            this.set('exactMatch', true);
-      			            me.addExactMatch(this);
-                            me.set('totalResults', me.get('totalResults') + 1);
-                        } else {
-                            me.addSearchResult(this);
-                            me.set('totalResults', me.get('totalResults') + 1);
-                        } 
-                    });
+                //    compound.on('didLoad', function() {
+		        //if (this.get('prefLabel') != null && this.get('prefLabel').toLowerCase() === currentQuery.toLowerCase()) {
+                //            this.set('exactMatch', true);
+      			//            me.addExactMatch(this);
+                //            me.set('totalResults', me.get('totalResults') + 1);
+                //        } else {
+                //            me.addSearchResult(this);
+                //            me.set('totalResults', me.get('totalResults') + 1);
+                //        } 
+                //    });
                 });
             } else {
                 // an error in the response, ignore for now
@@ -98,14 +107,16 @@ App.TargetsRoute = Ember.Route.extend({
 
 App.CompoundIndexRoute = Ember.Route.extend({
 	
-  setupController: function() {
+  setupController: function(controller, model) {
     console.log('compound index controller');	
   },
 
-  model: function(params) {
-	console.log('compound index compound')
-    return this.modelFor('compound');
-  }
+//  model: function(params) {
+//	console.log('compound index compound')
+//	//var compound = controller.store.createRecord('compound', {id: params.compound_id});
+//    //return compound;
+//    return this.modelFor('compound');
+ // }
 });
 
 App.CompoundsRoute = Ember.Route.extend({
