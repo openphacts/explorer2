@@ -38,8 +38,10 @@ Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform)
   }
 });
 Ember.Handlebars.registerBoundHelper('linkablePubmedId', function(pubmedId) {
+
 	if (pubmedId) {
-		return new Handlebars.SafeString('<a href="http://www.ncbi.nlm.nih.gov/pubmed?term=' + pubmedId + '" target="_blank">' + pubmedId + '</a>');
+		var justId = pubmedId.split("/").pop();
+		return new Handlebars.SafeString('<a href="' + pubmedId + '" target="_blank">' + justId + '</a>');
 	}
 });
 Ember.Handlebars.registerBoundHelper('expandableDescription', function(description) {
