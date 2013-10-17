@@ -61,8 +61,8 @@ App.CompoundPharmacologyIndexController.reopen({
         me.page++;
         var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
         $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	  thisCompound.get('pharmacology').pushObject(pharmaRecord);
+          var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
+	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
         me.set('currentCount', me.get('currentCount') + pharmaResults.length);
       pageScrolling = false;

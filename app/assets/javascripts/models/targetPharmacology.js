@@ -1,5 +1,5 @@
 App.TargetPharmacology = DS.Model.extend({
-  target: DS.belongsTo('App.Target'),
+  target: DS.belongsTo('target'),
   compoundInchikey: DS.attr('string'),
   compoundDrugType: DS.attr('string'),
   compoundGenericName: DS.attr('string'),
@@ -49,17 +49,4 @@ App.TargetPharmacology = DS.Model.extend({
   compoundInchikeyItem: DS.attr('string'),
   compoundPrefLabelItem: DS.attr('string'),
   pChembl: DS.attr('string')
-});
-App.TargetPharmacology.reopenClass({
-    find: function(uri, page, pageSize) {
-        var targetPharmacology = App.TargetPharmacology.createRecord();
-        var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
-        var callback=function(success, status, response){  
-            var targetPharmacologyResult = searcher.parseTargetPharmacologyResponse(response); 
-            targetPharmacology.setProperties(targetPharmacologyResult);
-        };  
-        searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + uri, page, pageSize, callback);
-        targetPharmacology.set("id", uri);
-        return targetPharmacology;
-    }
 });

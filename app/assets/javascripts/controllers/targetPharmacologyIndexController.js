@@ -1,6 +1,6 @@
 App.TargetPharmacologyIndexController = Ember.ObjectController.extend({
 
-  needs: "target",
+  needs: ["target", "compound"],
 
   page: 1,
 
@@ -23,8 +23,8 @@ App.TargetPharmacologyIndexController.reopen({
         me.page++;
         var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
         $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
-	  thisTarget.get('pharmacology').pushObject(pharmaRecord);
+          var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
+	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
       me.set('currentCount', me.get('currentCount') + pharmaResults.length);
       pageScrolling = false;

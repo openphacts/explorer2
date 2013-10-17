@@ -17,7 +17,7 @@ App.Router.map(function() {
         this.resource('compound.structure', { path: '/structure' }, function(){});
         this.resource('compound.pathways', { path: '/pathways' }, function(){});
     });
-    this.resource('targets', {}, function() {}); 
+    this.resource('targets', { path: '/targets' }, function() {}); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('target.pathways', { path: '/pathways' }, function(){});
@@ -180,4 +180,39 @@ App.TargetRoute = Ember.Route.extend({
 	console.log('target model');
     return this.get('store').find('target', params.target_id);
  }
+});
+
+App.TargetPharmacologyIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, target) {
+    console.log('target index route setup controller');
+    var me = controller;
+    controller.set('content', target);
+      var thisTarget = target;
+      var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+      if (success && response) {
+        var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
+	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
+        });
+        controller.set('page', controller.get('page') + 1);
+        controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+      }
+    };
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseTargetPharmacologyCountResponse(response);
+        controller.set('totalCount', count);
+      }
+    };
+    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
+    searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + target.id, countCallback);
+  },
+  model: function(params) {
+    console.log('target pharma index route');
+    return this.modelFor('target');
+  }
+
 });
