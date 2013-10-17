@@ -46,7 +46,19 @@ App.CompoundAdapter = DS.Adapter.extend({
 });
 App.TargetAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
-    return $.getJSON("/" + this.pluralize(type) + "/" + id);
+    return new Ember.RSVP.Promise(function(resolve, reject){
+      var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
+	  var callback=function(success, status, response){  
+        if (success) {
+	        var targetResult = searcher.parseTargetResponse(response); 
+            resolve(targetResult);
+        } else {
+            reject(status);
+        }
+        //return compoundResult;
+      }
+	  searcher.fetchTarget('http://www.conceptwiki.org/concept/' + id, null, callback);
+    });
   }
 });
 App.EnzymeAdapter = DS.Adapter.extend({

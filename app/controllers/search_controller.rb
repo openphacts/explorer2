@@ -61,16 +61,6 @@ class SearchController < ApplicationController
   end
   
   def index
-    @query = params[:query]
-    limit = params[:limit]
-    @concepts = find_compounds @query, limit
-    #@targets = find_targets query
-    #@enzymes = find_enzymes query
-    puts "concepts " + @concepts.size.to_s
-    respond_to do |format|
-      format.html { render :html => "home/index" }
-      format.json { render :json => @concepts}
-    end
 
   end
 

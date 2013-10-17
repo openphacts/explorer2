@@ -6,7 +6,9 @@ App.ApplicationController = Ember.Controller.extend({
 		console.log('app controller query');
 		var query = this.get('search');
 		this.set('searchQuery', query);
-		this.transitionToRoute('search', { query: query });
+		//this.transitionToRoute('search', { query: query }); NOTE: this is how you would transition to /search/blah
+        var params = Ember.Router.QueryParameters.create({ query: query });
+		this.transitionToRoute('search', params);
   }
 },
   isHome: (function() {

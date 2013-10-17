@@ -1,5 +1,5 @@
 App.CompoundPharmacology = DS.Model.extend({
-  compound: DS.belongsTo('App.Compound'),
+  compound: DS.belongsTo('compound'),
   compoundInchikey: DS.attr('string'),
   compoundDrugType: DS.attr('string'),
   compoundGenericName: DS.attr('string'),

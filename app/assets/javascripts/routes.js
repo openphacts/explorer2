@@ -2,26 +2,26 @@
 // you have to set location to 'history'. This means that you must also tell rails
 // what your routes are and to redirect them to whatever template contains the ember
 // outlet
-App.Router.reopen({
-  location: 'history',
-  rootURL: '/'
-});
+//App.Router.reopen({
+//  location: 'history',
+//  rootURL: '/'
+//});
 
 App.Router.map(function() { 
-    this.route("search", { path: "/search/:query" }, function() {
+    this.route("search", { path: "/search" }, function() {
 
     });
     this.resource('compounds', { path: '/compounds' }, function() {});
-    this.resource('compound', { path: '/compounds/:compound_id' }, function() {
+    this.resource('compound', { path: '/compounds/:compound_id' } , function() {
         this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
-//        this.resource('compound.structure', { path: '/structure' }, function(){});
-//        this.resource('compound.pathways', { path: '/pathways' }, function(){});
+        this.resource('compound.structure', { path: '/structure' }, function(){});
+        this.resource('compound.pathways', { path: '/pathways' }, function(){});
     });
-//    this.resource('targets', {}, function() {}); 
-//    this.resource('target', { path: '/targets/:target_id' }, function() {
-//        this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
-//        this.resource('target.pathways', { path: '/pathways' }, function(){});
-//    });
+    this.resource('targets', {}, function() {}); 
+    this.resource('target', { path: '/targets/:target_id' }, function() {
+        this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
+        this.resource('target.pathways', { path: '/pathways' }, function(){});
+    });
 //    this.resource('enzymes'); 
 //    this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
 //        this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
@@ -33,7 +33,9 @@ App.Router.map(function() {
 
 App.SearchRoute = Ember.Route.extend({
 
-  setupController: function(controller) {
+  observesParameters: ['query'],
+
+  setupController: function(controller, model, queryParams) {
     console.log('search route setup');
     controller.clear();
     controller.set('totalResults', 0);
@@ -44,16 +46,18 @@ App.SearchRoute = Ember.Route.extend({
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    var compound = controller.store.find('compound', result.uri.split('/').pop());
-                    //if (compoundResult.prefLabel != null && compoundResult.prefLabel.toLowerCase() === currentQuery.toLowerCase()) {
-                    //    compound.set('exactMatch', true);
-      			    //    me.addExactMatch(compound);
-                        me.set('totalResults', me.get('totalResults') + 1);
-                    //} else {
-                        me.addSearchResult(compound);
-                    //    me.set('totalResults', me.get('totalResults') + 1);
-                    //} 
-					console.log('compound load');
+                  //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
+                  //the promise is generated inside the store adapter for compound, see store.js
+                  controller.store.find('compound', result.uri.split('/').pop()).then(function(compound) {
+                      if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === currentQuery.toLowerCase()) {
+                          compound.set('exactMatch', true);
+      			          me.addExactMatch(compound);
+                          me.set('totalResults', me.get('totalResults') + 1);
+                      } else {
+                          me.addSearchResult(compound);
+                          me.set('totalResults', me.get('totalResults') + 1);
+                      } 
+                  });
                 });
             } else {
                 // an error in the response, ignore for now
@@ -62,42 +66,33 @@ App.SearchRoute = Ember.Route.extend({
             pageScrolling = false;
             enable_scroll();
         };
-//        var cwTargetCallback=function(success, status, response){
-//            if(success && response) {
-//                var results = searcher.parseResponse(response);
-//                $.each(results, function(index, result) {
-//                    var uuid = result.uri.split('/').pop();
-//	                //var compound = controller.store.createRecord('compound', {id: uuid});
-//                    controller.store.push('target', {id: uuid});
-//                    var target = controller.store.find('target', uuid);
-//					//var compound = me.store.find('compound', {});
-//					        // use the lda api to fetch compounds rather than the default behaviour of rails side
-//					        var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
-//					        var callback=function(success, status, response){  
-//					          var targetResult = searcher.parseTargetResponse(response); 
-//					          target.setProperties(targetResult);
-//                              me.addSearchResult(target);
-//                              me.set('totalResults', me.get('totalResults') + 1);
-//					        };
-//					        searcher.fetchTarget(result.uri, null, callback);
-//					        console.log('target load');
-//                });
-//            } else {
-//                // an error in the response, ignore for now
-//            }
-//            me.set('isSearching', false);
-//           pageScrolling = false;
-//            enable_scroll();
-//        }; 
-//        //targets
-//        searcher.byTag(controller.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
+        var cwTargetCallback=function(success, status, response){
+            if(success && response) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, result) {
+                    //find the target then add to the search results when the 'promise' returns
+                    controller.store.find('target', result.uri.split('/').pop()).then(function(target) {
+                      me.set('totalResults', me.get('totalResults') + 1);
+                      me.addSearchResult(target);
+					  console.log('target load');
+                    });
+                });
+            } else {
+                // an error in the response, ignore for now
+            }
+            me.set('isSearching', false);
+            pageScrolling = false;
+            enable_scroll();
+        }; 
+        //targets
+        searcher.byTag(controller.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
         searcher.byTag(controller.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
   },
 
-  model: function(params) {
+  model: function() {
     console.log('search route model');
-    this.controllerFor('search').setCurrentQuery(params.query);
-    return [];	
+    this.controllerFor('search').setCurrentQuery(this.get('queryParameters').query);
+    return [];
   }
 	
 });
@@ -105,13 +100,12 @@ App.SearchRoute = Ember.Route.extend({
 App.CompoundIndexRoute = Ember.Route.extend({
 	
   setupController: function(controller, model) {
-    console.log('compound index controller');	
+   console.log('compound index controller');
+   controller.set('model', model);	
   },
 
-  model: function(params) {
-	console.log('compound index compound')
-	//var compound = controller.store.createRecord('compound', {id: params.compound_id});
-    //return compound;
+  model: function() {
+	console.log('compound index model')
     return this.modelFor('compound');
  }
 });
@@ -119,26 +113,71 @@ App.CompoundIndexRoute = Ember.Route.extend({
 App.CompoundRoute = Ember.Route.extend({
 	
   setupController: function(controller, model) {
-    console.log('compound index controller');	
+    console.log('compound controller');
+    controller.set('model', model);	
   },
 
   model: function(params) {
-	console.log('compound index compound')
-	//var compound = controller.store.createRecord('compound', {id: params.compound_id});
-    //return compound;
-    return this.modelFor('compound');
+	console.log('compound model');
+    return this.get('store').find('compound', params.compound_id);
  }
 });
 
-App.IndexRoute = Ember.Route.extend({
-	// actions: {
-	// query: function() {
-	// 	console.log('query');
-	// 	var query = this.get('search');
-	// 	this.transitionTo('search/' + query);
-	//     }
-// },
-  setupController: function(controller, model) {
-    //App.searchController.set('query', '');
+App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, compound) {
+    controller.set('content', compound);
+      var me = controller;
+      var thisCompound = compound;
+      var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+        if (success && response) {
+          var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+          $.each(pharmaResults, function(index, pharma) {
+            var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
+	        thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+          });
+          controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+          controller.set('page', controller.get('page') + 1);
+        }
+    };
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseCompoundPharmacologyCountResponse(response);
+        controller.set('totalCount', count);
+      }
+    };
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
+    searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + compound.id, countCallback);
+  },
+  model: function(params) {
+    return this.modelFor('compound');
   }
+
+});
+
+App.TargetIndexRoute = Ember.Route.extend({
+	
+  setupController: function(controller, model) {
+   console.log('target index controller');
+   controller.set('model', model);	
+  },
+
+  model: function() {
+	console.log('target index model')
+    return this.modelFor('target');
+ }
+});
+
+App.TargetRoute = Ember.Route.extend({
+	
+  setupController: function(controller, model) {
+    console.log('target controller');
+    controller.set('model', model);	
+  },
+
+  model: function(params) {
+	console.log('target model');
+    return this.get('store').find('target', params.target_id);
+ }
 });

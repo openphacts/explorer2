@@ -14,6 +14,7 @@
 //= require jquery
 //= require handlebars
 //= require ember
+//= require Router
 //= require ember-data
 //= require bootstrap
 //= require combined
