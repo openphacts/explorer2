@@ -41,12 +41,15 @@ App.TargetAdapter = DS.Adapter.extend({
 });
 App.PathwayAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
+    console.log('pathway adapter find');
+    var identifier = id;
     return new Ember.RSVP.Promise(function(resolve, reject){
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pathwayInfoCallback=function(success, status, response){
         if (success && response) {
           var pathwayResult = searcher.parseInformationResponse(response);
+          pathwayResult['id'] = identifier;
           resolve(pathwayResult);
         } else {
           reject(status);

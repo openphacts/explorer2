@@ -16,6 +16,7 @@ App.Pathway = DS.Model.extend({
 });
 App.Pathway.reopenClass({
     find: function(id) {
+      console.log('pathway adapter find');
       var pathway = App.Pathway.createRecord();
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
