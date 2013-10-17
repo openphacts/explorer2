@@ -1,5 +1,5 @@
 App.Pathway = DS.Model.extend({
-  compound: DS.belongsTo('App.SearchResult'),
+  compound: DS.belongsTo('searchResult'),
   title: DS.attr('string'),
   identifier: DS.attr('string'),
   description: DS.attr('string'),
@@ -11,8 +11,8 @@ App.Pathway = DS.Model.extend({
   geneProductCWURI: DS.attr('string'),
   about: DS.attr('string'),
   parts: DS.attr(),
-  compounds: DS.hasMany('App.Compound'),
-  targets: DS.hasMany('App.Target'),
+  compounds: DS.hasMany('compound'),
+  targets: DS.hasMany('target'),
 });
 App.Pathway.reopenClass({
     find: function(id) {

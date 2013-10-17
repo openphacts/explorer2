@@ -4,7 +4,7 @@
 
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
-  			<li>{{#linkTo target.index controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}<span class="divider">/</span></li>
+  			<li>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}<span class="divider">/</span></li>
   			<li class="active">Target Phamacology</li>
 			
 			<div class="row pull-right"> 
@@ -27,8 +27,7 @@
 				<div class="span12">
     				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
    					<div class="row">
-      					<!--<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>-->
-      					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.target.description}}</div>
     				</div>
   				</div>
 			</div>
