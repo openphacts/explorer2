@@ -156,18 +156,18 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		ro5Violations =  chemspiderData.ro5_violations ? chemspiderData.ro5_violations : null;
 		smiles =  chemspiderData.smiles ? chemspiderData.smiles : null;
         inchiKey = chemspiderData.inchikey ? chemspiderData.inchikey : null;
+        molform =  chemspiderData.molformula ? chemspiderData.molformula : null;
     }
     if (chemblData) {
 		chemblURI =  chemblData["_about"] ? chemblData["_about"] : null;
 		fullMWT =  chemblData.full_mwt ? chemblData.full_mwt : null;
-		molform =  chemblData [constants.MOLFORM] ? chemblData[constants.MOLFORM] : null;
 		mwFreebase =  chemblData.mw_freebase ? chemblData.mw_freebase : null;
 		rtb =  chemblData.rtb ? chemblData.rtb : null;
     }
     if (conceptWikiData) {
         id =  conceptWikiData["_about"].split("/").pop();
     }
-
+	console.log(" molform " + molform);
 	return {
 		"id": id,
 		"prefLabel": prefLabel,
