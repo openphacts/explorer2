@@ -11,8 +11,9 @@ App.Pathway = DS.Model.extend({
   geneProductCWURI: DS.attr('string'),
   about: DS.attr('string'),
   parts: DS.attr(),
-  compounds: DS.hasMany('compound'),
-  targets: DS.hasMany('target'),
+  compounds: DS.hasMany('compound', { async: true }),
+  targets: DS.hasMany('target', { async: true }),
+  revision: DS.attr('string')
 });
 //App.Pathway.reopenClass({
 //    find: function(id) {

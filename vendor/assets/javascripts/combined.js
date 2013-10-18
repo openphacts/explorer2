@@ -1774,7 +1774,6 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
         var constants = new Openphacts.Constants();
         var latest_version, identifier, revision, title, description, parts, inDataset, pathwayOntology, organism, organismLabel, about;
         latest_version = response.primaryTopic.latest_version;
-        about = latest_version[constants.ABOUT];
         identifier = response.primaryTopic[constants.ABOUT];
         title = latest_version.title ? latest_version.title : null;
         organism = latest_version.organism[constants.ABOUT] ? latest_version.organism[constants.ABOUT] : null;
@@ -1801,12 +1800,11 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
                    'title': title, 
                    'description': description, 
                    'identifier': identifier,
-                   'revision': 'revision', 
+                   'revision': revision, 
                    'pathwayOntologies': pathwayOntologies,
                    'organism': organism, 
                    'organismLabel': organismLabel, 
-                   'parts': parts,
-                   'about': about
+                   'parts': parts
                 };
 }
 

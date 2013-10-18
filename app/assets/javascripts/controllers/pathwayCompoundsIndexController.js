@@ -1,6 +1,6 @@
-App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
+App.PathwayCompoundsIndexController = Ember.ArrayController.extend({
 
-  needs: "compound",
+  needs: "pathway",
 
   page: 1,
 
@@ -14,7 +14,7 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
 
 });
 
-App.CompoundPathwaysIndexController.reopen({
+App.PathwayCompoundsIndexController.reopen({
  
   fetchMore: function() {
     if (this.currentCount < this.totalCount) {

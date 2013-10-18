@@ -67,20 +67,20 @@
 			 	<th>Organism</th>
 				<th>Organism Label</th>
 				<th>Gene Product</th>
-				<th>About</th>
+				<th>Revision</th>
 			</tr>
 		</thead>
 		<tbody>
-			{{#each pathway in pathways}}
+			{{#each}}
 			<tr class="record-deco">
-				<td class="cell-basictext">{{#linkTo 'pathway.index' pathway}}{{pathway.title}}{{/linkTo}}</td>
-				<td class="cell-longtext">{{pathway.identifier}}</td>
-				<td class="lead cell-basictext">{{pathway.description}}</td>
-				<td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
-                <td class="lead cell-basictext">{{pathway.organism}}</td>
-				<td class="lead cell-basictext">{{pathway.organismLabel}}</td>
-				<td class="cell-basictext">{{pathway.geneProduct}}</td>
-                <td class="cell-basictext">{{pathway.about}}</td>
+				<td class="cell-basictext">{{#linkTo 'pathway.index' this}}{{title}}{{/linkTo}}</td>
+				<td class="cell-longtext">{{identifier}}</td>
+				<td class="lead cell-basictext">{{description}}</td>
+				<td class="lead cell-basictext">{{pathwayOntology}}</td>
+                <td class="lead cell-basictext">{{organism}}</td>
+				<td class="lead cell-basictext">{{organismLabel}}</td>
+				<td class="cell-basictext">{{geneProduct}}</td>
+                <td class="cell-basictext">{{revision}}</td>
 			</tr>
 			{{/each}}
 		</tbody>

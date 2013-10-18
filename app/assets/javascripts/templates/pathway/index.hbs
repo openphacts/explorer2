@@ -2,11 +2,9 @@
 <p>title: {{title}}</p>
 <p>identifier: {{identifier}}</p>
 <p>description: {{description}}</p>
-{{#each ontology in pathwayOntologies}}
 <h2>Ontologies</h2>
-<p>reference: {{ontology.reference}}</p>
-<p>metabolite: {{ontology.metabolite}}</p>
-<p>gene product: {{ontology.gene_product}}</p>
+{{#each ontology in pathwayOntologies}}
+<p>{{ontology}}</p>
 {{/each}}
 <h2>Organism</h2>
 <p>organism: {{organism}}</p>
@@ -22,6 +20,4 @@
 <p>type: {{part.type}}</p>
 {{/each}}
 <h2>Compounds</h2>
-{{#each compound in compounds}}
-<p>{{#linkTo 'compound.index' compound}}{{compound.prefLabel}}{{/linkTo}}</p>
-{{/each}}
+{{#linkTo 'pathway.compounds'}}Compounds{{/linkTo}}

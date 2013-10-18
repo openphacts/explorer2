@@ -28,6 +28,7 @@ App.Router.map(function() {
     });
     this.resource('pathways', { path: '/pathways' }, function() {}); 
     this.resource('pathway', { path: '/pathways/:pathway_id' }, function() {
+        this.resource('pathway.compounds', { path: '/compounds' }, function(){});
     });
 });
 
@@ -295,37 +296,59 @@ App.PathwayIndexRoute = Ember.Route.extend({
   }
 });
 
+App.PathwaysCompoundIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, model) {
+    controller.set('model', model);
+  },
+
+  model: function(params) {
+    console.log('pathway compounds index');
+    return this.modelFor('pathway').get('compounds');
+  }
+
+});
+
 App.CompoundPathwaysIndexRoute = Ember.Route.extend({
 
-  setupController: function(controller, compound) {
-    controller.set('content', compound);
-    var me = controller;
-      var thisCompound = compound;
-      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-      var pathwaysByCompoundCallback=function(success, status, response){
-        if (success && response) {
-          var pathwayResults = searcher.parseByCompoundResponse(response);
-          $.each(pathwayResults, function(index, pathwayResult) {
-            pathwayID = pathwayResult.identifier.split('/').pop();
-            me.store.find('pathway', pathwayID).then(function(pathway) {
-              thisCompound.get('pathways').pushObject(pathway);
-            });
-          });
-          controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
-          controller.set('page', controller.get('page') + 1);
-        }
-    };
+  setupController: function(controller, model) {
+    controller.set('content', model);
+    var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
     var countCallback=function(success, status, response){
       if (success && response) {
         var count = searcher.parseCountPathwaysByCompoundResponse(response);
         controller.set('totalCount', count);
       }
     };
-    searcher.byCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
-    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, countCallback);
+    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + this.modelFor('compound').id, null, null, countCallback);
+    // the initial number of pathways is equal to the amount currently loaded in the compound model
+    controller.set('currentCount', model.get('length'));
+//    var me = controller;
+//      var thisCompound = compound;
+//      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+//      var pathwaysByCompoundCallback=function(success, status, response){
+//        if (success && response) {
+//          var pathwayResults = searcher.parseByCompoundResponse(response);
+//          $.each(pathwayResults, function(index, pathwayResult) {
+//            pathwayID = pathwayResult.identifier.split('/').pop();
+//            me.store.find('pathway', pathwayID).then(function(pathway) {
+//              thisCompound.get('pathways').pushObject(pathway);
+//            });
+//          });
+//          controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
+//          controller.set('page', controller.get('page') + 1);
+//        }
+//    };
+//    var countCallback=function(success, status, response){
+//      if (success && response) {
+//        var count = searcher.parseCountPathwaysByCompoundResponse(response);
+//        controller.set('totalCount', count);
+//      }
+//    };
+//    searcher.byCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+//    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, countCallback);
   },
-  model: function(params) {
-    return this.modelFor('compound');
+  model: function() {
+    return this.modelFor('compound').get('pathways');
   }
-
 });
