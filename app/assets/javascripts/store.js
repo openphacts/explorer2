@@ -50,6 +50,9 @@ App.PathwayAdapter = DS.Adapter.extend({
         if (success && response) {
           var pathwayResult = searcher.parseInformationResponse(response);
           pathwayResult['id'] = identifier;
+          //pathwayResult['compounds'] = [];
+          //pathwayResults['compounds'].push('http://identifiers.org/hmdb/HMDB00045');
+          //pathwayResults['compounds'].push('http://identifiers.org/hmdb/HMDB01870');
           resolve(pathwayResult);
         } else {
           reject(status);

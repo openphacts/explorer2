@@ -306,9 +306,10 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
         if (success && response) {
           var pathwayResults = searcher.parseByCompoundResponse(response);
           $.each(pathwayResults, function(index, pathwayResult) {
-            pathwayResult['id'] = pathwayResult.identifier.split('/').pop();
-            var pathwayRecord = me.store.createRecord('pathway', pathwayResult);
-            thisCompound.get('pathways').pushObject(pathwayRecord);
+            pathwayID = pathwayResult.identifier.split('/').pop();
+            me.store.find('pathway', pathwayID).then(function(pathway) {
+              thisCompound.get('pathways').pushObject(pathway);
+            });
           });
           controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
           controller.set('page', controller.get('page') + 1);
