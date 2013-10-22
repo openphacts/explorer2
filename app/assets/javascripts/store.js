@@ -63,32 +63,38 @@ App.PathwayAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     console.log('pathway adapter find');
     var identifier = id;
-    return new Ember.RSVP.Promise(function(resolve, reject){
+    var promise = new Ember.RSVP.Promise(function(resolve, reject){
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       var pathwayInfoCallback=function(success, status, response){
         if (success && response) {
             // we have the pathway so now  find all the compounds and add ids for lazy loading
-            var getCompoundsCallback=function(success, status, response){
-              if (success && response) {
-                  var compoundsResult = searcher.parseGetCompoundsResponse(response);
-                  $.each(compoundsResult.metabolites, function(index, metabolite) {
-                    //load the ids of the pathways, the compound model will lazy load it
-                    // need to then find the cw id using the mapURL function
-                    pathwayResult['compounds'].push(metabolite);
-                  });
-                  // all data added so send it back
-                  resolve(pathwayResult);
-              }
-            }
           var pathwayResult = searcher.parseInformationResponse(response);
           pathwayResult['id'] = identifier;
           pathwayResult['compounds'] = [];
-          searcher.getCompounds('http://identifiers.org/wikipathways/' + id, null, getCompoundsCallback);
+          resolve(pathwayResult);
         } else {
           reject(status);
         }
       };
       searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
     });
+    promise.then(function(data){
+      console.log('compounds by pathway promise');
+      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+      var getCompoundsCallback=function(success, status, response){
+        if (success && response) {
+            var compoundsResult = searcher.parseGetCompoundsResponse(response);
+            $.each(compoundsResult.metabolites, function(index, metabolite) {
+              //load the ids of the pathways, the compound model will lazy load it
+              // need to then find the cw id using the mapURL function
+              data['compounds'].push(metabolite);
+            });
+            // all data added so send it back
+        }
+      }
+      searcher.getCompounds('http://identifiers.org/wikipathways/' + id, null, getCompoundsCallback);
+      return data;
+    });
+    return promise;
   }
 });
