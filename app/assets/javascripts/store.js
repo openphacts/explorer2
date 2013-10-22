@@ -8,37 +8,37 @@
 //window.attr = DS.attr;
 App.CompoundAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
-    // return a promise inside of which is the callback which either resolves with the retrieved data or rejects with the status
+    // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status
     var promise = new Ember.RSVP.Promise(function(resolve, reject){
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       // get the compound details  
 	  var callback=function(success, status, response){  
         if (success) {
-            //get the pathways for the compound
-            var pathwaysByCompoundCallback=function(success, status, response){
-              if (success && response) {
-                  var pathwayResults = pathwaysSearcher.parseByCompoundResponse(response);
-                  $.each(pathwayResults, function(index, pathwayResult) {
-                    pathwayID = pathwayResult.identifier.split('/').pop();
-                    //load the ids of the pathways, the compound model will lazy load it
-                    compoundResult['pathways'].push(pathwayID);
-                    //me.store.find('pathway', pathwayID).then(function(pathway) {
-                    //  thisCompound.get('pathways').pushObject(pathway);
-                    //});
-                  });
-                  // all data added so send it back
-                  resolve(compoundResult);
-              }
-            }
 	        var compoundResult = searcher.parseCompoundResponse(response);
             compoundResult['pathways'] = [];
-            pathwaysSearcher.byCompound('http://www.conceptwiki.org/concept/' + id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+            resolve(compoundResult);
         } else {
             reject(status);
         }
       }
 	  searcher.fetchCompound('http://www.conceptwiki.org/concept/' + id, null, callback);
+    });
+    // after finding the compound, find the pathways
+    promise.then(function(data) {
+      var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+      var pathwaysByCompoundCallback=function(success, status, response){
+        if (success && response) {
+            var pathwayResults = pathwaysSearcher.parseByCompoundResponse(response);
+            $.each(pathwayResults, function(index, pathwayResult) {
+              pathwayID = pathwayResult.identifier.split('/').pop();
+              //have to find the pathway record and add it, just adding the ID does not work
+              data['pathways'].pushObject(store.find('pathway', pathwayID));
+            });
+        }
+      }
+      pathwaysSearcher.byCompound('http://www.conceptwiki.org/concept/' + id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+      return data;
     });
     return promise;
   }
