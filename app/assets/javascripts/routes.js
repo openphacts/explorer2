@@ -334,7 +334,7 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
     };
     searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + this.modelFor('compound').id, null, null, countCallback);
     // the initial number of pathways is equal to the amount currently loaded in the compound model
-    controller.set('currentCount', model.get('length'));
+    //controller.set('currentCount', model.get('length'));
 //    var me = controller;
 //      var thisCompound = compound;
 //      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);

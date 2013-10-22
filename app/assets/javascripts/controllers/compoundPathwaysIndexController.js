@@ -4,7 +4,9 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
 
   page: 1,
 
-  currentCount: 0,
+  currentCount: function() {
+    return this.get('model.content.length');
+  }.property('model'),
 
   totalCount: 0,
 
