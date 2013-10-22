@@ -9,7 +9,7 @@
 App.CompoundAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     // return a promise inside of which is the callback which either resolves with the retrieved data or rejects with the status
-    return new Ember.RSVP.Promise(function(resolve, reject){
+    var promise = new Ember.RSVP.Promise(function(resolve, reject){
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       // get the compound details  
@@ -40,6 +40,7 @@ App.CompoundAdapter = DS.Adapter.extend({
       }
 	  searcher.fetchCompound('http://www.conceptwiki.org/concept/' + id, null, callback);
     });
+    return promise;
   }
 });
 App.TargetAdapter = DS.Adapter.extend({
