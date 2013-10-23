@@ -300,6 +300,54 @@ App.PathwayCompoundsIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, model) {
     controller.set('model', model);
+    controller.clear();
+    console.log('pathway adapter find');
+    var me = controller;
+    thisPathway = this.modelFor('pathway');
+    var alert = {};
+    Ember.RSVP.EventTarget.mixin(alert);
+    // alert when the list of compounds for this pathway have been loaded
+    alert.on("finished", function(event) {
+      // find the cw url for each compound associated with a pathway
+	  var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	  var mapURLCallback = function(success, status, response) {
+	    var constants = new Openphacts.Constants();
+	    if (success && response) {
+		    var matchingURL = null;
+		    var urls = mapSearcher.parseMapURLResponse(response);
+            var found = false;
+            //loop through all the identifiers for a compound until we find the cw one
+		    $.each(urls, function(i, url) {
+		      var uri = new URI(url);
+		      if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		          thisPathway.get('compounds').pushObject(compound);
+                });
+                found = true;
+		      }
+            });	
+	    }
+	  };
+      //loop through the url for each compound and fetch all the urls for it from the backend
+      $.each(compoundURLs, function(index, URL) {
+	    mapSearcher.mapURL(URL, null, null, null, mapURLCallback);
+      });
+    });
+    var compoundURLs = [];
+    var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    var getCompoundsCallback=function(success, status, response){
+      if (success && response) {
+          var compoundsResult = searcher.parseGetCompoundsResponse(response);
+          $.each(compoundsResult.metabolites, function(index, metabolite) {
+            //load the ids of the pathways, the compound model will lazy load it
+            // need to then find the cw id using the mapURL function
+            compoundURLs.push(metabolite);
+          });
+          //we now have all the compound urls for this pathway although they are probably not the cw one so call the trigger
+          alert.trigger('finished');
+      }
+    }
+    searcher.getCompounds('http://identifiers.org/wikipathways/' + thisPathway.id, null, getCompoundsCallback);
   },
 
   model: function(params) {
@@ -325,40 +373,32 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, model) {
     controller.set('content', model);
+    controller.clear();
+    var me = controller;
+    var thisCompound = this.modelFor('compound');
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    //how many pathways for this compound
     var countCallback=function(success, status, response){
       if (success && response) {
         var count = searcher.parseCountPathwaysByCompoundResponse(response);
         controller.set('totalCount', count);
       }
     };
-    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + this.modelFor('compound').id, null, null, countCallback);
-    // the initial number of pathways is equal to the amount currently loaded in the compound model
-    //controller.set('currentCount', model.get('length'));
-//    var me = controller;
-//      var thisCompound = compound;
-//      var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-//      var pathwaysByCompoundCallback=function(success, status, response){
-//        if (success && response) {
-//          var pathwayResults = searcher.parseByCompoundResponse(response);
-//          $.each(pathwayResults, function(index, pathwayResult) {
-//            pathwayID = pathwayResult.identifier.split('/').pop();
-//            me.store.find('pathway', pathwayID).then(function(pathway) {
-//              thisCompound.get('pathways').pushObject(pathway);
-//            });
-//          });
-//          controller.set('currentCount', controller.get('currentCount') + pathwayResults.length);
-//          controller.set('page', controller.get('page') + 1);
-//        }
-//    };
-//    var countCallback=function(success, status, response){
-//      if (success && response) {
-//        var count = searcher.parseCountPathwaysByCompoundResponse(response);
-//        controller.set('totalCount', count);
-//      }
-//    };
-//    searcher.byCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
-//    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + compound.id, null, null, countCallback);
+    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, countCallback);
+    //load the pathways for this compound
+    var pathwaysByCompoundCallback=function(success, status, response){
+      if (success && response) {
+          var pathwayResults = searcher.parseByCompoundResponse(response);
+          $.each(pathwayResults, function(index, pathwayResult) {
+            pathwayID = pathwayResult.identifier.split('/').pop();
+            //have to find the pathway record and add it, just adding the ID does not work
+            me.get('store').find('pathway', pathwayID).then(function(pathway) {
+              thisCompound.get('pathways').pushObject(pathway);
+            });
+          });
+      }
+    }
+    searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
   },
   model: function() {
     return this.modelFor('compound').get('pathways');

@@ -6,7 +6,7 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
 
   currentCount: function() {
     return this.get('model.content.length');
-  }.property('model'),
+  }.property('model.content.length'),
 
   totalCount: 0,
 
