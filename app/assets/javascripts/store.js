@@ -64,9 +64,35 @@ App.PathwayAdapter = DS.Adapter.extend({
     console.log('pathway adapter find');
     var identifier = id;
     var alert = {};
-    var compoundURLs = [];
     Ember.RSVP.EventTarget.mixin(alert);
-
+      alert.on("finished", function(event) {
+        // find the cw url for each compound associated with a pathway
+	    var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	    var mapURLCallback = function(success, status, response) {
+		  var constants = new Openphacts.Constants();
+		  if (success && response) {
+			  var matchingURL = null;
+		      var urls = mapSearcher.parseMapURLResponse(response);
+              var found = false;
+              //loop through all the identifiers for a compound until we find the cw one
+		      $.each(urls, function(i, url) {
+			    var uri = new URI(url);
+			    if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                  console.log('compound is ' + url);
+				  thisData['compounds'].pushObject(store.find('compound', url.split('/').pop()));
+                  found = true;
+				}
+		      });	
+		  }
+	    };
+        //loop through the url for each compound and fetch all the urls for it from the backend
+        $.each(compoundURLs, function(index, URL) {
+	      console.log('url is ' + URL);
+	      mapSearcher.mapURL(URL, null, null, null, mapURLCallback);
+        });
+      });
+    var compoundURLs = [];
+    var thisData = null;
     var promise = new Ember.RSVP.Promise(function(resolve, reject){
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       var pathwayInfoCallback=function(success, status, response){
@@ -83,6 +109,7 @@ App.PathwayAdapter = DS.Adapter.extend({
       searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
     });
     promise.then(function(data){
+      thisData = data;
       console.log('compounds by pathway promise');
       var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
       var getCompoundsCallback=function(success, status, response){
@@ -96,42 +123,42 @@ App.PathwayAdapter = DS.Adapter.extend({
               //data['compounds'].pushObject(store.find('compound', '5a814fb1-403a-4dab-8190-b7e6db7b4432'));
               //data['compounds'].push(metabolite);
             });
+            //we now have all the compound urls for this pathway although they are probably not the cw one so call the trigger
             alert.trigger('finished');
         }
         return data;
       }
       searcher.getCompounds('http://identifiers.org/wikipathways/' + id, null, getCompoundsCallback);
     });
-    promise.then(function(data) {
-      alert.on("finished", function(event) {
-        console.log('finished');
-        console.log(compoundURLs);
-	    var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-	    var mapURLCallback = function(success, status, response) {
-		  var constants = new Openphacts.Constants();
-		  if (success && response) {
-              console.log('pathway compounds callback success');
-			  var matchingURL = null;
-		      var urls = mapSearcher.parseMapURLResponse(response);
-              var found = false;
-              //loop through all the identifiers for a compound until we find the cw one
-		      $.each(urls, function(i, url) {
-			    var uri = new URI(url);
-			    if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
-                  console.log('compound is ' + url);
-				  data['compounds'].pushObject(store.find('compound', url.split('/').pop()));
-                  found = true;
-				}
-		      });	
-		  }
-	    };
-        $.each(compoundURLs, function(index, URL) {
-	      console.log('url is ' + URL);
-	      mapSearcher.mapURL(URL, null, null, null, mapURLCallback);
-        });
-      });
-      return data;
-    });
+//    promise.then(function(data) {
+//      alert.on("finished", function(event) {
+//        // find the cw url for each compound associated with a pathway
+//	    var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+//	    var mapURLCallback = function(success, status, response) {
+//		  var constants = new Openphacts.Constants();
+//		  if (success && response) {
+//			  var matchingURL = null;
+//		      var urls = mapSearcher.parseMapURLResponse(response);
+//              var found = false;
+//              //loop through all the identifiers for a compound until we find the cw one
+//		      $.each(urls, function(i, url) {
+//			    var uri = new URI(url);
+//			    if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+//                  console.log('compound is ' + url);
+//				  data['compounds'].pushObject(store.find('compound', url.split('/').pop()));
+//                  found = true;
+//				}
+//		      });	
+//		  }
+//	    };
+//        //loop through the url for each compound and fetch all the urls for it from the backend
+//        $.each(compoundURLs, function(index, URL) {
+//	      console.log('url is ' + URL);
+//	      mapSearcher.mapURL(URL, null, null, null, mapURLCallback);
+//        });
+//      });
+//      return data;
+//    });
     return promise;
   }
 });
