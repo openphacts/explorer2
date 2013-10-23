@@ -70,7 +70,7 @@ App.CompoundPharmacologyIndexController.reopen({
       enable_scroll();
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page, 50, pharmaCallback);
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page + 1, 50, pharmaCallback);
     }
     pageScrolling = false;
     enable_scroll();

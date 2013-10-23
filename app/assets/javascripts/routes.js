@@ -190,11 +190,11 @@ App.TargetRoute = Ember.Route.extend({
 
 App.TargetPharmacologyIndexRoute = Ember.Route.extend({
 
-  setupController: function(controller, target) {
+  setupController: function(controller, model) {
     console.log('target index route setup controller');
     var me = controller;
-    controller.set('content', target);
-      var thisTarget = target;
+    controller.set('content', model);
+      var thisTarget = this.modelFor('target');
       var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
@@ -203,8 +203,7 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
           var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
 	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
-        controller.set('page', controller.get('page') + 1);
-        controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+        controller.set('page', 1);
       }
     };
     var countCallback=function(success, status, response){
@@ -213,12 +212,16 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
         controller.set('totalCount', count);
       }
     };
-    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
-    searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + target.id, countCallback);
+    if (controller.get('totalCount') == null) {
+        searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + thisTarget.id, countCallback);
+    }
+    if (controller.get('page') == null) {
+        searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, 1, 50, pharmaCallback);
+    }
   },
   model: function(params) {
     console.log('target pharma index route');
-    return this.modelFor('target');
+    return this.modelFor('target').get('pharmacology');
   }
 
 });
