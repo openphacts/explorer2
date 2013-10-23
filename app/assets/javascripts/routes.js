@@ -126,20 +126,20 @@ App.CompoundRoute = Ember.Route.extend({
 
 App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 
-  setupController: function(controller, compound) {
-    controller.set('content', compound);
+  setupController: function(controller, model) {
+    controller.set('content', model);
       var me = controller;
-      var thisCompound = compound;
+      var thisCompound = this.modelFor('compound');
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
         if (success && response) {
           var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
           $.each(pharmaResults, function(index, pharma) {
             var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
-	        thisCompound.get('pharmacology').pushObject(pharmaRecord);        
+	        thisCompound.get('pharmacology').pushObject(pharmaRecord);
           });
-          controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
-          controller.set('page', controller.get('page') + 1);
+          //controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
+          controller.set('page', 1);
         }
     };
     var countCallback=function(success, status, response){
@@ -148,11 +148,16 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
         controller.set('totalCount', count);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
-    searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + compound.id, countCallback);
+    if (controller.get('totalCount') == null) {
+        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, countCallback);
+    }
+    if (controller.get('page') == null) {
+        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, 1, 50, pharmaCallback);
+    }
+
   },
   model: function(params) {
-    return this.modelFor('compound');
+    return this.modelFor('compound').get('pharmacology');
   }
 
 });

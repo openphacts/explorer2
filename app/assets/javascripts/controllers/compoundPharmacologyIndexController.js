@@ -1,12 +1,14 @@
-App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
+App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   needs: "compound",
 
-  page: 1,
+  page: null,
 
-  currentCount: 0,
+  currentCount: function() {
+    return this.get('model.content.length');
+  }.property('model.content.length'),
 
-  totalCount: 0,
+  totalCount: null,
 
   navigateTo: function(target) {
     var me = this;
@@ -52,9 +54,9 @@ App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
 App.CompoundPharmacologyIndexController.reopen({
  
   fetchMore: function() {
-    if (this.currentCount < this.totalCount) {
+    if (this.get('model.content.length') < this.totalCount) {
     var me = this;
-    var thisCompound = this.get('content');
+    var thisCompound = this.get('controllers.compound').get('content');
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
@@ -64,7 +66,6 @@ App.CompoundPharmacologyIndexController.reopen({
           var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('currentCount', me.get('currentCount') + pharmaResults.length);
       pageScrolling = false;
       enable_scroll();
       }
