@@ -412,3 +412,39 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
     return this.modelFor('compound').get('pathways');
   }
 });
+
+App.TargetPathwaysIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, model) {
+    controller.set('content', model);
+    controller.clear();
+    var me = controller;
+    var thisTarget = this.modelFor('target');
+    var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    //how many pathways for this compound
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseCountPathwaysByTargetResponse(response);
+        controller.set('totalCount', count);
+      }
+    };
+    searcher.countPathwaysByTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, countCallback);
+    //load the pathways for this compound
+    var pathwaysByTargetCallback=function(success, status, response){
+      if (success && response) {
+          var pathwayResults = searcher.parseByTargetResponse(response);
+          $.each(pathwayResults, function(index, pathwayResult) {
+            pathwayID = pathwayResult.identifier.split('/').pop();
+            //have to find the pathway record and add it, just adding the ID does not work
+            me.get('store').find('pathway', pathwayID).then(function(pathway) {
+              thisTarget.get('pathways').pushObject(pathway);
+            });
+          });
+      }
+    }
+    searcher.byTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, 1, 50, null, pathwaysByTargetCallback);
+  },
+  model: function() {
+    return this.modelFor('target').get('pathways');
+  }
+});

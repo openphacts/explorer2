@@ -2,13 +2,13 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
 
   needs: "compound",
 
-  page: 1,
+  page: null,
 
   currentCount: function() {
     return this.get('model.content.length');
   }.property('model.content.length'),
 
-  totalCount: 0,
+  totalCount: null,
 
   notEmpty: function() {
     return this.get('totalCount') > 0;
@@ -34,7 +34,6 @@ App.CompoundPathwaysIndexController.reopen({
               thisCompound.get('pathways').pushObject(pathway);
             });
         });
-        me.set('currentCount', me.get('currentCount') + pathwayResults.length);
       pageScrolling = false;
       enable_scroll();
       }
