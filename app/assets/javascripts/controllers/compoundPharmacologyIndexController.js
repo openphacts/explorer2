@@ -10,6 +10,12 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   totalCount: null,
 
+  fetching: false,
+
+  notEmpty: function() {
+    return this.get('totalCount') > 0;
+  }.property('totalCount'),
+
   navigateTo: function(target) {
     var me = this;
     console.log(target.about);
@@ -47,12 +53,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 		}
 	});
 
-  }
+  },
 
-});
-
-App.CompoundPharmacologyIndexController.reopen({
- 
   fetchMore: function() {
     if (this.get('model.content.length') < this.totalCount) {
     var me = this;
@@ -66,14 +68,14 @@ App.CompoundPharmacologyIndexController.reopen({
           var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
-      pageScrolling = false;
-      enable_scroll();
+        me.set('fetching', false);
+      } else {
+        //failed response so scrolling is now allowed
+        me.set('fetching', false);
       }
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page + 1, 50, pharmaCallback);
     }
-    pageScrolling = false;
-    enable_scroll();
   }
 
 });

@@ -26,18 +26,6 @@
 <div class='content'>
 	{{outlet}}
 </div>
-
-<script type="text/javascript"> 
-console.log('helloooooo');
-$('#search_box').typeahead({
-    source: function (query, process) {
-console.log('in here');
-        $.getJSON(typeaheadUrl, { query: query }, function (data) {
-            return process(data);
-        })
-    }
-  });
-</script>
 <script type="text/javascript"> 
 
 	$('#compound-only').click(function(){

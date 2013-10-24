@@ -146,13 +146,13 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
       if (success && response) {
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         controller.set('totalCount', count);
+        if (count > 0 && controller.get('page') === null) {
+            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, 1, 50, pharmaCallback);
+        }
       }
     };
-    if (controller.get('totalCount') == null) {
+    if (controller.get('totalCount') === null) {
         searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, countCallback);
-    }
-    if (controller.get('page') == null) {
-        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, 1, 50, pharmaCallback);
     }
 
   },
@@ -208,15 +208,15 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
     };
     var countCallback=function(success, status, response){
       if (success && response) {
-        var count = searcher.parseTargetPharmacologyCountResponse(response);
-        controller.set('totalCount', count);
+          var count = searcher.parseTargetPharmacologyCountResponse(response);
+          controller.set('totalCount', count);
+          if (count > 0 && controller.get('page') == null) {
+              searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, 1, 50, pharmaCallback);
+          }
       }
     };
     if (controller.get('totalCount') == null) {
         searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + thisTarget.id, countCallback);
-    }
-    if (controller.get('page') == null) {
-        searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, 1, 50, pharmaCallback);
     }
   },
   model: function(params) {

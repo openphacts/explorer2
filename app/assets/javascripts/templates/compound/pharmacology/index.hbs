@@ -51,7 +51,7 @@
 	</div>
 
 	<button class="btn btn-primary btn-mini text-top pull-right" title="Create TSV file for download" {{action "tsvDownload" this}}><i class="icon-white icon-download"></i></button>
-
+    {{#if notEmpty}}
 	<!-- RESULT LISTING -->
 	<div style="padding:30px">	
 	<table class="mytable">
@@ -101,25 +101,12 @@
 		</tbody>
 	</table>
 	</div>
+    {{else}}
+        <h2 class="centre">There is no pharmacology data for {{controllers.compound.prefLabel}}</h2>
+    {{/if}}
+
 	
 <script type="text/javascript">
-$(window).off("scroll", scrollHandler);
-scrollOnThisPage = true;
-pageScrolling = false;
-scrollHandler = function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        disable_scroll();
-        pageScrolling = true;
-        console.log("Fetching results for scroll " + pageScrolling);
-        //this is not a very pleasant way to get the controller but can find no other method
-        App.__container__.lookup('controller:compoundPharmacologyIndex').fetchMore();
-    }
-};
-$(window).scroll(scrollHandler);
 
 // Hide the extra content initially, using JS so that if JS is disabled, no problemo:
 $('.read-more-content').addClass('hide')
