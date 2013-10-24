@@ -26,3 +26,33 @@
         {{controllers.compound.smiles}}
     </div>
 </div>
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+<tr>
+<th>type</th>
+<th>molecule</th>
+<th>csURI</th>
+<th>matchType</th>
+<th>complexity</th>
+<th>isotopic</th>
+<th>hasSpectra</th>
+<th>hasPatents</th>
+</tr>
+</thead>
+<tbody>
+{{#each}}
+<tr class="record-deco">
+<td>{{type}}</td>
+<td>{{molecule}}</td>
+<td>{{csURI}}</td>
+<td>{{matchType}}</td>
+<td>{{complexity}}</td>
+<td>{{isotopic}}</td>
+<td>{{hasSpectra}}</td>
+<td>{{hasPatents}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+</div>

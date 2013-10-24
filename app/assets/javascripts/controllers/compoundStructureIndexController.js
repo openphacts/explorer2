@@ -8,37 +8,39 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
        console.log("Set structure search type: " + type);
        this.set('structureSearchType', type);
        var me = this;
-       var thisCompound = this.get('content');
+       var thisCompound = this.get('controllers.compound').get('content');
+       thisCompound.get('structure').clear();
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
          if (success && response) {
              var results = null;
              if (type == "exact") {
-                 results = searcher.parseExactResponse(response);
-                 $.each(results, function(index, pharma) {
-                   // fetch each compound and add to records
-                   //var structureRecord = App.CompoundStructure.createRecord(pharma);
-                   //thisCompound.get('structure').pushObject(pharmaRecord);
-                 });
+                 result = searcher.parseExactResponse(response);
+                 var structureRecord = me.get('store').createRecord('compoundStructure', result);
+                 thisCompound.get('structure').pushObject(structureRecord);
              } else if (type == "similarity") {
-                 // fetch each compound and add to records
-                 //var structureRecord = App.CompoundStructure.createRecord(pharma);
-	             //thisCompound.get('structure').pushObject(pharmaRecord);
+                 results = searcher.parseSimilarityResponse(response);
+                 $.each(results, function(index, result) {
+                   var structureRecord = me.get('store').createRecord('compoundStructure', result);
+                   thisCompound.get('structure').pushObject(structureRecord);
+                 });
              } else if (type == "substructure") {
-                 // fetch each compound and add to records
-                 //var structureRecord = App.CompoundStructure.createRecord(pharma);
-	            //thisCompound.get('structure').pushObject(pharmaRecord);
+                 results = searcher.parseSubstructureResponse(response);
+                 $.each(results, function(index, result) {
+                   var structureRecord = me.get('store').createRecord('compoundStructure', result);
+                   thisCompound.get('structure').pushObject(structureRecord);
+                 });
              }
          }
        };
        if (type == "exact") {
-           searcher.exact(thisCompound.smiles, null, callback);
+           searcher.exact(thisCompound.get('smiles'), null, callback);
        } else if (type == "similarity") {
            // TODO fix start and count at 1 and 100 for the moment
-           searcher.similarity(thisCompound.smiles, null, null, null, null, 1, 100, callback);
+           searcher.similarity(thisCompound.get('smiles'), null, null, null, null, 1, 100, callback);
        } else if (type == "substructure") {
            // TODO fix start and count at 1 and 100 for the moment
-           searcher.substructure(thisCompound.smiles, null, 1, 100, callback);
+           searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
        }
      }
   }

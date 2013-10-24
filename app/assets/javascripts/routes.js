@@ -64,8 +64,6 @@ App.SearchRoute = Ember.Route.extend({
                 // an error in the response, ignore for now
             }
             me.set('isSearching', false);
-            pageScrolling = false;
-            enable_scroll();
         };
         var cwTargetCallback=function(success, status, response){
             if(success && response) {
@@ -82,8 +80,6 @@ App.SearchRoute = Ember.Route.extend({
                 // an error in the response, ignore for now
             }
             me.set('isSearching', false);
-            pageScrolling = false;
-            enable_scroll();
         }; 
         //targets
         searcher.byTag(controller.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
@@ -454,19 +450,50 @@ App.TargetPathwaysIndexRoute = Ember.Route.extend({
 });
 App.CompoundStructureIndexRoute = Ember.Route.extend({
 
+  observesParameters: ['type'],
+
   setupController: function(controller, model) {
     controller.set('content', model);
     controller.clear();
+    var me = controller;
+    var thisCompound = this.modelFor('compound');
     var structureSearchType = controller.get('structureSearchType');
-    if (structureSearchType == "exact") {
-
-    } else if (structureSearchType == "similarity") {
-
-    } else if (structureSearchType == "substructure") {
-
-    }
+    var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+    var callback=function(success, status, response){
+       if (success && response) {
+           var results = null;
+           if (structureSearchType === "exact") {
+               result = searcher.parseExactResponse(response);
+               // fetch each compound and add to records
+               var structureRecord = me.get('store').createRecord('compoundStructure', result);
+               thisCompound.get('structure').pushObject(structureRecord);
+           } else if (structureSearchType === "similarity") {
+               // fetch each compound and add to records
+               //var structureRecord = App.CompoundStructure.createRecord(pharma);
+	           //thisCompound.get('structure').pushObject(pharmaRecord);
+           } else if (structureSearchType === "substructure") {
+               // fetch each compound and add to records
+               //var structureRecord = App.CompoundStructure.createRecord(pharma);
+	          //thisCompound.get('structure').pushObject(pharmaRecord);
+           }
+       }
+     };
+     if (structureSearchType === "exact") {
+         searcher.exact(thisCompound.get('smiles'), null, callback);
+     } else if (structureSearchType === "similarity") {
+         // TODO fix start and count at 1 and 100 for the moment
+         searcher.similarity(thisCompound.get('smiles'), null, null, null, null, 1, 100, callback);
+     } else if (structureSearchType === "substructure") {
+         // TODO fix start and count at 1 and 100 for the moment
+         searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
+     }
   },
   model: function(params) {
+    //the route can come in with a ?type=structureSearchType param, default is exact
+    var type = this.get('queryParameters').type;
+    if (type) {
+        this.controllerFor('compoundStructureIndex').set('structureSearchType', type);
+    }
     return this.modelFor('compound').get('structure');
   }
 
