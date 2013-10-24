@@ -27,9 +27,12 @@ App.CompoundPathwaysIndexController.reopen({
       if (success && response) {
         me.page++;
         var pathwayResults = searcher.parseByCompoundPathwayResponse(response);
-        $.each(pathwayResults, function(index, pharma) {
-          //var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	      //thisCompound.get('pharmacology').pushObject(pharmaRecord);
+        $.each(pathwayResults, function(index, pathway) {
+            pathwayID = pathway.identifier.split('/').pop();
+            //have to find the pathway record and add it, just adding the ID does not work
+            me.get('store').find('pathway', pathwayID).then(function(pathway) {
+              thisCompound.get('pathways').pushObject(pathway);
+            });
         });
         me.set('currentCount', me.get('currentCount') + pathwayResults.length);
       pageScrolling = false;
