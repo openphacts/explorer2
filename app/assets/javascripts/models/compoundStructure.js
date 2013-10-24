@@ -1,4 +1,4 @@
-App.Compound = App.SearchResult.extend({
+App.CompoundStructure = App.SearchResult.extend({
     cwURI: DS.attr('string'),
     description: DS.attr('string'),
     biotransformationItem: DS.attr('string'),
@@ -20,11 +20,5 @@ App.Compound = App.SearchResult.extend({
     psa: DS.attr('string'),
     ro5Violations: DS.attr('string'),
     rtb: DS.attr('string'),
-    pharmacology: DS.hasMany('CompoundPharmacology'),
-    pharmacologyRecords: DS.attr('number'),
-    pathways: DS.hasMany('pathway', { async: true }),
-    pathwayRecords: DS.attr('number'),
-    structure: DS.hasMany('compoundStructure'),
-    structureRecords: DS.attr('number'),
     isCompound: true
 });

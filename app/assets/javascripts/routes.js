@@ -390,9 +390,11 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
       if (success && response) {
         var count = searcher.parseCountPathwaysByCompoundResponse(response);
         controller.set('totalCount', count);
+        if(count > 0) {
+          searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+        }
       }
     };
-    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, countCallback);
     //load the pathways for this compound
     var pathwaysByCompoundCallback=function(success, status, response){
       if (success && response) {
@@ -406,7 +408,7 @@ App.CompoundPathwaysIndexRoute = Ember.Route.extend({
           });
       }
     }
-    searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, countCallback);
   },
   model: function() {
     return this.modelFor('compound').get('pathways');
@@ -426,9 +428,11 @@ App.TargetPathwaysIndexRoute = Ember.Route.extend({
       if (success && response) {
         var count = searcher.parseCountPathwaysByTargetResponse(response);
         controller.set('totalCount', count);
+        if (count > 0) {
+            searcher.byTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, 1, 50, null, pathwaysByTargetCallback);
+        }
       }
     };
-    searcher.countPathwaysByTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, countCallback);
     //load the pathways for this compound
     var pathwaysByTargetCallback=function(success, status, response){
       if (success && response) {
@@ -442,9 +446,28 @@ App.TargetPathwaysIndexRoute = Ember.Route.extend({
           });
       }
     }
-    searcher.byTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, 1, 50, null, pathwaysByTargetCallback);
+    searcher.countPathwaysByTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, countCallback);
   },
   model: function() {
     return this.modelFor('target').get('pathways');
   }
+});
+App.CompoundStructureIndexRoute = Ember.Route.extend({
+
+  setupController: function(controller, model) {
+    controller.set('content', model);
+    controller.clear();
+    var structureSearchType = controller.get('structureSearchType');
+    if (structureSearchType == "exact") {
+
+    } else if (structureSearchType == "similarity") {
+
+    } else if (structureSearchType == "substructure") {
+
+    }
+  },
+  model: function(params) {
+    return this.modelFor('compound').get('structure');
+  }
+
 });
