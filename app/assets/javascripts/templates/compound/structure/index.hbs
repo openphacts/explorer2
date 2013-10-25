@@ -16,9 +16,9 @@
 
 <div class="row btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
     <div class="span4 big-padding-left">
-        <button class="btn active" {{action 'structureSearchType' 'exact'}}>Exact</button>
-        <button class="btn" {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
-        <button class="btn" {{action 'structureSearchType' 'similarity'}}>Similarity</button>
+        <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
+        <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
+        <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
     </div>
 </div>
 <div class="row">

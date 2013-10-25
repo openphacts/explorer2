@@ -3,7 +3,19 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
   needs: "compound",
   structureSearchType: "exact",
 
- actions: {
+  exactSearch: function() {
+    return this.get('structureSearchType') === "exact";
+  }.property('structureSearchType'),
+
+  subSearch: function() {
+    return this.get('structureSearchType') === "substructure";
+  }.property('structureSearchType'),
+
+  simSearch: function() {
+    return this.get('structureSearchType') === "similarity";
+  }.property('structureSearchType'),
+
+  actions: {
      structureSearchType: function(type) {
        console.log("Set structure search type: " + type);
        this.set('structureSearchType', type);
