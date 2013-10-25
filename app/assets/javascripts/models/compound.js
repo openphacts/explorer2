@@ -24,7 +24,7 @@ App.Compound = App.SearchResult.extend({
     pharmacologyRecords: DS.attr('number'),
     pathways: DS.hasMany('pathway', { async: true }),
     pathwayRecords: DS.attr('number'),
-    structure: DS.hasMany('compoundStructure'),
+    structure: DS.hasMany('compound'),
     structureRecords: DS.attr('number'),
     isCompound: true
 });

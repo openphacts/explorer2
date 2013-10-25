@@ -461,12 +461,28 @@ App.CompoundStructureIndexRoute = Ember.Route.extend({
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
        if (success && response) {
-           var results = null;
            if (structureSearchType === "exact") {
                result = searcher.parseExactResponse(response);
-               // fetch each compound and add to records
-               var structureRecord = me.get('store').createRecord('compoundStructure', result);
-               thisCompound.get('structure').pushObject(structureRecord);
+               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	           var mapURLCallback = function(success, status, response) {
+	             var constants = new Openphacts.Constants();
+	             if (success && response) {
+		             var matchingURL = null;
+		             var urls = mapSearcher.parseMapURLResponse(response);
+                     var found = false;
+                     //loop through all the identifiers for a compound until we find the cw one
+		             $.each(urls, function(i, url) {
+		               var uri = new URI(url);
+		               if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                           me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                     thisCompound.get('structure').pushObject(compound);
+                           });
+                          found = true;
+		               }
+                     });	
+	             }
+	           };
+               mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
            } else if (structureSearchType === "similarity") {
                // fetch each compound and add to records
                //var structureRecord = App.CompoundStructure.createRecord(pharma);

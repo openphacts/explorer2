@@ -16,19 +16,83 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
              var results = null;
              if (type == "exact") {
                  result = searcher.parseExactResponse(response);
-                 var structureRecord = me.get('store').createRecord('compoundStructure', result);
-                 thisCompound.get('structure').pushObject(structureRecord);
+                 var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	             var mapURLCallback = function(success, status, response) {
+	               var constants = new Openphacts.Constants();
+	               if (success && response) {
+		               var matchingURL = null;
+		               var urls = mapSearcher.parseMapURLResponse(response);
+                       var found = false;
+                       //loop through all the identifiers for a compound until we find the cw one
+		               $.each(urls, function(i, url) {
+		                 var uri = new URI(url);
+		                 if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                             me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                       thisCompound.get('structure').pushObject(compound);
+                             });
+                            found = true;
+		                 }
+                       });	
+	               }
+	             };
+                 mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
              } else if (type == "similarity") {
                  results = searcher.parseSimilarityResponse(response);
+                 var relevance = {};
                  $.each(results, function(index, result) {
-                   var structureRecord = me.get('store').createRecord('compoundStructure', result);
-                   thisCompound.get('structure').pushObject(structureRecord);
+                   var about = result.about;
+                   var relevance = result.relevance;
+                   relevance[about] = relevance;
+                   //var compound = me.get('store').find('compound', );
+	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	               var mapURLCallback = function(success, status, response) {
+	                 var constants = new Openphacts.Constants();
+	                 if (success && response) {
+		                 var matchingURL = null;
+		                 var urls = mapSearcher.parseMapURLResponse(response);
+                         var found = false;
+                         //loop through all the identifiers for a compound until we find the cw one
+		                 $.each(urls, function(i, url) {
+		                   var uri = new URI(url);
+		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                         thisCompound.get('structure').pushObject(compound);
+                               });
+                              found = true;
+		                   }
+                         });	
+	                 }
+	               };
+                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
                  });
              } else if (type == "substructure") {
                  results = searcher.parseSubstructureResponse(response);
+                 var relevance = {};
                  $.each(results, function(index, result) {
-                   var structureRecord = me.get('store').createRecord('compoundStructure', result);
-                   thisCompound.get('structure').pushObject(structureRecord);
+                   var about = result.about;
+                   var relevance = result.relevance;
+                   relevance[about] = relevance;
+                   //var compound = me.get('store').find('compound', );
+	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	               var mapURLCallback = function(success, status, response) {
+	                 var constants = new Openphacts.Constants();
+	                 if (success && response) {
+		                 var matchingURL = null;
+		                 var urls = mapSearcher.parseMapURLResponse(response);
+                         var found = false;
+                         //loop through all the identifiers for a compound until we find the cw one
+		                 $.each(urls, function(i, url) {
+		                   var uri = new URI(url);
+		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                         thisCompound.get('structure').pushObject(compound);
+                               });
+                              found = true;
+		                   }
+                         });	
+	                 }
+	               };
+                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
                  });
              }
          }

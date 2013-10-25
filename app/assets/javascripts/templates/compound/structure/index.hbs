@@ -13,6 +13,7 @@
         </div>
     </ul>
 <div>
+
 <div class="row btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
     <div class="span4 big-padding-left">
         <button class="btn active" {{action 'structureSearchType' 'exact'}}>Exact</button>
@@ -30,27 +31,55 @@
 	<table class="mytable">
 		<thead id="tablehead" class="headingstyle">
 <tr>
-<th>type</th>
-<th>molecule</th>
-<th>csURI</th>
-<th>matchType</th>
-<th>complexity</th>
-<th>isotopic</th>
-<th>hasSpectra</th>
-<th>hasPatents</th>
+    <th>cwURI</th>
+    <th>description</th>
+    <th>biotransformationItem</th>
+    <th>toxicity</th>
+    <th>proteinBinding</th>
+    <th>prefLabel</th>
+    <th>csURI</th>
+    <th>smiles</th>
+    <th>chemblURI</th>
+    <th>fullMWT</th>
+    <th>hba</th>
+    <th>hbd</th>
+    <th>inchi</th>
+    <th>inchiKey</th>
+    <th>logp</th>
+    <th>molform</th>
+    <th>mwFreebase</th>
+    <th>psa</th>
+    <th>ro5Violations</th>
+    <th>rtb</th>
+    <th>molecule</th>
+    <th>csURI</th>
 </tr>
 </thead>
 <tbody>
 {{#each}}
 <tr class="record-deco">
-<td>{{type}}</td>
-<td>{{molecule}}</td>
-<td>{{csURI}}</td>
-<td>{{matchType}}</td>
-<td>{{complexity}}</td>
-<td>{{isotopic}}</td>
-<td>{{hasSpectra}}</td>
-<td>{{hasPatents}}</td>
+    <td>{{cwURI}}</td>
+    <td>{{description}}</td>
+    <td>{{biotransformationItem}}</td>
+    <td>{{toxicity}}</td>
+    <td>{{proteinBinding}}</td>
+    <td>{{#linkTo 'compound.index' this}}{{prefLabel}}{{/linkTo}}</td>
+    <td>{{csURI}}</td>
+    <td>{{smiles}}</td>
+    <td>{{chemblURI}}</td>
+    <td>{{fullMWT}}</td>
+    <td>{{hba}}</td>
+    <td>{{hbd}}</td>
+    <td>{{inchi}}</td>
+    <td>{{inchiKey}}</td>
+    <td>{{logp}}</td>
+    <td>{{molform}}</td>
+    <td>{{mwFreebase}}</td>
+    <td>{{psa}}</td>
+    <td>{{ro5Violations}}</td>
+    <td>{{rtb}}</td>
+    <td>{{molecule}}</td>
+    <td>{{csURI}}</td>
 </tr>
 {{/each}}
 </tbody>
