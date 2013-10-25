@@ -38,12 +38,9 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
                  mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
              } else if (type == "similarity") {
                  results = searcher.parseSimilarityResponse(response);
-                 var relevance = {};
                  $.each(results, function(index, result) {
                    var about = result.about;
                    var relevance = result.relevance;
-                   relevance[about] = relevance;
-                   //var compound = me.get('store').find('compound', );
 	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
 	               var mapURLCallback = function(success, status, response) {
 	                 var constants = new Openphacts.Constants();
@@ -56,6 +53,7 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
 		                   var uri = new URI(url);
 		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
                                me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+                                 compound.set('relevance', relevance);
 		                         thisCompound.get('structure').pushObject(compound);
                                });
                               found = true;
@@ -67,12 +65,9 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
                  });
              } else if (type == "substructure") {
                  results = searcher.parseSubstructureResponse(response);
-                 var relevance = {};
                  $.each(results, function(index, result) {
                    var about = result.about;
                    var relevance = result.relevance;
-                   relevance[about] = relevance;
-                   //var compound = me.get('store').find('compound', );
 	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
 	               var mapURLCallback = function(success, status, response) {
 	                 var constants = new Openphacts.Constants();
@@ -85,6 +80,7 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
 		                   var uri = new URI(url);
 		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
                                me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+                                 compound.set('relevance', relevance);
 		                         thisCompound.get('structure').pushObject(compound);
                                });
                               found = true;

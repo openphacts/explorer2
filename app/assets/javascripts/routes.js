@@ -484,13 +484,63 @@ App.CompoundStructureIndexRoute = Ember.Route.extend({
 	           };
                mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
            } else if (structureSearchType === "similarity") {
-               // fetch each compound and add to records
-               //var structureRecord = App.CompoundStructure.createRecord(pharma);
-	           //thisCompound.get('structure').pushObject(pharmaRecord);
+                 results = searcher.parseSimilarityResponse(response);
+                 var relevance = {};
+                 $.each(results, function(index, result) {
+                   var about = result.about;
+                   var relevance = result.relevance;
+                   relevance[about] = relevance;
+                   //var compound = me.get('store').find('compound', );
+	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	               var mapURLCallback = function(success, status, response) {
+	                 var constants = new Openphacts.Constants();
+	                 if (success && response) {
+		                 var matchingURL = null;
+		                 var urls = mapSearcher.parseMapURLResponse(response);
+                         var found = false;
+                         //loop through all the identifiers for a compound until we find the cw one
+		                 $.each(urls, function(i, url) {
+		                   var uri = new URI(url);
+		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                         thisCompound.get('structure').pushObject(compound);
+                               });
+                              found = true;
+		                   }
+                         });	
+	                 }
+	               };
+                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
+                 });
            } else if (structureSearchType === "substructure") {
-               // fetch each compound and add to records
-               //var structureRecord = App.CompoundStructure.createRecord(pharma);
-	          //thisCompound.get('structure').pushObject(pharmaRecord);
+                 results = searcher.parseSubstructureResponse(response);
+                 var relevance = {};
+                 $.each(results, function(index, result) {
+                   var about = result.about;
+                   var relevance = result.relevance;
+                   relevance[about] = relevance;
+                   //var compound = me.get('store').find('compound', );
+	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+	               var mapURLCallback = function(success, status, response) {
+	                 var constants = new Openphacts.Constants();
+	                 if (success && response) {
+		                 var matchingURL = null;
+		                 var urls = mapSearcher.parseMapURLResponse(response);
+                         var found = false;
+                         //loop through all the identifiers for a compound until we find the cw one
+		                 $.each(urls, function(i, url) {
+		                   var uri = new URI(url);
+		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
+                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
+		                         thisCompound.get('structure').pushObject(compound);
+                               });
+                              found = true;
+		                   }
+                         });	
+	                 }
+	               };
+                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
+                 });
            }
        }
      };

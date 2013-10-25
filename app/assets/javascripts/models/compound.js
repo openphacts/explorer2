@@ -26,5 +26,7 @@ App.Compound = App.SearchResult.extend({
     pathwayRecords: DS.attr('number'),
     structure: DS.hasMany('compound'),
     structureRecords: DS.attr('number'),
+    //for structure search
+    relevance: DS.attr('number'),
     isCompound: true
 });
