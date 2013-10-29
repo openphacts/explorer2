@@ -1,5 +1,7 @@
 App.SearchController = Ember.ArrayController.extend({
 
+    needs: 'application',
+
     isSearching: false,
 
     currentPage: 0,
@@ -24,6 +26,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     setCurrentQuery: function(query) {
         this.current_query=query;
+        this.get('controllers.application').set('searchQuery', query);
     },
 
     getCurrentQuery: function() {

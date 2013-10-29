@@ -4,8 +4,8 @@ App.ApplicationController = Ember.Controller.extend({
 	actions: {
 	query: function() {
 		console.log('app controller query');
-		var query = this.get('search');
-		this.set('searchQuery', query);
+		var query = this.get('searchQuery');
+		//this.set('searchQuery', query);
 		//this.transitionToRoute('search', { query: query }); NOTE: this is how you would transition to /search/blah
         var params = Ember.Router.QueryParameters.create({ query: query });
 		this.transitionToRoute('search', params);
@@ -22,7 +22,7 @@ App.ApplicationController = Ember.Controller.extend({
   }
 });
 App.IndexController = Ember.Controller.extend({
-  needs: 'search',
+  needs: 'search'
 });
 App.SearchBoxController = Ember.Controller.extend({
 	//actions: {
