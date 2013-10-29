@@ -228,17 +228,22 @@ App.EnzymesRoute = Ember.Route.extend({
     setupController: function(controller) {
 	    console.log('enzymes index route setup controller');
 	    controller.set('content', []);
-	    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
 		    if (success && response) {
-			    var root = searcher.parseClassificationRootClasses(response);
+			    var root = searcher.parseRootNodes(response);
 			    $.each(root, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('enzyme', enzymeResult);
+                    enzyme.set('id', enzymeResult.uri.split('/').pop());
 				    controller.addObject(enzyme);				    
 			    });
 			}
 		}
-	    searcher.getClassificationRootClasses(callback);
+	    searcher.getRootNodes('enzyme', callback);
+   },
+
+   model: function(params) {
+     console.log('enzymes route model');
    }	
 });
 
