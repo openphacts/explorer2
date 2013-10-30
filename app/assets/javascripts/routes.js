@@ -264,10 +264,10 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
     var me = controller;
     controller.set('model', enzyme);
       var thisEnzyme = enzyme;
-      var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+      var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
-        var pharmaResults = searcher.parsePharmacologyPaginated(response);
+        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
           var pharmaRecord = me.store.createRecord('enzymePharmacology', pharma);
 	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
@@ -276,17 +276,17 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
     };
     var countCallback = function(success, status, response) {
         if (success) {
-            var count = searcher.parsePharmacologyCount(response);
+            var count = searcher.parseTargetClassPharmacologyCount(response);
             controller.totalCount = count;
             // are there any results?
             controller.set('empty', count > 0 ? false : true);
             if (count > 0) {
-                searcher.getPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
+		        searcher.getTargetClassPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
             }
         }
     };
 
-    searcher.getPharmacologyCount('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, countCallback);
+    searcher.getTargetClassPharmacologyCount('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
   },
   model: function(params) {
     console.log('enzyme pharma index route');

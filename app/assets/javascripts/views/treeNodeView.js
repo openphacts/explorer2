@@ -76,7 +76,7 @@ App.TreeNodeView = Ember.View.extend({
 			        if (success && response) {
 				        var members = searcher.parseChildNodes(response);
 				        var membersWithSingleName = [];
-				        $.each(members, function(index, member) {
+				        $.each(members.children, function(index, member) {
 							var enzyme = me.get('controller').store.createRecord('enzyme');
 						    enzyme.set('uri', member.uri);
 							enzyme.set('name', member.names[0]);

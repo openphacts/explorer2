@@ -1,4 +1,8 @@
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 var Openphacts = Openphacts || {};
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.Constants = function() {};
 
 Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
@@ -53,6 +57,8 @@ Openphacts.Constants.prototype.RO5_VIOLATIONS = 'ro5_violations';
 Openphacts.Constants.prototype.SMILES = 'smiles';
 Openphacts.Constants.prototype.RELEVANCE = 'relevance';
 Openphacts.Constants.prototype.PATHWAY_COUNT = 'pathway_count';
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -398,6 +404,8 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyCountResponse = function(response) {
     return response.primaryTopic.compoundPharmacologyTotalResults;
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -527,6 +535,8 @@ Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(respo
 		altLabels: altLabels
 	};
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -912,6 +922,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 Openphacts.TargetSearch.prototype.parseTargetPharmacologyCountResponse = function(response) {
     return response.primaryTopic.targetPharmacologyTotalResults;
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.StructureSearch = function StructureSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1098,6 +1110,8 @@ Openphacts.StructureSearch.prototype.parseSimilarityResponse = function(response
 Openphacts.StructureSearch.prototype.parseSmilesToURLResponse = function(response) {
 	return response.primaryTopic["_about"];
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.ActivitySearch = function ActivitySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1157,6 +1171,8 @@ Openphacts.ActivitySearch.prototype.parseUnits = function(response) {
 	});
 	return units;
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.TreeSearch = function TreeSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1202,6 +1218,27 @@ Openphacts.TreeSearch.prototype.getChildNodes = function(URI, callback) {
 		}
 	});
 }
+
+Openphacts.TreeSearch.prototype.getParentNodes = function(URI, callback) {
+	var query = $.ajax({
+		url: this.baseURL + '/tree/parents',
+                dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+                        uri: URI,
+			app_id: this.appID,
+			app_key: this.appKey
+		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
 
 Openphacts.TreeSearch.prototype.getTargetClassPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, activityUnit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, relation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
         params={};
@@ -1347,7 +1384,14 @@ Openphacts.TreeSearch.prototype.parseRootNodes = function(response) {
 }
 
 Openphacts.TreeSearch.prototype.parseChildNodes = function(response) {
-    var enzymeClasses = [];
+	var constants = new Openphacts.Constants();
+	var childResponse = {};
+    var treeClasses = [];
+    var label = response.primaryTopic.prefLabel;
+    if ($.isArray(label)) {
+	  label = label[0];
+    }
+    childResponse['label'] = label;
     if ($.isArray(response.primaryTopic.childNode)) {
 	  $.each(response.primaryTopic.childNode, function(i, member) {
                 var about = member["_about"];
@@ -1359,7 +1403,7 @@ Openphacts.TreeSearch.prototype.parseChildNodes = function(response) {
                 } else {
                    names.push(member.prefLabel);
                 }
-                enzymeClasses.push({uri: about, names: names});
+                treeClasses.push({uri: about, names: names});
 	        });
         } else {
 	        var about = response.primaryTopic.childNode["_about"];
@@ -1371,10 +1415,50 @@ Openphacts.TreeSearch.prototype.parseChildNodes = function(response) {
             } else {
                 names.push(response.primaryTopic.childNode.prefLabel);
             }
-            enzymeClasses.push({uri: about, names: names});
+            treeClasses.push({uri: about, names: names});
         }
-	    return enzymeClasses;
+        childResponse['children'] = treeClasses;
+	    return childResponse;
 }
+
+Openphacts.TreeSearch.prototype.parseParentNodes = function(response) {
+	var constants = new Openphacts.Constants();
+	var parentResponse = {};
+    var treeClasses = [];
+    var label = response.primaryTopic.prefLabel;
+    if ($.isArray(label)) {
+	  label = label[0];
+    }
+    parentResponse['label'] = label;
+    if ($.isArray(response.primaryTopic.parentNode)) {
+	  $.each(response.primaryTopic.parentNode, function(i, member) {
+                var about = member["_about"];
+                var names = [];
+                if ($.isArray(member.prefLabel)) {
+                    $.each(member.prefLabel, function(j, label) {
+                        names.push(label);
+                    });
+                } else {
+                   names.push(member.prefLabel);
+                }
+                treeClasses.push({uri: about, names: names});
+	        });
+        } else {
+	        var about = response.primaryTopic.parentNode["_about"];
+            var names = [];
+            if ($.isArray(response.primaryTopic.parentNode.prefLabel)) {
+                $.each(response.primaryTopic.parentNode.prefLabel, function(j, label) {
+                    names.push(label);
+                });
+            } else {
+                names.push(response.primaryTopic.parentNode.prefLabel);
+            }
+            treeClasses.push({uri: about, names: names});
+        }
+        parentResponse['parents'] = treeClasses;
+	    return parentResponse;
+}
+
 
 Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyCount = function(response) {
     var constants = new Openphacts.Constants();
@@ -1461,6 +1545,8 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     });
     return records;
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.PathwaySearch = function PathwaySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1774,6 +1860,7 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
         var constants = new Openphacts.Constants();
         var latest_version, identifier, revision, title, description, parts, inDataset, pathwayOntology, organism, organismLabel, about;
         latest_version = response.primaryTopic.latest_version;
+        about = latest_version[constants.ABOUT];
         identifier = response.primaryTopic[constants.ABOUT];
         title = latest_version.title ? latest_version.title : null;
         organism = latest_version.organism[constants.ABOUT] ? latest_version.organism[constants.ABOUT] : null;
@@ -1800,11 +1887,12 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
                    'title': title, 
                    'description': description, 
                    'identifier': identifier,
-                   'revision': revision, 
+                   'revision': 'revision', 
                    'pathwayOntologies': pathwayOntologies,
                    'organism': organism, 
                    'organismLabel': organismLabel, 
-                   'parts': parts
+                   'parts': parts,
+                   'about': about
                 };
 }
 
@@ -2038,6 +2126,8 @@ Openphacts.PathwaySearch.prototype.parseOrganismsResponse = function(response) {
         }
 	return organisms;
 }
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.MapSearch = function MapSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;

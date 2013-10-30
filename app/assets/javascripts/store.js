@@ -65,3 +65,42 @@ App.PathwayAdapter = DS.Adapter.extend({
     return promise;
   }
 });
+App.EnzymeAdapter = DS.Adapter.extend({
+  find: function(store, type, id) {
+    console.log('enzyme adapter find');
+    var identifier = id;
+    var promise = new Ember.RSVP.Promise(function(resolve, reject){
+      var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+      var parentCallback=function(success, status, response){
+        if (success && response) {
+		  enzymeResult = searcher.parseParentNodes(response);
+		  var enzymeResponse = {};
+		  enzymeResponse['id'] = id;
+		  enzymeResponse['uri'] = 'http://purl.uniprot.org/enzyme/' + id;
+		  enzymeResponse['name'] = enzymeResult.label;
+          resolve(enzymeResponse);
+        } else {
+          reject(status);
+        }
+      };
+      var childCallback=function(success, status, response){
+        if (success && response) {
+		  var enzymeResponse = {};
+		  enzymeResponse['id'] = id;
+		  enzymeResponse['uri'] = 'http://purl.uniprot.org/enzyme/' + id;
+		  enzymeResponse['name'] = enzymeResult.label;
+          resolve(enzymeResponse);
+        } else {
+          reject(status);
+        }
+      };
+
+      if ((id.match(/-$/))) {
+		searcher.getChildNodes('http://purl.uniprot.org/enzyme/' + id, parentCallback);	
+      } else {
+		searcher.getParentNodes('http://purl.uniprot.org/enzyme/' + id, parentCallback);	
+      }
+    });
+    return promise;	
+  }		
+});
