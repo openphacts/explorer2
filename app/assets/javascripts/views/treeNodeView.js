@@ -47,6 +47,7 @@ App.TreeNodeView = Ember.View.extend({
   },
   expand: function() {
         console.log('expand');
+        var me = this;
 		// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 		// hence the need to get the data slightly differently. Sure it's a fudge but.....
 		if (this.get('opened')) {
@@ -69,15 +70,21 @@ App.TreeNodeView = Ember.View.extend({
 		    if (uri.match(/-$/)) {
 			    // only fetch for uris which end with a '-' eg http://purl.uniprot.org/enzyme/5.3.-.-
 			    var treeBranchView = App.TreeBranchView.create();
+			    treeBranchView.set('content', []);
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
 			        if (success && response) {
 				        var members = searcher.parseChildNodes(response);
 				        var membersWithSingleName = [];
 				        $.each(members, function(index, member) {
-					        membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
+							var enzyme = me.get('controller').store.createRecord('enzyme');
+						    enzyme.set('uri', member.uri);
+							enzyme.set('name', member.names[0]);
+							enzyme.set('id', member.uri.split('/').pop());
+		                    treeBranchView.get('content').pushObject(enzyme);
+					        //membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
 				        });
-				        treeBranchView.set('content', membersWithSingleName);
+				        //treeBranchView.set('content', membersWithSingleName);
 					    var index = me.get('parentView').indexOf(me) + 1;
 					    me.get('parentView').insertAt(index, treeBranchView);
 					    me.set('opened', true);
