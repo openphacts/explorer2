@@ -16,6 +16,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     return this.get('totalCount') > 0;
   }.property('totalCount'),
 
+  actions: {
   navigateTo: function(target) {
     var me = this;
     console.log(target.about);
@@ -76,6 +77,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page + 1, 50, pharmaCallback);
     }
+  }
   }
 
 });
