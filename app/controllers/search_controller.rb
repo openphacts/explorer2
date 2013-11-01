@@ -6,6 +6,7 @@ class SearchController < ApplicationController
   # and targets for matches. Only matches the start of
   # the prefLabel
   def typeahead
+    puts "inside typeahead"
     results = []
     File.open(File.join(Rails.root, "filestore", "compounds.txt")).each do |row|
        if row.downcase.starts_with? params[:query].downcase
@@ -60,16 +61,6 @@ class SearchController < ApplicationController
   end
   
   def index
-    @query = params[:query]
-    limit = params[:limit]
-    @concepts = find_compounds @query, limit
-    #@targets = find_targets query
-    #@enzymes = find_enzymes query
-    puts "concepts " + @concepts.size.to_s
-    respond_to do |format|
-      format.html
-      format.json { render :json => @concepts}
-    end
 
   end
 

@@ -1,7 +1,7 @@
 App.Enzyme = App.SearchResult.extend({
     uri: DS.attr('string'),
     name: DS.attr('string'),
-    pharmacology: DS.hasMany('App.EnzymePharmacology'),
+    pharmacology: DS.hasMany('enzymePharmacology'),
     pharmacologyRecords: DS.attr('number')
 });
 App.Enzyme.reopenClass({

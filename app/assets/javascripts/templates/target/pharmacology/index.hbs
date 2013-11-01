@@ -4,7 +4,7 @@
 
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
-  			<li>{{#linkTo target.index controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}<span class="divider">/</span></li>
+  			<li>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}<span class="divider">/</span></li>
   			<li class="active">Target Phamacology</li>
 			
 			<div class="row pull-right"> 
@@ -25,10 +25,9 @@
 			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src controllers.target.seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
-    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}</h3>
+    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
    					<div class="row">
-      					<!--<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>-->
-      					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.target.description}}</div>
     				</div>
   				</div>
 			</div>
@@ -39,6 +38,7 @@
 		</div>
 	
 	<!-- RESULT LISTING -->
+    {{#if notEmpty}}
 	<div style="padding:30px">	
 	<table class="mytable">
 
@@ -71,33 +71,38 @@
 				<th>SMILES</th>
 				<th>InChl</th>
 				<th>InChlKey</th>
+                <th>pChembl</th>
 
 			</tr>
 		</thead>
 		<tbody>
-			{{#each targetPharma in pharmacology}}
+			{{#each}}
 			<tr class="record-deco">
-				<td class="cell-basictext">{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
-				<td class="cell-basictext">{{targetPharma.targetOrganism}}</td>
-				<td class="cell-basictext">{{targetPharma.assayOrganism}}</td>
-				<td class="cell-longtext">{{targetPharma.assayDescription}}</td>
-				<td class="lead cell-basictext">{{targetPharma.activityActivityType}}</td>
-				<td class="lead cell-basictext">{{targetPharma.activityRelation}}</td>
-				<td class="lead cell-basictext">{{targetPharma.activityStandardValue}}</td>
-				<td class="lead cell-basictext">{{targetPharma.activityStandardUnits}}</td>
-				<td class="cell-basictext" >{{targetPharma.compoundFullMwt}}</td>
-				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundSmiles}}</td>
-				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchi}}</td>
-				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{targetPharma.compoundInchikey}}</td>
+				<td class="cell-basictext">{{compoundSource cwCompoundUri compoundPrefLabel}}</td>
+				<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
+				<td class="cell-basictext">{{assayOrganism}}</td>
+				<td class="cell-longtext">{{assayDescription}}</td>
+				<td class="lead cell-basictext">{{activityActivityType}}</td>
+				<td class="lead cell-basictext">{{activityRelation}}</td>
+				<td class="lead cell-basictext">{{activityStandardValue}}</td>
+				<td class="lead cell-basictext">{{activityStandardUnits}}</td>
+				<td class="cell-basictext" >{{compoundFullMwt}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundSmiles}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchi}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchikey}}</td>
+				<td class="cell-basictext" >{{pChembl}}</td>
 			</tr>
 			{{/each}}
 		</tbody>
 	</table>
 	</div>
+    {{else}}
+        <h2 class="centre">There is no pharmacology data for {{controllers.target.prefLabel}}</h2>
+    {{/if}}
 		
 </div>
 
-<script>
+<script type="text/javascript">
 
 $(function() {
 	moveScroller();

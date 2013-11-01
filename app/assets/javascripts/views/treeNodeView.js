@@ -24,10 +24,10 @@ App.TreeNodeView = Ember.View.extend({
   // class names that determine what icons are used beside the node
   classNameBindings: ['opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
   classNames: ['treerow'],
-  //templateName: 'treenode',
+  templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
-  template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
+  //template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
 
   mouseEnter: function(evt) {
 		var name, uri;
@@ -47,6 +47,7 @@ App.TreeNodeView = Ember.View.extend({
   },
   expand: function() {
         console.log('expand');
+        var me = this;
 		// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 		// hence the need to get the data slightly differently. Sure it's a fudge but.....
 		if (this.get('opened')) {
@@ -69,15 +70,21 @@ App.TreeNodeView = Ember.View.extend({
 		    if (uri.match(/-$/)) {
 			    // only fetch for uris which end with a '-' eg http://purl.uniprot.org/enzyme/5.3.-.-
 			    var treeBranchView = App.TreeBranchView.create();
-			    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+			    treeBranchView.set('content', []);
+			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
 			        if (success && response) {
-				        var members = searcher.parseClassificationClassMembers(response);
+				        var members = searcher.parseChildNodes(response);
 				        var membersWithSingleName = [];
-				        $.each(members, function(index, member) {
-					        membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
+				        $.each(members.children, function(index, member) {
+							var enzyme = me.get('controller').store.createRecord('enzyme');
+						    enzyme.set('uri', member.uri);
+							enzyme.set('name', member.names[0]);
+							enzyme.set('id', member.uri.split('/').pop());
+		                    treeBranchView.get('content').pushObject(enzyme);
+					        //membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
 				        });
-				        treeBranchView.set('content', membersWithSingleName);
+				        //treeBranchView.set('content', membersWithSingleName);
 					    var index = me.get('parentView').indexOf(me) + 1;
 					    me.get('parentView').insertAt(index, treeBranchView);
 					    me.set('opened', true);
@@ -85,7 +92,7 @@ App.TreeNodeView = Ember.View.extend({
 					    me.set('fetchedData', true);
 				    }
 			    }
-			    searcher.getClassificationClassMembers(uri, callback);
+			    searcher.getChildNodes(uri, callback);
 		    }
 		}
   }

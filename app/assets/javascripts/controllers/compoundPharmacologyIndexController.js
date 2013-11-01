@@ -1,12 +1,20 @@
-App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
+App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   needs: "compound",
 
-  page: 1,
+  page: null,
 
-  currentCount: 0,
+  currentCount: function() {
+    return this.get('model.content.length');
+  }.property('model.content.length'),
 
-  totalCount: 0,
+  totalCount: null,
+
+  fetching: false,
+
+  notEmpty: function() {
+    return this.get('totalCount') > 0;
+  }.property('totalCount'),
 
   navigateTo: function(target) {
     var me = this;
@@ -35,7 +43,7 @@ App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
 		data: {
 			_format: "json",
 			uri: compound.id,
-            total_count: compound.pharmacologyCount
+            total_count: me.totalCount
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
@@ -45,34 +53,29 @@ App.CompoundPharmacologyIndexController = Ember.ObjectController.extend({
 		}
 	});
 
-  }
+  },
 
-});
-
-App.CompoundPharmacologyIndexController.reopen({
- 
   fetchMore: function() {
-    if (this.currentCount < this.totalCount) {
+    if (this.get('model.content.length') < this.totalCount) {
     var me = this;
-    var thisCompound = this.get('content');
+    var thisCompound = this.get('controllers.compound').get('content');
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
         me.page++;
         var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
         $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	  thisCompound.get('pharmacology').pushObject(pharmaRecord);
+          var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
+	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('currentCount', me.get('currentCount') + pharmaResults.length);
-      pageScrolling = false;
-      enable_scroll();
+        me.set('fetching', false);
+      } else {
+        //failed response so scrolling is now allowed
+        me.set('fetching', false);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page, 50, pharmaCallback);
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page + 1, 50, pharmaCallback);
     }
-    pageScrolling = false;
-    enable_scroll();
   }
 
 });

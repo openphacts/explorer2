@@ -15,9 +15,9 @@
 <div>
 <div class="row btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
     <div class="span4 big-padding-left">
-        <button class="btn active" {{action 'structureSearch' 'exact'}}>Exact</button>
-        <button class="btn" {{action 'structureSearch' 'substructure'}}>Sub-structure</button>
-        <button class="btn" {{action 'structureSearch' 'similarity'}}>Similarity</button>
+        <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
+        <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
+        <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
     </div>
 </div>
 <div class="row">
@@ -26,19 +26,63 @@
         {{controllers.compound.smiles}}
     </div>
 </div>
-<div>
-    <table>
-        <thead>
-            <tr><th>CS URI</th><th>Label</th><th>ID</th></tr>
-        </thead>
-        <tbody>
-			{{#each compoundStructure in structure}}
-			<tr>
-                                <td>{{compoundStructure.csUri}}</td>
-				<td>{{compoundStructure.prefLabel}}</td>
-				<td>{{compoundStructure.id}}</td>
-			</tr>
-			{{/each}}
-        </tbody>
-    </table>
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+<tr>
+    <th>cwURI</th>
+    <th>description</th>
+    <th>biotransformationItem</th>
+    <th>toxicity</th>
+    <th>proteinBinding</th>
+    <th>prefLabel</th>
+    <th>csURI</th>
+    <th>smiles</th>
+    <th>chemblURI</th>
+    <th>fullMWT</th>
+    <th>hba</th>
+    <th>hbd</th>
+    <th>inchi</th>
+    <th>inchiKey</th>
+    <th>logp</th>
+    <th>molform</th>
+    <th>mwFreebase</th>
+    <th>psa</th>
+    <th>ro5Violations</th>
+    <th>rtb</th>
+    <th>molecule</th>
+    <th>csURI</th>
+    <th>relevance</th>
+</tr>
+</thead>
+<tbody>
+{{#each}}
+<tr class="record-deco">
+    <td>{{cwURI}}</td>
+    <td>{{description}}</td>
+    <td>{{biotransformationItem}}</td>
+    <td>{{toxicity}}</td>
+    <td>{{proteinBinding}}</td>
+    <td>{{#linkTo 'compound.index' this}}{{prefLabel}}{{/linkTo}}</td>
+    <td>{{csURI}}</td>
+    <td>{{smiles}}</td>
+    <td>{{chemblURI}}</td>
+    <td>{{fullMWT}}</td>
+    <td>{{hba}}</td>
+    <td>{{hbd}}</td>
+    <td>{{inchi}}</td>
+    <td>{{inchiKey}}</td>
+    <td>{{logp}}</td>
+    <td>{{molform}}</td>
+    <td>{{mwFreebase}}</td>
+    <td>{{psa}}</td>
+    <td>{{ro5Violations}}</td>
+    <td>{{rtb}}</td>
+    <td>{{molecule}}</td>
+    <td>{{csURI}}</td>
+    <td>{{relevance}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
 </div>
