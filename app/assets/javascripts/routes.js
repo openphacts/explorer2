@@ -22,9 +22,8 @@ App.Router.map(function() {
         this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
         this.resource('target.pathways', { path: '/pathways' }, function(){});
     });
-    this.resource('enzymes', { path: '/enzymes' }, function() {}); 
-    this.resource('enzyme', { path: '/enzymes/:enzyme_id' }, function() {
-        this.resource('enzyme.pharmacology', { path: '/pharmacology' }, function(){});
+    this.resource('trees', { path: '/trees' }, function() {
+        this.route('pharmacology', { path: '/pharmacology' }, function(){});
     });
     this.resource('pathways', { path: '/pathways' }, function() {}); 
     this.resource('pathway', { path: '/pathways/:pathway_id' }, function() {
@@ -198,16 +197,16 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
 
 });
 
-App.EnzymesRoute = Ember.Route.extend({
-    setupController: function(controller) {
+App.TreesIndexRoute = Ember.Route.extend({
+    setupController: function(controller, model) {
 	    console.log('enzymes index route setup controller');
-	    controller.set('content', []);
+	    controller.set('content', model);
 	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
 			    $.each(root, function(index,enzymeResult) {
-				    var enzyme = controller.store.createRecord('enzyme', enzymeResult);
+				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
 				    controller.addObject(enzyme);				    
 			    });
@@ -218,32 +217,78 @@ App.EnzymesRoute = Ember.Route.extend({
 
    model: function(params) {
      console.log('enzymes route model');
+     return [];
    }	
 });
 
-App.EnzymeIndexRoute = Ember.Route.extend({
+App.TreeIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, model) {
     controller.set('model', model);
   },
   model: function(params) {
-    return this.modelFor('enzyme');
+    return this.modelFor('tree');
   }
 });
 
-App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
+App.TreesPharmacologyRoute = Ember.Route.extend({
+
+  observesParameters: ['uri'],
+
+  setupController: function(controller, model) {
+    console.log('tree pharma controller setup');
+    var me = controller;
+    controller.set('content', model);
+      var thisEnzyme = model;
+      var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+      var pharmaCallback=function(success, status, response){
+      if (success && response) {
+        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
+	      thisEnzyme.get('pharmacology').addObject(pharmaRecord);
+        });
+      }
+    };
+    var countCallback = function(success, status, response) {
+        if (success) {
+            var count = searcher.parseTargetClassPharmacologyCount(response);
+            controller.totalCount = count;
+            // are there any results?
+            controller.set('empty', count > 0 ? false : true);
+            if (count > 0) {
+		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
+            }
+        }
+    };
+
+    searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+  },
+
+  model: function(params) {
+    console.log('tree pharma controller model');
+    var uri = this.get('queryParameters').uri;
+    var tree = this.controllerFor('trees').store.find('tree', uri);
+    return tree;
+  }
+
+});
+
+App.TreesPharmacologyIndexRoute = Ember.Route.extend({
+
+  observesParameters: ['uri'],
 
   setupController: function(controller, enzyme) {
     console.log('enzyme index route setup controller');
     var me = controller;
-    controller.set('model', enzyme);
+    controller.set('model', enzyme.get('pharmacology'));
       var thisEnzyme = enzyme;
       var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
         var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = me.store.createRecord('enzymePharmacology', pharma);
+          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
 	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
         });
       }
@@ -255,16 +300,18 @@ App.EnzymePharmacologyIndexRoute = Ember.Route.extend({
             // are there any results?
             controller.set('empty', count > 0 ? false : true);
             if (count > 0) {
-		        searcher.getTargetClassPharmacologyPaginated('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
+		        searcher.getTargetClassPharmacologyPaginated(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
             }
         }
     };
 
-    searcher.getTargetClassPharmacologyCount('http://purl.uniprot.org/enzyme/' + enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+    searcher.getTargetClassPharmacologyCount(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
   },
   model: function(params) {
     console.log('enzyme pharma index route');
-    return this.modelFor('enzyme');
+    var uri = this.get('queryParameters').uri;
+    var tree = this.controllerFor('trees').store.find('tree', uri);
+    return tree;
   }
 
 });

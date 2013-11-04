@@ -11,8 +11,8 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
   totalCount: null,
 
   notEmpty: function() {
-    return this.get('totalCount') > 0;
-  }.property('totalCount'),
+    return this.get('model.content.length') > 0;
+  }.property('model.content.length'),
 
   fetching: false,
 

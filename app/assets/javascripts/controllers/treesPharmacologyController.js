@@ -1,6 +1,6 @@
-App.EnzymePharmacologyIndexController = Ember.ObjectController.extend({
+App.TreesPharmacologyController = Ember.ObjectController.extend({
 
-  needs: "enzyme",
+  needs: "trees",
 
   page: 1,
 
@@ -9,6 +9,10 @@ App.EnzymePharmacologyIndexController = Ember.ObjectController.extend({
   totalCount: 0,
 
   empty: true,
+
+  notEmpty: function() {
+    return this.get('model.pharmacology.length') > 0;
+  }.property('model.pharmacology.length'),
   
   navigateTo: function(target) {
     var me = this;
@@ -32,7 +36,7 @@ App.EnzymePharmacologyIndexController = Ember.ObjectController.extend({
 
 
 
-App.EnzymePharmacologyIndexController.reopen({
+App.TreesPharmacologyController.reopen({
  
   fetchMore: function() {
     if (this.currentCount < this.totalCount) {

@@ -64,7 +64,7 @@ App.PathwayAdapter = DS.Adapter.extend({
     return promise;
   }
 });
-App.EnzymeAdapter = DS.Adapter.extend({
+App.TreeAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     console.log('enzyme adapter find');
     var identifier = id;
@@ -75,7 +75,7 @@ App.EnzymeAdapter = DS.Adapter.extend({
 		  enzymeResult = searcher.parseParentNodes(response);
 		  var enzymeResponse = {};
 		  enzymeResponse['id'] = id;
-		  enzymeResponse['uri'] = 'http://purl.uniprot.org/enzyme/' + id;
+		  enzymeResponse['uri'] = id;
 		  enzymeResponse['name'] = enzymeResult.label;
           resolve(enzymeResponse);
         } else {
@@ -84,9 +84,10 @@ App.EnzymeAdapter = DS.Adapter.extend({
       };
       var childCallback=function(success, status, response){
         if (success && response) {
+		  enzymeResult = searcher.parseChildNodes(response);
 		  var enzymeResponse = {};
 		  enzymeResponse['id'] = id;
-		  enzymeResponse['uri'] = 'http://purl.uniprot.org/enzyme/' + id;
+		  enzymeResponse['uri'] = id;
 		  enzymeResponse['name'] = enzymeResult.label;
           resolve(enzymeResponse);
         } else {
@@ -95,9 +96,9 @@ App.EnzymeAdapter = DS.Adapter.extend({
       };
 
       if ((id.match(/-$/))) {
-		searcher.getChildNodes('http://purl.uniprot.org/enzyme/' + id, parentCallback);	
+		searcher.getChildNodes(id, childCallback);	
       } else {
-		searcher.getParentNodes('http://purl.uniprot.org/enzyme/' + id, parentCallback);	
+		searcher.getParentNodes(id, parentCallback);	
       }
     });
     return promise;	
