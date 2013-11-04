@@ -221,16 +221,6 @@ App.TreesIndexRoute = Ember.Route.extend({
    }	
 });
 
-App.TreeIndexRoute = Ember.Route.extend({
-
-  setupController: function(controller, model) {
-    controller.set('model', model);
-  },
-  model: function(params) {
-    return this.modelFor('tree');
-  }
-});
-
 App.TreesPharmacologyRoute = Ember.Route.extend({
 
   observesParameters: ['uri'],
