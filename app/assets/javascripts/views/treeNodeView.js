@@ -1,12 +1,9 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
   highlighted: false,
-  contentChanged: function() {
-    console.log('something happened to the content');
-  }.property('content.children'),
   branch: function(){
-    return this.get('content').get('children');
-  }.property('content.children'),
+    return this.get('content').get('hasChildren');
+  }.property('content.hasChildren'),
   subBranch: undefined,
   fetchedData: false,
   indentLevel: function(){
@@ -62,15 +59,16 @@ actions: {
 			name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
 			uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 		    console.log("Clicked on " + name + " " + uri);
-		    if (this.get('content').get('children')) {
+		    if (this.get('content').get('hasChildren')) {
 			    // only fetch for uris which have children
-                var treeBranchView = App.TreeBranchView.create();
-			    var treeBranchView = me.get('parentView').createChildView(App.TreeBranchView);
-                controller.get('childTreeNodes').push(treeBranchView);
-				var index = me.get('parentView').indexOf(me) + 1;
+                //var treeBranchView = App.TreeBranchView.create();
+			    //var treeBranchView = me.get('parentView').createChildView(App.TreeBranchView);
+                //controller.get('childTreeNodes').push(treeBranchView);
+				//var index = me.get('parentView').indexOf(me) + 1;
                 //me.get('parentView').pushObject(treeBranchView);
-                me.get('parentView').insertAt(index, treeBranchView);
-			    treeBranchView.set('content', []);
+                //me.get('parentView').insertAt(index, treeBranchView);
+			    //treeBranchView.set('content', []);
+                var contentIndex = controller.get('content').indexOf(this.get('content'));
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
 			        if (success && response) {
@@ -81,17 +79,19 @@ actions: {
 						    enzyme.set('uri', member.uri);
 							enzyme.set('name', member.names[0]);
 							enzyme.set('id', member.uri.split('/').pop());
-                            enzyme.set('children', false);
+                            enzyme.set('hasChildren', false);
                             enzyme.set('level', parent.get('level') + 1);
-		                    treeBranchView.get('content').pushObject(enzyme);
+                            controller.get('content').insertAt(contentIndex + 1, enzyme);
+                            parent.get('children').pushObject(enzyme);
+		                    //treeBranchView.get('content').pushObject(enzyme);
                             // now figure out if this node has children
 		                    var innerCallback = function(success, status, response) {
 			                  if (success && response) {
 			                    var members = searcher.parseChildNodes(response);
                                 //does the node have children
-                                enzyme.set('children', members.children.length > 0 ? true : false);
+                                enzyme.set('hasChildren', members.children.length > 0 ? true : false);
 				              } else {
-                                enzyme.set('children', false);
+                                enzyme.set('hasChildren', false);
                               }
 			                }
                             searcher.getChildNodes(member.uri, innerCallback);
@@ -100,7 +100,7 @@ actions: {
                         //me.get('parentView').get('childViews').pushObject(treeBranchView)
 					    //me.get('parentView').insertAt(index, treeBranchView);
 					    me.set('opened', true);
-					    me.set('subBranch', treeBranchView);
+					    //me.set('subBranch', treeBranchView);
 					    me.set('fetchedData', true);
 				    }
 			    }

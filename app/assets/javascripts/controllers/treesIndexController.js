@@ -22,11 +22,12 @@ App.TreesIndexController = Ember.ArrayController.extend({
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('level', 1);
 				    me.addObject(enzyme);
+                    enzyme.set('hasChildren', false);
 		            var innerCallback = function(success, status, response) {
 			          if (success && response) {
 			              var members = searcher.parseChildNodes(response);
                           //does the node have children
-                          enzyme.set('children', members.children.length > 0 ? true : false);
+                          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
 				      }
 			        }
                     searcher.getChildNodes(enzymeResult.uri, innerCallback);		    
