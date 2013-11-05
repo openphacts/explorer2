@@ -1,25 +1,17 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
   highlighted: false,
+  contentChanged: function() {
+    console.log('something happened to the content');
+  }.property('content.children'),
   branch: function(){
-	var name, uri;
-	uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-	    if(uri.match(/-$/)){ return true; }
-	  }.property(),
+    return this.get('content').get('children');
+  }.property('content.children'),
   subBranch: undefined,
   fetchedData: false,
   indentLevel: function(){
-	uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-	var enzyme = uri.split('/')[uri.split('/').length -1];
-	var levels = enzyme.split('.');
-	var totalLevels = 0;
-	$.each(levels, function(index, level) {
-		if (level !== '-') {
-			totalLevels += 1;
-		}
-	});
-	return 'indentLevel' + totalLevels;
-  }.property(),
+	return 'indentLevel' + this.get('content').get('level');
+  }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
   classNameBindings: ['opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
@@ -45,8 +37,10 @@ App.TreeNodeView = Ember.View.extend({
 	    console.log("Mouse leave " + name + " " + uri);
 	    this.set('highlighted', false);
   },
+actions: {
   expand: function() {
         console.log('expand');
+        var controller = this.get('controller');
         var me = this;
 		// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 		// hence the need to get the data slightly differently. Sure it's a fudge but.....
@@ -64,12 +58,18 @@ App.TreeNodeView = Ember.View.extend({
 			// user wants to open the branch for the first time
 			var name, uri;
 			var me = this;
+            var parent = this.get('content');
 			name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
 			uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 		    console.log("Clicked on " + name + " " + uri);
-		    if (uri.match(/-$/)) {
-			    // only fetch for uris which end with a '-' eg http://purl.uniprot.org/enzyme/5.3.-.-
-			    var treeBranchView = App.TreeBranchView.create();
+		    if (this.get('content').get('children')) {
+			    // only fetch for uris which have children
+                var treeBranchView = App.TreeBranchView.create();
+			    var treeBranchView = me.get('parentView').createChildView(App.TreeBranchView);
+                controller.get('childTreeNodes').push(treeBranchView);
+				var index = me.get('parentView').indexOf(me) + 1;
+                //me.get('parentView').pushObject(treeBranchView);
+                me.get('parentView').insertAt(index, treeBranchView);
 			    treeBranchView.set('content', []);
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
@@ -81,12 +81,24 @@ App.TreeNodeView = Ember.View.extend({
 						    enzyme.set('uri', member.uri);
 							enzyme.set('name', member.names[0]);
 							enzyme.set('id', member.uri.split('/').pop());
+                            enzyme.set('children', false);
+                            enzyme.set('level', parent.get('level') + 1);
 		                    treeBranchView.get('content').pushObject(enzyme);
-					        //membersWithSingleName.push({'name' : member.names[0], 'uri': member.uri});
+                            // now figure out if this node has children
+		                    var innerCallback = function(success, status, response) {
+			                  if (success && response) {
+			                    var members = searcher.parseChildNodes(response);
+                                //does the node have children
+                                enzyme.set('children', members.children.length > 0 ? true : false);
+				              } else {
+                                enzyme.set('children', false);
+                              }
+			                }
+                            searcher.getChildNodes(member.uri, innerCallback);
 				        });
-				        //treeBranchView.set('content', membersWithSingleName);
-					    var index = me.get('parentView').indexOf(me) + 1;
-					    me.get('parentView').insertAt(index, treeBranchView);
+					    //var index = me.get('parentView').indexOf(me) + 1;
+                        //me.get('parentView').get('childViews').pushObject(treeBranchView)
+					    //me.get('parentView').insertAt(index, treeBranchView);
 					    me.set('opened', true);
 					    me.set('subBranch', treeBranchView);
 					    me.set('fetchedData', true);
@@ -96,4 +108,5 @@ App.TreeNodeView = Ember.View.extend({
 		    }
 		}
   }
+}
 });

@@ -208,7 +208,17 @@ App.TreesIndexRoute = Ember.Route.extend({
 			    $.each(root, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
-				    controller.addObject(enzyme);				    
+                    enzyme.set('children', false);
+                    enzyme.set('level', 1);
+				    controller.addObject(enzyme);
+                    var innerCallback = function(success, status, response) {
+			          if (success && response) {
+			              var members = searcher.parseChildNodes(response);
+                          //does the node have children
+                          enzyme.set('children', members.children.length > 0 ? true : false);
+				      }
+			        }
+                    searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
 			    });
 			}
 		}
