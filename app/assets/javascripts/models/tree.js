@@ -3,6 +3,7 @@ App.Tree = App.SearchResult.extend({
     name: DS.attr('string'),
     hasChildren: DS.attr('boolean'),
     level: DS.attr('number'),
+    opened: DS.attr('boolean'),
     children: DS.hasMany('tree', { inverse: 'parent' }),
     parent: DS.belongsTo('tree', { inverse: 'children' }),
     hidden: DS.attr('boolean'),

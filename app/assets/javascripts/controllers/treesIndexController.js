@@ -23,6 +23,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
                     enzyme.set('level', 1);
 				    me.addObject(enzyme);
                     enzyme.set('hasChildren', false);
+                    enzyme.set('opened', false);
 		            var innerCallback = function(success, status, response) {
 			          if (success && response) {
 			              var members = searcher.parseChildNodes(response);

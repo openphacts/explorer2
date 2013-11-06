@@ -210,6 +210,7 @@ App.TreesIndexRoute = Ember.Route.extend({
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('hasChildren', false);
                     enzyme.set('level', 1);
+                    enzyme.set('opened', false);
 				    controller.addObject(enzyme);
                     var innerCallback = function(success, status, response) {
 			          if (success && response) {

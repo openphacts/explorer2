@@ -7,6 +7,9 @@ App.TreeNodeView = Ember.View.extend({
   branch: function(){
     return this.get('content').get('hasChildren');
   }.property('content.hasChildren'),
+  opened: function() {
+    return this.get('content').get('opened');	
+  }.property('content.opened'),
   subBranch: undefined,
   fetchedData: false,
   indentLevel: function(){
@@ -41,13 +44,14 @@ actions: {
   expand: function() {
         console.log('expand');
         var controller = this.get('controller');
+		var contentIndex = controller.get('content').indexOf(this.get('content'));
+		var parent = controller.get('content')[contentIndex];
         var me = this;
 		// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 		// hence the need to get the data slightly differently. Sure it's a fudge but.....
-		if (this.get('opened')) {
+		if (parent.get('opened')) {
 			// user wants to close the branch
 			var index = this.get('parentView').indexOf(this) + 1;
-			var contentIndex = controller.get('content').indexOf(this.get('content'));
 			me.iterateOverChildren(this.get('content'), true);
             //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
 	        //  child.set('hidden', true);
@@ -55,10 +59,10 @@ actions: {
             //});
 			//this.get('parentView').removeAt(index);
 			this.set('opened', false);
-		} else if (this.get('fetchedData')){
+			this.get('content').set('opened', false);
+		} else if (parent.get('fetchedData')){
 			// user wants to open the branch and we have already created the view before
 			var index = this.get('parentView').indexOf(this) + 1;
-			var contentIndex = controller.get('content').indexOf(this.get('content'));
 			me.iterateOverChildren(this.get('content'), false);
             //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
 	        //  child.set('hidden', false);
@@ -66,6 +70,7 @@ actions: {
             //});
 			//this.get('parentView').insertAt(index, this.get('subBranch'));
 			this.set('opened', true);
+			this.get('content').set('opened', true);
 		} else {
 			// user wants to open the branch for the first time
 			var name, uri;
@@ -84,6 +89,7 @@ actions: {
                 //me.get('parentView').insertAt(index, treeBranchView);
 			    //treeBranchView.set('content', []);
                 var contentIndex = controller.get('content').indexOf(this.get('content'));
+				controller.get('content')[contentIndex].set('opened', true);
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
 			        if (success && response) {
@@ -114,10 +120,10 @@ actions: {
 					    //var index = me.get('parentView').indexOf(me) + 1;
                         //me.get('parentView').get('childViews').pushObject(treeBranchView)
 					    //me.get('parentView').insertAt(index, treeBranchView);
-					    me.set('opened', true);
+					    controller.get('content')[contentIndex].set('opened', true);
 					    //parent.set('opened', true);
 					    //me.set('subBranch', treeBranchView);
-					    me.set('fetchedData', true);
+					    controller.get('content')[contentIndex].set('fetchedData', true);
 				    }
 			    }
 			    searcher.getChildNodes(uri, callback);
@@ -129,10 +135,14 @@ actions: {
 	var me = this;
 	console.log('iterating over ' + child.id);
     $.each(child.get('children').get('content'), function(index, innerChild) {
-	  innerChild.set('hidden', hidden);
-	  console.log('inner child is ' + innerChild.id + ' ' + innerChild.get('hidden'));
-	  me.iterateOverChildren(innerChild, hidden);
-    }); 	
+      console.log('parent is opened ' + innerChild.get('parent').get('opened'));
+	  if (innerChild.get('parent').get('opened') == hidden) {
+		  innerChild.set('hidden', hidden);
+		  console.log('inner child is ' + innerChild.id + ' ' + innerChild.get('hidden'));
+		  me.iterateOverChildren(innerChild, hidden);		
+	  }
+    });
+    child.set('opened', hidden); 	
   }
 
 });
