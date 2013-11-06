@@ -1,6 +1,9 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
   highlighted: false,
+  hidden: function() {
+	return this.get('content').get('hidden');
+  }.property('content.hidden'),
   branch: function(){
     return this.get('content').get('hasChildren');
   }.property('content.hasChildren'),
@@ -11,7 +14,7 @@ App.TreeNodeView = Ember.View.extend({
   }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
+  classNameBindings: ['hidden', 'opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
   classNames: ['treerow'],
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
@@ -44,12 +47,24 @@ actions: {
 		if (this.get('opened')) {
 			// user wants to close the branch
 			var index = this.get('parentView').indexOf(this) + 1;
-			this.get('parentView').removeAt(index);
+			var contentIndex = controller.get('content').indexOf(this.get('content'));
+			me.iterateOverChildren(this.get('content'), true);
+            //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
+	        //  child.set('hidden', true);
+	        //  me.iterateOverChildren(child, true);
+            //});
+			//this.get('parentView').removeAt(index);
 			this.set('opened', false);
 		} else if (this.get('fetchedData')){
 			// user wants to open the branch and we have already created the view before
 			var index = this.get('parentView').indexOf(this) + 1;
-			this.get('parentView').insertAt(index, this.get('subBranch'));
+			var contentIndex = controller.get('content').indexOf(this.get('content'));
+			me.iterateOverChildren(this.get('content'), false);
+            //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
+	        //  child.set('hidden', false);
+	        //  me.iterateOverChildren(child, false);
+            //});
+			//this.get('parentView').insertAt(index, this.get('subBranch'));
 			this.set('opened', true);
 		} else {
 			// user wants to open the branch for the first time
@@ -82,7 +97,7 @@ actions: {
                             enzyme.set('hasChildren', false);
                             enzyme.set('level', parent.get('level') + 1);
                             controller.get('content').insertAt(contentIndex + 1, enzyme);
-                            parent.get('children').pushObject(enzyme);
+                            controller.get('content')[contentIndex].get('children').pushObject(enzyme);
 		                    //treeBranchView.get('content').pushObject(enzyme);
                             // now figure out if this node has children
 		                    var innerCallback = function(success, status, response) {
@@ -100,6 +115,7 @@ actions: {
                         //me.get('parentView').get('childViews').pushObject(treeBranchView)
 					    //me.get('parentView').insertAt(index, treeBranchView);
 					    me.set('opened', true);
+					    //parent.set('opened', true);
 					    //me.set('subBranch', treeBranchView);
 					    me.set('fetchedData', true);
 				    }
@@ -108,5 +124,15 @@ actions: {
 		    }
 		}
   }
-}
+},
+  iterateOverChildren: function(child, hidden) {
+	var me = this;
+	console.log('iterating over ' + child.id);
+    $.each(child.get('children').get('content'), function(index, innerChild) {
+	  innerChild.set('hidden', hidden);
+	  console.log('inner child is ' + innerChild.id + ' ' + innerChild.get('hidden'));
+	  me.iterateOverChildren(innerChild, hidden);
+    }); 	
+  }
+
 });
