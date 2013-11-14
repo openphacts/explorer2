@@ -23,5 +23,9 @@ App.TreePharmacology = DS.Model.extend({
    assayURI: DS.attr('string'),
    assayDescription: DS.attr('string'),
    assayOrganism: DS.attr('string'),
-   pChembl: DS.attr('string')
+   pChembl: DS.attr('string'),
+   activityType: DS.attr('string'),
+   activityValue: DS.attr('number'),
+   activityRelation: DS.attr('string'),
+   activityUnits: DS.attr('string')
 });

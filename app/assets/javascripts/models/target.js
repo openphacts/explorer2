@@ -19,18 +19,3 @@ App.Target = App.SearchResult.extend({
     pharmacology: DS.hasMany('TargetPharmacology'),
     isCompound: false
 });
-//App.Target.reopenClass({
-//    find: function(uri) {
-//        // use the lda api to fetch compounds rather than the default behaviour of rails side
-//        var target = App.Target.createRecord();
-//        var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);  
-//        var callback=function(success, status, response){  
-//            var targetResult = searcher.parseTargetResponse(response); 
-//            target.setProperties(targetResult);
-//	    target.trigger('didLoad');
-//        };  
-//        searcher.fetchTarget('http://www.conceptwiki.org/concept/' + uri, null, callback);
-//        target.set("id", uri);
-//        return target;
-//    }
-//});

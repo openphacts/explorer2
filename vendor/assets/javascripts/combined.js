@@ -57,6 +57,7 @@ Openphacts.Constants.prototype.RO5_VIOLATIONS = 'ro5_violations';
 Openphacts.Constants.prototype.SMILES = 'smiles';
 Openphacts.Constants.prototype.RELEVANCE = 'relevance';
 Openphacts.Constants.prototype.PATHWAY_COUNT = 'pathway_count';
+Openphacts.Constants.prototype.MOLWT = 'molweight';
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
 
 Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
@@ -1474,9 +1475,18 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     var records = [];
     $.each(response.items, function(i, item) {
       var targets = [];
-      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null;
+      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null, activityType = null, activityRelation = null, activityValue = null, activityUnits = null;
       chemblActivityURI = item["_about"];
       pmid = item.pmid;
+
+      activityType = item.activity_type;
+      activityRelation = item.activity_relation;
+      activityValue = item.activity_value;
+      var units = item.activity_unit;
+      if (units) {
+          activityUnits = units.prefLabel;
+      }
+
       relation = item.relation ? item.relation : null;
       standardUnits = item.standardUnits;
       standardValue = item.standardValue ? item.standardValue : null;
@@ -1484,7 +1494,6 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       inDataset = item[constants.IN_DATASET];
       forMolecule = item[constants.FOR_MOLECULE];
       chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
-      fullMWT = forMolecule[constants.FULL_MWT] ? forMolecule[constants.FULL_MWT] : null;
       pChembl = item.pChembl ? item.pChembl : null;
       $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
         var src = match[constants.IN_DATASET];
@@ -1496,18 +1505,55 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             inchi = match[constants.INCHI];
             inchiKey = match[constants.INCHIKEY];
             smiles = match[constants.SMILES];
-            ro5Violations = match[constants.RO5_VIOLATIONS] ? match[constants.RO5_VIOLATIONS] : null;
+            ro5Violations = match[constants.RO5_VIOLATIONS] !== null ? match[constants.RO5_VIOLATIONS] : null;
+            fullMWT = match[constants.MOLWT] ? match[constants.MOLWT] : null;
 		}
       });
-//TODO not sure where/if the targets are in 1.3
-//      targetURI = item.target[constants.ABOUT];
-//      targetTitle = item.target.title;
-//      targetOrganism = item.target.organism;
-//      if (item.target.exactMatch) {
-//          $.each(item.target.exactMatch, function(j, match) {
-//            targets.push(match);
-//          });
-//      }
+      var targets = item.hasAssay.hasTarget;
+      var assayTargets = [];
+      if ($.isArray(targets)) {
+          $.each(targets, function(index, target) {
+            var targetURI = target[constants.ABOUT];
+            var targetTitle = target.title;
+            var targetOrganismNames = target.targetOrganismName;
+            var targetComponents = target.hasTargetComponent;
+            var assayTargetComponents = [];
+            if (targetComponents) {
+                if ($.isArray(targetComponents)) {
+                    $.each(targetComponents, function(j, targetComponent) {
+                      var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
+                      var targetComponentURI = targetComponent[constants.EXACT_MATCH];
+                      assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
+                    });
+                } else {
+                    var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                    var targetComponentURI = targetComponents[constants.ABOUT];
+                    assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
+                }
+            }   
+            assayTargets.push({"uri": targetURI, "title": targetTitle, "targetComponents": assayTargetComponents,"targetOrganismNames": targetOrganismNames});
+          });
+      } else {
+          var targetURI = targets[constants.ABOUT];
+          var targetTitle = targets.title;
+          var targetOrganismNames = targets.targetOrganismName;    
+          var targetComponents = targets.hasTargetComponent;
+          var assayTargetComponents = [];
+          if (targetComponents) {
+              if ($.isArray(targetComponents)) {
+                  $.each(targetComponents, function(j, targetComponent) {
+                    var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
+                    var targetComponentURI = targetComponent[constants.EXACT_MATCH];
+                    assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
+                  });
+              } else {
+                  var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                  var targetComponentURI = targetComponents[constants.ABOUT];
+                  assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
+              }
+          }
+          assayTargets.push({"uri": targetURI, "title": targetTitle, "targetComponents": assayTargetComponents,"targetOrganismNames": targetOrganismNames});
+      }
       var onAssay = item[constants.ON_ASSAY];
       assayURI = onAssay["_about"] ? onAssay["_about"] : null;
       assayDescription = onAssay.description ? onAssay.description : null;
@@ -1517,13 +1563,16 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       publishedValue = item.publishedValue ? item.publishedValue : null;
       standardUnits = item.standardUnits ? item.standardUnits : null;
       records.push({
-          //targets: targets,
+          'targets': assayTargets,
           'chemblActivityURI': chemblActivityURI,
           'pmid': pmid,
           'relation': relation,
           'standardUnits': standardUnits,
           'standardValue': standardValue,
           'activityType': activityType,
+          'activityRelation': activityRelation,
+          'activityUnits': activityUnits,
+          'activityValue': activityValue,
           'inDataset': inDataset,
           'fullMWT': fullMWT,
           'chemblURI': chemblURI,
@@ -1543,7 +1592,6 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
           'publishedType': publishedType,
           'publishedUnits': publishedUnits,
           'publishedValue': publishedValue,
-          'standardUnits': standardUnits,
           'pChembl': pChembl
       });
     });
@@ -2172,3 +2220,28 @@ Openphacts.MapSearch.prototype.parseMapURLResponse = function(response) {
         }
 	return urls;
 }
+Openphacts.DataSources = function DataSources(baseURL, appID, appKey) {
+        this.baseURL = baseURL;
+        this.appID = appID;
+        this.appKey = appKey;
+}
+
+Openphacts.DataSources.prototype.getSources = function(callback) {
+        var sourcesQuery = $.ajax({
+                url: this.baseURL + '/sources',
+                dataType: 'json',
+                cache: true,
+                data: {
+                        _format: "json",
+                        app_id: this.appID,
+                        app_key: this.appKey
+                },
+                success: function(response, status, request) {
+                        callback.call(this, true, request.status, response.result.primaryTopic);
+                },
+                error: function(request, status, error) {
+                        callback.call(this, false, request.status);
+                }
+        });
+}
+

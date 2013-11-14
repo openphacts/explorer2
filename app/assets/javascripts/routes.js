@@ -254,11 +254,9 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
     var countCallback = function(success, status, response) {
         if (success) {
             var count = searcher.parseTargetClassPharmacologyCount(response);
-            controller.totalCount = count;
-            // are there any results?
-            controller.set('empty', count > 0 ? false : true);
+            controller.set('totalCount', count);
             if (count > 0) {
-		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
+		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
             }
         }
     };
@@ -279,10 +277,10 @@ App.TreesPharmacologyIndexRoute = Ember.Route.extend({
 
   observesParameters: ['uri'],
 
-  setupController: function(controller, enzyme) {
+  setupController: function(controller, model) {
     console.log('enzyme index route setup controller');
     var me = controller;
-    controller.set('model', enzyme.get('pharmacology'));
+    controller.set('model', model);
       var thisEnzyme = enzyme;
       var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
@@ -312,7 +310,7 @@ App.TreesPharmacologyIndexRoute = Ember.Route.extend({
     console.log('enzyme pharma index route');
     var uri = this.get('queryParameters').uri;
     var tree = this.controllerFor('trees').store.find('tree', uri);
-    return tree;
+    return tree.get('pharmacology');
   }
 
 });

@@ -2,17 +2,19 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 
   needs: "trees",
 
-  page: 1,
+  page: null,
 
-  currentCount: 0,
+  currentCount: function() {
+    return this.get('model.pharmacology.length');
+  }.property('model.pharmacology.length'),
 
-  totalCount: 0,
-
-  empty: true,
+  totalCount: null,
 
   notEmpty: function() {
     return this.get('model.pharmacology.length') > 0;
   }.property('model.pharmacology.length'),
+
+  fetching: false,
   
   navigateTo: function(target) {
     var me = this;
@@ -30,36 +32,32 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
     };  
 
     searcher.fetchTarget(target, callback);
-  }
+  },
 
-});
+  actions: {
 
-
-
-App.TreesPharmacologyController.reopen({
- 
   fetchMore: function() {
-    if (this.currentCount < this.totalCount) {
+    if (this.get('model.pharmacology.length') < this.totalCount) {
     var me = this;
     var thisEnzyme = this.get('content');
-    var searcher = new Openphacts.EnzymeSearch(ldaBaseUrl, appID, appKey);
+    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
         me.page++;
-        var pharmaResults = searcher.parseEnzymePharmacologyResponse(response);
+        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.EnzymePharmacology.createRecord(pharma);
-	  thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
+          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
+	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('currentCount', me.get('currentCount') + pharmaResults.length);
-      pageScrolling = false;
-      enable_scroll();
+        me.set('fetching', false);
+      } else {
+        me.set('fetching', false);
       }
     };
-    searcher.enzymePharmacology(thisEnzyme.id, this.page, 50, pharmaCallback);
+    searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
     }
-    pageScrolling = false;
-    enable_scroll();
+  }
+
   }
 
 });
