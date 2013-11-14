@@ -1062,15 +1062,23 @@ Openphacts.StructureSearch.prototype.smilesToURL = function(smiles, callback) {
 }
 
 Openphacts.StructureSearch.prototype.parseExactResponse = function(response) {
+    var results = [];
+    if ($.isArray(response.primaryTopic.result)) {
+        $.each(response.primaryTopic.result, function(i, result) {
+          results.push(result);
+        });
+    } else {
+        results.push(response.primaryTopic.result);
+    }
 	return {
-                type: response.primaryTopic.type,
-                molecule: response.primaryTopic.Molecule,
-                csURI: response.primaryTopic.result,
-                matchType: response.primaryTopic.MatchType ? response.primaryTopic.MatchType : null,
-                complexity: response.primaryTopic.Complexity ? response.primaryTopic.Complexity : null,
-                isotopic: response.primaryTopic.Isotopic ? response.primaryTopic.Isotopic : null,
-                hasSpectra: response.primaryTopic.HasSpectra ? response.primaryTopic.HasSpectra : null,
-                hasPatents: response.primaryTopic.HasPatents ? response.primaryTopic.HasPatents : null
+                'type': response.primaryTopic.type,
+                'molecule': response.primaryTopic.Molecule,
+                'csURIs': results,
+                'matchType': response.primaryTopic.MatchType ? response.primaryTopic.MatchType : null,
+                'complexity': response.primaryTopic.Complexity ? response.primaryTopic.Complexity : null,
+                'isotopic': response.primaryTopic.Isotopic ? response.primaryTopic.Isotopic : null,
+                'hasSpectra': response.primaryTopic.HasSpectra ? response.primaryTopic.HasSpectra : null,
+                'hasPatents': response.primaryTopic.HasPatents ? response.primaryTopic.HasPatents : null
         };
 }
 

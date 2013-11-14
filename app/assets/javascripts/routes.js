@@ -484,41 +484,25 @@ App.TargetPathwaysIndexRoute = Ember.Route.extend({
     return this.modelFor('target').get('pathways');
   }
 });
-App.CompoundStructureIndexRoute = Ember.Route.extend({
+App.CompoundsStructureRoute = Ember.Route.extend({
 
-  observesParameters: ['type'],
+  observesParameters: ['type', 'uri'],
 
   setupController: function(controller, model) {
     controller.set('content', model);
-    controller.clear();
     var me = controller;
-    var thisCompound = this.modelFor('compound');
+    var thisCompound = model;
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
        if (success && response) {
            if (structureSearchType === "exact") {
                result = searcher.parseExactResponse(response);
-               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-	           var mapURLCallback = function(success, status, response) {
-	             var constants = new Openphacts.Constants();
-	             if (success && response) {
-		             var matchingURL = null;
-		             var urls = mapSearcher.parseMapURLResponse(response);
-                     var found = false;
-                     //loop through all the identifiers for a compound until we find the cw one
-		             $.each(urls, function(i, url) {
-		               var uri = new URI(url);
-		               if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
-                           me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
-		                     thisCompound.get('structure').pushObject(compound);
-                           });
-                          found = true;
-		               }
-                     });	
-	             }
-	           };
-               mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
+               $.each(result.csURIs, function(index, csURI) {
+                   me.get('store').find('compound', csURI).then(function(compound) {
+		               thisCompound.get('structure').pushObject(compound);
+                   });
+               });
            } else if (structureSearchType === "similarity") {
                  results = searcher.parseSimilarityResponse(response);
                  var relevance = {};
@@ -594,9 +578,10 @@ App.CompoundStructureIndexRoute = Ember.Route.extend({
     //the route can come in with a ?type=structureSearchType param, default is exact
     var type = this.get('queryParameters').type;
     if (type) {
-        this.controllerFor('compoundStructureIndex').set('structureSearchType', type);
+        this.controllerFor('compoundsStructure').set('structureSearchType', type);
     }
-    return this.modelFor('compound').get('structure');
+    var uri = this.get('queryParameters').uri;
+    return this.get('store').find('compound', uri);
   }
 
 });

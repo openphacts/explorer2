@@ -1,6 +1,5 @@
-App.CompoundStructureIndexController = Ember.ArrayController.extend({
+App.CompoundsStructureController = Ember.ObjectController.extend({
 
-  needs: "compound",
   structureSearchType: "exact",
 
   exactSearch: function() {
@@ -20,7 +19,7 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
        console.log("Set structure search type: " + type);
        this.set('structureSearchType', type);
        var me = this;
-       var thisCompound = this.get('controllers.compound').get('content');
+       var thisCompound = this.get('content');
        thisCompound.get('structure').clear();
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
@@ -114,6 +113,10 @@ App.CompoundStructureIndexController = Ember.ArrayController.extend({
            // TODO fix start and count at 1 and 100 for the moment
            searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
        }
+     },
+
+     fetchMore: function() {
+       console.log('fetch more structures');
      }
   }
 });
