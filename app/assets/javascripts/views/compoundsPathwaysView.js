@@ -1,4 +1,4 @@
-App.CompoundPathwaysIndexView = Ember.View.extend({
+App.CompoundsPathwaysView = Ember.View.extend({
   didInsertElement: function() {
     var view = this;
     $(window).bind("scroll", function() {

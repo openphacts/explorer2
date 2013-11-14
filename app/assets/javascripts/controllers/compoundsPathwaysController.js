@@ -1,12 +1,11 @@
-App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
+App.CompoundsPathwaysController = Ember.ObjectController.extend({
 
-  needs: "compound",
 
   page: null,
 
   currentCount: function() {
-    return this.get('model.content.length');
-  }.property('model.content.length'),
+    return this.get('model.pathways.length');
+  }.property('model.pathways.length'),
 
   totalCount: null,
 
@@ -16,8 +15,9 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
 
   fetching: false,
 
+actions: {
   fetchMore: function() {
-    if (this.currentCount < this.totalCount) {
+    if (this.get('model.pathways.length') < this.totalCount) {
     var me = this;
     var thisCompound = this.get('content');
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
@@ -40,6 +40,7 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
     };
     searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
     }
+  }
   }
 
 });
