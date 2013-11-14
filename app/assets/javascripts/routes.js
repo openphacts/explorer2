@@ -11,11 +11,10 @@ App.Router.map(function() {
     this.route("search", { path: "/search" }, function() {
 
     });
-    this.resource('compounds', { path: '/compounds' }, function() {});
-    this.resource('compound', { path: '/compounds/:compound_id' } , function() {
-        this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
-        this.resource('compound.structure', { path: '/structure' }, function(){});
-        this.resource('compound.pathways', { path: '/pathways' }, function(){});
+    this.resource('compounds', { path: '/compounds' }, function() {
+        this.route('pharmacology', { path: '/pharmacology' }, function(){});
+        this.route('pathways', { path: '/pathways' }, function(){});
+        this.route('structure', { path: '/structure' }, function(){});
     });
     this.resource('targets', { path: '/targets' }, function() {}); 
     this.resource('target', { path: '/targets/:target_id' }, function() {
@@ -50,7 +49,9 @@ App.SearchRoute = Ember.Route.extend({
 	
 });
 
-App.CompoundIndexRoute = Ember.Route.extend({
+App.CompoundsIndexRoute = Ember.Route.extend({
+
+  observesParameters: ['uri'],
 	
   setupController: function(controller, model) {
    console.log('compound index controller');
@@ -59,7 +60,10 @@ App.CompoundIndexRoute = Ember.Route.extend({
 
   model: function() {
 	console.log('compound index model')
-    return this.modelFor('compound');
+    var uri = this.get('queryParameters').uri;
+    var compound = this.controllerFor('compounds').store.find('compound', uri);
+    var uriParams = Ember.Router.QueryParameters.create({ "uri": uri });
+    return compound;
  }
 });
 
@@ -76,12 +80,14 @@ App.CompoundRoute = Ember.Route.extend({
  }
 });
 
-App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
+App.CompoundsPharmacologyRoute = Ember.Route.extend({
+
+  observesParameters: ['uri'],
 
   setupController: function(controller, model) {
     controller.set('content', model);
       var me = controller;
-      var thisCompound = this.modelFor('compound');
+      var thisCompound = model;
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
         if (success && response) {
@@ -90,7 +96,6 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
             var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	        thisCompound.get('pharmacology').pushObject(pharmaRecord);
           });
-          //controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
           controller.set('page', 1);
         }
     };
@@ -128,7 +133,9 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 
   },
   model: function(params) {
-    return this.modelFor('compound').get('pharmacology');
+    console.log('compounds pharma controller model');
+    var uri = this.get('queryParameters').uri;
+    return this.get('store').find('compound', uri);
   }
 
 });

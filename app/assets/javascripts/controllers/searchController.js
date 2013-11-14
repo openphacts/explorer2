@@ -51,7 +51,7 @@ App.SearchController = Ember.ArrayController.extend({
                 $.each(results, function(index, result) {
                   //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
                   //the promise is generated inside the store adapter for compound, see store.js
-                  me.store.find('compound', result.uri.split('/').pop()).then(function(compound) {
+                  me.store.find('compound', result.uri).then(function(compound) {
                       if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                           compound.set('exactMatch', true);
       			          me.addExactMatch(compound);

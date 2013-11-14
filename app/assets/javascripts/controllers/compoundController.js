@@ -1,4 +1,4 @@
-App.CompoundController = Ember.ObjectController.extend({
+App.CompoundsController = Ember.ObjectController.extend({
 
   isExpanded: false,
 

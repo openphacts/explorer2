@@ -15,13 +15,15 @@ App.CompoundAdapter = DS.Adapter.extend({
 	  var callback=function(success, status, response){  
         if (success) {
 	        var compoundResult = searcher.parseCompoundResponse(response);
+            //TODO all objects require a uri - shoudl make it a first class entity in the response
+            compoundResult['uri'] = compoundResult['cwURI'];
             compoundResult['pathways'] = [];
             resolve(compoundResult);
         } else {
             reject(status);
         }
       }
-	  searcher.fetchCompound('http://www.conceptwiki.org/concept/' + id, null, callback);
+	  searcher.fetchCompound(id, null, callback);
     });
     return promise;
   }

@@ -1,4 +1,4 @@
-App.CompoundPharmacologyIndexView = Ember.View.extend({
+App.CompoundsPharmacologyView = Ember.View.extend({
   didInsertElement: function() {
     var view = this;
     $(window).bind("scroll", function() {

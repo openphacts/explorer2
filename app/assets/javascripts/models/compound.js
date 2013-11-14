@@ -28,5 +28,6 @@ App.Compound = App.SearchResult.extend({
     structureRecords: DS.attr('number'),
     //for structure search
     relevance: DS.attr('number'),
-    isCompound: true
+    isCompound: true,
+    uri: DS.attr('string')
 });
