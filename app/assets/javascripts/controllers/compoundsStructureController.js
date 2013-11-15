@@ -2,6 +2,20 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   structureSearchType: "exact",
 
+  page: null,
+
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
+
+  totalCount: null,
+
+  fetching: false,
+
+  notEmpty: function() {
+    return this.get('totalCount') > 0;
+  }.property('totalCount'),
+
   exactSearch: function() {
     return this.get('structureSearchType') === "exact";
   }.property('structureSearchType'),
@@ -26,80 +40,36 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
          if (success && response) {
              var results = null;
              if (type == "exact") {
-                 result = searcher.parseExactResponse(response);
-                 var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-	             var mapURLCallback = function(success, status, response) {
-	               var constants = new Openphacts.Constants();
-	               if (success && response) {
-		               var matchingURL = null;
-		               var urls = mapSearcher.parseMapURLResponse(response);
-                       var found = false;
-                       //loop through all the identifiers for a compound until we find the cw one
-		               $.each(urls, function(i, url) {
-		                 var uri = new URI(url);
-		                 if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
-                             me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
-		                       thisCompound.get('structure').pushObject(compound);
-                             });
-                            found = true;
-		                 }
-                       });	
-	               }
-	             };
-                 mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
+                 results = searcher.parseExactResponse(response);
+                 me.set('totalCount', results.length);
+                 $.each(results, function(index, result) {
+                   me.get('store').find('compound', result).then(function(compound) {
+		               thisCompound.get('structure').pushObject(compound);
+                   });
+                 });
              } else if (type == "similarity") {
                  results = searcher.parseSimilarityResponse(response);
+                 me.set('totalCount', results.length);
+                 var relevance = {};
                  $.each(results, function(index, result) {
                    var about = result.about;
-                   var relevance = result.relevance;
-	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-	               var mapURLCallback = function(success, status, response) {
-	                 var constants = new Openphacts.Constants();
-	                 if (success && response) {
-		                 var matchingURL = null;
-		                 var urls = mapSearcher.parseMapURLResponse(response);
-                         var found = false;
-                         //loop through all the identifiers for a compound until we find the cw one
-		                 $.each(urls, function(i, url) {
-		                   var uri = new URI(url);
-		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
-                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
-                                 compound.set('relevance', relevance);
-		                         thisCompound.get('structure').pushObject(compound);
-                               });
-                              found = true;
-		                   }
-                         });	
-	                 }
-	               };
-                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
-                 });
+                   var relVal = result.relevance;
+                   relevance[about] = relVal;
+                   me.get('store').find('compound', about).then(function(compound) {
+		               thisCompound.get('structure').pushObject(compound);
+                   });
+                 }); 
              } else if (type == "substructure") {
                  results = searcher.parseSubstructureResponse(response);
+                 me.set('totalCount', results.length);
+                 var relevance = {};
                  $.each(results, function(index, result) {
                    var about = result.about;
-                   var relevance = result.relevance;
-	               var mapSearcher = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-	               var mapURLCallback = function(success, status, response) {
-	                 var constants = new Openphacts.Constants();
-	                 if (success && response) {
-		                 var matchingURL = null;
-		                 var urls = mapSearcher.parseMapURLResponse(response);
-                         var found = false;
-                         //loop through all the identifiers for a compound until we find the cw one
-		                 $.each(urls, function(i, url) {
-		                   var uri = new URI(url);
-		                   if (!found && constants.SRC_CLS_MAPPINGS['http://' + uri.hostname()] == 'conceptWikiValue') {
-                               me.get('store').find('compound', url.split('/').pop()).then(function(compound) {
-                                 compound.set('relevance', relevance);
-		                         thisCompound.get('structure').pushObject(compound);
-                               });
-                              found = true;
-		                   }
-                         });	
-	                 }
-	               };
-                   mapSearcher.mapURL(about, null, null, null, mapURLCallback);
+                   var relVal = result.relevance;
+                   relevance[about] = relVal;
+                   me.get('store').find('compound', about).then(function(compound) {
+		               thisCompound.get('structure').pushObject(compound);
+                   });
                  });
              }
          }

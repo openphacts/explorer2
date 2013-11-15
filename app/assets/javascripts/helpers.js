@@ -1,5 +1,5 @@
 Ember.Handlebars.registerBoundHelper('objectLink', function(type, route, routeLabel, content) {
-  var link = '<a href="#/' + type + '/' + route + '?uri=' + content.get('uri') + '">' + routeLabel + '</a>';
+  var link = '<a href="#/' + type + '/' + route + '?uri=' + content.get('URI') + '">' + routeLabel + '</a>';
   return new Handlebars.SafeString(link);		
 });
 Ember.Handlebars.registerBoundHelper('treePharmaLink', function(tree) {

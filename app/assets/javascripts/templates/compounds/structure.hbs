@@ -13,6 +13,9 @@
         </div>
     </ul>
 <div>
+<div>
+Total: {{totalCount}}
+</div>
 <div class="row btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
     <div class="span4 big-padding-left">
         <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
@@ -30,13 +33,12 @@
 	<table class="mytable">
 		<thead id="tablehead" class="headingstyle">
 <tr>
-    <th>cwURI</th>
+    <th>URI</th>
     <th>description</th>
     <th>biotransformationItem</th>
     <th>toxicity</th>
     <th>proteinBinding</th>
     <th>prefLabel</th>
-    <th>csURI</th>
     <th>smiles</th>
     <th>chemblURI</th>
     <th>fullMWT</th>
@@ -50,21 +52,23 @@
     <th>psa</th>
     <th>ro5Violations</th>
     <th>rtb</th>
-    <th>molecule</th>
-    <th>csURI</th>
-    <th>relevance</th>
+    {{#if subSearch}}
+        <th>relevance</th>
+    {{/if}}
+    {{#if simSearch}}
+        <th>relevance</th>
+    {{/if}}
 </tr>
 </thead>
 <tbody>
 {{#each structureRecord in structure}}
 <tr class="record-deco">
-    <td>{{structureRecord.cwURI}}</td>
+    <td>{{structureRecord.URI}}</td>
     <td>{{structureRecord.description}}</td>
     <td>{{structureRecord.biotransformationItem}}</td>
     <td>{{structureRecord.toxicity}}</td>
     <td>{{structureRecord.proteinBinding}}</td>
     <td>{{objectLink 'compounds' '' structureRecord.prefLabel structureRecord}}</td>
-    <td>{{structureRecord.csURI}}</td>
     <td>{{structureRecord.smiles}}</td>
     <td>{{structureRecord.chemblURI}}</td>
     <td>{{structureRecord.fullMWT}}</td>
@@ -78,9 +82,12 @@
     <td>{{structureRecord.psa}}</td>
     <td>{{structureRecord.ro5Violations}}</td>
     <td>{{structureRecord.rtb}}</td>
-    <td>{{structureRecord.molecule}}</td>
-    <td>{{structureRecord.csURI}}</td>
-    <td>{{structureRecord.relevance}}</td>
+    {{#if subSearch}}
+        <td>{{structureRecord.relevance}}</td>
+    {{/if}}
+    {{#if simSearch}}
+        <td>{{structureRecord.relevance}}</td>
+    {{/if}}
 </tr>
 {{/each}}
 </tbody>
