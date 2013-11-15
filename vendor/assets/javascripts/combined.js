@@ -151,10 +151,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		proteinBinding =  drugbankData.proteinBinding ? drugbankData.proteinBinding : null;
         drugbankURI =  drugbankData[constants.ABOUT] ? drugbankData[constants.ABOUT] : null;
      	
-     	console.log("drugbankURI " + drugbankURI);
      	// provenance
      	drugbankLinkout =  drugbankURI;
      	drugbankProvenance = new Array();
+     	drugbankProvenance['source'] = 'drugbank';
      	drugbankProvenance['description'] = drugbankLinkout;
     	drugbankProvenance['biotransformation'] = drugbankLinkout;
      	drugbankProvenance['toxicity'] = drugbankLinkout;
@@ -173,9 +173,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
         inchiKey = chemspiderData.inchikey ? chemspiderData.inchikey : null;
         molform =  chemspiderData.molformula ? chemspiderData.molformula : null;
 
+        // provenance 
         chemspiderLinkOut = 'http://ops.rsc.org/' + csURI.split('/').pop();
-       	//console.log(" chemspider linkout " + chemspiderLinkOut); 
        	chemspiderProvenance = new Array();
+       	chemspiderProvenance['source'] = 'chemspider';
        	chemspiderProvenance['hba'] = chemspiderLinkOut;
        	chemspiderProvenance['hbd'] = chemspiderLinkOut;
        	chemspiderProvenance['inchi'] = chemspiderLinkOut;
@@ -194,14 +195,13 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		mwFreebase =  chemblData.mw_freebase ? chemblData.mw_freebase : null;
 		rtb =  chemblData.rtb ? chemblData.rtb : null;
 
-		//console.log(" chembl linkout " + chemblURI);
+		// provenance
 		chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblURI.split("/").pop();
 		chemblProvenance = new Array();
+		chemblProvenance['source'] = 'chembl';
 		chemblProvenance['fullMWT'] = chemblLinkOut;
 		chemblProvenance['mwFreebase'] = chemblLinkOut;
 		chemblProvenance['rtb'] = chemblLinkOut;
-
-		console.log(" modify chembl url " + chemblLinkOut);
 
     }
     if (conceptWikiData) {
@@ -232,7 +232,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
         "inchiKey": inchiKey,
         "drugbankURI": drugbankURI,
 
-        "drugbankProvenance": drugbankProvenance
+        "drugbankProvenance": drugbankProvenance,
+        "chemspiderProvenance": chemspiderProvenance,
+        "chemblProvenance" : chemblProvenance,
+
 	};
 }
 
