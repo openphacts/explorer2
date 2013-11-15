@@ -29,7 +29,7 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
 });
 Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, compoundPrefLabel) {
   if (cwCompoundUri && compoundPrefLabel) {
-    return new Handlebars.SafeString('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
+    return new Handlebars.SafeSring('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
   }
 });
 Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform) {
@@ -38,7 +38,6 @@ Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform)
   }
 });
 Ember.Handlebars.registerBoundHelper('linkablePubmedId', function(pubmedId) {
-
 	if (pubmedId) {
 		var justId = pubmedId.split("/").pop();
 		return new Handlebars.SafeString('<a href="' + pubmedId + '" target="_blank">' + justId + '</a>');
@@ -100,6 +99,76 @@ Ember.Handlebars.registerBoundHelper('pdbLinkouts', function(pdb) {
 	}
 });
 
+Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source) {
+
+	// create provenance linkout
+	var linkout = new String();
+	console.log(" prov func params " + item + " " + source);
+	
+	if (item) {
+
+		// check datasource of the item
+		switch(source)
+		{
+			case 'drugbank':
+				//console.log(" drugbank datasource");
+				linkout = createDrugbankLink(item);				
+  				break;
+			
+			case 'chembl':
+				//console.log(" chembl datasource");
+				linkout = createChemblLink(item);
+  				break;
+
+  			case 'chemspider':
+  				//console.log(" chemspider databsource");
+  				linkout = createChemspiderLink(item);
+  				break;
+
+  			case 'conceptwiki':
+  				//console.log(" conceptwiki datasource");
+  				linkout = createConceptWikiLink(item);
+				break;
+
+			default:
+				console.log("source unrecognised");
+		}
+		
+		// assign icon to datasource
+
+		// append linkout to icon
+
+		// return clickable icon
+		return new Handlebars.SafeString(linkout);
+	}
+ 
+});
+
+// provenance mini functions - linkout per source
+
+function createDrugbankLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/drugbankProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	return dbLink;
+}
+
+function createChemblLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemblProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	return dbLink;
+}
+
+function createChemspiderLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	return dbLink;
+}
+
+function createConceptWikiLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/conceptWikiProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	return dbLink;
+}
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
