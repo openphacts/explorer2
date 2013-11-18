@@ -177,7 +177,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 
      	// provenance
      	drugbankLinkout =  drugbankURI;
-     	drugbankProvenance = new Array();
+     	drugbankProvenance = {};
      	drugbankProvenance['source'] = 'drugbank';
      	drugbankProvenance['description'] = drugbankLinkout;
     	drugbankProvenance['biotransformation'] = drugbankLinkout;
@@ -201,7 +201,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 
         // provenance 
         chemspiderLinkOut = 'http://ops.rsc.org/' + csURI.split('/').pop();
-       	chemspiderProvenance = new Array();
+       	chemspiderProvenance = {};
        	chemspiderProvenance['source'] = 'chemspider';
        	chemspiderProvenance['hba'] = chemspiderLinkOut;
        	chemspiderProvenance['hbd'] = chemspiderLinkOut;
@@ -216,24 +216,19 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
     }
     if (chemblData) {
 		chemblURI =  chemblData["_about"] != null ? chemblData["_about"] : chemblURI;
-		//fullMWT =  chemblData.full_mwt ? chemblData.full_mwt : fullMWT;
-		//molform =  chemblData [constants.MOLFORM] ? chemblData[constants.MOLFORM] : molform;
 		mwFreebase =  chemblData.mw_freebase != null ? chemblData.mw_freebase : mwFreebase;
-		//rtb =  chemblData.rtb ? chemblData.rtb : rtb;
 		
 		// provenance
 		chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblURI.split("/").pop();
-		chemblProvenance = new Array();
+		chemblProvenance = {};
 		chemblProvenance['source'] = 'chembl';
 		chemblProvenance['fullMWT'] = chemblLinkOut;
 		chemblProvenance['mwFreebase'] = chemblLinkOut;
 		chemblProvenance['rtb'] = chemblLinkOut;
     }
     if (conceptWikiData) {
-        //id =  conceptWikiData["_about"].split("/").pop();
         prefLabel = conceptWikiData.prefLabel != null ? conceptWikiData.prefLabel : prefLabel;
     }
-	console.log(" molform " + molform);
 	return {
 		"id": id,
 		"prefLabel": prefLabel,
@@ -466,6 +461,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyCountResponse = fun
     return response.primaryTopic.compoundPharmacologyTotalResults;
 }
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.ConceptWikiSearch = function(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -596,6 +592,7 @@ Openphacts.ConceptWikiSearch.prototype.parseFindConceptResponse = function(respo
 	};
 }
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.TargetSearch = function TargetSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -980,7 +977,9 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 
 Openphacts.TargetSearch.prototype.parseTargetPharmacologyCountResponse = function(response) {
     return response.primaryTopic.targetPharmacologyTotalResults;
-}//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+}
+//This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.StructureSearch = function StructureSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1167,6 +1166,7 @@ Openphacts.StructureSearch.prototype.parseSmilesToURLResponse = function(respons
 	return response.primaryTopic["_about"];
 }
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.ActivitySearch = function ActivitySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1227,6 +1227,7 @@ Openphacts.ActivitySearch.prototype.parseUnits = function(response) {
 	return units;
 }
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.TreeSearch = function TreeSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -1651,6 +1652,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     return records;
 }
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
+
 Openphacts.PathwaySearch = function PathwaySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
 	this.appID = appID;
@@ -2174,7 +2176,6 @@ Openphacts.PathwaySearch.prototype.parseGetReferencesResponse = function(respons
                 'references': references
             };
 }
-
 Openphacts.PathwaySearch.prototype.parseCountPathwaysResponse = function(response) {
     var constants = new Openphacts.Constants();
 	return response.primaryTopic[constants.PATHWAY_COUNT];
