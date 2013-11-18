@@ -1635,7 +1635,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       });
     });
     return records;
-}=======
+}
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
 Openphacts.PathwaySearch = function PathwaySearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
