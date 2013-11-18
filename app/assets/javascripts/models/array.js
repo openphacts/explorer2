@@ -1,4 +1,4 @@
-DS.JSONTransforms.array = {
+DS.RESTAdapter.registerTransform('array', {
     // If the outgoing json is already a valid javascript array
     // then pass it through untouched. In all other cases, replace it
     // with an empty array.  This means null or undefined values
@@ -28,4 +28,4 @@ DS.JSONTransforms.array = {
           return [];
       }
     }
-  };
+  });

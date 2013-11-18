@@ -1,4 +1,4 @@
-App.TargetsController = Ember.ArrayController.create({
+App.TargetsController = Ember.ArrayController.extend({
 
    total_compounds: 0,
 

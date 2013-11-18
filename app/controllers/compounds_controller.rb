@@ -16,6 +16,12 @@ class CompoundsController < ApplicationController
       format.any  { render :text => "only HTML and JSON format are supported at the moment." }
     end
   end
+  
+  def index
+    respond_to do |format|
+      format.html { render 'home/index' }
+    end
+  end
 
   def pharmacology
     respond_to do |format|
@@ -24,6 +30,12 @@ class CompoundsController < ApplicationController
   end
 
   def structure
+    respond_to do |format|
+      format.html { render 'home/index' }
+    end
+  end
+
+  def pathways
     respond_to do |format|
       format.html { render 'home/index' }
     end

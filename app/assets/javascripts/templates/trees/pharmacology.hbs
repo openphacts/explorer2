@@ -1,13 +1,9 @@
-{{#if empty}}
-There are no pharmacology results
-{{else}}
-
 <div>
 
 	<ul class="breadcrumb">
   		<li><a href="/">Home</a> <span class="divider">/</span></li>
-  		<li>Enzyme X <span class="divider">/</span></li>
-  		<li class="active">Enzyme Phamacology</li>
+  		<li>{{name}}<span class="divider">/</span></li>
+  		<li class="active">Enzyme Pharmacology</li>
 				
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -19,6 +15,8 @@ There are no pharmacology results
 	</ul>	
 	
 </div>
+Loaded {{currentCount}} of {{totalCount}}
+{{#linkTo 'trees.index'}}Tree view{{/linkTo}}
 
 <!-- RESULT LISTING -->
 	<div style="padding:30px">	
@@ -67,15 +65,15 @@ There are no pharmacology results
 			<tr class="record-deco">
 				
 				<td class="cell-basictext">{{cs_image_src enzymePharma.csURI}}</td>
-				<td class="cell-basictext" style="min-width:300px;">{{compoundSource enzymePharma.cwCompoundURI enzymePharma.prefLabel}}</td>
-				<td class="cell-basictext"><button type="button" class="btn btn-link" {{action "navigateTo" enzymePharma.targetURI}}>{{enzymePharma.targetTitle}}</button></td>
-				<td class="cell-basictext" style="min-width:120px;">{{enzymePharma.targetOrganism}}</td>
+				<td class="cell-basictext" style="min-width:300px;">{{enzymePharma.prefLabel}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}<p>{{target.title}}</p>{{/each}}</td>
+				<td class="cell-basictext" style="min-width:120px;">{{#each target in enzymePharma.targets}}<p>{{target.targetOrganismNames}}</p>{{/each}}</td>
 				<td class="cell-basictext">{{enzymePharma.assayOrganism}}</td>
 				<td class="cell-longtext" style="min-width:300px;">{{enzymePharma.assayDescription}}</td>
 				<td class="lead cell-basictext">{{enzymePharma.activityType}}</td>
-				<td class="lead cell-basictext">{{enzymePharma.relation}}</td>
-				<td class="lead cell-basictext">{{enzymePharma.standardValue}}</td>
-			    <td class="lead cell-basictext">{{enzymePharma.standardUnits}}</td>
+				<td class="lead cell-basictext">{{enzymePharma.activityRelation}}</td>
+				<td class="lead cell-basictext">{{enzymePharma.activityValue}}</td>
+			    <td class="lead cell-basictext">{{enzymePharma.activityUnits}}</td>
 			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
 			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
 			    <td class="cell-longtext">{{enzymePharma.smiles}}</td>
@@ -88,24 +86,3 @@ There are no pharmacology results
 		</tbody>
 	</table>
 	</div>
-
-{{/if}}
-
-<script type="text/javascript">
-$(window).off("scroll", scrollHandler);
-scrollOnThisPage = true;
-pageScrolling = false;
-scrollHandler = function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        disable_scroll();
-        pageScrolling = true;
-        console.log("Fetching results for scroll " + pageScrolling);
-        //this is not a very pleasant way to get the controller but can find no other method
-        App.__container__.lookup('controller:enzymePharmacologyIndex').fetchMore();
-    }
-};
-</script>

@@ -4,7 +4,7 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
-  match 'search/typeahead' => 'search#typeahead'
+#  match 'search/typeahead' => 'search#typeahead'
 
   match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
@@ -16,20 +16,30 @@ Explorer2::Application.routes.draw do
 
 #  match 'compounds/:id/pharmacology' => 'home#index'
 
-#  match 'compound/:id' => 'home#index'
+  match 'compound/:id' => 'home#index'
 
 #  match 'compound/:id/pharmacology' => 'home#index'
 
-  resources :compounds, :only => :show do
-    member do
-      get 'pharmacology'
-      get 'structure'
+  resources :search, :only => [:index] do
+    collection do
+      get 'typeahead'
     end
   end
 
-  resources :targets, :only => :show do
+  match 'search/:query' => 'home#index'
+
+  resources :compounds, :only => [:show, :index] do
     member do
       get 'pharmacology'
+      get 'structure'
+      get 'pathways'
+    end
+  end
+
+  resources :targets, :only => [:show, :index] do
+    member do
+      get 'pharmacology'
+      get 'pathways'
     end
   end
   
@@ -45,6 +55,9 @@ Explorer2::Application.routes.draw do
       get :tsv_download
       get :tsv_status
     end
+  end
+
+  resources :pathways, :only => :show do
   end
 
 #  match 'targets' => 'home#index'

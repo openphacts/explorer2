@@ -121,4 +121,7 @@ div.tree-node-icon img.single-enzyme-icon {
 div.highlight-on {
 	background-color: LightBlue;
 }
+div.hidden {
+	display:none;
+}
 /* End of Tree View CSS */

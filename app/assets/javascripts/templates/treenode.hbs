@@ -1,13 +1,1 @@
-<!-- <span {{bindAttr class=":toggle-icon children.length::leaf"}} {{action toggle}}>
-    {{#if isExpanded}}
-        &#x25BC;
-    {{else}}
-        &#x25B6;
-    {{/if}}
-</span>
-<a {{action click}} class="text">{{text}}</a>
-{{#if isExpanded}}
-    {{name}}
-{{/if}} -->
-{{view.content.name}}
-{{view.content.uri}}
+<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{treePharmaLink view.content}}

@@ -1,6 +1,6 @@
-Ember.Handlebars.registerBoundHelper('enzymePharmaLink', function(uri, name) {
-	if (uri && name) {
-		return new Handlebars.SafeString('<a class="enzymeName" href="/enzymes/' + uri.split('/')[uri.split('/').length - 1] + '/pharmacology">' + name + '</a>');		
+Ember.Handlebars.registerBoundHelper('treePharmaLink', function(tree) {
+	if (tree) {
+		return new Handlebars.SafeString('<a class="enzymeName" href="#/trees/pharmacology?uri=' + tree.get('uri') + '">' + tree.get('name') + '</a>');		
 	}
 });
 Ember.Handlebars.registerBoundHelper('getIndentLevel', function(view) {

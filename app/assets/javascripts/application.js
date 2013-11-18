@@ -13,8 +13,9 @@
 //= require modernizr
 //= require jquery
 //= require handlebars
-//= require ember-latest
-//= require ember-data-latest
+//= require ember
+//= require Router
+//= require ember-data
 //= require bootstrap
 //= require combined
 //= require_self
@@ -23,6 +24,8 @@
 //= require helpers
 //= require_tree ./controllers
 //= require models
+//= require URI
+//= require purl
 //= require_tree ./templates
 //= require_tree ./views
 
