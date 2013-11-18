@@ -2,6 +2,7 @@ App.CompoundIndexController = Ember.ObjectController.extend({
 
   showProvenance: false,
 
+  actions: {
   	  enableProvenance: function() {
     	this.set('showProvenance', true);
     	console.log("Compound provenance enabled");
@@ -11,5 +12,6 @@ App.CompoundIndexController = Ember.ObjectController.extend({
       	this.set('showProvenance', false);
     	console.log("Compound provenance disabled");
   	  }
+  }
   	
 });

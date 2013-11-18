@@ -28,5 +28,7 @@ App.Compound = App.SearchResult.extend({
     structureRecords: DS.attr('number'),
     //for structure search
     relevance: DS.attr('number'),
-    isCompound: true
+    isCompound: true,
+    chemspiderProvenance: DS.attr(),
+    chemblProvenance: DS.attr()
 });
