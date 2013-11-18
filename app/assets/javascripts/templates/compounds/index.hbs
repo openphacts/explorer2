@@ -16,14 +16,13 @@
 		<div class="row pull-right" > 
 			<div class="span1 small-padding-top small-padding-right">Provenance </div>
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-  				<button class="btn">On</button>
-  				<button class="btn active">Off</button>
+  				<button {{action 'enableProvenance'}} class="btn" >On</button>
+  				<button {{action 'disableProvenance'}} class="btn active" >Off</button>
   			</div>
 		</div>
 	</ul>
 	
-	
-    			<div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
+   <div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
   		
 	
 	<!-- main -->
@@ -33,7 +32,7 @@
   			
   			<!--Sidebar content-->
     		<div class="span3">
-      			<div style="padding:0 0 0 20px;" >{{cs_image_src csUri}}</div>
+      			<div style="padding:0 0 0 20px;background:white;" >{{cs_image_src csURI}}</div>
       			
       			<!--box properties-->
       			<div id="boxes" class="small-top-spacing">
@@ -42,7 +41,12 @@
       					<div class="summary-box">
       						<div class="inner-property-content">
   								<p><small>AlogP</small></p>
-  								<p class="lead">{{logp}}</p>
+                  {{#if showProvenance}}
+                    <p class="lead">{{logp}} {{provenanceLinkout chemspiderProvenance.logp chemspiderProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{logp}}</p> 
+                  {{/if}}
+  								
   							</div>
       					</div>
       				{{/if}}
@@ -51,16 +55,28 @@
       					<div class="summary-box">
       						<div class="inner-property-content">
   								<p><small># H-Bond Acceptors</small></p>
-  								<p class="lead">{{hba}}</p>
+  								
+                  {{#if showProvenance}}
+                    <p class="lead">{{hba}} {{provenanceLinkout chemspiderProvenance.hba chemspiderProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{hba}}</p> 
+                  {{/if}} 
+
   							</div>
     	  				</div>
-					{{/if}}
+					    {{/if}}
 
       				{{#if hbd}}      				
       					<div class="summary-box">
     	  					<div class="inner-property-content">
   								<p><small># H-Bond Donors</small></p>
-  								<p class="lead">{{hbd}}</p>
+                  
+                  {{#if showProvenance}}
+                    <p class="lead">{{hbd}} {{provenanceLinkout chemspiderProvenance.hbd chemspiderProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{hbd}}</p> 
+                  {{/if}} 
+
   							</div>
       					</div>
       				{{/if}}
@@ -69,7 +85,13 @@
       					<div class="summary-box">
       						<div class="inner-property-content">
   								<p><small>Mol Weight</small></p>
-  								<p class="lead">{{fullMWT}}</p>
+  							  
+                  {{#if showProvenance}}
+                    <p class="lead">{{fullMWT}} {{provenanceLinkout chemspiderProvenance.fullMWT chemspiderProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{fullMWT}}</p> 
+                  {{/if}} 
+
   							</div>
       					</div>
       				{{/if}}
@@ -78,7 +100,13 @@
       					<div class="summary-box">
       						<div class="inner-property-content">
   								<p><small>Mol Weight Freebase</small></p>
-  								<p class="lead">{{mwFreebase}}</p>
+
+  								{{#if showProvenance}}
+                    <p class="lead">{{mwFreebase}} {{provenanceLinkout chemblProvenance.fullMWT chemblProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{mwFreebase}}</p> 
+                  {{/if}} 
+
   							</div>
       					</div>
       				{{/if}}
@@ -87,7 +115,13 @@
  	     				<div class="summary-box">
   	 	   					<div class="inner-property-content">
   								<p><small>Polar Surface Area</small></p>
-  								<p class="lead">{{psa}}</p>
+
+  								{{#if showProvenance}}
+                    <p class="lead">{{psa}} {{provenanceLinkout chemspiderProvenance.psa chemspiderProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{psa}}</p> 
+                  {{/if}} 
+
   							</div>
    		   				</div>
       				{{/if}}
@@ -96,7 +130,13 @@
       					<div class="summary-box">
     	  					<div class="inner-property-content">
   								<p><small># Rotatable Bonds</small></p>
-  								<p class="lead">{{rtb}}</p>
+
+  								{{#if showProvenance}}
+                    <p class="lead">{{rtb}} {{provenanceLinkout chemblProvenance.rtb chemblProvenance.source}}</p> 
+                  {{else}}
+                    <p class="lead">{{rtb}}</p> 
+                  {{/if}} 
+                  
   							</div>
       					</div>
       				{{/if}}
@@ -131,50 +171,116 @@
 							
 				<!--description-->
 				<div class="summary-descriptive-text large-top-spacing">
-					<p>{{description}}</p>
+        {{#if description}}
+          {{#if showProvenance}}
+
+            <p>{{description}}</p>{{provenanceLinkout drugbankProvenance.description drugbankProvenance.source}}
+
+          {{else}}
+
+            <p>{{description}}</p>
+
+          {{/if}}
+        {{/if}}
 				</div>
 				
 				<!--biotransformation-->
 				<div class="summary-descriptive-text small-top-spacing">
-					<p>{{biotransformationItem}}</p>
+        {{#if biotransformation}}
+          {{#if showProvenance}}
+
+            <p>{{biotransformation}}</p>{{provenanceLinkout drugbankProvenance.biotransformation drugbankProvenance.source}}
+
+          {{else}}
+
+            <p>{{biotransformationItem}}</p>
+
+          {{/if}}
+        {{/if}}
 				</div>
 				
 				<!--details-->
 				<div class="dl-horizontal" style="font-size:13px;">
 					<dl>
+            <!--Chemspider ID-->
 						{{#if csUri}}
   							<dt>ChemSpider ID</dt>
   							<dd>{{linkableChemspiderID csUri}}</dd>
 						{{/if}}
 
-  						{{#if smiles}}
-  							<dt>SMILES</dt>
-  							<dd>{{smiles}}</dd>
-  						{{/if}}
+            <!--SMILES-->
+						{{#if smiles}}
+							<dt>SMILES</dt>
+							{{#if showProvenance}}
+
+                  <dd>{{smiles}} {{provenanceLinkout chemspiderProvenance.smiles chemspiderProvenance.source}}</dd>
+
+                {{else}}
+
+                  <dd>{{smiles}}</dd>
+
+                {{/if}}
+						{{/if}}
   						
+            <!--InCHL-->
 						{{#if inchi}}
 							<dt>Standard InChi</dt>
-  							<dd>{{inchi}}</dd>
+	              {{#if showProvenance}}
+
+                  <dd>{{inchi}} {{provenanceLinkout chemspiderProvenance.inchi chemspiderProvenance.source}}</dd>
+
+                {{else}}
+
+                  <dd>{{inchi}}</dd>
+
+                {{/if}}
   						{{/if}}
 
+              <!--InCHLKey-->
   						{{#if inchiKey}}
   							<dt>Standard InChiKey</dt>
-  							<dd>{{inchiKey}}</dd>
-  						{{/if}}
+  							{{#if showProvenance}}
 
+                  <dd>{{inchiKey}} {{provenanceLinkout chemspiderProvenance.inchiKey chemspiderProvenance.source}}</dd>
+
+                {{else}}
+
+                  <dd>{{inchiKey}}</dd>
+
+                {{/if}}
+  						{{/if}}
+              
+            <!--Protein Binding-->
 						{{#if proteinBinding}}
-  							<dt>Protien Binding</dt>
-  							<dd>{{proteinBinding}}</dd>
+  						  <dt>Protien Binding</dt>
+  							{{#if showProvenance}}
+
+                    <dd>{{proteinBinding}} {{provenanceLinkout drugbankProvenance.proteinBinding drugbankProvenance.source}}</dd>
+
+                  {{else}}
+
+                    <dd>{{proteinBinding}}</dd>
+
+                  {{/if}}
 						{{/if}}
 
+            <!--Toxicity-->
 						{{#if toxicity}}
-  							<dt>Toxicity</dt>
-  							<dd>{{toxicity}}</dd>
+                <dt>Toxicity</dt>
+                 
+                  {{#if showProvenance}}
+
+                    <dd>{{toxicity}} {{provenanceLinkout drugbankProvenance.description drugbankProvenance.source}}</dd>
+
+                  {{else}}
+
+                    <dd>{{toxicity}}</dd>
+
+                  {{/if}}
 						{{/if}}
 
 					</dl>
      			</div>
-     			
      			
     		</div>
   		</div>

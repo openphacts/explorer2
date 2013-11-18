@@ -6,7 +6,7 @@ App.Compound = App.SearchResult.extend({
     proteinBinding: DS.attr('string'),
     prefLabel: DS.attr('string'),
     exactMatch: DS.attr('boolean'),
-    //csURI: DS.attr('string'),
+    csURI: DS.attr('string'),
     smiles: DS.attr('string'),
     chemblURI: DS.attr('string'),
     fullMWT: DS.attr('string'),
@@ -29,5 +29,7 @@ App.Compound = App.SearchResult.extend({
     //for structure search
     relevance: DS.attr('number'),
     isCompound: true,
-    uri: DS.attr('string')
+    uri: DS.attr('string'),
+    chemspiderProvenance: DS.attr(),
+    chemblProvenance: DS.attr()
 });

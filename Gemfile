@@ -15,7 +15,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2'
   gem 'compass-rails'
   gem 'uglifier'
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '2.3.2.2'
   # vendor ember doesn't understand that handlebars 1.0.0 is greater than 1.0.0.rc3, freeze it here for the moment
   gem 'handlebars_assets'
   gem 'delayed_job_active_record'

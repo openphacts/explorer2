@@ -19,7 +19,7 @@
 		<div id="summary-anchor">
 		<div id="summary" class="compound_summary collapse in">
 			
-			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csUri}}</div>
+			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csURI}}</div>
 			<div class="row">
 				<div class="span8">
     				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
@@ -90,7 +90,6 @@
 				<td class="cell-longtext">{{assayDescription}}</td>
 				<td class="lead cell-basictext">{{activityActivityType}}</td>
 				<td class="lead cell-basictext">{{activityRelation}}</td>
-				<!-- <td class="lead cell-basictext">{{activityStandardValue}}</td> -->
                 <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
                 <td class="lead cell-basictext">{{activityValue}}</td>
 				<td class="lead cell-basictext">{{activityStandardUnits}}</td>
@@ -104,132 +103,3 @@
     {{else}}
         <h2 class="centre">There is no pharmacology data for {{controllers.compound.prefLabel}}</h2>
     {{/if}}
-
-	
-<script type="text/javascript">
-
-// Hide the extra content initially, using JS so that if JS is disabled, no problemo:
-$('.read-more-content').addClass('hide')
-
-// Set up a link to expand the hidden content:
-.before('<a class="read-more-show" href="#"> more</a>')
-  
-// Set up a link to hide the expanded content.
-.append(' <a class="read-more-hide" href="#"> less</a>');
-
-// Set up the toggle effect:
-$('.read-more-show').on('click', function(e) {
-  $(this).next('.read-more-content').removeClass('hide');
-  $(this).addClass('hide');
-  e.preventDefault();
-  	var s = $("#summary");
-        s.css({
-            height: "250px"
-        });
-});
-
-$('.read-more-hide').on('click', function(e) {
-  $(this).parent('.read-more-content').addClass('hide').parent().children('.read-more-show').removeClass('hide');
-  e.preventDefault();
-  var s = $("#summary");
-        s.css({
-            height: "135px"
-        });
-});
- var toggleSummary = true;
- 
- $('#toggle-summary').on('click', function() {
- 	console.log("var " + toggleSummary);
- 	if (toggleSummary) {
-		var s = $("#summary");
-    
-        s.css({
-            height: "55px"
-        });
-    	$('#structure').hide();
-			
-    	var i = $('#compound-image');
-		i.css({
-			visibility:"hidden"
-		});	
-		toggleSummary = false;
-		$(this).text(function(i, text){
-          return "more";
-      	});
-      	
- 	} else {
-		var s = $("#summary");
-        s.css({
-            height: "135px",
-            width: "100%"
-        });
-        $('#structure').show();
-
-		var i = $('#compound-image');
-			i.css({
-			visibility:"visible"
-		});
-		toggleSummary = true;
-		$(this).text(function(i, text){
-          return "less";
-      	});
- 	}
- 
- });
- 
-$(function() {
-	moveScroller();
-});
-  
-//sticky
-function moveScroller() {
-    var move = function() {
-        var st = $(window).scrollTop();
-        var ot = $("#summary-anchor").offset().top;
-        var s = $("#summary");
-        if(st > ot) {
-            
-    		s.css({
-            	position: "fixed",
-            	top: "0px",
-            	height: "55px"
-        	});
-    		$('#structure').hide();
-			
-    		var i = $('#compound-image');
-				i.css({
-					visibility:"hidden"
-				});
-			toggleSummary = false;
-			$('#toggle-summary').text(function(i, text){
-    			return "more";
-    		});
-    		
-    		
-    		
-        } else {
-            
-			s.css({
-            	position: "relative",
-            	top: "",
-            	height: "135px",
-            	width: "100%"
-        	});
-        	$('#structure').show();
-
-			var i = $('#compound-image');
-				i.css({
-				visibility:"visible"
-			});
-		
-			toggleSummary = true;
-			$('#toggle-summary').text(function(i, text){
-    			return "less";
-    		});        
-    	}
-    };
-    $(window).scroll(move);
-    move();
-}
-
-</script>

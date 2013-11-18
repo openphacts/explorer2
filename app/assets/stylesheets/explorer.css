@@ -222,3 +222,8 @@ sub {
 	padding: 15px;
 }
 /* end summary pages */
+.release-status {
+	color: red;
+	font-size: small;
+	padding-left: 5px;
+}
