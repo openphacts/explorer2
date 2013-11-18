@@ -29,7 +29,7 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
 });
 Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, compoundPrefLabel) {
   if (cwCompoundUri && compoundPrefLabel) {
-    return new Handlebars.SafeSring('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
+    return new Handlebars.SafeString('<a href="/compounds/' + cwCompoundUri.split('/').pop() + '">' + compoundPrefLabel + '</a>');
   }
 });
 Ember.Handlebars.registerBoundHelper('formatMolecularFormula', function(molform) {
