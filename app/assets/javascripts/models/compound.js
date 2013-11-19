@@ -30,5 +30,6 @@ App.Compound = App.SearchResult.extend({
     relevance: DS.attr('number'),
     isCompound: true,
     chemspiderProvenance: DS.attr(),
-    chemblProvenance: DS.attr()
+    chemblProvenance: DS.attr(),
+    drugbankProvenance: DS.attr()
 });
