@@ -52,7 +52,7 @@ App.PathwayAdapter = DS.Adapter.extend({
           reject(status);
         }
       };
-      searcher.information('http://identifiers.org/wikipathways/' + id, null, pathwayInfoCallback);
+      searcher.information(id, null, pathwayInfoCallback);
     });
     return promise;
   }

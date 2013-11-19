@@ -26,7 +26,7 @@ actions: {
         me.page++;
         var pathwayResults = searcher.parseByCompoundPathwayResponse(response);
         $.each(pathwayResults, function(index, pathway) {
-            pathwayID = pathway.identifier.split('/').pop();
+            pathwayID = pathway.identifier;
             //have to find the pathway record and add it, just adding the ID does not work
             me.get('store').find('pathway', pathwayID).then(function(pathway) {
               thisCompound.get('pathways').pushObject(pathway);
@@ -38,7 +38,7 @@ actions: {
         me.set('fetching', false);
       }
     };
-    searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+    searcher.byCompound(thisCompound.get('URI'), null, null, 1, 50, null, pathwaysByCompoundCallback);
     }
   }
   }

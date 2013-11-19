@@ -85,7 +85,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
     controller.set('content', model);
     controller.clear();
     var me = controller;
-    var thisTarget = this.modelFor('target');
+    var thisTarget = model;
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
     //how many pathways for this compound
     var countCallback=function(success, status, response){
@@ -102,7 +102,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
       if (success && response) {
           var pathwayResults = searcher.parseByTargetResponse(response);
           $.each(pathwayResults, function(index, pathwayResult) {
-            pathwayID = pathwayResult.identifier.split('/').pop();
+            pathwayID = pathwayResult.identifier;
             //have to find the pathway record and add it, just adding the ID does not work
             me.get('store').find('pathway', pathwayID).then(function(pathway) {
               thisTarget.get('pathways').pushObject(pathway);

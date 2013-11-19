@@ -163,7 +163,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
         var count = searcher.parseCountPathwaysByCompoundResponse(response);
         controller.set('totalCount', count);
         if(count > 0) {
-          searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
+          searcher.byCompound(thisCompound.get('URI'), null, null, 1, 50, null, pathwaysByCompoundCallback);
         }
       }
     };
@@ -172,7 +172,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
       if (success && response) {
           var pathwayResults = searcher.parseByCompoundResponse(response);
           $.each(pathwayResults, function(index, pathwayResult) {
-            pathwayID = pathwayResult.identifier.split('/').pop();
+            pathwayID = pathwayResult.identifier;
             //have to find the pathway record and add it, just adding the ID does not work
             me.get('store').find('pathway', pathwayID).then(function(pathway) {
               thisCompound.get('pathways').pushObject(pathway);
@@ -180,7 +180,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
           });
       }
     }
-    searcher.countPathwaysByCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, countCallback);
+    searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countCallback);
   },
   model: function() {
     var uri = this.get('queryParameters').uri;
