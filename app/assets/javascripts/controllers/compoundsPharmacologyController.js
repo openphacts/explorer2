@@ -75,7 +75,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
         me.set('fetching', false);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, this.page + 1, 50, pharmaCallback);
+    searcher.compoundPharmacology(thisCompound.get('URI'), this.page + 1, 50, pharmaCallback);
     }
   }
   }

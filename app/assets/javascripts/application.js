@@ -21,6 +21,7 @@
 //= require_self
 //= require store
 //= require routes
+//= require routeSetup
 //= require helpers
 //= require_tree ./controllers
 //= require models

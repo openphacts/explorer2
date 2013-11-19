@@ -1,26 +1,27 @@
 App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
 
-  needs: ["target"],
+  needs: 'targets',
 
   page: null,
 
   currentCount: function() {
-    return this.get('model.content.length');
-  }.property('model.content.length'),
+    return this.get('model.pharmacology.length');
+  }.property('model.pharmacology.length'),
 
   totalCount: null,
 
+  fetching: false,
+
   notEmpty: function() {
-    return this.get('model.content.length') > 0;
-  }.property('model.content.length'),
+    return this.get('totalCount') > 0;
+  }.property('totalCount'),
 
   fetching: false,
 
   fetchMore: function() {
-    console.log('fetching more');
-    if (this.get('model.content.length') < this.totalCount) {
+    if (this.get('model.pharmacology.length') < this.totalCount) {
     var me = this;
-    var thisTarget = this.get('controllers.target').get('content');
+    var thisTarget = this.get('content');
     var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
@@ -32,11 +33,11 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
         });
         me.set('fetching', false);
       } else {
-        //failed response so allow scrolling
+        //failed response so scrolling is now allowed
         me.set('fetching', false);
       }
     };
-    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, this.page + 1, 50, pharmaCallback);
+    searcher.targetPharmacology(thisTarget.get('URI'), this.page + 1, 50, pharmaCallback);
     }
   }
 

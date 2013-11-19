@@ -72,10 +72,15 @@ App.SearchController = Ember.ArrayController.extend({
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
                     //find the target then add to the search results when the 'promise' returns
-                    me.store.find('target', result.uri.split('/').pop()).then(function(target) {
-                      me.set('totalResults', me.get('totalResults') + 1);
-                      me.addSearchResult(target);
-					  console.log('target load');
+                    me.store.find('target', result.uri).then(function(target) {
+                      if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
+                          target.set('exactMatch', true);
+                          me.set('totalResults', me.get('totalResults') + 1);
+                          me.addExactMatch(target);
+                      } else {
+                          me.set('totalResults', me.get('totalResults') + 1);
+                          me.addSearchResult(target);
+                      }
                     });
                 });
             } else {

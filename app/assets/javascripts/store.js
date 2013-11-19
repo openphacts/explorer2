@@ -1,11 +1,3 @@
-//App.Store = DS.Store.extend({
-//  revision: 12,
-//  adapter: DS.RESTAdapter.create({
-//    bulkCommit: false
-//  })
-//});
-
-//window.attr = DS.attr;
 App.CompoundAdapter = DS.Adapter.extend({
   find: function(store, type, id) {
     // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status
@@ -15,8 +7,6 @@ App.CompoundAdapter = DS.Adapter.extend({
 	  var callback=function(success, status, response){  
         if (success) {
 	        var compoundResult = searcher.parseCompoundResponse(response);
-            //TODO all objects require a uri - shoudl make it a first class entity in the response
-            //compoundResult['uri'] = compoundResult['cwURI'];
             compoundResult['pathways'] = [];
             resolve(compoundResult);
         } else {
@@ -35,12 +25,13 @@ App.TargetAdapter = DS.Adapter.extend({
 	  var callback=function(success, status, response){  
         if (success) {
 	        var targetResult = searcher.parseTargetResponse(response); 
+            targetResult['pathways'] = [];
             resolve(targetResult);
         } else {
             reject(status);
         }
       }
-	  searcher.fetchTarget('http://www.conceptwiki.org/concept/' + id, null, callback);
+	  searcher.fetchTarget(id, null, callback);
     });
   }
 });

@@ -29,7 +29,7 @@
 {{else}}
 <div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
-			<h2>{{#linkTo 'target.index' result}}{{result.prefLabel}}{{/linkTo}}</h2>
+			<h2>{{objectLink 'targets' '' result.prefLabel result}}</h2>
 			<p><small><em>Target</em></small></p>
 		</div>
 		
@@ -39,8 +39,8 @@
 		<div class="row span7">
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>{{#linkTo 'target.pharmacology' result}}Pharmacology{{/linkTo}}</p>
-                <p>{{#linkTo 'target.pathways' result}}Pathways{{/linkTo}}</p>
+				<p>{{objectLink 'targets' 'pharmacology' 'Pharmacology' result}}</p>
+                <p>{{objectLink 'targets' 'pathways' 'Pathways' result}}</p>
 			</div>
 		</div>
 	
@@ -48,18 +48,3 @@
 {{/if}}
     
 </div>
-
-<script type="text/javascript">
-
-	$("div").each(function (index, domEle) {
-	
-		if ($(this).is("#formula1")) {
-			
-			var formula = $(this).text();
-			formula = formula.replace(/(\d+)?\s*/g, "<sub>$1</sub>");
-			$(this).html(formula);
-		}	
-	
-	});
-
-</script>

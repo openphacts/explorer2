@@ -1,0 +1,141 @@
+<style>
+	dt { 
+		padding: 20px 0 0 0;
+	}
+	dd { 
+		padding: 20px 0 0 0; 
+		}
+</style>
+<div>
+
+	<!-- breadcrumb	-->
+	<ul class="breadcrumb">
+  		<li><a href="/">Home</a></li>
+		<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
+  		<li class="active">Target Information</li>
+
+		<div class="row pull-right"> 
+			<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  				<button class="btn">On</button>
+  				<button class="btn active">Off</button>
+  			</div>
+		</div>
+	</ul>
+	
+    <div> &larr; {{#linkTo 'search'}} back to search{{/linkTo}}</div>
+	
+	<!-- main -->
+	<div class="container">
+	<div class="container-fluid large-top-spacing">
+  		<div class="row-fluid">
+  			
+  			<!--Sidebar content-->
+    		<div class="span3">
+      			<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}</div>
+      			
+      			<!--box properties-->
+      			<div id="boxes" class="small-top-spacing">
+      				
+					{{#if molecularWeight}}
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small>Molecular Weight</small></p>
+  							<p class="lead">{{molecularWeight}}</p>
+  						</div>
+      				</div>
+      				{{/if}}
+      				
+					{{#if numberOfResidues}}
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small># of Residues</small></p>
+  							<p class="lead">{{numberOfResidues}}</p>
+  						</div>
+      				</div>
+					{{/if}}
+					
+					{{#if theoreticalPi}}
+      				<div class="summary-box">
+      					<div class="inner-property-content">
+  							<p><small>Theoretical Pi</small></p>
+  							<p class="lead">{{theoreticalPi}}</p>
+  						</div>
+      				</div>
+					{{/if}}
+
+      			</div>
+    		</div>
+    		
+    		<!--Body content-->
+    		<div class="span9" style="padding:30px 0 0 0;">
+     			
+				<!--title and formula-->
+				<div>
+					<div style="padding:20px 0 0 0">
+						<h1>{{prefLabel}}</h1>
+					</div>
+					{{#if alternativeName}}
+				<div class="summary-descriptive-text large-top-spacing">
+  						<em>{{alternativeName}}</em>
+				</div>
+				{{/if}}
+					<div style="padding:30px 0 0 0;text-align:left;">
+					{{objectLink 'targets' 'pharmacology' 'Pharmacology' this}}
+					</div>
+					<div style="padding:5px 0 0 0;text-align:left;">
+					{{objectLink 'targets' 'pathways' 'Pathways' this}}
+					</div>
+				</div>
+				
+				<!--biotransformation-->
+				
+				
+				<!--details-->
+				<div class="dl-horizontal" style="font-size:13px;">
+					<dl>
+						<dt>Organism</dt>
+  						<dd>{{linkableOrganism organism}}</dd> 
+  						
+  						<dt>Existence</dt>
+  						<dd>{{linkableExistence existence}}</dd>
+
+  						{{#if functionAnnotation}}
+  						<dt>Specific Function</dt>
+  						<dd>{{functionAnnotation}}</dd>
+						{{/if}}
+  						
+  						{{#if cellularLocation}} 
+  						<dt>Cellular Location</dt>
+  						<dd>{{cellularLocation}}</dd>
+  						{{/if}}
+  						 
+  						{{#if keywords}}
+  						<dt>Keywords</dt>
+  						<dd>{{keywords}}</dd> 
+	  					{{/if}}
+	  					
+	  					{{#if seeAlso}}
+  						<dt>PDB</dt>
+  						<dd>{{pdbLinkouts seeAlso}}</dd>
+  						{{/if}}	
+  						
+	  					{{#if sequence}}
+	  					<dt>Sequence</dt>
+  						<dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}}</div></dd>
+  						{{/if}}	
+
+  						
+					</dl>
+     			</div>
+     			
+     			
+    		</div>
+  		</div>
+	</div>
+	</div>
+	
+
+	
+	
+</div>
