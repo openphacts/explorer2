@@ -170,6 +170,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
     //load the pathways for this compound
     var pathwaysByCompoundCallback=function(success, status, response){
       if (success && response) {
+          me.set('page', 1);
           var pathwayResults = searcher.parseByCompoundResponse(response);
           $.each(pathwayResults, function(index, pathwayResult) {
             pathwayID = pathwayResult.identifier;
