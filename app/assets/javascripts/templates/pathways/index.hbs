@@ -1,0 +1,23 @@
+<h2>Pathway</h2>
+<p>title: {{title}}</p>
+<p>identifier: {{identifier}}</p>
+<p>description: {{description}}</p>
+<h2>Ontologies</h2>
+{{#each ontology in pathwayOntologies}}
+<p>{{ontology}}</p>
+{{/each}}
+<h2>Organism</h2>
+<p>organism: {{organism}}</p>
+<p>organism label: {{organismLabel}}</p>
+<h2>Gene Product</h2>
+<p>gene product label: {{geneProductLabel}}</p>
+<p>gene product URI: {{geneProductURI}}</p>
+<p>gene product concept Wiki URI: {{geneProductCWURI}}</p>
+<p>about: {{about}}</p>
+<h2>Parts</h2>
+{{#each part in parts}}
+<p>about: {{part.about}}</p>
+<p>type: {{part.type}}</p>
+{{/each}}
+<h2>Compounds</h2>
+{{objectLink 'pathways' 'compounds' 'Compounds' this}}

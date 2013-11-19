@@ -1966,9 +1966,10 @@ Openphacts.PathwaySearch.prototype.organisms = function(lens, page, pageSize, or
 
 Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response) {
         var constants = new Openphacts.Constants();
-        var latest_version, identifier, revision, title, description, parts, inDataset, pathwayOntology, organism, organismLabel, about;
+        var latest_version, identifier, revision, title, description, parts, inDataset, pathwayOntology, organism, organismLabel, about, URI = null;
         latest_version = response.primaryTopic.latest_version;
         identifier = response.primaryTopic[constants.ABOUT];
+        URI = response.primaryTopic[constants.ABOUT];;
         title = latest_version.title ? latest_version.title : null;
         organism = latest_version.organism[constants.ABOUT] ? latest_version.organism[constants.ABOUT] : null;
         organismLabel = latest_version.organism.label ? latest_version.organism.label : null;
@@ -1991,6 +1992,7 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
             parts.push({about: part["_about"], type: part.type});
 	});
 	return {
+                   'URI': URI,
                    'title': title, 
                    'description': description, 
                    'identifier': identifier,
