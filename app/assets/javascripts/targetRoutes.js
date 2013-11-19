@@ -19,7 +19,9 @@ App.TargetsIndexRoute = Ember.Route.extend({
 
 });
 
-App.TargetsPharmacologyIndexRoute = Ember.Route.extend({
+App.TargetsPharmacologyRoute = Ember.Route.extend({
+
+  observesParameters: ['uri'],
 
   setupController: function(controller, model) {
     console.log('target index route setup controller');
@@ -54,15 +56,15 @@ App.TargetsPharmacologyIndexRoute = Ember.Route.extend({
         if (me.get('currentCount')%50 > 0) {
             me.set('page', Math.floor(me.get('currentCount')/50) + 1);
         } else {
-            me.set('page', me.get('currentCount')/50);
+            searcher.targetPharmacology(thisTarget.get('URI'), 1, 50, pharmaCallback);
         }
       }
     };
-    //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
-    if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
+    //if controllers model is empty and totalCount is null then we have not loaded any pharma
+    if (me.get('currentCount') === 0 && controller.get('totalCount') === null) {
         searcher.targetPharmacologyCount(thisTarget.get('URI'), countCallback);
-    } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
-        //could still be count for a different compound
+    } else if (me.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
+        //could still be count for a different target
         searcher.targetPharmacologyCount(thisTarget.get('URI'), countCallback);
     } else {
         //reset the totalCount just to be sure
@@ -77,7 +79,7 @@ App.TargetsPharmacologyIndexRoute = Ember.Route.extend({
 
 });
 
-App.TargetsPathwaysIndexRoute = Ember.Route.extend({
+App.TargetsPathwaysRoute = Ember.Route.extend({
 
   setupController: function(controller, model) {
     controller.set('content', model);

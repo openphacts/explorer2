@@ -17,5 +17,6 @@ App.Target = App.SearchResult.extend({
     classifiedWith: DS.attr(),
     seeAlso: DS.attr(),
     pharmacology: DS.hasMany('TargetPharmacology'),
-    isCompound: false
+    isCompound: false,
+    URI: DS.attr('string')
 });

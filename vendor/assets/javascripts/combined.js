@@ -684,9 +684,9 @@ Openphacts.TargetSearch.prototype.targetTypes = function(lens, callback) {
 
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
-	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null;
-	var cwUri = response.primaryTopic[constants.ABOUT];
-	var id = cwUri.split("/").pop();
+	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
+	var URI = response.primaryTopic[constants.ABOUT];
+	var id = URI.split("/").pop();
 	var keywords = [];
 	var classifiedWith = [];
 	var seeAlso = [];
@@ -753,30 +753,32 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
-                  id = exactMatch[constants.ABOUT].split("/").pop();
+                  //id = exactMatch[constants.ABOUT].split("/").pop();
+                  cwUri = exactMatch[constants.ABOUT];
                   label = exactMatch[constants.PREF_LABEL];
             }
 		}
 	});
 
 	return {
-		id: id,
-		cellularLocation: cellularLocation,
-		molecularWeight: molecularWeight,
-		numberOfResidues: numberOfResidues,
-		theoreticalPi: theoreticalPi,
-		drugbankURI: drugbankURI,
-		keywords: keywords,
-		functionAnnotation: functionAnnotation,
-		alternativeName: alternativeName,
-		existence: existence,
-		organism: organism,
-		sequence: sequence,
-		classifiedWith: classifiedWith,
-		seeAlso: seeAlso,
-        prefLabel: label,
-        chemblItems: chemblItems,
-        cwURI: cwUri
+		'id': id,
+		'cellularLocation': cellularLocation,
+		'molecularWeight': molecularWeight,
+		'numberOfResidues': numberOfResidues,
+		'theoreticalPi': theoreticalPi,
+		'drugbankURI': drugbankURI,
+		'keywords': keywords,
+		'functionAnnotation': functionAnnotation,
+		'alternativeName': alternativeName,
+		'existence': existence,
+		'organism': organism,
+		'sequence': sequence,
+		'classifiedWith': classifiedWith,
+		'seeAlso': seeAlso,
+        'prefLabel': label,
+        'chemblItems': chemblItems,
+        'cwURI': cwUri,
+        'URI': URI
 	};
 }
 

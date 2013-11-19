@@ -1,6 +1,4 @@
-App.TargetPathwaysIndexController = Ember.ArrayController.extend({
-
-  needs: ["compound", "target"],
+App.TargetsPathwaysController = Ember.ObjectController.extend({
 
   page: null,
 
@@ -12,12 +10,9 @@ App.TargetPathwaysIndexController = Ember.ArrayController.extend({
 
   notEmpty: function() {
     return this.get('totalCount') > 0;
-  }.property('totalCount')
+  }.property('totalCount'),
 
-});
-
-App.TargetPathwaysIndexController.reopen({
- 
+  actions: {
   fetchMore: function() {
     if (this.currentCount < this.totalCount) {
     var me = this;
@@ -43,5 +38,7 @@ App.TargetPathwaysIndexController.reopen({
     pageScrolling = false;
     enable_scroll();
   }
+  }
 
 });
+

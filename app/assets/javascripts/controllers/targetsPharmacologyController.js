@@ -1,4 +1,4 @@
-App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
+App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
   needs: 'targets',
 
@@ -18,6 +18,7 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
 
   fetching: false,
 
+actions: {
   fetchMore: function() {
     if (this.get('model.pharmacology.length') < this.totalCount) {
     var me = this;
@@ -39,6 +40,7 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
     };
     searcher.targetPharmacology(thisTarget.get('URI'), this.page + 1, 50, pharmaCallback);
     }
+  }
   }
 
 });
