@@ -1,3 +1,7 @@
+Ember.Handlebars.registerBoundHelper('targetLink', function(uri, label) {
+  var link = '<a href="#/targets?uri=' + uri + '">' + label + '</a>';
+  return new Handlebars.SafeString(link);		
+});
 Ember.Handlebars.registerBoundHelper('compoundLink', function(uri, label) {
   var link = '<a href="#/compounds?uri=' + uri + '">' + label + '</a>';
   return new Handlebars.SafeString(link);		
