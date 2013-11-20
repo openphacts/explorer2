@@ -21,7 +21,7 @@ group :assets do
   gem 'delayed_job_active_record'
   gem 'daemons'
   #needed for some linux deploys
-  gem 'therubyracer', '~>0.10.0', :platforms => :ruby
+  gem 'therubyracer', '~>0.12.0', :platforms => :ruby
   gem 'uuidtools'
 end
 
