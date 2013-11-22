@@ -43,8 +43,9 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 		cache: true,
 		data: {
 			_format: "json",
-			uri: compound.id,
-            total_count: me.totalCount
+			uri: 'http://www.conceptwiki.org/concept/' + compound.id,
+            total_count: me.totalCount,
+            request_type: 'compound'
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
