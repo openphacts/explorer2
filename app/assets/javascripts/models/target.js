@@ -17,5 +17,11 @@ App.Target = App.SearchResult.extend({
     classifiedWith: DS.attr(),
     seeAlso: DS.attr('string'),
     pharmacology: DS.hasMany('TargetPharmacology'),
-    isCompound: false
+    isCompound: false,
+    
+    // provenance
+    chemblProvenance: DS.attr(),
+    drugbankProvenance: DS.attr(),
+    uniprotProvenance: DS.attr(),
+    conceptwikiProvenance: DS.attr()
 });
