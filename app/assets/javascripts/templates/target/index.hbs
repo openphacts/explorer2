@@ -41,7 +41,11 @@
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small>Molecular Weight</small></p>
-  							<p class="lead">{{molecularWeight}}</p>
+  							{{#if showProvenance}}
+  								<p class="lead">{{molecularWeight}} {{provenanceLinkout uniprotProvenance.molecularWeight uniprotProvenance.source}}</p>
+  							{{else}}
+								<p class="lead">{{molecularWeight}}</p>
+  							{{/if}}
   						</div>
       				</div>
       				{{/if}}
@@ -50,7 +54,11 @@
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small># of Residues</small></p>
-  							<p class="lead">{{numberOfResidues}}</p>
+							{{#if showProvenance}}
+  								<p class="lead">{{numberOfResidues}} {{provenanceLinkout uniprotProvenance.molecularWeight uniprotProvenance.source}}</p>
+							{{else}}
+  								<p class="lead">{{numberOfResidues}}</p>
+							{{/if}}
   						</div>
       				</div>
 					{{/if}}
@@ -59,7 +67,11 @@
       				<div class="summary-box">
       					<div class="inner-property-content">
   							<p><small>Theoretical Pi</small></p>
-  							<p class="lead">{{theoreticalPi}}</p>
+							{{#if showProvenance}}
+								<p class="lead">{{theoreticalPi}} {{provenanceLinkout drugbankProvenance.theoreticalPi drugbankProvenance.source}}</p>							
+							{{else}}
+  								<p class="lead">{{theoreticalPi}}</p>							
+							{{/if}}
   						</div>
       				</div>
 					{{/if}}
