@@ -287,6 +287,28 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minActivityValue = value;
 	  break;
 	}
+    var me = this;
+    me.set('page', 0);
+    var thisCompound = this.get('controllers.compound').get('content');
+    me.clear();
+    me.set('fetching', true);
+    var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+    var pharmaCallback=function(success, status, response){
+      if (success && response) {
+        me.page++;
+        var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
+	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
+        });
+        me.set('fetching', false);
+      } else {
+        //failed response so scrolling is now allowed
+        me.set('fetching', false);
+      }
+    };
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, activity, value, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, condition, null, null, null, null, null, null, null, 1, 50, null, null, pharmaCallback);
+    // TODO Fetch count first then fetch pharma results if there are any
 
   }
 
