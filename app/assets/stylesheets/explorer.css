@@ -227,3 +227,11 @@ sub {
 	font-size: small;
 	padding-left: 5px;
 }
+/* Sorting */
+.sortASC {
+	background-color: gray;
+}
+
+.sortDESC {
+	background-color: gray;
+}
