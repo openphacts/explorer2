@@ -257,6 +257,37 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
     }
   }
+  },
+
+  applyFilters: function() {
+    console.log('apply filters');	
+    var activity = this.get('selectedActivity').label;
+    var unit = this.get('selectedUnit').label;
+    var condition = this.get('selectedCondition');
+    var value = this.get('activityValue');
+    var minActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minActivityValue = null;
+	switch(condition)
+	{
+	case '>':
+  	  minExActivityValue = value;
+	  break;
+	case '<':
+      maxExActivityValue = value;
+  	  break;
+	case '=':
+      activityValue = value;
+	  break;
+	case '<=':
+      maxActivityValue = value;
+	  break;
+	case '>=':
+      minActivityValue = value;
+	  break;
+	}
+
   }
 
 });
