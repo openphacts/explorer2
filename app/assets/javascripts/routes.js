@@ -99,7 +99,7 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         controller.set('totalCount', count);
         if (count > 0) {
-            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
+            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, null, pharmaCallback);
         }
       }
     };
@@ -117,13 +117,13 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     };
     //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
     if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, countCallback);
+        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
     } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
         //could still be count for a different compound
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, countCallback);
+        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
     } else {
         //reset the totalCount just to be sure
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, countOnlyCallback);
+        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countOnlyCallback);
     }
 
   },

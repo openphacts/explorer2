@@ -69,16 +69,16 @@
 				<th></th>
 			<tr>
 			<tr>
-				<th align="left">Name</th>
-				<th width="10%">Organism</th>
-				<th width="10%">Organism</th>
-				<th align="left" width="300px">Description</th>
-				<th>Type</th>
-			 	<th {{action "sortHeader" "relation"}}>Relation</th>
-				<th>Value</th>
-				<th>Units</th>
-				<th>PubMed Article</th>
-                <th>pChembl</th>
+				<th align="left" {{action "sortHeader" "target_name"}}>Name</th>
+				<th width="10%" {{action "sortHeader" "target_organism"}}>Organism</th>
+				<th width="10%" {{action "sortHeader" "assay_organism"}}>Organism</th>
+				<th align="left" width="300px" {{action "sortHeader" "assay_description"}}>Description</th>
+				<th {{action "sortHeader" "activity_type"}}>Type</th>
+			 	<th {{action "sortHeader" "activity_relation"}}>Relation</th>
+				<th {{action "sortHeader" "activity_value"}}>Value</th>
+				<th {{action "sortHeader" "activity_unit"}}>Units</th>
+				<th {{action "sortHeader" "pmid"}}>PubMed Article</th>
+                <th {{action "sortHeader" "pChembl"}}>pChembl</th>
 			</tr>
 		</thead>
 		<tbody>

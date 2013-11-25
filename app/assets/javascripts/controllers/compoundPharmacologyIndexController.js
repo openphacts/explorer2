@@ -54,7 +54,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	        me.set('fetching', false);
 	      }
 	    };
-	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, pharmaCallback);	
+	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);	
 	},
 	
   navigateTo: function(target) {
@@ -145,7 +145,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
         me.set('fetching', false);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, pharmaCallback);
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
     }
   }
   }

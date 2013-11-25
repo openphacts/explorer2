@@ -87,7 +87,7 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, lens, 
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, page, pageSize, orderBy, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, assayOrganism, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
     params={};
     params['_format'] = "json";
     params['app_key'] = this.appKey;
@@ -102,9 +102,18 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOr
     maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
     maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
     activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
     page ? params['_page'] = page : '';
     pageSize ? params['_pageSize'] = pageSize : '';
     orderBy ? params['_orderBy'] = orderBy : '';
+    lens ? params['_lens'] = lens : '';
 
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/pages',
@@ -120,7 +129,7 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOr
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, assayOrganism, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
     params={};
     params['_format'] = "json";
     params['app_key'] = this.appKey;
@@ -135,6 +144,16 @@ Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, as
     maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
     maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
     activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    lens ? params['_lens'] = lens : '';
+
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/count',
                 dataType: 'json',
