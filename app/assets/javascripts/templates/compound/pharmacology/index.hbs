@@ -1,8 +1,40 @@
 <div>
+	<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Filters for {{controllers.compound.prefLabel}}</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>Filters here</p>
+		{{view Ember.Select
+		       content=activities
+		       prompt="Select an activity"
+		       selection=selectedActivity
+		}}
+		{{view Ember.Select
+		       content=conditions
+		       prompt="Select a condition"
+		       selection=selectedCondition
+		}}
+		{{input type="text" placeholder="Enter a value" value=activityValue id="activityValueInput"}}
+		{{view Ember.Select
+		       content=units
+		       prompt="Select a unit"
+		       selection=selectedUnit
+		}}
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    <button class="btn btn-primary">Apply filters</button>
+	  </div>
+	</div>
+	<!-- End of Modal -->
+	
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
   			<li>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} <span class="divider">/</span></li>
-  			<li class="active">Compound Phamacology</li>
+  			<li class="active">Compound Pharmacology</li>
 			
 			<div class="row pull-right"> 
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -22,7 +54,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csURI}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#myModal" role="button" class="btn small-margin-left" data-toggle="modal">Filter Results</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
@@ -69,6 +101,9 @@
 				<th></th>
 			<tr>
 			<tr>
+				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
 				<th align="left" {{action "sortHeader" "target_name"}} {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC"}}>Name{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th width="10%" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC"}}>Organism{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th width="10%" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC"}}>Organism{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>

@@ -2,6 +2,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   needs: "compound",
 
+  conditions: [">", "<", "=", "<=", ">="],
+
   page: null,
 
   currentCount: function() {
@@ -19,6 +21,14 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
   sortedHeader: null,
 
   currentHeader: null,
+
+  selectedActivity: null,
+
+  selectedUnit: null,
+
+  selectedCondition: null,
+
+  activityValue: null,
 
   targetNameSortASC: function() {
 	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === "target_name";
