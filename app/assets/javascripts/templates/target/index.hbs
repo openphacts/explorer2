@@ -17,8 +17,8 @@
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-  				<button class="btn">On</button>
-  				<button class="btn active">Off</button>
+  				<button {{action 'enableProvenance'}} class="btn">On</button>
+  				<button {{action 'disableProvenance'}} class="btn active">Off</button>
   			</div>
 		</div>
 	</ul>
@@ -117,7 +117,7 @@
 	  					
 	  					{{#if seeAlso}}
   						<dt>PDB</dt>
-  						<dd>{{pdbLinkouts seeAlso}}</dd>
+  						<dd>{{	 seeAlso}}</dd>
   						{{/if}}	
   						
 	  					{{#if sequence}}
