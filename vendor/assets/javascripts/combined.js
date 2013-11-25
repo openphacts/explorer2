@@ -674,7 +674,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
 	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null;
 	
-	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptWikiProvenance;
+	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var cwUri = response.primaryTopic[constants.ABOUT];
 	var id = cwUri.split("/").pop();
 	var keywords = [];
@@ -694,6 +694,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 
                 var drugbankLinkOut = drugbankURI;
                 drugbankProvenance = new Array();
+                drugbankProvenance['source'] = 'drugbank';
                 drugbankProvenance['cellularLocation'] = drugbankLinkOut;
                 drugbankProvenance['numberOfResidues'] = drugbankLinkOut;
                 drugbankProvenance['theoreticalPi'] = drugbankLinkOut;
@@ -730,6 +731,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 chemblItems.push(chemblDataItem);
                 
                 chemblProvenance = new Array();
+                chemblProvenance['source'] = 'chembl';
                 chemblProvenance['synonymsData'] = chemblLinkOut;
                 chemblProvenance['targetComponents'] = chemblLinkOut;
                 chemblProvenance['type'] = chemblLinkOut;
@@ -775,9 +777,9 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                   label = exactMatch[constants.PREF_LABEL];
                   
                   conceptWikiLinkOut = exactMatch[constants.ABOUT];
-                  conceptWikiProvenance = new Array();
-                  conceptWikiProvenance['source'] = 'conceptwiki';
-                  conceptWikiProvenance['label'] = conceptWikiLinkOut;
+                  conceptwikiProvenance = new Array();
+                  conceptwikiProvenance['source'] = 'conceptwiki';
+                  conceptwikiProvenance['label'] = conceptWikiLinkOut;
             }
 		}
 	});
@@ -799,7 +801,12 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 		seeAlso: seeAlso,
         prefLabel: label,
         chemblItems: chemblItems,
-        cwURI: cwUri
+        cwURI: cwUri,
+        
+        chemblProvenance: chemblProvenance,
+    	drugbankProvenance: drugbankProvenance,
+    	uniprotProvenance: uniprotProvenance,
+    	conceptwikiProvenance: conceptwikiProvenance
 	};
 }
 
