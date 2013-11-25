@@ -8,6 +8,12 @@ defaults: &defaults
     app_id: "blahblahblah" #app id from https://dev.openphacts.org
     app_key: "blahblahblahblahblah" #app key from https://dev.openphacts.org
 
+  tsv:
+    url: "api.location" # no protocol eg beta.openphacts.org 
+    target_path : "/target/pharmacology/pages" # or equivalent for target pharma paginated
+    compound_path: "/compound/pharmacology/pages" # or equivalent for compound pharma paginated
+    tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
+
 development:
   <<: *defaults
 

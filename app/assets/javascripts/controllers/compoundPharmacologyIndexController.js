@@ -43,17 +43,39 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 		cache: true,
 		data: {
 			_format: "json",
-			uri: compound.id,
-            total_count: me.totalCount
+			uri: 'http://www.conceptwiki.org/concept/' + compound.id,
+            total_count: me.totalCount,
+            request_type: 'compound'
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
+            me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {
 			console.log('tsv create request success');
 		}
 	});
 
+  },
+
+  monitorTSVCreation: function(uuid) {
+    var me = this;
+    console.log("Monitor TSV file");
+	var tsvCreateRequest = $.ajax({
+		url: tsvStatusUrl,
+        dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+			uuid: uuid,
+		},
+		success: function(response, status, request) {
+			console.log('tsv monitor status ' + response.status);
+		},
+		error: function(request, status, error) {
+			console.log('tsv create request success');
+		}
+	});
   },
 
   fetchMore: function() {

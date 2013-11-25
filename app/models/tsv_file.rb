@@ -1,8 +1,11 @@
-# For reasons unknown this model causes apache/passenget to fail with 'missing method handle_asynchronously', no amount of
+# For reasons unknown this model causes apache/passenger to fail with 'missing method handle_asynchronously', no amount of
 # debugging has found the cause. We have used this method in other apps with no problems. An explicit require is required to fix it
 # See http://dev.mygrid.org.uk/blog/?p=201 for details
 
 require 'delayed_job'
+require 'cgi'
+require 'csv'
+require 'net/http'
 
 class TsvFile < ActiveRecord::Base
 
@@ -13,23 +16,29 @@ class TsvFile < ActiveRecord::Base
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
     url_path = ''
-    domain = AppSettings.config["tsv"]["tsv_url"]
+    domain = AppSettings.config["tsv"]["url"]
+    logger.info "domain: " + domain.to_s
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
+    logger.info "tsv file 1"
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
-    params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
-    params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
-    params[:target_organism] != "" ? url_params += "&target_organism=" + CGI::escape(params[:target_organism]) : ''
+    logger.info "tsv file 2"
+    #params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
+    #params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
+    #params[:target_organism] != "" ? url_params += "&target_organism=" + CGI::escape(params[:target_organism]) : ''
     number_of_pages = (params[:total_count].to_i / 250) + 1
     i = 1
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
+    logger.info "tsv file 3"
     # download the tsv file 250 records at a time
     all_headers = []
     begin
-      FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+      CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
         while i <= number_of_pages
           url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
+    logger.info "tsv file 4"
           response = Net::HTTP.get(domain, url_path)
-          tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers => true})
+    logger.info "tsv file 5"
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true})
           # only need the header line from the first response
           if i == 1 
             all_headers = tab_data.headers
@@ -67,7 +76,7 @@ class TsvFile < ActiveRecord::Base
     first = true
     i = 1
     total = JSON.parse(params[:csids]).size
-    FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+    CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       tab << all_headers
       JSON.parse(params[:csids]).each do |csid|
         
@@ -75,7 +84,7 @@ class TsvFile < ActiveRecord::Base
         begin
           url_path = "#{path}?".concat(url_params)
           response = Net::HTTP.get(domain, url_path)
-          tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true})
           tab_data.each do |row|
             current_row = []
             all_headers.each {|header| current_row << row.values_at(header)}
