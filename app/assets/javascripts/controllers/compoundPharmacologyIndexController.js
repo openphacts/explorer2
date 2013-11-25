@@ -20,6 +20,86 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   currentHeader: null,
 
+  targetNameSortASC: function() {
+	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === "target_name";
+  }.property('sortedHeader'),
+
+  targetNameSortDESC: function() {
+	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  targetOrgansismSortASC: function() {
+	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === "target_organism";
+  }.property('sortedHeader'),
+
+  targetOrganismSortDESC: function() {
+	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  assayOrganismSortASC: function() {
+	return this.get('currentHeader') === "assay_organism" && this.get('sortedHeader') === "assay_organism";
+  }.property('sortedHeader'),
+
+  assayOrganismSortDESC: function() {
+	return this.get('currentHeader') === "assay_organism" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  assayDescriptionSortASC: function() {
+	return this.get('currentHeader') === "assay_description" && this.get('sortedHeader') === "assay_description";
+  }.property('sortedHeader'),
+
+  assayDescriptionSortDESC: function() {
+	return this.get('currentHeader') === "assay_description" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityTypeSortASC: function() {
+	return this.get('currentHeader') === "activity_type" && this.get('sortedHeader') === "activity_type";
+  }.property('sortedHeader'),
+
+  activityTypeSortDESC: function() {
+	return this.get('currentHeader') === "activity_type" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityRelationSortASC: function() {
+	return this.get('currentHeader') === "activity_relation" && this.get('sortedHeader') === "activity_relation";
+  }.property('sortedHeader'),
+
+  activityRelationSortDESC: function() {
+	return this.get('currentHeader') === "activity_relation" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityValueSortASC: function() {
+	return this.get('currentHeader') === "activity_value" && this.get('sortedHeader') === "activity_value";
+  }.property('sortedHeader'),
+
+  activityValueSortDESC: function() {
+	return this.get('currentHeader') === "activity_value" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityUnitSortASC: function() {
+	return this.get('currentHeader') === "activity_unit" && this.get('sortedHeader') === "activity_unit";
+  }.property('sortedHeader'),
+
+  activityUnitSortDESC: function() {
+	return this.get('currentHeader') === "activity_unit" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  pmidSortASC: function() {
+	return this.get('currentHeader') === "pmid" && this.get('sortedHeader') === "pmid";
+  }.property('sortedHeader'),
+
+  pmidSortDESC: function() {
+	return this.get('currentHeader') === "pmid" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  pchemblSortASC: function() {
+	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === "pchembl";
+  }.property('sortedHeader'),
+
+  pchemblSortDESC: function() {
+	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
   actions: {
 	
 	sortHeader: function(header) {
