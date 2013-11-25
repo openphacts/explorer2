@@ -125,6 +125,15 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
         //reset the totalCount just to be sure
         searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countOnlyCallback);
     }
+    var activityTypesCallback=function(success, status, response){
+        if (success && response) {
+	        var activityTypes = activitySearcher.parseTypes(response);
+            me.set('activityTypes', activityTypes);
+        }
+    };
+    var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+    activitySearcher.getTypes(null, null, null, null, null, activityTypesCallback);
+
 
   },
   model: function(params) {

@@ -8,7 +8,8 @@
 	  <div class="modal-body">
 	    <p>Filters here</p>
 		{{view Ember.Select
-		       content=activities
+		       content=activityTypes
+		       optionLabelPath="content.label"
 		       prompt="Select an activity"
 		       selection=selectedActivity
 		}}
@@ -19,7 +20,8 @@
 		}}
 		{{input type="text" placeholder="Enter a value" value=activityValue id="activityValueInput"}}
 		{{view Ember.Select
-		       content=units
+		       content=activityUnits
+		       optionLabelPath="content.label"
 		       prompt="Select a unit"
 		       selection=selectedUnit
 		}}

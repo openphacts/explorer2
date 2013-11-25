@@ -1651,7 +1651,11 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                       assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                     });
                 } else {
-                    var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	                var targetComponentLabel = null;
+	                if (targetComponents[constants.EXACT_MATCH]) {
+		                targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	                }
+                    //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
                     var targetComponentURI = targetComponents[constants.ABOUT];
                     assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                 }
@@ -1672,7 +1676,11 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                     assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                   });
               } else {
-                  var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	              var targetComponentLabel = null;
+	              if (targetComponents[constants.EXACT_MATCH]) {
+		              targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	              }
+                  //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
                   var targetComponentURI = targetComponents[constants.ABOUT];
                   assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
               }

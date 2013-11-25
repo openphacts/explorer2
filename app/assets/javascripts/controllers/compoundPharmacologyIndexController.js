@@ -4,6 +4,25 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   conditions: [">", "<", "=", "<=", ">="],
 
+  activityTypes: null,
+
+  activityUnits: null,
+
+  activityTypesSelected: function() {
+	var me = this;
+	var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+	if (this.get('selectedActivity') != null) {
+	    // fetch the units for activity
+	  var callback=function(success, status, response){
+		if (success && response) {
+		    var units = activitySearcher.parseUnits(response);
+		    me.set('activityUnits', units);	
+		}
+      };
+      activitySearcher.getUnits(this.get('selectedActivity').label, null, callback);		
+	}
+  }.observes('selectedActivity'),
+
   page: null,
 
   currentCount: function() {
