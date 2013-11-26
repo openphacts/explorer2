@@ -27,6 +27,14 @@
 		       selection=selectedUnit
 		}}
         </div>
+        <div>
+	    <p><h4>Activity Relation</h4></p>
+		{{view Ember.Select
+		       content=activityRelations
+		       prompt="Select a relation"
+		       selection=selectedRelation
+		}}
+        </div>
         <div id="pchembl-filters">
 	    <p><h4>pChembl Filter</h4></p>
 		{{view Ember.Select

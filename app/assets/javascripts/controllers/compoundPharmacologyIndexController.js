@@ -4,6 +4,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   conditions: [">", "<", "=", "<=", ">="],
 
+  activityRelations: [">", "<", "=", "<=", ">="],
+
   pchemblConditions: [">", "<", "=", "<=", ">="],
 
   activityTypes: null,
@@ -50,6 +52,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
   selectedCondition: null,
 
   activityValue: null,
+
+  selectedRelation: null,
 
   pchemblValue: null,
 
@@ -266,7 +270,6 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     };
     searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
     }
-  }
   },
 
   applyFilters: function() {
@@ -275,10 +278,11 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var targetOrganism = null;
     var targetType = null;
     var lens = null;
-    var activity = this.get('selectedActivity').label;
-    var unit = this.get('selectedUnit').label;
-    var condition = this.get('selectedCondition');
-    var currentActivityValue = this.get('activityValue');
+    var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+    var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+    var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+    var activityRelation = this.get('selectedRelation') != null ? this.get('selectedRelation') : null;
     var minActivityValue = null;
     var maxActivityValue = null;
     var maxExActivityValue = null;
@@ -302,10 +306,9 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minActivityValue = currentActivityValue;
 	  break;
 	}
-    var activity = this.get('selectedActivity').label;
-    var unit = this.get('selectedUnit').label;
-    var pchemblCondition = this.get('selectedPchemblCondition');
-    var currentPchemblValue = this.get('pchemblValue');
+
+    var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
     var minPchemblValue = null;
     var maxPchemblValue = null;
     var maxExPchemblValue = null;
@@ -362,5 +365,6 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
 
   }
+  },
 
 });
