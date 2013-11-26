@@ -143,6 +143,26 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
+  monitorTSVCreation: function(uuid) {
+    var me = this;
+    console.log("Monitor TSV file");
+	var tsvCreateRequest = $.ajax({
+		url: tsvStatusUrl,
+        dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+			uuid: uuid,
+		},
+		success: function(response, status, request) {
+			console.log('tsv monitor status ' + response.status);
+		},
+		error: function(request, status, error) {
+			console.log('tsv create request success');
+		}
+	});
+  },
+
   actions: {
 	
 	sortHeader: function(header) {
@@ -278,26 +298,6 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 		}
 	});
 
-  },
-
-  monitorTSVCreation: function(uuid) {
-    var me = this;
-    console.log("Monitor TSV file");
-	var tsvCreateRequest = $.ajax({
-		url: tsvStatusUrl,
-        dataType: 'json',
-		cache: true,
-		data: {
-			_format: "json",
-			uuid: uuid,
-		},
-		success: function(response, status, request) {
-			console.log('tsv monitor status ' + response.status);
-		},
-		error: function(request, status, error) {
-			console.log('tsv create request success');
-		}
-	});
   },
 
   fetchMore: function() {
