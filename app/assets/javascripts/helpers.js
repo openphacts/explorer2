@@ -129,9 +129,13 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
   				//console.log(" conceptwiki datasource");
   				linkout = createConceptWikiLink(item);
 				break;
-
+				
+			case 'uniprot':
+				linkout = createUniprotLink(item);
+				break;
+				
 			default:
-				console.log("source unrecognised");
+				console.log("source unrecognised: " + source);
 		}
 		
 		// assign icon to datasource
@@ -154,21 +158,28 @@ function createDrugbankLink(item) {
 
 function createChemblLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemblProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemblProvIcon.png" title="ChEMBL" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createChemspiderLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="ChemSpider height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createConceptWikiLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/conceptWikiProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/conceptWikiProvIcon.png" title="ConceptWiki" height="15" width="15"></a>'
 	return dbLink;
 }
+
+function createUniprotLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/uniprotProvIcon.png" title="UniProt" height="15" width="33"></a>'
+	return dbLink;	
+}
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
