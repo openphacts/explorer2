@@ -147,6 +147,65 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	
 	sortHeader: function(header) {
 	    console.log('sorting by ' + header);
+    //first set all the current filters
+    var assayOrganism = null;
+    var targetOrganism = null;
+    var targetType = null;
+    var lens = null;
+    var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+    var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+    var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+    var activityRelation = this.get('selectedRelation') != null ? this.get('selectedRelation') : null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+	switch(condition)
+	{
+	case '>':
+  	  minExActivityValue = currentActivityValue;
+	  break;
+	case '<':
+      maxExActivityValue = currentActivityValue;
+  	  break;
+	case '=':
+      activityValue = currentActivityValue;
+	  break;
+	case '<=':
+      maxActivityValue = currentActivityValue;
+	  break;
+	case '>=':
+      minActivityValue = currentActivityValue;
+	  break;
+	}
+
+    var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  minExPchemblValue = currentPchemblValue;
+	  break;
+	case '<':
+      maxExPchemblValue = currentPchemblValue;
+  	  break;
+	case '=':
+      actualPchemblValue = currentPchemblValue;
+	  break;
+	case '<=':
+      maxPchemblValue = currentPchemblValue;
+	  break;
+	case '>=':
+      minPchemblValue = currentPchemblValue;
+	  break;
+	}
 	    this.clear();
 	    this.set('page', 0);
 	    this.set('fetching', true);
@@ -177,7 +236,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	        me.set('fetching', false);
 	      }
 	    };
-	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);	
+	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.page + 1, 50, sortBy, lens, pharmaCallback);	
 	},
 	
   navigateTo: function(target) {

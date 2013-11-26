@@ -81,6 +81,73 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('content', model);
       var me = controller;
+    // set all the current filters
+    var assayOrganism = null;
+    var targetOrganism = null;
+    var targetType = null;
+    var lens = null;
+    var activity = me.get('selectedActivity') != null ? me.get('selectedActivity').label : null;
+    var unit = me.get('selectedUnit') != null ? me.get('selectedUnit').label : null;
+    var condition = me.get('selectedCondition') != null ? me.get('selectedCondition') : null;
+    var currentActivityValue = me.get('activityValue') != null ? me.get('activityValue') : null;
+    var activityRelation = me.get('selectedRelation') != null ? me.get('selectedRelation') : null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+	switch(condition)
+	{
+	case '>':
+  	  minExActivityValue = currentActivityValue;
+	  break;
+	case '<':
+      maxExActivityValue = currentActivityValue;
+  	  break;
+	case '=':
+      activityValue = currentActivityValue;
+	  break;
+	case '<=':
+      maxActivityValue = currentActivityValue;
+	  break;
+	case '>=':
+      minActivityValue = currentActivityValue;
+	  break;
+	}
+
+    var pchemblCondition = me.get('selectedPchemblCondition') != null ? me.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = me.get('pchemblValue') != null ? me.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  minExPchemblValue = currentPchemblValue;
+	  break;
+	case '<':
+      maxExPchemblValue = currentPchemblValue;
+  	  break;
+	case '=':
+      actualPchemblValue = currentPchemblValue;
+	  break;
+	case '<=':
+      maxPchemblValue = currentPchemblValue;
+	  break;
+	case '>=':
+      minPchemblValue = currentPchemblValue;
+	  break;
+	}
+	    var sortBy = null;
+	    if (me.get('currentHeader') !== null && me.get('sortedHeader') == null) {
+		    // we have previously sorted descending on a header and it is still current
+		    sortBy = 'DESC(?' + me.get('currentHeader') + ')';
+     	} else if (me.get('currentHeader') !== null) {
+	        //we have previously sorted on a header
+	        sortBy = '?' + me.get('currentHeader');
+        }
       var thisCompound = this.modelFor('compound');
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
@@ -99,7 +166,7 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         controller.set('totalCount', count);
         if (count > 0) {
-            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, null, pharmaCallback);
+            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
         }
       }
     };
@@ -117,13 +184,13 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     };
     //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
     if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
     } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
         //could still be count for a different compound
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+       searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
     } else {
         //reset the totalCount just to be sure
-        searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countOnlyCallback);
+       searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countOnlyCallback);
     }
     var activityTypesCallback=function(success, status, response){
         if (success && response) {
