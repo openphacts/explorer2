@@ -354,6 +354,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     };
     // get the count for these filters then get the first page of results
     var countCallback=function(success, status, response){
+      $('#compoundPharmaFilterModalView').modal('toggle');
       if (success && response) {
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         me.set('totalCount', count);

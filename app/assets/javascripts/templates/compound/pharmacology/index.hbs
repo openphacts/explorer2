@@ -1,6 +1,6 @@
 <div>
 	<!-- Modal -->
-	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div id="compoundPharmaFilterModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	    <h3 id="myModalLabel">Select filters for {{controllers.compound.prefLabel}}</h3>
@@ -75,7 +75,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src controllers.compound.csURI}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#myModal" role="button" class="btn small-margin-left" data-toggle="modal">Filter Results</a></h3>
+    				<h3>{{#linkTo 'compound.index' controllers.compound}}{{controllers.compound.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal">Filter Results</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula controllers.compound.molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription controllers.compound.description}}</div>
