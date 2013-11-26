@@ -6,7 +6,8 @@
 	    <h3 id="myModalLabel">Select filters for {{controllers.compound.prefLabel}}</h3>
 	  </div>
 	  <div class="modal-body">
-	    <p><h4>Activity Filters</h4></p>
+        <div id="activity-filters">
+	    <p><h4>Activity Filter</h4></p>
 		{{view Ember.Select
 		       content=activityTypes
 		       optionLabelPath="content.label"
@@ -18,13 +19,23 @@
 		       prompt="Select a condition"
 		       selection=selectedCondition
 		}}
-		{{input type="text" placeholder="Enter a value" value=activityValue id="activityValueInput"}}
+		{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
 		{{view Ember.Select
 		       content=activityUnits
 		       optionLabelPath="content.label"
 		       prompt="Select a unit"
 		       selection=selectedUnit
 		}}
+        </div>
+        <div id="pchembl-filters">
+	    <p><h4>pChembl Filter</h4></p>
+		{{view Ember.Select
+		       content=pchemblConditions
+		       prompt="Select a condition"
+		       selection=selectedPchemblCondition
+		}}
+		{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+        </div>
 	  </div>
 	  <div class="modal-footer">
 	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

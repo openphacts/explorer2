@@ -87,7 +87,7 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, lens, 
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, assayOrganism, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
     params={};
     params['_format'] = "json";
     params['app_key'] = this.appKey;
@@ -103,7 +103,6 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOr
     maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
     activityUnit ? params['activity_unit'] = activityUnit : '';
     activityRelation ? params['activity_relation'] = activityRelation : '';
-    assayOrganism ? params['assay_organism'] = assayOrganism : '';
     pChembl ? params['pChembl'] = pChembl : '';
     minpChembl ? params['min-pChembl'] = minpChembl : '';
     minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
@@ -129,7 +128,7 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOr
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, assayOrganism, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
     params={};
     params['_format'] = "json";
     params['app_key'] = this.appKey;
@@ -145,7 +144,6 @@ Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, as
     maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
     activityUnit ? params['activity_unit'] = activityUnit : '';
     activityRelation ? params['activity_relation'] = activityRelation : '';
-    assayOrganism ? params['assay_organism'] = assayOrganism : '';
     pChembl ? params['pChembl'] = pChembl : '';
     minpChembl ? params['min-pChembl'] = minpChembl : '';
     minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';

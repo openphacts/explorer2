@@ -4,6 +4,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   conditions: [">", "<", "=", "<=", ">="],
 
+  pchemblConditions: [">", "<", "=", "<=", ">="],
+
   activityTypes: null,
 
   activityUnits: null,
@@ -48,6 +50,14 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
   selectedCondition: null,
 
   activityValue: null,
+
+  pchemblValue: null,
+
+  selectedPchemblCondition: null,
+
+  selectedPchemblValue: null,
+
+  // I'm sure all this can be done more elegantly but....
 
   targetNameSortASC: function() {
 	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === "target_name";
@@ -163,7 +173,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	        me.set('fetching', false);
 	      }
 	    };
-	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);	
+	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);	
 	},
 	
   navigateTo: function(target) {
@@ -254,37 +264,69 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
         me.set('fetching', false);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
+    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
     }
   }
   },
 
   applyFilters: function() {
     console.log('apply filters');	
+    var assayOrganism = null;
+    var targetOrganism = null;
+    var targetType = null;
+    var lens = null;
     var activity = this.get('selectedActivity').label;
     var unit = this.get('selectedUnit').label;
     var condition = this.get('selectedCondition');
-    var value = this.get('activityValue');
+    var currentActivityValue = this.get('activityValue');
     var minActivityValue = null;
+    var maxActivityValue = null;
     var maxExActivityValue = null;
     var activityValue = null;
-    var minActivityValue = null;
+    var minExActivityValue = null;
 	switch(condition)
 	{
 	case '>':
-  	  minExActivityValue = value;
+  	  minExActivityValue = currentActivityValue;
 	  break;
 	case '<':
-      maxExActivityValue = value;
+      maxExActivityValue = currentActivityValue;
   	  break;
 	case '=':
-      activityValue = value;
+      activityValue = currentActivityValue;
 	  break;
 	case '<=':
-      maxActivityValue = value;
+      maxActivityValue = currentActivityValue;
 	  break;
 	case '>=':
-      minActivityValue = value;
+      minActivityValue = currentActivityValue;
+	  break;
+	}
+    var activity = this.get('selectedActivity').label;
+    var unit = this.get('selectedUnit').label;
+    var pchemblCondition = this.get('selectedPchemblCondition');
+    var currentPchemblValue = this.get('pchemblValue');
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  minExPchemblValue = currentPchemblValue;
+	  break;
+	case '<':
+      maxExPchemblValue = currentPchemblValue;
+  	  break;
+	case '=':
+      actualPchemblValue = currentPchemblValue;
+	  break;
+	case '<=':
+      maxPchemblValue = currentPchemblValue;
+	  break;
+	case '>=':
+      minPchemblValue = currentPchemblValue;
 	  break;
 	}
     var me = this;
@@ -307,8 +349,17 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
         me.set('fetching', false);
       }
     };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, activity, value, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, condition, null, null, null, null, null, null, null, 1, 50, null, null, pharmaCallback);
-    // TODO Fetch count first then fetch pharma results if there are any
+    // get the count for these filters then get the first page of results
+    var countCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseCompoundPharmacologyCountResponse(response);
+        me.set('totalCount', count);
+        if (count > 0) {
+            searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, null, lens, pharmaCallback);
+        }
+      }
+    };
+    searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
 
   }
 
