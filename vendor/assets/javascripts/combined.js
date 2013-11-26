@@ -779,7 +779,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                   conceptWikiLinkOut = exactMatch[constants.ABOUT];
                   conceptwikiProvenance = new Array();
                   conceptwikiProvenance['source'] = 'conceptwiki';
-                  conceptwikiProvenance['label'] = conceptWikiLinkOut;
+                  conceptwikiProvenance['prefLabel'] = conceptWikiLinkOut;
             }
 		}
 	});
