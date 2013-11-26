@@ -12,11 +12,13 @@
 		       content=activityTypes
 		       optionLabelPath="content.label"
 		       prompt="Select an activity"
+		       value=selectedActivity
 		       selection=selectedActivity
 		}}
 		{{view Ember.Select
 		       content=conditions
 		       prompt="Select a condition"
+               value=selectedCondition
 		       selection=selectedCondition
 		}}
 		{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
@@ -24,6 +26,7 @@
 		       content=activityUnits
 		       optionLabelPath="content.label"
 		       prompt="Select a unit"
+               value=selectedUnit
 		       selection=selectedUnit
 		}}
         </div>
@@ -32,6 +35,7 @@
 		{{view Ember.Select
 		       content=activityRelations
 		       prompt="Select a relation"
+               value=selectedRelation
 		       selection=selectedRelation
 		}}
         </div>
@@ -40,6 +44,7 @@
 		{{view Ember.Select
 		       content=pchemblConditions
 		       prompt="Select a condition"
+               value=selectedPchemblCondition
 		       selection=selectedPchemblCondition
 		}}
 		{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}

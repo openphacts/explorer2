@@ -96,6 +96,8 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     var maxExActivityValue = null;
     var activityValue = null;
     var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
 	switch(condition)
 	{
 	case '>':
@@ -114,6 +116,7 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
       minActivityValue = currentActivityValue;
 	  break;
 	}
+    }
 
     var pchemblCondition = me.get('selectedPchemblCondition') != null ? me.get('selectedPchemblCondition') : null;
     var currentPchemblValue = me.get('pchemblValue') != null ? me.get('pchemblValue') : null;
@@ -122,6 +125,8 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     var maxExPchemblValue = null;
     var minExPchemblValue = null;
     var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
 	switch(pchemblCondition)
 	{
 	case '>':
@@ -140,6 +145,7 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
       minPchemblValue = currentPchemblValue;
 	  break;
 	}
+    }
 	    var sortBy = null;
 	    if (me.get('currentHeader') !== null && me.get('sortedHeader') == null) {
 		    // we have previously sorted descending on a header and it is still current

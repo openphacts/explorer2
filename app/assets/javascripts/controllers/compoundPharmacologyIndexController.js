@@ -182,6 +182,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExActivityValue = null;
     var activityValue = null;
     var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
 	switch(condition)
 	{
 	case '>':
@@ -200,6 +202,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minActivityValue = currentActivityValue;
 	  break;
 	}
+    }
 
     var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
     var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
@@ -208,6 +211,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExPchemblValue = null;
     var minExPchemblValue = null;
     var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
 	switch(pchemblCondition)
 	{
 	case '>':
@@ -226,6 +231,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minPchemblValue = currentPchemblValue;
 	  break;
 	}
+    }
 	    this.clear();
 	    this.set('page', 0);
 	    this.set('fetching', true);
@@ -317,6 +323,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExActivityValue = null;
     var activityValue = null;
     var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
 	switch(condition)
 	{
 	case '>':
@@ -335,6 +343,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minActivityValue = currentActivityValue;
 	  break;
 	}
+    }
 
     var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
     var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
@@ -343,6 +352,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExPchemblValue = null;
     var minExPchemblValue = null;
     var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
 	switch(pchemblCondition)
 	{
 	case '>':
@@ -361,6 +372,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minPchemblValue = currentPchemblValue;
 	  break;
 	}
+    }
 	    var sortBy = null;
 	    if (this.get('currentHeader') !== null && this.get('sortedHeader') == null) {
 		    // we have previously sorted descending on a header and it is still current
@@ -407,6 +419,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExActivityValue = null;
     var activityValue = null;
     var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
 	switch(condition)
 	{
 	case '>':
@@ -425,6 +439,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minActivityValue = currentActivityValue;
 	  break;
 	}
+    }
 
     var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
     var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
@@ -433,6 +448,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var maxExPchemblValue = null;
     var minExPchemblValue = null;
     var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
 	switch(pchemblCondition)
 	{
 	case '>':
@@ -451,6 +468,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minPchemblValue = currentPchemblValue;
 	  break;
 	}
+    }
     var me = this;
     me.set('page', 0);
     var thisCompound = this.get('controllers.compound').get('content');
