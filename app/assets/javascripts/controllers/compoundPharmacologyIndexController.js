@@ -474,6 +474,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     // get the count for these filters then get the first page of results
     var countCallback=function(success, status, response){
       $('#compoundPharmaFilterModalView').modal('toggle');
+      $('#compoundPharmaFilterModalView').button('toggle');
       if (success && response) {
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         me.set('totalCount', count);
@@ -484,7 +485,18 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     };
     searcher.compoundPharmacologyCount('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
 
-  }
   },
+  resetFilters: function() {
+      console.log('reset filters');
+      this.set('selectedActivity',null);
+      this.set('selectedUnit', null);
+      this.set('selectedCondition', null);
+      this.set('activityValue', null);
+      this.set('selectedRelation', null);
+      this.set('pchemblValue', null);
+      this.set('selectedPchemblCondition', null);
+      this.set('selectedPchemblValue', null);
+  }
+  }
 
 });
