@@ -7,8 +7,8 @@
 			<div class="row pull-right"> 
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
   				<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-  					<button class="btn">On</button>
-  					<button class="btn active">Off</button>
+  					<button {{action 'enableProvenance'}} class="btn" >On</button>
+  					<button {{action 'disableProvenance'}} class="btn active" >Off</button>
   				</div>
 			</div>
 		</ul>
@@ -43,7 +43,11 @@
 						</dl>
 					</div>
   			</div>
-	 		
+
+	 		<div class="span2 btn-group pull-right" data-toggle="buttons-radio" style="padding-top:10px;">
+  					<button {{action 'enableProvenance'}} class="btn" >On</button>
+  					<button {{action 'disableProvenance'}} class="btn active" >Off</button>
+  				</div>	
 
 			</div>
 		</div>
@@ -82,22 +86,43 @@
 			</tr>
 		</thead>
 		<tbody>
-			{{#each}}
-			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70">{{#each target in targets}}<p>{{target.title}}{{target.cwUUID}}</p>{{/each}}</td>
-				<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
-				<td class="cell-basictext">{{assayOrganism}}</td>
-				<td class="cell-longtext">{{assayDescription}}</td>
-				<td class="lead cell-basictext">{{activityActivityType}}</td>
-				<td class="lead cell-basictext">{{activityRelation}}</td>
-				<!-- <td class="lead cell-basictext">{{activityStandardValue}}</td> -->
-                <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
-                <td class="lead cell-basictext">{{activityValue}}</td>
-				<td class="lead cell-basictext">{{activityStandardUnits}}</td>
-				<td class="cell-basictext">{{linkablePubmedId activityPubmedId}}</td>
-                <td class="cell-basictext">{{pChembl}}</td>
-			</tr>
-			{{/each}}
+			
+			
+			{{#if showPharmaProvenance}}
+				{{#each}}
+					<tr class="record-deco">
+						<td style="vertical-align:middle;" height="70">{{#each target in targets}}<p>{{target.title}}{{target.cwUUID}}</p>{{/each}}</td>
+						<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
+						<td class="cell-basictext">{{assayOrganism}} {{provenanceLinkout assayOrganismItem chemblProvenance.source}}</td>
+						<td class="cell-longtext">{{assayDescription}} {{provenanceLinkout assayDescriptionItem chemblProvenance.source}}</td>
+						<td class="lead cell-basictext">{{activityActivityType}} {{provenanceLinkout activityActivityTypeItem chemblProvenance.source}}</td>
+						<td class="lead cell-basictext">{{activityRelation}} {{provenanceLinkout activityRelationItem chemblProvenance.source}}</td>
+						<!-- <td class="lead cell-basictext">{{activityStandardValue}}</td> -->
+ 		               <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
+ 		               	<td class="lead cell-basictext">{{activityValue}} {{provenanceLinkout activityActivityTypeItem chemblProvenance.source}}</td>
+						<td class="lead cell-basictext">{{activityStandardUnits}} {{provenanceLinkout activityStandardUnitsItem chemblProvenance.source}}</td>
+						<td class="cell-basictext">{{linkablePubmedId activityPubmedId}}</td>
+   		             	<td class="cell-basictext">{{pChembl}}</td>
+					</tr>
+				{{/each}}		
+			{{else}}
+				{{#each}}
+					<tr class="record-deco">
+						<td style="vertical-align:middle;" height="70">{{#each target in targets}}<p>{{target.title}}{{target.cwUUID}}</p>{{/each}}</td>
+						<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
+						<td class="cell-basictext">{{assayOrganism}}</td>
+						<td class="cell-longtext">{{assayDescription}}</td>
+						<td class="lead cell-basictext">{{activityActivityType}}</td>
+						<td class="lead cell-basictext">{{activityRelation}}</td>
+						<!-- <td class="lead cell-basictext">{{activityStandardValue}}</td> -->
+  		                <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
+   			            <td class="lead cell-basictext">{{activityValue}}</td>
+						<td class="lead cell-basictext">{{activityStandardUnits}}</td>
+						<td class="cell-basictext">{{linkablePubmedId activityPubmedId}}</td>
+                		<td class="cell-basictext">{{pChembl}}</td>
+					</tr>
+				{{/each}}
+			{{/if}}
 		</tbody>
 	</table>
 	</div>
