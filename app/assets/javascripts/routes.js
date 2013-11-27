@@ -236,7 +236,8 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
 	  var allUnitsCallback=function(success, status, response){
 		if (success && response) {
 		    var units = activitySearcher.parseAllUnits(response);
-		    me.set('activityUnits', units);	
+		    me.set('activityUnits', units);
+            me.set('defaultUnitFilters', units);
 		}
       };
       activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
