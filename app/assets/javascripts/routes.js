@@ -82,8 +82,8 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
     controller.set('content', model);
       var me = controller;
     // set all the current filters
-    var assayOrganism = null;
-    var targetOrganism = null;
+    var assayOrganism = me.get('assayOrganismQuery');
+    var targetOrganism = me.get('targetOrganismQuery');
     var targetType = null;
     var lens = null;
     var activity = me.get('selectedActivity') != null ? me.get('selectedActivity').label : null;

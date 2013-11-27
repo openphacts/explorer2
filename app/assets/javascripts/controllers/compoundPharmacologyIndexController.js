@@ -71,6 +71,10 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   selectedPchemblValue: null,
 
+  assayOrganismQuery: null,
+
+  targetOrganismQuery: null,
+
   // I'm sure all this can be done more elegantly but....
 
   targetNameSortASC: function() {
@@ -178,8 +182,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	sortHeader: function(header) {
 	    console.log('sorting by ' + header);
     //first set all the current filters
-    var assayOrganism = null;
-    var targetOrganism = null;
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
     var targetType = null;
     var lens = null;
     var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
@@ -343,8 +347,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
   fetchMore: function() {
     if (this.get('model.content.length') < this.totalCount && this.totalCount > 0) {
     //first set all the current filters
-    var assayOrganism = null;
-    var targetOrganism = null;
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
     var targetType = null;
     var lens = null;
     var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
@@ -462,8 +466,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   applyFilters: function() {
     console.log('apply filters');	
-    var assayOrganism = null;
-    var targetOrganism = null;
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
     var targetType = null;
     var lens = null;
     var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
