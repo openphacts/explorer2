@@ -251,11 +251,16 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 }
 
 Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function(response) {
+
+    var drugbankProvenance, chemspiderProvenance, chemblProvenance, conceptwikiProvenance;
     var constants = new Openphacts.Constants();
 	var records = [];
-
+	
 	$.each(response.items, function(i, item) {
-
+		
+		chemblProvenance = new Array();
+		chemblProvenance['source'] = 'chembl';
+		
 		var chembl_activity_uri = item[constants.ABOUT];
 		var chembl_src = item[constants.IN_DATASET];
         // according to the API docs pmid can be an array but an array of what?
@@ -322,7 +327,9 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			assay_description_item = chembleAssayLink;
 			assay_organism = onAssay['assayOrganismName'] ? onAssay['assayOrganismName']: null;
 			assay_organism_item = chembleAssayLink;
-
+			chemblProvenance['assayOrganism'] = chembleAssayLink;
+			chemblProvenance['assayDescription'] = chembleAssayLink;
+						
 			var target = onAssay[constants.ON_TARGET];
 			var targets = [];
 			var target_organisms = [];
@@ -363,6 +370,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     target_inner['about'] = target['_about'];
                     var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
                     target_inner['item'] = targetLink;
+                    chemblProvenance['targetTitle'] = targetLink;
                 } else {
                     target_inner['item'] = '';
                 }
@@ -375,6 +383,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                 if (target["_about"]) {
                     var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
                     organism_inner['item'] = organismLink;
+                    chemblProvenance['organismTitle'] = organismLink;
                 } else {
                     organism_inner['item'] = '';
                 }
@@ -441,7 +450,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			compoundInchiItem: compound_inchi_item,
 			compoundInchikeyItem: compound_inchikey_item,
 			compoundPrefLabelItem: compound_pref_label_item,
-            pChembl: pChembl
+            pChembl: pChembl,
+            
+            chemblProvenance: chemblProvenance
+            
 		});
 	});
 	return records;
