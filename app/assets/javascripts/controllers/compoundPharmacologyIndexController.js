@@ -598,6 +598,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       this.set('pchemblValue', null);
       this.set('selectedPchemblCondition', null);
       this.set('selectedPchemblValue', null);
+      this.set('assayOrganismQuery', null);
+      this.set('targetOrganismQuery', null);
   }
   }
 
