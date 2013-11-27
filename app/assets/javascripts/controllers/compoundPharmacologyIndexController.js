@@ -2,6 +2,16 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   needs: "compound",
 
+  greaterThan: false,
+
+  lessThan: false,
+
+  equalTo: false,
+
+  greaterThanOrEqual: false,
+
+  lessThanOrEqual: false,
+
   conditions: [">", "<", "=", "<=", ">="],
 
   activityRelations: [">", "<", "=", "<=", ">="],
@@ -176,7 +186,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
     var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
     var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
-    var activityRelation = this.get('selectedRelation') != null ? this.get('selectedRelation') : null;
+    var activityRelation = null;
     var minActivityValue = null;
     var maxActivityValue = null;
     var maxExActivityValue = null;
@@ -231,6 +241,30 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
       minPchemblValue = currentPchemblValue;
 	  break;
 	}
+    }
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
     }
 	    this.clear();
 	    this.set('page', 0);
@@ -317,7 +351,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
     var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
     var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
-    var activityRelation = this.get('selectedRelation') != null ? this.get('selectedRelation') : null;
+    var activityRelation = null;
     var minActivityValue = null;
     var maxActivityValue = null;
     var maxExActivityValue = null;
@@ -344,7 +378,30 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	  break;
 	}
     }
-
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
     var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
     var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
     var minPchemblValue = null;
@@ -413,7 +470,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
     var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
     var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
-    var activityRelation = this.get('selectedRelation') != null ? this.get('selectedRelation') : null;
+    var activityRelation = null;
     var minActivityValue = null;
     var maxActivityValue = null;
     var maxExActivityValue = null;
@@ -440,7 +497,30 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 	  break;
 	}
     }
-
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
     var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
     var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
     var minPchemblValue = null;

@@ -3,6 +3,28 @@ require 'tempfile'
 
 class CoreApiCallsController < ApplicationController
 
+  # Get the list of organisms for use in the filter
+  # autocompleter
+  def organisms
+    organisms = []
+    query = params[:query]
+    f = File.open(File.join(Rails.root,'filestore','organisms.txt'),'r')
+    f.each_line do |line|
+      if line.downcase.starts_with? query.downcase
+       organisms.push(line)
+      end
+    end
+    f.close
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => organisms.to_xml }
+      format.json {
+        render :json => organisms.to_json
+      }
+    end
+  end
+
   # Given query params, a URI and total count of results download them all
   # as a tsv file and return it. The download requests batches of 250 from
   # the Linked Data API server using delayed job and the TsvFile model

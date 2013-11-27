@@ -54,6 +54,7 @@ Explorer2::Application.routes.draw do
       get :tab_separated_file
       get :tsv_download
       get :tsv_status
+      get :organisms
     end
   end
 

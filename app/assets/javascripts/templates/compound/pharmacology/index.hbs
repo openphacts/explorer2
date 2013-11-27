@@ -5,7 +5,7 @@
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	    <h3 id="myModalLabel">Select filters for {{controllers.compound.prefLabel}}</h3>
 	  </div>
-	  <div class="modal-body">
+	  <div class="modal-body" style="overflow-y: visible;">
         <div id="activity-filters">
 	    <p><h4>Activity Filter</h4></p>
 		{{view Ember.Select
@@ -17,7 +17,7 @@
 		}}
 		{{view Ember.Select
 		       content=conditions
-		       prompt="Select a condition"
+		       prompt="Select an operator"
                value=selectedCondition
 		       selection=selectedCondition
 		}}
@@ -31,23 +31,31 @@
 		}}
         </div>
         <div>
-	    <p><h4>Activity Relation</h4></p>
-		{{view Ember.Select
-		       content=activityRelations
-		       prompt="Select a relation"
-               value=selectedRelation
-		       selection=selectedRelation
-		}}
+<h5>Return activities with the following relation only</h5>
+<p class="small-padding-right activity-relation-operator">></p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">>=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
         </div>
         <div id="pchembl-filters">
 	    <p><h4>pChembl Filter</h4></p>
 		{{view Ember.Select
 		       content=pchemblConditions
-		       prompt="Select a condition"
+		       prompt="Select an operator"
                value=selectedPchemblCondition
 		       selection=selectedPchemblCondition
 		}}
 		{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+        </div>
+        <div>
+	    <p><h4>Organism filters</h4></p>
+            <div>
+                <h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box"}}
+            </div>
+            <div>
+                <h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box"}}
+            </div>
         </div>
 	  </div>
 	  <div class="modal-footer">
