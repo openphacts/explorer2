@@ -1262,8 +1262,35 @@ Openphacts.ActivitySearch.prototype.getUnits = function(activityType, lens, call
     params['app_key'] = this.appKey;
     params['app_id'] = this.appID;
     lens ? params['_lens'] = lens : '';
+    var unitsURL = null;
+    activityType != null ? unitsURL = '/pharmacology/filters/units/' + activityType : unitsURL = '/pharmacology/filters/units';
 	var activityQuery = $.ajax({
 		url: this.baseURL + '/pharmacology/filters/units/' + activityType,
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ActivitySearch.prototype.getAllUnits = function(page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    lens ? params['_lens'] = lens : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+
+    var unitsURL = null;
+	var activityQuery = $.ajax({
+		url: this.baseURL + '/pharmacology/filters/units',
         dataType: 'json',
 		cache: true,
 		data: params,
@@ -1292,6 +1319,14 @@ Openphacts.ActivitySearch.prototype.parseUnits = function(response) {
     var units = [];
 	$.each(response.primaryTopic.unit, function(i, type) {
             units.push({uri: type["_about"], label: type.label});
+	});
+	return units;
+}
+
+Openphacts.ActivitySearch.prototype.parseAllUnits = function(response) {
+    var units = [];
+	$.each(response.items, function(i, item) {
+            units.push({uri: item["_about"], label: item.label});
 	});
 	return units;
 }
