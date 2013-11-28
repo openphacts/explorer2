@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
+	if (target) {
+		return new Handlebars.SafeString('<a href="' + target.item + '">' + target.title + '</a>');		
+	}
+});
 Ember.Handlebars.registerBoundHelper('treePharmaLink', function(tree) {
 	if (tree) {
 		return new Handlebars.SafeString('<a class="enzymeName" href="#/trees/pharmacology?uri=' + tree.get('uri') + '">' + tree.get('name') + '</a>');		

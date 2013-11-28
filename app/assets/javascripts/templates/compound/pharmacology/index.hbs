@@ -153,7 +153,7 @@
 		<tbody>
 			{{#each}}
 			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70">{{#each target in targets}}<p><button class="btn btn-link" type="button" {{action "fetchTarget" target.item}}>{{target.title}}</button></p>{{/each}}</td>
+				<td style="vertical-align:middle;" height="70">{{#each target in targets}}<p>{{targetLink target}}</p>{{/each}}</td>
 				<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{assayOrganism}}</td>
 				<td class="cell-longtext">{{assayDescription}}</td>
