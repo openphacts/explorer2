@@ -677,19 +677,38 @@ Openphacts.TargetSearch.prototype.compoundsForTarget = function(targetURI, callb
 	});
 }
 
-Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page, pageSize, callback) {
+Openphacts.TargetSearch.prototype.targetPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+    lens ? params['_lens'] = lens : '';
+
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target/pharmacology/pages',
                 dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			_page: page,
-			_pageSize: pageSize,
-			uri: targetURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -699,17 +718,35 @@ Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page,
 	});
 }
 
-Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(targetURI, callback) {
+Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    lens ? params['_lens'] = lens : '';
+
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target/pharmacology/count',
                 dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			uri: targetURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
