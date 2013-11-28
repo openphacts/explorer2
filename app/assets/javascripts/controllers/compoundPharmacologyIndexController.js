@@ -24,33 +24,33 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   activityUnits: null,
 
-  activityTypesSelected: function() {
-	var me = this;
-	var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
-	if (this.get('selectedActivity') != null) {
-	    // fetch the units for activity
-	  var callback=function(success, status, response){
-		if (success && response) {
-		    var units = activitySearcher.parseUnits(response);
-		    me.set('activityUnits', units);	
-            //TODO the selected unit filter might not be valid for this activity so alert the user somehow
-		}
-      };
-      activitySearcher.getUnits(this.get('selectedActivity').label, null, callback);		
-	} else {
-        // no activity type selected so reset to all units
-        me.set('activityUnits', me.get('defaultUnitFilters'));	
-        // find the previously selected unit and rest the unit select to it
-        if (me.get('selectedUnit') != null) {
-            var label = me.get('selectedUnit').label;
-            $.each(me.get('defaultUnitFilters'), function(index, unit) {
-                if (unit.get('label') === label) {
-                    me.set('selectedUnit', unit);
-                }
-            });
-        }
-    }
-  }.observes('selectedActivity'),
+	//   activityTypesSelected: function() {
+	// var me = this;
+	// var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+	// if (this.get('selectedActivity') != null) {
+	//     // fetch the units for activity
+	//   var callback=function(success, status, response){
+	// 	if (success && response) {
+	// 	    var units = activitySearcher.parseUnits(response);
+	// 	    me.set('activityUnits', units);	
+	//             //TODO the selected unit filter might not be valid for this activity so alert the user somehow
+	// 	}
+	//       };
+	//       activitySearcher.getUnits(this.get('selectedActivity').label, null, callback);		
+	// } else {
+	//         // no activity type selected so reset to all units
+	//         me.set('activityUnits', me.get('defaultUnitFilters'));	
+	//         // find the previously selected unit and rest the unit select to it
+	//         if (me.get('selectedUnit') != null) {
+	//             var label = me.get('selectedUnit').label;
+	//             $.each(me.get('defaultUnitFilters'), function(index, unit) {
+	//                 if (unit.get('label') === label) {
+	//                     me.set('selectedUnit', unit);
+	//                 }
+	//             });
+	//         }
+	//     }
+	//   }.observes('selectedActivity'),
 
   page: null,
 
