@@ -1,5 +1,19 @@
 App.TargetPharmacologyIndexView = Ember.View.extend({
   didInsertElement: function() {
+	  $('#assay_organism_box').typeahead({
+        source: function (query, process) {
+            $.getJSON(organismsUrl, { query: query }, function (data) {
+                return process(data);
+            })
+        }
+      });
+      $('#target_organism_box').typeahead({
+        source: function (query, process) {
+            $.getJSON(organismsUrl, { query: query }, function (data) {
+                return process(data);
+            })
+        }
+      });
     var view = this;
     $(window).bind("scroll", function() {
       view.didScroll();
