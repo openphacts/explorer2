@@ -48,5 +48,9 @@ App.TargetPharmacology = DS.Model.extend({
   compoundInchiItem: DS.attr('string'),
   compoundInchikeyItem: DS.attr('string'),
   compoundPrefLabelItem: DS.attr('string'),
-  pChembl: DS.attr('string')
+  pChembl: DS.attr('string'),
+  
+  chemblProvenance: DS.attr(),
+  chemspiderProvenance: DS.attr(),
+  conceptwikiProvenance: DS.attr(),
 });
