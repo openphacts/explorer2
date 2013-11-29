@@ -47,6 +47,8 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
   targetOrganismQuery: null,
 
   page: null,
+    
+  showPharmaProvenance: false,
 
   currentCount: function() {
     return this.get('model.content.length');
@@ -558,8 +560,18 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
 
   goToTop: function() {
       window.scrollTo(0,0);
+  },
+  enableProvenance: function() {
+      this.set('showPharmaProvenance', true);
+      console.log("Target pharma provenance enabled");
+  },
+
+  disableProvenance: function() {
+      this.set('showPharmaProvenance', false);
+      console.log("Target pharma provenance disabled");
+  }
   }
 
-  }
+  	
 
 });

@@ -54,6 +54,8 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   page: null,
 
+  showPharmaProvenance: false,
+
   currentCount: function() {
     return this.get('model.content.length');
   }.property('model.content.length'),
@@ -621,6 +623,20 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
   goToTop: function() {
       window.scrollTo(0,0);
   }
+  },
+  
+
+  actions: {
+  	  enableProvenance: function() {
+    	this.set('showPharmaProvenance', true);
+    	console.log("Compound pharma provenance enabled");
+	  },
+
+  	  disableProvenance: function() {
+      	this.set('showPharmaProvenance', false);
+    	console.log("Compound pharma provenance disabled");
+
+  	  }
   }
 
 });
