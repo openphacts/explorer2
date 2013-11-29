@@ -788,6 +788,7 @@ Openphacts.TargetSearch.prototype.targetTypes = function(lens, callback) {
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
 	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
+	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var URI = response.primaryTopic[constants.ABOUT];
 	var id = URI.split("/").pop();
 	var keywords = [];
@@ -804,6 +805,13 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 numberOfResidues = drugbankData.numberOfResidues ? drugbankData.numberOfResidues : null;
                 theoreticalPi = drugbankData.theoreticalPi ? drugbankData.theoreticalPi : null;
                 drugbankURI = drugbankData[constants.ABOUT] ? drugbankData[constants.ABOUT] : null;
+
+                var drugbankLinkOut = drugbankURI;
+                drugbankProvenance = {};
+                drugbankProvenance['source'] = 'drugbank';
+                drugbankProvenance['cellularLocation'] = drugbankLinkOut;
+                drugbankProvenance['numberOfResidues'] = drugbankLinkOut;
+                drugbankProvenance['theoreticalPi'] = drugbankLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
                 // there can be multiple proteins per target response
 			    chemblData = exactMatch;
@@ -834,6 +842,13 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 }
                 chemblDataItem['keywords'] = keywords;
                 chemblItems.push(chemblDataItem);
+
+                chemblProvenance = {};
+                chemblProvenance['source'] = 'chembl';
+                chemblProvenance['synonymsData'] = chemblLinkOut;
+                chemblProvenance['targetComponents'] = chemblLinkOut;
+                chemblProvenance['type'] = chemblLinkOut;
+                chemblProvenance['keywords'] = chemblLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'uniprotValue') {
 				uniprotData = exactMatch;
                 uniprotURI = uniprotData[constants.ABOUT];
@@ -853,12 +868,28 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
+
+	            uniprotProvenance = {};
+	            uniprotLinkOut = uniprotURI;
+				uniprotProvenance['source'] = 'uniprot';
+	            uniprotProvenance['classifiedWith'] = uniprotLinkOut;
+	            uniprotProvenance['seeAlso'] = uniprotLinkOut;
+	            uniprotProvenance['molecularWeight'] = uniprotLinkOut;
+	            uniprotProvenance['functionAnnotation'] = uniprotLinkOut;
+	        	uniprotProvenance['alternativeName'] = uniprotLinkOut;
+	            uniprotProvenance['existence'] = uniprotLinkOut;
+	            uniprotProvenance['organism'] = uniprotLinkOut;
+	            uniprotProvenance['sequence'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
                   //id = exactMatch[constants.ABOUT].split("/").pop();
                   cwUri = exactMatch[constants.ABOUT];
                   label = exactMatch[constants.PREF_LABEL];
+                  conceptWikiLinkOut = exactMatch[constants.ABOUT];
+                  conceptwikiProvenance = {};
+                  conceptwikiProvenance['source'] = 'conceptwiki';
+                  conceptwikiProvenance['prefLabel'] = conceptWikiLinkOut;
             }
 		}
 	});
@@ -881,7 +912,11 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
         'prefLabel': label,
         'chemblItems': chemblItems,
         'cwURI': cwUri,
-        'URI': URI
+        'URI': URI,
+        'chemblProvenance': chemblProvenance,
+    	'drugbankProvenance': drugbankProvenance,
+    	'uniprotProvenance': uniprotProvenance,
+    	'conceptwikiProvenance': conceptwikiProvenance
 	};
 }
 
@@ -890,6 +925,10 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 	var records = [];
 
 	$.each(response.items, function(index, item) {
+
+		chemblProvenance = {};
+		chemblProvenance['source'] = 'chembl';
+
 		var chembl_activity_uri = item["_about"];
 		var chembl_src = item["inDataset"];
 
@@ -1074,7 +1113,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		    //targetOrganismItem: target_organism_item,
 			'targets': targets,
             'pChembl': pChembl,
-            'compoundRO5Violations': compound_ro5_violations
+            'compoundRO5Violations': compound_ro5_violations,
+            'chemblProvenance': chemblProvenance
 		});
 	});
 	return records;
