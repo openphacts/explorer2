@@ -460,6 +460,7 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
     var me = this;
     var thisCompound = this.get('controllers.compound').get('content');
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+    me.set('fetching', true);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
         me.page++;
