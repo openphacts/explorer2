@@ -186,8 +186,11 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
             var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	        thisCompound.get('pharmacology').pushObject(pharmaRecord);
           });
+          me.set('fetching', false);
           //controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
           controller.set('page', 1);
+        } else {
+          me.set('fetching', false);
         }
     };
     var countCallback=function(success, status, response){
@@ -195,6 +198,7 @@ App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         controller.set('totalCount', count);
         if (count > 0) {
+            me.set('fetching', true);
             searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
         }
       }
@@ -385,6 +389,9 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
 	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
         controller.set('page', 1);
+        me.set('fetching', false);
+      } else {
+        me.set('fetching', false);
       }
     };
     var countCallback=function(success, status, response){
@@ -392,6 +399,7 @@ App.TargetPharmacologyIndexRoute = Ember.Route.extend({
           var count = searcher.parseTargetPharmacologyCountResponse(response);
           controller.set('totalCount', count);
           if (count > 0 && controller.get('page') == null) {
+              me.set('fetching', true);
               searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
           }
       }

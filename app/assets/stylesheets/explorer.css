@@ -260,6 +260,7 @@ sub {
  * Spinner
  * =========================================================*/
 .spinner{
+     z-index: 2000;
      width:100px;
      height:100px;
      margin:30px auto;
@@ -353,3 +354,10 @@ sub {
      opacity:0.1;
 }
 /* End of activity spinner */
+
+.goto-button {
+    z-index: 1500;
+    position: fixed;
+    right: 3%;
+    bottom: 3%;
+}
