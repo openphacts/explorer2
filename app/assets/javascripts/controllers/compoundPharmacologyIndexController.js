@@ -622,21 +622,17 @@ App.CompoundPharmacologyIndexController = Ember.ArrayController.extend({
 
   goToTop: function() {
       window.scrollTo(0,0);
+  },
+  enableProvenance: function() {
+      this.set('showPharmaProvenance', true);
+      console.log("Compound pharma provenance enabled");
+  },
+
+  disableProvenance: function() {
+      this.set('showPharmaProvenance', false);
+      console.log("Compound pharma provenance disabled");
   }
   },
-  
 
-  actions: {
-  	  enableProvenance: function() {
-    	this.set('showPharmaProvenance', true);
-    	console.log("Compound pharma provenance enabled");
-	  },
-
-  	  disableProvenance: function() {
-      	this.set('showPharmaProvenance', false);
-    	console.log("Compound pharma provenance disabled");
-
-  	  }
-  }
 
 });
