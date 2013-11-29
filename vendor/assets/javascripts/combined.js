@@ -823,10 +823,15 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 }
 
 Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(response) {
+    
+    var drugbankProvenance, chemspiderProvenance, chemblProvenance, conceptwikiProvenance;
     var constants = new Openphacts.Constants();
 	var records = [];
 
 	$.each(response.items, function(index, item) {
+	
+		chemblProvenance = new Array();
+		chemblProvenance['source'] = 'chembl';
 		var chembl_activity_uri = item["_about"];
 		var chembl_src = item["inDataset"];
 
@@ -852,11 +857,15 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		$.each(em, function(index, match) {
           var src = match[constants.IN_DATASET];
           if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+              conceptwikiProvenance = new Array();
+          	  conceptwikiProvenance['source'] = 'conceptwiki';
               cw_compound_uri = match["_about"];
               compound_pref_label = match['prefLabel'];
               cw_src = match["inDataset"];
               compound_pref_label_item = cw_compound_uri;
           } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+              chemspiderProvenance = new Array();
+          	  chemspiderProvenance['source'] = 'chemspider';
               cs_compound_uri = match["_about"];
               csid = cs_compound_uri.split('/').pop();
               compound_inchi = match['inchi'];
@@ -889,7 +898,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			assay_organism = onAssay.assayOrganismName ? onAssay.assayOrganismName : null;
 			assay_organism_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
 			assay_description = onAssay['description'] ? onAssay['description'] : null;
-			//assay_description_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
+			assay_description_item = chembldAssayLink + chembl_assay_uri.split('/').pop();
 			target = onAssay[constants.ON_TARGET];
 		}
 		var chembl_target_uri;
@@ -929,8 +938,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             targets_inner['URI'] = target[constants.ABOUT];
 			targets.push(targets_inner);
 		}
-
-		var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' + chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
+		var chemblActivityLink = 'http://www.ebi.ac.uk/rdf/services/chembl/describe?uri=http://rdf.ebi.ac.uk/resource/chembl/activity/' + chembl_activity_uri.split('/').pop();
+		//var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/crossrefsearch.ebi?id=' + chembl_activity_uri.split('/a').pop() + '&db=chembl-activity&ref=chembl-compound';
 
 		var activity_activity_type_item, activity_standard_value_item, activity_standard_units_item, activity_relation_item;
 
@@ -1007,11 +1016,13 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			'compoundInchikeyItem': compound_inchikey_item,
 			//targetPrefLabelItem: target_pref_label_item,
 			'assayOrganismItem': assay_organism_item,
-			//assayDescriptionItem: assay_description_item,
+			assayDescriptionItem: assay_description_item,
 		    //targetOrganismItem: target_organism_item,
 			'targets': targets,
             'pChembl': pChembl,
-            'compoundRO5Violations': compound_ro5_violations
+            'compoundRO5Violations': compound_ro5_violations,
+            
+            chemblProvenance:chemblProvenance
 		});
 	});
 	return records;
