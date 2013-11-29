@@ -1,6 +1,10 @@
 Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
 	if (target) {
-		return new Handlebars.SafeString('<a href="' + target.item + '">' + target.title + '</a>');		
+        if (target.title === "Unchecked") {
+            return new Handlebars.SafeString('N/A');
+        } else {
+    		return new Handlebars.SafeString('<a href="' + target.item + '">' + target.title + '</a>');		
+        }
 	}
 });
 Ember.Handlebars.registerBoundHelper('treePharmaLink', function(tree) {
