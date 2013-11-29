@@ -3,6 +3,8 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
   needs: ["target"],
 
   page: null,
+    
+  showPharmaProvenance: false,
 
   currentCount: function() {
     return this.get('model.content.length');
@@ -38,6 +40,21 @@ App.TargetPharmacologyIndexController = Ember.ArrayController.extend({
     };
     searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, this.page + 1, 50, pharmaCallback);
     }
+  },
+  
+  actions: {
+  	  enableProvenance: function() {
+    	this.set('showPharmaProvenance', true);
+    	console.log("Target pharma provenance enabled");
+	  },
+
+  	  disableProvenance: function() {
+      	this.set('showPharmaProvenance', false);
+    	console.log("Target pharma provenance disabled");
+
+  	  }
   }
+
+  	
 
 });
