@@ -3,6 +3,25 @@ Ember.Handlebars.registerBoundHelper('pathwayLink', function(pathwayURI) {
 		return new Handlebars.SafeString('<a href="' + pathwayURI + '">' + pathwayURI + '</a>');		
 	}
 });
+
+Ember.Handlebars.registerBoundHelper('pathwayShortLink', function(pathwayURI) {
+	if (pathwayURI) {
+		return new Handlebars.SafeString('<a href="' + pathwayURI + '">' + pathwayURI.split('/').pop() + '</a>');		
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('organismLink', function(organism) {
+	if (organism) {
+		return new Handlebars.SafeString('<a href="' + organism + '">' + organism.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('revisionLink', function(revision) {
+	if (revision) {
+		return new Handlebars.SafeString('<a href="' + revision + '">' + revision.split('/').pop() + '</a>');		        
+	}
+});
+
 Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
 	if (target) {
         if (target.title === "Unchecked") {
