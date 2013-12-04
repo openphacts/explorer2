@@ -22,6 +22,18 @@ Ember.Handlebars.registerBoundHelper('revisionLink', function(revision) {
 	}
 });
 
+Ember.Handlebars.registerBoundHelper('ontologyLink', function(ontology) {
+	if (ontology) {
+		return new Handlebars.SafeString('<a href="' + ontology + '">' + ontology.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('vocabPart', function(part) {
+	if (part) {
+		return new Handlebars.SafeString(part.split('#').pop());		        
+	}
+});
+
 Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
 	if (target) {
         if (target.title === "Unchecked") {
