@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('pathwayLink', function(pathwayURI) {
+	if (pathwayURI) {
+		return new Handlebars.SafeString('<a href="' + pathwayURI + '">' + pathwayURI + '</a>');		
+	}
+});
 Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
 	if (target) {
         if (target.title === "Unchecked") {
