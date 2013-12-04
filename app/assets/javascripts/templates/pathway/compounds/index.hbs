@@ -1,3 +1,12 @@
+<ul class="breadcrumb">
+  	<li><a href="/">Home</a> <span class="divider">/</span></li>
+  	<li>{{#linkTo 'pathway.index' controllers.pathway}}{{controllers.pathway.title}}{{/linkTo}}<span class="divider">/</span></li>
+  	<li class="active">Compounds</li>
+</ul>
+
+	<div class="container">
+
 {{#each}}
 <p>{{#linkTo 'compound.index' this}}{{prefLabel}}{{/linkTo}}</p>
 {{/each}}
+</div>
