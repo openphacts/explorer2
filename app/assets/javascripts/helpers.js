@@ -10,6 +10,18 @@ Ember.Handlebars.registerBoundHelper('pathwayShortLink', function(pathwayURI) {
 	}
 });
 
+Ember.Handlebars.registerBoundHelper('organismLink', function(organism) {
+	if (organism) {
+		return new Handlebars.SafeString('<a href="' + organism + '">' + organism.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('revisionLink', function(revision) {
+	if (revision) {
+		return new Handlebars.SafeString('<a href="' + revision + '">' + revision.split('/').pop() + '</a>');		        
+	}
+});
+
 Ember.Handlebars.registerBoundHelper('targetLink', function(target) {
 	if (target) {
         if (target.title === "Unchecked") {
