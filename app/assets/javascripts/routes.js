@@ -745,7 +745,8 @@ App.CompoundStructureIndexRoute = Ember.Route.extend({
                      });	
 	             }
 	           };
-               mapSearcher.mapURL(result.csURI, null, null, null, mapURLCallback);
+               //exact is always going to be one result
+               mapSearcher.mapURL(result[0], null, null, null, mapURLCallback);
            } else if (structureSearchType === "similarity") {
                  results = searcher.parseSimilarityResponse(response);
                  var relevance = {};

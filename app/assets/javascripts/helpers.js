@@ -173,7 +173,7 @@ function createChemblLink(item) {
 
 function createChemspiderLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="ChemSpider height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="ChemSpider" height="15" width="15"></a>'
 	return dbLink;
 }
 
