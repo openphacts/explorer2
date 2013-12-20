@@ -1,4 +1,6 @@
 App.ApplicationController = Ember.Controller.extend({
+
+    fetching: false,
     searchQuery: '',
 	actions: {
 	query: function() {

@@ -1,5 +1,12 @@
-Pathway Compounds
+<ul class="breadcrumb">
+  	<li><a href="/">Home</a> <span class="divider">/</span></li>
+  	<li>{{#linkTo 'pathway.index' controllers.pathway}}{{controllers.pathway.title}}{{/linkTo}}<span class="divider">/</span></li>
+  	<li class="active">Compounds</li>
+</ul>
 
-{{#each compound in compounds}}
-<p>{{compoundLink compound.URI compound.prefLabel}}</p>
+	<div class="container">
+
+{{#each}}
+<p>{{compoundLink this.URI this.prefLabel}}</p>
 {{/each}}
+</div>

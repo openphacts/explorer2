@@ -3,8 +3,12 @@ Ember.Handlebars.registerBoundHelper('pathwayLink', function(uri, label) {
   return new Handlebars.SafeString(link);		
 });
 Ember.Handlebars.registerBoundHelper('targetLink', function(uri, label) {
+        if (label === "Unchecked") {
+            return new Handlebars.SafeString('N/A');
+        } else {
   var link = '<a href="#/targets?uri=' + uri + '">' + label + '</a>';
-  return new Handlebars.SafeString(link);		
+  return new Handlebars.SafeString(link);
+}		
 });
 Ember.Handlebars.registerBoundHelper('compoundLink', function(uri, label) {
   var link = '<a href="#/compounds?uri=' + uri + '">' + label + '</a>';
@@ -14,6 +18,37 @@ Ember.Handlebars.registerBoundHelper('objectLink', function(type, route, routeLa
   var link = '<a href="#/' + type + '/' + route + '?uri=' + content.get('URI') + '">' + routeLabel + '</a>';
   return new Handlebars.SafeString(link);		
 });
+
+Ember.Handlebars.registerBoundHelper('pathwayShortLink', function(pathwayURI) {
+	if (pathwayURI) {
+		return new Handlebars.SafeString('<a href="' + pathwayURI + '">' + pathwayURI.split('/').pop() + '</a>');		
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('organismLink', function(organism) {
+	if (organism) {
+		return new Handlebars.SafeString('<a href="' + organism + '">' + organism.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('revisionLink', function(revision) {
+	if (revision) {
+		return new Handlebars.SafeString('<a href="' + revision + '">' + revision.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('ontologyLink', function(ontology) {
+	if (ontology) {
+		return new Handlebars.SafeString('<a href="' + ontology + '">' + ontology.split('/').pop() + '</a>');		        
+	}
+});
+
+Ember.Handlebars.registerBoundHelper('vocabPart', function(part) {
+	if (part) {
+		return new Handlebars.SafeString(part.split('#').pop());		        
+	}
+});
+
 Ember.Handlebars.registerBoundHelper('treePharmaLink', function(tree) {
 	if (tree) {
 		return new Handlebars.SafeString('<a class="enzymeName" href="#/trees/pharmacology?uri=' + tree.get('uri') + '">' + tree.get('name') + '</a>');		
@@ -145,9 +180,13 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
   				//console.log(" conceptwiki datasource");
   				linkout = createConceptWikiLink(item);
 				break;
-
+				
+			case 'uniprot':
+				linkout = createUniprotLink(item);
+				break;
+				
 			default:
-				console.log("source unrecognised");
+				console.log("source unrecognised: " + source);
 		}
 		
 		// assign icon to datasource
@@ -170,21 +209,28 @@ function createDrugbankLink(item) {
 
 function createChemblLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemblProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemblProvIcon.png" title="ChEMBL" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createChemspiderLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/chemspiderProvIcon.png" title="ChemSpider" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createConceptWikiLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/conceptWikiProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/conceptWikiProvIcon.png" title="ConceptWiki" height="15" width="15"></a>'
 	return dbLink;
 }
+
+function createUniprotLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/uniprotProvIcon.png" title="UniProt" height="15" width="33"></a>'
+	return dbLink;	
+}
+
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 

@@ -31,5 +31,6 @@ App.Compound = App.SearchResult.extend({
     isCompound: true,
     uri: DS.attr('string'),
     chemspiderProvenance: DS.attr(),
-    chemblProvenance: DS.attr()
+    chemblProvenance: DS.attr(),
+    drugbankProvenance: DS.attr()
 });

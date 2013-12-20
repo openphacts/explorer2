@@ -87,19 +87,38 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(compoundURI, lens, 
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacology = function(compoundURI, page, pageSize, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+    lens ? params['_lens'] = lens : '';
+
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/pages',
-                dataType: 'json',
+        dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			_page: page,
-			_pageSize: pageSize,
-			uri: compoundURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -109,16 +128,55 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(compoundURI,
 	});
 }
 
-Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(compoundURI, callback) {
+Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    lens ? params['_lens'] = lens : '';
+
 	var compoundQuery = $.ajax({
 		url: this.baseURL + '/compound/pharmacology/count',
-                dataType: 'json',
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.CompoundSearch.prototype.compoundClassifications = function(URI, tree, callback) {
+	var compoundQuery = $.ajax({
+		url: this.baseURL + '/compound/classifications',
+        dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
-			uri: compoundURI,
+			uri: URI,
 			app_id: this.appID,
-			app_key: this.appKey
+			app_key: this.appKey,
+			tree: tree
 		},
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
@@ -195,7 +253,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		ro5Violations =  chemspiderData.ro5_violations != null ? chemspiderData.ro5_violations : ro5Violations;
 		smiles =  chemspiderData.smiles != null ? chemspiderData.smiles : smiles;
         inchiKey = chemspiderData.inchikey != null ? chemspiderData.inchikey : inchikey;
-        rtb = chemspiderData.rtb != null ? chemspiderData.rtb : inchikey;
+        rtb = chemspiderData.rtb != null ? chemspiderData.rtb : rtb;
         fullMWT = chemspiderData.molweight != null ? chemspiderData.molweight : molweight;
         molform = chemspiderData.molformula != null ? chemspiderData.molformula : molformula;
 
@@ -261,10 +319,14 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 }
 
 Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function(response) {
+    var drugbankProvenance, chemspiderProvenance, chemblProvenance, conceptwikiProvenance;
     var constants = new Openphacts.Constants();
 	var records = [];
 
 	$.each(response.items, function(i, item) {
+
+		chemblProvenance = {};
+		chemblProvenance['source'] = 'chembl';
 
 		var chembl_activity_uri = item[constants.ABOUT];
 		var chembl_src = item[constants.IN_DATASET];
@@ -332,6 +394,8 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			assay_description_item = chembleAssayLink;
 			assay_organism = onAssay['assayOrganismName'] ? onAssay['assayOrganismName']: null;
 			assay_organism_item = chembleAssayLink;
+			chemblProvenance['assayOrganism'] = chembleAssayLink;
+			chemblProvenance['assayDescription'] = chembleAssayLink;
 
 			var target = onAssay[constants.ON_TARGET];
 			var targets = [];
@@ -373,6 +437,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     target_inner['about'] = target['_about'];
                     var targetLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
                     target_inner['item'] = targetLink;
+                    chemblProvenance['targetTitle'] = targetLink;
                 } else {
                     target_inner['item'] = '';
                 }
@@ -385,6 +450,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                 if (target["_about"]) {
                     var organismLink = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target["_about"].split('/').pop();
                     organism_inner['item'] = organismLink;
+                    chemblProvenance['organismTitle'] = organismLink;
                 } else {
                     organism_inner['item'] = '';
                 }
@@ -451,7 +517,8 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			compoundInchiItem: compound_inchi_item,
 			compoundInchikeyItem: compound_inchikey_item,
 			compoundPrefLabelItem: compound_pref_label_item,
-            pChembl: pChembl
+            pChembl: pChembl,
+            chemblProvenance: chemblProvenance
 		});
 	});
 	return records;
@@ -481,6 +548,29 @@ Openphacts.ConceptWikiSearch.prototype.byTag = function(query, limit, branch, ty
 			app_id: this.appID,
 			app_key: this.appKey
 		},
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ConceptWikiSearch.prototype.freeText = function(query, limit, branch, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['q'] = query;
+    limit ? params['limit'] = limit : '';
+    branch ? params['branch'] = branch : '';
+
+	var conceptWikiSearcher = $.ajax({
+		url: this.baseURL + "/search/freetext",
+        dataType: 'json',
+		cache: true,
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -620,15 +710,13 @@ Openphacts.TargetSearch.prototype.fetchTarget = function(targetURI, lens, callba
 	});
 }
 
-Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page, pageSize, callback) {
+Openphacts.TargetSearch.prototype.compoundsForTarget = function(targetURI, callback) {
 	var targetQuery = $.ajax({
-		url: this.baseURL + '/target/pharmacology/pages',
+		url: this.baseURL + '/target/classificationsForCompounds',
                 dataType: 'json',
 		cache: true,
 		data: {
 			_format: "json",
-			_page: page,
-			_pageSize: pageSize,
 			uri: targetURI,
 			app_id: this.appID,
 			app_key: this.appKey
@@ -642,17 +730,76 @@ Openphacts.TargetSearch.prototype.targetPharmacology = function(targetURI, page,
 	});
 }
 
-Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(targetURI, callback) {
+Openphacts.TargetSearch.prototype.targetPharmacology = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+    lens ? params['_lens'] = lens : '';
+
+	var targetQuery = $.ajax({
+		url: this.baseURL + '/target/pharmacology/pages',
+                dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.TargetSearch.prototype.targetPharmacologyCount = function(URI, assayOrganism, targetOrganism, activityType, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityUnit, activityRelation, pChembl, minpChembl, minExpChembl, maxpChembl, maxExpChembl, targetType, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    params['uri'] = URI;
+    assayOrganism ? params['assay_organism'] = assayOrganism : '';
+    targetOrganism ? params['target_organism'] = targetOrganism : '';
+    activityType ? params['activity_type'] = activityType : '';
+    activityValue ? params['activity_value'] = activityValue : '';
+    minActivityValue ? params['min-activity_value'] = minActivityValue : '';
+    minExActivityValue ? params['minEx-activity_value'] = minExActivityValue : '';
+    maxActivityValue ? params['max-activity_value'] = maxActivityValue : '';
+    maxExActivityValue ? params['maxEx-activity_value'] = maxExActivityValue : '';
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    activityRelation ? params['activity_relation'] = activityRelation : '';
+    pChembl ? params['pChembl'] = pChembl : '';
+    minpChembl ? params['min-pChembl'] = minpChembl : '';
+    minExpChembl ? params['minEx-pChembl'] = minExpChembl : '';
+    maxpChembl ? params['max-pChembl'] = maxpChembl : '';
+    maxExpChembl ? params['maxEx-pChembl'] = maxExpChembl : '';
+    targetType ? params['target_type'] = targetType : '';
+    lens ? params['_lens'] = lens : '';
+
 	var targetQuery = $.ajax({
 		url: this.baseURL + '/target/pharmacology/count',
                 dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			uri: targetURI,
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
 			callback.call(this, true, request.status, response.result);
 		},
@@ -685,6 +832,7 @@ Openphacts.TargetSearch.prototype.targetTypes = function(lens, callback) {
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
 	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
+	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var URI = response.primaryTopic[constants.ABOUT];
 	var id = URI.split("/").pop();
 	var keywords = [];
@@ -701,6 +849,13 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 numberOfResidues = drugbankData.numberOfResidues ? drugbankData.numberOfResidues : null;
                 theoreticalPi = drugbankData.theoreticalPi ? drugbankData.theoreticalPi : null;
                 drugbankURI = drugbankData[constants.ABOUT] ? drugbankData[constants.ABOUT] : null;
+
+                var drugbankLinkOut = drugbankURI;
+                drugbankProvenance = {};
+                drugbankProvenance['source'] = 'drugbank';
+                drugbankProvenance['cellularLocation'] = drugbankLinkOut;
+                drugbankProvenance['numberOfResidues'] = drugbankLinkOut;
+                drugbankProvenance['theoreticalPi'] = drugbankLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
                 // there can be multiple proteins per target response
 			    chemblData = exactMatch;
@@ -731,6 +886,13 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
                 }
                 chemblDataItem['keywords'] = keywords;
                 chemblItems.push(chemblDataItem);
+
+                chemblProvenance = {};
+                chemblProvenance['source'] = 'chembl';
+                chemblProvenance['synonymsData'] = chemblLinkOut;
+                chemblProvenance['targetComponents'] = chemblLinkOut;
+                chemblProvenance['type'] = chemblLinkOut;
+                chemblProvenance['keywords'] = chemblLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'uniprotValue') {
 				uniprotData = exactMatch;
                 uniprotURI = uniprotData[constants.ABOUT];
@@ -750,12 +912,28 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
+
+	            uniprotProvenance = {};
+	            uniprotLinkOut = uniprotURI;
+				uniprotProvenance['source'] = 'uniprot';
+	            uniprotProvenance['classifiedWith'] = uniprotLinkOut;
+	            uniprotProvenance['seeAlso'] = uniprotLinkOut;
+	            uniprotProvenance['molecularWeight'] = uniprotLinkOut;
+	            uniprotProvenance['functionAnnotation'] = uniprotLinkOut;
+	        	uniprotProvenance['alternativeName'] = uniprotLinkOut;
+	            uniprotProvenance['existence'] = uniprotLinkOut;
+	            uniprotProvenance['organism'] = uniprotLinkOut;
+	            uniprotProvenance['sequence'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
                   //id = exactMatch[constants.ABOUT].split("/").pop();
                   cwUri = exactMatch[constants.ABOUT];
                   label = exactMatch[constants.PREF_LABEL];
+                  conceptWikiLinkOut = exactMatch[constants.ABOUT];
+                  conceptwikiProvenance = {};
+                  conceptwikiProvenance['source'] = 'conceptwiki';
+                  conceptwikiProvenance['prefLabel'] = conceptWikiLinkOut;
             }
 		}
 	});
@@ -778,7 +956,11 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
         'prefLabel': label,
         'chemblItems': chemblItems,
         'cwURI': cwUri,
-        'URI': URI
+        'URI': URI,
+        'chemblProvenance': chemblProvenance,
+    	'drugbankProvenance': drugbankProvenance,
+    	'uniprotProvenance': uniprotProvenance,
+    	'conceptwikiProvenance': conceptwikiProvenance
 	};
 }
 
@@ -787,6 +969,10 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 	var records = [];
 
 	$.each(response.items, function(index, item) {
+
+		chemblProvenance = {};
+		chemblProvenance['source'] = 'chembl';
+
 		var chembl_activity_uri = item["_about"];
 		var chembl_src = item["inDataset"];
 
@@ -971,7 +1157,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		    //targetOrganismItem: target_organism_item,
 			'targets': targets,
             'pChembl': pChembl,
-            'compoundRO5Violations': compound_ro5_violations
+            'compoundRO5Violations': compound_ro5_violations,
+            'chemblProvenance': chemblProvenance
 		});
 	});
 	return records;
@@ -1175,18 +1362,23 @@ Openphacts.ActivitySearch = function ActivitySearch(baseURL, appID, appKey) {
 	this.appKey = appKey;
 }
 
-Openphacts.ActivitySearch.prototype.getTypes = function(callback) {
+Openphacts.ActivitySearch.prototype.getTypes = function(activityUnit, page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    activityUnit ? params['activity_unit'] = activityUnit : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+    lens ? params['_lens'] = lens : '';
 	var activityQuery = $.ajax({
 		url: this.baseURL + '/pharmacology/filters/activities',
-                dataType: 'json',
+        dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic);
+			callback.call(this, true, request.status, response.result);
 		},
 		error: function(request, status, error) {
 			callback.call(this, false, request.status);
@@ -1194,18 +1386,46 @@ Openphacts.ActivitySearch.prototype.getTypes = function(callback) {
 	});
 }
 
-Openphacts.ActivitySearch.prototype.getUnits = function(activityType, callback) {
+Openphacts.ActivitySearch.prototype.getUnits = function(activityType, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    lens ? params['_lens'] = lens : '';
+    var unitsURL = null;
+    activityType != null ? unitsURL = '/pharmacology/filters/units/' + activityType : unitsURL = '/pharmacology/filters/units';
 	var activityQuery = $.ajax({
 		url: this.baseURL + '/pharmacology/filters/units/' + activityType,
-                dataType: 'json',
+        dataType: 'json',
 		cache: true,
-		data: {
-			_format: "json",
-			app_id: this.appID,
-			app_key: this.appKey
-		},
+		data: params,
 		success: function(response, status, request) {
-			callback.call(this, true, request.status, response.result.primaryTopic);
+			callback.call(this, true, request.status, response.result);
+		},
+		error: function(request, status, error) {
+			callback.call(this, false, request.status);
+		}
+	});
+}
+
+Openphacts.ActivitySearch.prototype.getAllUnits = function(page, pageSize, orderBy, lens, callback) {
+    params={};
+    params['_format'] = "json";
+    params['app_key'] = this.appKey;
+    params['app_id'] = this.appID;
+    lens ? params['_lens'] = lens : '';
+    page ? params['_page'] = page : '';
+    pageSize ? params['_pageSize'] = pageSize : '';
+    orderBy ? params['_orderBy'] = orderBy : '';
+
+    var unitsURL = null;
+	var activityQuery = $.ajax({
+		url: this.baseURL + '/pharmacology/filters/units',
+        dataType: 'json',
+		cache: true,
+		data: params,
+		success: function(response, status, request) {
+			callback.call(this, true, request.status, response.result);
 		},
 		error: function(request, status, error) {
 			callback.call(this, false, request.status);
@@ -1214,17 +1434,29 @@ Openphacts.ActivitySearch.prototype.getUnits = function(activityType, callback) 
 }
 
 Openphacts.ActivitySearch.prototype.parseTypes = function(response) {
-        var activityTypes = [];
-	$.each(response.normalised_activity_type, function(i, type) {
-            activityTypes.push({uri: type["_about"], label: type.label});
-	});
+    var activityTypes = [];
+    if ($.isArray(response.items)) {
+	    $.each(response.items, function(i, item) {
+          activityTypes.push({uri: item["_about"], label: item.label});
+	    });
+    } else {
+        activityTypes.push({uri: response.items["_about"], label: response.items.label});
+    }
 	return activityTypes;
 }
 
 Openphacts.ActivitySearch.prototype.parseUnits = function(response) {
-        var units = [];
-	$.each(response.unit, function(i, type) {
+    var units = [];
+	$.each(response.primaryTopic.unit, function(i, type) {
             units.push({uri: type["_about"], label: type.label});
+	});
+	return units;
+}
+
+Openphacts.ActivitySearch.prototype.parseAllUnits = function(response) {
+    var units = [];
+	$.each(response.items, function(i, item) {
+            units.push({uri: item["_about"], label: item.label});
 	});
 	return units;
 }
@@ -1582,7 +1814,11 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                       assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                     });
                 } else {
-                    var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	                var targetComponentLabel = null;
+	                if (targetComponents[constants.EXACT_MATCH]) {
+		                targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	                }
+                    //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
                     var targetComponentURI = targetComponents[constants.ABOUT];
                     assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                 }
@@ -1603,7 +1839,11 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                     assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
                   });
               } else {
-                  var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	              var targetComponentLabel = null;
+	              if (targetComponents[constants.EXACT_MATCH]) {
+		              targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+	              }
+                  //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
                   var targetComponentURI = targetComponents[constants.ABOUT];
                   assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
               }
