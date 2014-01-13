@@ -104,7 +104,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	return this.get('currentHeader') === "compound_name" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
-  targetOrgansismSortASC: function() {
+  targetOrganismSortASC: function() {
 	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === "target_organism";
   }.property('sortedHeader'),
 
@@ -169,11 +169,11 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   }.property('sortedHeader'),
 
   pchemblSortASC: function() {
-	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === "pchembl";
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === "pChembl";
   }.property('sortedHeader'),
 
   pchemblSortDESC: function() {
-	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === null;
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
   actions: {
@@ -269,7 +269,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             activityRelation = activityRelation + relation + "|";
         });
     }
-	    this.clear();
+	    var thisTarget = this.get('content');
+	    thisTarget.get('pharmacology').clear();
 	    this.set('page', 0);
 	    this.set('fetching', true);
 	    var sortBy = '';
@@ -283,7 +284,6 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	        this.set('currentHeader', header);
         }
 	    var me = this;
-	    var thisTarget = this.get('controllers.target').get('content');
 	    var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
 	    var pharmaCallback=function(success, status, response){
 	      if (success && response) {
@@ -299,12 +299,13 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	        me.set('fetching', false);
 	      }
 	    };
-	    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.get('page') + 1, 50, sortBy, lens, pharmaCallback);
+	    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.get('page') + 1, 50, sortBy, lens, pharmaCallback);
 	},
 
   fetchMore: function() {
     console.log('fetching more');
-    if (this.get('model.pharmacology.length') < this.totalCount) {
+    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
+      this.set('fetching', true)
 	    //first set all the current filters
 	    var assayOrganism = this.get('assayOrganismQuery');
 	    var targetOrganism = this.get('targetOrganismQuery');
@@ -513,8 +514,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
     }
     var me = this;
     me.set('page', 0);
-    var thisTarget = this.get('controllers.target').get('content');
-    me.clear();
+    var thisTarget = this.get('content');
+    thisTarget.get('pharmacology').clear();
     me.set('fetching', true);
     var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
@@ -539,11 +540,11 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
         var count = searcher.parseTargetPharmacologyCountResponse(response);
         me.set('totalCount', count);
         if (count > 0) {
-		    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + thisTarget.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
+		    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
         }
       }
     };
-    searcher.targetPharmacologyCount('http://www.conceptwiki.org/concept/' + thisTarget.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
+    searcher.targetPharmacologyCount(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
 
   },
   resetFilters: function() {

@@ -75,7 +75,7 @@ App.TargetsPharmacologyView = Ember.View.extend({
 
   didScroll: function() {
     if(this.isScrolledToBottom() && !this.get('controller').get('fetching')) {
-      this.get('controller').set('fetching', true);
+      //this.get('controller').set('fetching', true);
       this.get('controller').send('fetchMore');
     }
   },

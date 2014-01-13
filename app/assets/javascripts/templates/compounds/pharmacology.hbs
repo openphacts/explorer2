@@ -1,3 +1,81 @@
+<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+</div>
+<div>
+	<!-- Modal -->
+	<div id="compoundPharmaFilterModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
+	  </div>
+	  <div class="modal-body" style="overflow-y: visible;">
+        <div id="activity-filters">
+	    <p><h4>Activity Filter</h4></p>
+		{{view Ember.Select
+		       content=activityTypes
+		       optionLabelPath="content.label"
+		       prompt="Select an activity"
+		       value=selectedActivity
+		       selection=selectedActivity
+		}}
+		{{view Ember.Select
+		       content=conditions
+		       prompt="Select an operator"
+               value=selectedCondition
+		       selection=selectedCondition
+		}}
+		{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+		{{view Ember.Select
+		       content=activityUnits
+		       optionLabelPath="content.label"
+		       prompt="Select a unit"
+               value=selectedUnit
+		       selection=selectedUnit
+		}}
+        </div>
+        <div>
+<h5>Return activities with the following relation(s) only</h5>
+<p class="small-padding-right activity-relation-operator">></p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">>=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+        </div>
+        <div id="pchembl-filters">
+	    <p><h4>pChembl Filter</h4></p>
+		{{view Ember.Select
+		       content=pchemblConditions
+		       prompt="Select an operator"
+               value=selectedPchemblCondition
+		       selection=selectedPchemblCondition
+		}}
+		{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+        </div>
+        <div>
+	    <p><h4>Organism filters</h4></p>
+            <div>
+                <h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box"}}
+            </div>
+            <div>
+                <h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box"}}
+            </div>
+        </div>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+	    <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+	  </div>
+	</div>
+	<!-- End of Modal -->
+<div class="goto-button" id="top"><button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
 <div>
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
@@ -22,7 +100,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" controllers.compound}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
@@ -69,16 +147,19 @@
 				<th></th>
 			<tr>
 			<tr>
-				<th align="left">Name</th>
-				<th width="10%">Organism</th>
-				<th width="10%">Organism</th>
-				<th align="left" width="300px">Description</th>
-				<th>Type</th>
-			 	<th>Relation</th>
-				<th>Value</th>
-				<th>Units</th>
-				<th>PubMed Article</th>
-                <th>pChembl</th>
+				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
+				<th align="left" {{action "sortHeader" "target_name"}} {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC"}}>Name{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th width="10%" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC"}}>Organism{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th width="10%" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC"}}>Organism{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th align="left" width="300px" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC"}}>Description{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC"}}>Type{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+			 	<th {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC"}}>Relation{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC"}}>Value{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC"}}>Units{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC"}}>PubMed Article{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+                <th {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC"}}>pChembl{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 			</tr>
 		</thead>
 		<tbody>

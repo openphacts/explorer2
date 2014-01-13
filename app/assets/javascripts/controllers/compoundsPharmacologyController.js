@@ -102,7 +102,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
-  targetOrgansismSortASC: function() {
+  targetOrganismSortASC: function() {
 	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === "target_organism";
   }.property('sortedHeader'),
 
@@ -167,11 +167,11 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   }.property('sortedHeader'),
 
   pchemblSortASC: function() {
-	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === "pchembl";
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === "pChembl";
   }.property('sortedHeader'),
 
   pchemblSortDESC: function() {
-	return this.get('currentHeader') === "pchembl" && this.get('sortedHeader') === null;
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
   monitorTSVCreation: function(uuid) {
@@ -287,7 +287,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             activityRelation = activityRelation + relation + "|";
         });
     }
-	    this.clear();
+	    var thisCompound = this.get('content');
+	    thisCompound.get('pharmacology').clear();
 	    this.set('page', 0);
 	    this.set('fetching', true);
 	    var sortBy = '';
@@ -301,7 +302,6 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	        this.set('currentHeader', header);
         }
 	    var me = this;
-	    var thisCompound = this.get('controllers.compound').get('content');
 	    var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
 	    var pharmaCallback=function(success, status, response){
 	      if (success && response) {
@@ -317,7 +317,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	        me.set('fetching', false);
 	      }
 	    };
-	    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.page + 1, 50, sortBy, lens, pharmaCallback);	
+	    searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.page + 1, 50, sortBy, lens, pharmaCallback);	
 	},
 	
   navigateTo: function(target) {
@@ -346,7 +346,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 		cache: true,
 		data: {
 			_format: "json",
-			uri: 'http://www.conceptwiki.org/concept/' + compound.id,
+			uri: this.get('content').get('URI'),
             total_count: me.totalCount,
             request_type: 'compound'
 		},
@@ -362,7 +362,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   },
 
   fetchMore: function() {
-    if (this.get('model.pharmacology.length') < this.totalCount && this.totalCount > 0) {
+    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
+    this.set('fetching', true)
     //first set all the current filters
     var assayOrganism = this.get('assayOrganismQuery');
     var targetOrganism = this.get('targetOrganismQuery');
@@ -573,8 +574,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     }
     var me = this;
     me.set('page', 0);
-    var thisCompound = this.get('controllers.compound').get('content');
-    me.clear();
+    var thisCompound = this.get('content');
+    thisCompound.get('pharmacology').clear();
     me.set('fetching', true);
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){

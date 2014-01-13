@@ -25,6 +25,102 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
   setupController: function(controller, model) {
     controller.set('content', model);
       var me = controller;
+    // set all the current filters
+    var assayOrganism = me.get('assayOrganismQuery');
+    var targetOrganism = me.get('targetOrganismQuery');
+    var targetType = null;
+    var lens = null;
+    var activity = me.get('selectedActivity') != null ? me.get('selectedActivity').label : null;
+    var unit = me.get('selectedUnit') != null ? me.get('selectedUnit').label : null;
+    var condition = me.get('selectedCondition') != null ? me.get('selectedCondition') : null;
+    var currentActivityValue = me.get('activityValue') != null ? me.get('activityValue') : null;
+    var activityRelation = null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+        switch(condition)
+        {
+        case '>':
+            minExActivityValue = currentActivityValue;
+          break;
+        case '<':
+      maxExActivityValue = currentActivityValue;
+            break;
+        case '=':
+      activityValue = currentActivityValue;
+          break;
+        case '<=':
+      maxActivityValue = currentActivityValue;
+          break;
+        case '>=':
+      minActivityValue = currentActivityValue;
+          break;
+        }
+    }
+    var activityRelations = [];
+    if (me.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (me.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (me.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (me.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (me.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
+    var pchemblCondition = me.get('selectedPchemblCondition') != null ? me.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = me.get('pchemblValue') != null ? me.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
+        switch(pchemblCondition)
+        {
+        case '>':
+            minExPchemblValue = currentPchemblValue;
+          break;
+        case '<':
+      maxExPchemblValue = currentPchemblValue;
+            break;
+        case '=':
+      actualPchemblValue = currentPchemblValue;
+          break;
+        case '<=':
+      maxPchemblValue = currentPchemblValue;
+          break;
+        case '>=':
+      minPchemblValue = currentPchemblValue;
+          break;
+        }
+    }
+            var sortBy = null;
+            if (me.get('currentHeader') !== null && me.get('sortedHeader') == null) {
+                    // we have previously sorted descending on a header and it is still current
+                    sortBy = 'DESC(?' + me.get('currentHeader') + ')';
+             } else if (me.get('currentHeader') !== null) {
+                //we have previously sorted on a header
+                sortBy = '?' + me.get('currentHeader');
+        }
       var thisCompound = model;
       var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
@@ -32,9 +128,13 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
           var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
           $.each(pharmaResults, function(index, pharma) {
             var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
-	        thisCompound.get('pharmacology').pushObject(pharmaRecord);
+                thisCompound.get('pharmacology').pushObject(pharmaRecord);
           });
+          me.set('fetching', false);
+          //controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
           controller.set('page', 1);
+        } else {
+          me.set('fetching', false);
         }
     };
     var countCallback=function(success, status, response){
@@ -42,7 +142,8 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
         var count = searcher.parseCompoundPharmacologyCountResponse(response);
         controller.set('totalCount', count);
         if (count > 0) {
-            searcher.compoundPharmacology(thisCompound.get('URI'), 1, 50, pharmaCallback);
+            me.set('fetching', true);
+            searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
         }
       }
     };
@@ -60,14 +161,33 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
     };
     //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
     if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
-        searcher.compoundPharmacologyCount(thisCompound.get('URI'), countCallback);
+        searcher.compoundPharmacologyCount(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
     } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
         //could still be count for a different compound
-        searcher.compoundPharmacologyCount(thisCompound.get('URI'), countCallback);
+       searcher.compoundPharmacologyCount(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
     } else {
         //reset the totalCount just to be sure
-        searcher.compoundPharmacologyCount(thisCompound.get('URI'), countOnlyCallback);
+       searcher.compoundPharmacologyCount(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countOnlyCallback);
     }
+    var activityTypesCallback=function(success, status, response){
+        if (success && response) {
+                var activityTypes = activitySearcher.parseTypes(response);
+            me.set('activityTypes', activityTypes);
+        }
+    };
+    var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+    activitySearcher.getTypes(null, null, null, null, null, activityTypesCallback);
+
+    // fetch all activity units for default in filter select
+    var allUnitsCallback=function(success, status, response){
+                if (success && response) {
+                    var units = activitySearcher.parseAllUnits(response);
+                    me.set('activityUnits', units);
+            //me.set('defaultUnitFilters', units);
+                }
+    };
+    activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
+
 
   },
   model: function(params) {
