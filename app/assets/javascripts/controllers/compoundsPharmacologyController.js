@@ -1,6 +1,6 @@
 App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
-  needs: 'compounds',
+  needs: ["compounds", "application"],
 
   defaultUnitFilters: null,
 
@@ -352,7 +352,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.monitorTSVCreation(response.uuid);
+            me.get('controllers.application').addJob(response.uuid);
+            //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {
 			console.log('tsv create request success');

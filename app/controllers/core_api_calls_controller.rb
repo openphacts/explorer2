@@ -49,9 +49,10 @@ class CoreApiCallsController < ApplicationController
     tsv_file = TsvFile.where(:uuid => params[:uuid]).first
     status = tsv_file.status
     percentage = tsv_file.percentage
+    response = {"status" => status, "percentage" => percentage}
     respond_to do |format|
       format.json {
-        render :json => "[{'status' : '#{status}','percentage' : '#{percentage}'}]"   
+        render :json => response 
       }
     end
   end

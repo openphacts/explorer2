@@ -1,7 +1,42 @@
 App.ApplicationController = Ember.Controller.extend({
 
+    jobsList: {},
+    //by default there are no alerts
+    alertReady: false,
     fetching: false,
     searchQuery: '',
+    //monitor the tsv creation
+    addJob: function(jobID) {
+      this.jobsList[jobID] = {"percentage": 0, "status": "processing"};
+      var me = this;
+      var thisJob = jobID;
+	  var tsvCreateRequest = $.ajax({
+		url: tsvStatusUrl,
+        dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+			uuid: jobID,
+		},
+		success: function(response, status, request) {
+			console.log('tsv monitor status ' + response.status);
+            var status = response.status;
+            var percentage = response.percentage;
+            if (percentage !== 0) {
+              me.jobsList[thisJob].percentage = percentage;
+            }
+            if (status === "finished") {
+              me.jobsList[thisJob].status = "complete";
+            } else if (status === "failed") {
+              me.jobsList[thisJob].status = "failed";
+            }
+            
+		},
+		error: function(request, status, error) {
+			console.log('tsv create request error');
+		}
+	  });
+    },
 	actions: {
 	query: function() {
 		console.log('app controller query');

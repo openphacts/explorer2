@@ -100,7 +100,7 @@
 			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
-    				<h3>{{objectLink 'targets' '' this.prefLabel this}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" controllers.compound}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{objectLink 'targets' '' this.prefLabel this}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
     				</div>

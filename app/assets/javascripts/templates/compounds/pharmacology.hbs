@@ -100,7 +100,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" controllers.compound}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
@@ -128,7 +128,7 @@
 		</div>
 	</div>
 
-	<button class="btn btn-primary btn-mini text-top pull-right" title="Create TSV file for download" {{action "tsvDownload" this}}><i class="icon-white icon-download"></i></button>
+	<button class="btn btn-primary btn-mini text-top pull-right" title="Create TSV file for download" {{action "tsvDownload"}}><i class="icon-white icon-download"></i></button>
     {{#if notEmpty}}
 	<!-- RESULT LISTING -->
 	<div style="padding:30px">	
