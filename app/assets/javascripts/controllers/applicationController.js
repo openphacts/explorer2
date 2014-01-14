@@ -36,6 +36,9 @@ App.ApplicationController = Ember.ArrayController.extend({
 			console.log('tsv monitor status ' + response.status);
             status = response.status;
             var percentage = response.percentage;
+            var job = me.jobsList.findBy("uuid", jobID);
+            //job may have been removed by the user in the mean time
+            if (job != null) {
             if (percentage !== 0) {
               me.jobsList.findBy("uuid", jobID).set('percentage', percentage);
             }
@@ -44,6 +47,9 @@ App.ApplicationController = Ember.ArrayController.extend({
               runAgain = false;
             } else if (status === "failed") {
               me.jobsList.findBy("uuid", jobID).set('status', 'failed');
+              runAgain = false;
+            }
+            } else {
               runAgain = false;
             }
             
@@ -58,6 +64,12 @@ App.ApplicationController = Ember.ArrayController.extend({
     },
 
 	actions: {
+
+    removeJob: function(job) {
+      console.log("removing job " + job.get('uuid'));
+      this.jobsList.removeObject(job);
+    },
+
 	query: function() {
 		console.log('app controller query');
 		var query = this.get('searchQuery');

@@ -6,13 +6,13 @@
 </div>
 <div class="modal-body" style="overflow-y: visible;">
     {{#if alertsAvailable}}
-	<table class="mytable">
+	<table class="mytable centersummary">
 		<thead id="tablehead" class="headingstyle">
-          <tr><th>Job ID</th><th>Percentage</th><th>Status</th></tr>
+          <tr><th>Job ID</th><th>Percentage</th><th>Status</th><th></th></tr>
         </thead>
         <tbody>
 {{#each job in jobsList}}
-          <tr class="record-deco"><td>{{job.uuid}}</td><td>{{job.percentage}}</td><td>{{job.status}}</td></tr>
+          <tr class="record-deco"><td>{{job.uuid}}</td><td>{{job.percentage}}</td><td>{{job.status}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
 {{/each}}
         </tbody>
     </table>
