@@ -7,10 +7,17 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(jobID) {
-      this.jobsList[jobID] = {"percentage": 0, "status": "processing"};
+      this.jobsList[jobID] = {"id": jobID, "percentage": 0, "status": "processing"};
       var me = this;
-      var thisJob = jobID;
-	  var tsvCreateRequest = $.ajax({
+	  this.checkTSV(jobID, me, true);
+    },
+    checkTSV: function (jobID, controller, go) {
+    console.log("Check TSV is " + go + " for " + jobID);
+    var jobID = jobID;
+    var me = controller;
+    var runAgain = true;
+    if (go !== false) {
+    $.ajax({
 		url: tsvStatusUrl,
         dataType: 'json',
 		cache: true,
@@ -20,23 +27,29 @@ App.ApplicationController = Ember.Controller.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv monitor status ' + response.status);
-            var status = response.status;
+            status = response.status;
             var percentage = response.percentage;
             if (percentage !== 0) {
-              me.jobsList[thisJob].percentage = percentage;
+              controller.jobsList[thisJob].percentage = percentage;
             }
             if (status === "finished") {
-              me.jobsList[thisJob].status = "complete";
+              controller.jobsList[thisJob].status = "complete";
+              runAgain = false;
             } else if (status === "failed") {
-              me.jobsList[thisJob].status = "failed";
+              controller.jobsList[thisJob].status = "failed";
+              runAgain = false;
             }
             
 		},
 		error: function(request, status, error) {
 			console.log('tsv create request error');
-		}
+		},
+        complete: setTimeout(function() {me.checkTSV(jobID, me, runAgain)}, 5000),
+        timeout: 2000
 	  });
+      }
     },
+
 	actions: {
 	query: function() {
 		console.log('app controller query');
