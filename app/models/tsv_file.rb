@@ -21,6 +21,7 @@ class TsvFile < ActiveRecord::Base
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
     params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
+    params[:activity_relation] != "" ? url_params += "&activity_relation=" + CGI::escape(params[:activity_relation]) : ''
     params[:pchembl_value_type] != "" ? url_params += "&" + CGI::escape(params[:pchembl_value_type]) + "=" + CGI::escape(params[:pchembl_value]) : ''
     params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
     params[:target_organism] != "" ? url_params += "&target_organism=" + CGI::escape(params[:target_organism]) : ''
@@ -30,7 +31,7 @@ class TsvFile < ActiveRecord::Base
     # download the tsv file 250 records at a time
     all_headers = []
     begin
-      FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+      CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
         while i <= number_of_pages
           if app_version == ""
             url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
@@ -38,7 +39,7 @@ class TsvFile < ActiveRecord::Base
             url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
           end
           response = Net::HTTP.get(domain, url_path)
-          tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers => true})
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true})
           # only need the header line from the first response
           if i == 1 
             all_headers = tab_data.headers
@@ -77,7 +78,7 @@ class TsvFile < ActiveRecord::Base
     first = true
     i = 1
     total = JSON.parse(params[:csids]).size
-    FasterCSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
+    CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       #tab << all_headers
       JSON.parse(params[:csids]).each do |csid|
         
@@ -89,7 +90,7 @@ class TsvFile < ActiveRecord::Base
             url_path = "/#{app_version}#{path}?".concat(url_params)
           end
           response = Net::HTTP.get(domain, url_path)
-          tab_data = FasterCSV.parse(response, {:col_sep => "\t", :headers=>true})
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true})
           if i == 1 
             all_headers = tab_data.headers
             all_headers.delete(nil)

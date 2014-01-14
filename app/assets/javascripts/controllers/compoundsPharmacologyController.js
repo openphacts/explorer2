@@ -343,7 +343,96 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   tsvDownload: function(compound) {
     var me = this;
-    console.log("Create TSV file");
+    //first set all the current filters
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
+    var targetType = null;
+    var lens = null;
+    var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+    var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+    var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+    var activityRelation = null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+    var activityValueType = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+	switch(condition)
+	{
+	case '>':
+  	  activityValueType = "minExActivityValue";
+	  break;
+	case '<':
+      activityValueType = "maxExActivityValue";
+  	  break;
+	case '=':
+      activityValueType = "activityValue";
+	  break;
+	case '<=':
+      activityValueType = "maxActivityValue";
+	  break;
+	case '>=':
+      activityValueType = "minActivityValue";
+	  break;
+	}
+    }
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
+    var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    var pChemblValueType = null;
+    if (pchemblCondition != null && currentPchemblValue != null) {
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  pChemblValueType = "minExPchemblValue";
+	  break;
+	case '<':
+      pChemblValueType = "maxExPchemblValue";
+  	  break;
+	case '=':
+      pChemblValueType = "actualPchemblValue";
+	  break;
+	case '<=':
+      pChemblValueType = "maxPchemblValue";
+	  break;
+	case '>=':
+      pChemblValueType = "minPchemblValue";
+	  break;
+	}
+    }
 	var tsvCreateRequest = $.ajax({
 		url: tsvCreateUrl,
         dataType: 'json',
@@ -352,7 +441,16 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 			_format: "json",
 			uri: this.get('content').get('URI'),
             total_count: me.totalCount,
-            request_type: 'compound'
+            request_type: 'compound',
+            pchembl_value_type: pChemblValueType,
+            pchembl_value: currentPchemblValue,
+            activity_relation: activityRelation,
+            activity_value_type: activityValueType,
+            activity_value: currentActivityValue,
+            activity_type: activity,
+            activity_unit: unit,
+            assay_organism: assayOrganism,
+            target_organism: targetOrganism
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
