@@ -1,3 +1,11 @@
+Ember.Handlebars.registerBoundHelper('completedJob', function(status) {
+  var html = "";
+  if (status == "complete") {
+    return new Handlebars.SafeString("download");
+  } else {
+    return new Handlebars.SafeString("");
+  }
+});
 Handlebars.registerHelper("log", function(context) {
   return console.log(context);
 });
