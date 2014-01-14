@@ -5,7 +5,20 @@
 <h3 id="myModalLabel">Alerts!</h3>
 </div>
 <div class="modal-body" style="overflow-y: visible;">
-Latest alerts
+    {{#if alertsAvailable}}
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+          <tr><th>Job ID</th><th>Percentage</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+{{#each job in jobsList}}
+          <tr class="record-deco"><td>{{job.uuid}}</td><td>{{job.percentage}}</td><td>{{job.status}}</td></tr>
+{{/each}}
+        </tbody>
+    </table>
+    {{else}}
+    There are no alerts
+    {{/if}}
 </div>
 </div>
 </div>

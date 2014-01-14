@@ -8,3 +8,4 @@
 //= require ./models/tree.js
 //= require ./models/treePharmacology.js
 //= require ./models/pathway.js
+//= require ./models/job.js

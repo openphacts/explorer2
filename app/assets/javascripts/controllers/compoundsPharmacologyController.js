@@ -2,6 +2,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   needs: ["compounds", "application"],
 
+  getJobs: function() {
+    return this.myJobs.get('length');
+  }.property('myJobs.@each.percentage'),
+
   defaultUnitFilters: null,
 
   greaterThan: false,

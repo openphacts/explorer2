@@ -1,15 +1,22 @@
-App.ApplicationController = Ember.Controller.extend({
+//Developers = [{name: 'Yehuda'},{name: 'Tom'}, {name: 'Paul'}];
+//App.jobsList = [];
+//App.jobsStatus = {};
+App.ApplicationController = Ember.ArrayController.extend({
 
-    jobsList: {},
+    //jobsList used in the view to loop over the entries
+    jobsList: [],
+    alertsAvailable: function() {
+      return this.jobsList.get('length') > 0;
+    }.property('jobsList.@each'),
     //by default there are no alerts
     alertReady: false,
     fetching: false,
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(jobID) {
-      this.jobsList[jobID] = {"id": jobID, "percentage": 0, "status": "processing"};
+      this.jobsList.pushObject(Ember.Object.create({uuid: jobID, percentage: 0, status: "processing"}));
       var me = this;
-	  this.checkTSV(jobID, me, true);
+	  this.checkTSV(jobID, this, true);
     },
     checkTSV: function (jobID, controller, go) {
     console.log("Check TSV is " + go + " for " + jobID);
@@ -30,13 +37,13 @@ App.ApplicationController = Ember.Controller.extend({
             status = response.status;
             var percentage = response.percentage;
             if (percentage !== 0) {
-              controller.jobsList[thisJob].percentage = percentage;
+              me.jobsList.findBy("uuid", jobID).set('percentage', percentage);
             }
             if (status === "finished") {
-              controller.jobsList[thisJob].status = "complete";
+              me.jobsList.findBy("uuid", jobID).set('status', 'complete');
               runAgain = false;
             } else if (status === "failed") {
-              controller.jobsList[thisJob].status = "failed";
+              me.jobsList.findBy("uuid", jobID).set('status', 'failed');
               runAgain = false;
             }
             

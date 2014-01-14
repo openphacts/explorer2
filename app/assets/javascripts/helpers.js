@@ -1,3 +1,6 @@
+Handlebars.registerHelper("log", function(context) {
+  return console.log(context);
+});
 Ember.Handlebars.registerBoundHelper('pathwayLink', function(uri, label) {
   var link = '<a href="#/pathways?uri=' + uri + '">' + label + '</a>';
   return new Handlebars.SafeString(link);		
