@@ -17,7 +17,7 @@ class TsvFile < ActiveRecord::Base
     app_id = AppSettings.config["keys"]["app_id"]
     app_version = AppSettings.config["tsv"]["api_version"]
     url_path = ''
-    domain = AppSettings.config["tsv"]["tsv_url"]
+    domain = AppSettings.config["tsv"]["url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
     params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
