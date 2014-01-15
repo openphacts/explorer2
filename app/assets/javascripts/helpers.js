@@ -1,7 +1,7 @@
-Ember.Handlebars.registerBoundHelper('completedJob', function(status) {
+Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("download");
+    return new Handlebars.SafeString("<a href='" + tsvDownloadUrl +"/" + uuid + "'>Download</a>");
   } else {
     return new Handlebars.SafeString("");
   }
