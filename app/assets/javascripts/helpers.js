@@ -1,7 +1,10 @@
+Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
+  return new Handlebars.SafeString('<div class="progress progress-striped active no-margin" title="' + percentage + '%"><div class="bar" style="width: ' + percentage + '%;"></div></div>');
+});
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
+    return new Handlebars.SafeString("<a class='btn' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
   } else {
     return new Handlebars.SafeString("");
   }
