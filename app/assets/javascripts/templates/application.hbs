@@ -1,11 +1,11 @@
 <!-- Modal for alerts -->
 <div id="alertsModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" {{action "dismissAlerts"}}>×</button>
 <h3 id="myModalLabel">Alerts!</h3>
 </div>
 <div class="modal-body" style="overflow-y: visible;">
-    {{#if alertsAvailable}}
+    {{#if anyJobs}}
 	<table class="mytable centersummary">
 		<thead id="tablehead" class="headingstyle">
           <tr><th>Job ID</th><th>Percentage</th><th>Status</th><th></th></tr>
@@ -33,7 +33,7 @@
 	
     </div>	
     <ul class="nav pull-right">
-        <li><a href="#alertsModalView" data-toggle="modal" title="Alerts and things you need to pay attention to"><span {{bind-attr class="alertReady:label alertReady:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
+        <li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
         <li id="search-only" class="active"><a href="#about">Search</a></li>
     	<li id="compound-only"><a href="#compound">Compounds</a></li>
         <li id="target-only"><a href="#target">Targets</a></li>

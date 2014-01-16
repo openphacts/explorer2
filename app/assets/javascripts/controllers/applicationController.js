@@ -5,7 +5,9 @@ App.ApplicationController = Ember.ArrayController.extend({
 
     //jobsList used in the view to loop over the entries
     jobsList: [],
-    alertsAvailable: function() {
+    alertsAvailable: false,
+
+    anyJobs: function() {
       return this.jobsList.get('length') > 0;
     }.property('jobsList.@each'),
     //by default there are no alerts
@@ -44,6 +46,7 @@ App.ApplicationController = Ember.ArrayController.extend({
             }
             if (status === "finished") {
               me.jobsList.findBy("uuid", jobID).set('status', 'complete');
+              me.set('alertsAvailable', true);
               runAgain = false;
             } else if (status === "failed") {
               me.jobsList.findBy("uuid", jobID).set('status', 'failed');
@@ -64,6 +67,10 @@ App.ApplicationController = Ember.ArrayController.extend({
     },
 
 	actions: {
+
+    dismissAlerts: function() {
+      this.set('alertsAvailable', false);
+    },
 
     removeJob: function(job) {
       console.log("removing job " + job.get('uuid'));
