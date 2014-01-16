@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 {{#each job in jobsList}}
-          <tr class="record-deco"><td>{{job.uuid}}</td><td>{{job.percentage}}</td><td>{{job.status}}</td><td>{{completedJob job.status}}<button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
+          <tr class="record-deco"><td>{{job.uuid}}</td><td>{{job.percentage}}</td><td>{{job.status}}</td><td>{{completedJob job.status job.uuid}}<button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
 {{/each}}
         </tbody>
     </table>

@@ -8,10 +8,6 @@ App.ApplicationController = Ember.ArrayController.extend({
     alertsAvailable: function() {
       return this.jobsList.get('length') > 0;
     }.property('jobsList.@each'),
-
-    completedJob: function() {
-      return this.get('status') == "complete";
-    },
     //by default there are no alerts
     alertReady: false,
     fetching: false,

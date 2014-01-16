@@ -1,7 +1,7 @@
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a href='" + tsvDownloadUrl +"/" + uuid + "'>Download</a>");
+    return new Handlebars.SafeString("<a target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
   } else {
     return new Handlebars.SafeString("");
   }
