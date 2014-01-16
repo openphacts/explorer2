@@ -20,9 +20,17 @@ class TsvFile < ActiveRecord::Base
     domain = AppSettings.config["tsv"]["url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
     url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
-    params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) + "&activity_unit=" + CGI::escape(params[:activity_unit]) + "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value]) : ''
+    params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) : ''
+    params[:activity_unit] != "" ? url_params += "&activity_unit=" + CGI::escape(params[:activity_unit]) : ''
+    # activity_value can only be used if we have an activity_value_type
+    if params[:activity_value_type] != "" && params[:activity_value] != "" 
+      url_params += "&" + CGI::escape(params[:activity_value_type]) + "=" + CGI::escape(params[:activity_value])
+    end
     params[:activity_relation] != "" ? url_params += "&activity_relation=" + CGI::escape(params[:activity_relation]) : ''
-    params[:pchembl_value_type] != "" ? url_params += "&" + CGI::escape(params[:pchembl_value_type]) + "=" + CGI::escape(params[:pchembl_value]) : ''
+    # pchembl_value can only be used with pchembl_value_type
+    if params[:pchembl_value_type] != "" && params[:pchembl_value] != ""
+      url_params += "&" + CGI::escape(params[:pchembl_value_type]) + "=" + CGI::escape(params[:pchembl_value])
+    end
     params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
     params[:target_organism] != "" ? url_params += "&target_organism=" + CGI::escape(params[:target_organism]) : ''
     number_of_pages = (params[:total_count].to_i / 250) + 1
@@ -38,6 +46,7 @@ class TsvFile < ActiveRecord::Base
           else
             url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
           end
+          logger.info "Retrieving: " + url_path
           response = Net::HTTP.get(domain, url_path)
           tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true})
           # only need the header line from the first response

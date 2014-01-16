@@ -360,23 +360,24 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     var minExActivityValue = null;
     var activityValueType = null;
     // only set activity filter if all filter boxes have been selected
-    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+    //if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+    if (condition != null) {
 	switch(condition)
 	{
 	case '>':
-  	  activityValueType = "minExActivityValue";
+  	  activityValueType = "minEx-activity_value";
 	  break;
 	case '<':
-      activityValueType = "maxExActivityValue";
+      activityValueType = "maxEx-activity_value";
   	  break;
 	case '=':
-      activityValueType = "activityValue";
+      activityValueType = "activity_value";
 	  break;
 	case '<=':
-      activityValueType = "maxActivityValue";
+      activityValueType = "max-activity_value";
 	  break;
 	case '>=':
-      activityValueType = "minActivityValue";
+      activityValueType = "min-activity_value";
 	  break;
 	}
     }
@@ -417,19 +418,19 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	switch(pchemblCondition)
 	{
 	case '>':
-  	  pChemblValueType = "minExPchemblValue";
+  	  pChemblValueType = "minEx-pChembl";
 	  break;
 	case '<':
-      pChemblValueType = "maxExPchemblValue";
+      pChemblValueType = "maxEx-pChembl";
   	  break;
 	case '=':
-      pChemblValueType = "actualPchemblValue";
+      pChemblValueType = "pchembl";
 	  break;
 	case '<=':
-      pChemblValueType = "maxPchemblValue";
+      pChemblValueType = "max-pChembl";
 	  break;
 	case '>=':
-      pChemblValueType = "minPchemblValue";
+      pChemblValueType = "min-pChembl";
 	  break;
 	}
     }
@@ -602,8 +603,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     var maxExActivityValue = null;
     var activityValue = null;
     var minExActivityValue = null;
-    // only set activity filter if all filter boxes have been selected
-    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+    // only set activity filter if we have a condition and a value, otherwise it is meaningless
+    if (condition != null && currentActivityValue != null) {
 	switch(condition)
 	{
 	case '>':
