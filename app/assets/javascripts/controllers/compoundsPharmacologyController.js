@@ -434,6 +434,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	  break;
 	}
     }
+    var thisCompound = this.get('content');
 	var tsvCreateRequest = $.ajax({
 		url: tsvCreateUrl,
         dataType: 'json',
@@ -455,7 +456,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid);
+            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), 'filters');
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {

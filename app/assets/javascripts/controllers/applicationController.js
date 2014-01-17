@@ -15,8 +15,8 @@ App.ApplicationController = Ember.ArrayController.extend({
     fetching: false,
     searchQuery: '',
     //monitor the tsv creation
-    addJob: function(jobID) {
-      this.jobsList.pushObject(Ember.Object.create({uuid: jobID, percentage: 0, status: "processing"}));
+    addJob: function(jobID, label, filters) {
+      this.jobsList.pushObject(Ember.Object.create({uuid: jobID, percentage: 0, status: "processing", label: label, filters: filters}));
       var me = this;
 	  this.checkTSV(jobID, this, true);
     },

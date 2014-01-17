@@ -1,6 +1,6 @@
 App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
-  needs: 'targets',
+  needs: ['targets', 'application'],
 
   greaterThan: false,
 
@@ -667,6 +667,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	  break;
 	}
     }
+    var thisTarget = this.get('content');
 	var tsvCreateRequest = $.ajax({
 		url: tsvCreateUrl,
         dataType: 'json',
@@ -688,7 +689,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid);
+            me.get('controllers.application').addJob(response.uuid, thisTarget.get('prefLabel'), 'filters');
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {

@@ -1,12 +1,15 @@
+Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
+  return new Handlebars.SafeString('<td title="' + job.filters + '">' + job.label + '</td>');
+});
 Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
   return new Handlebars.SafeString('<div class="progress progress-striped active no-margin" title="' + percentage + '%"><div class="bar" style="width: ' + percentage + '%;"></div></div>');
 });
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a class='btn' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
+    return new Handlebars.SafeString("<a class='btn' target='_blank' href=' title='TSV file ready. Click button to download.'" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
   } else {
-    return new Handlebars.SafeString("");
+    return new Handlebars.SafeString("<button type='button' class='btn btn-disabled' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
   }
 });
 Handlebars.registerHelper("log", function(context) {
