@@ -33,7 +33,8 @@ class TsvFile < ActiveRecord::Base
     end
     params[:assay_organism] != "" ? url_params += "&assay_organism=" + CGI::escape(params[:assay_organism]) : ''
     params[:target_organism] != "" ? url_params += "&target_organism=" + CGI::escape(params[:target_organism]) : ''
-    number_of_pages = (params[:total_count].to_i / 250) + 1
+    number_of_pages = params[:total_count].to_i / 250
+    number_of_pages += params[:total_count].to_i%250 > 0 ? 1 : 0 
     i = 1
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
     # download the tsv file 250 records at a time

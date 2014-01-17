@@ -434,6 +434,29 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	  break;
 	}
     }
+    var filtersString = "";
+    // pchembl
+    filtersString += pChemblValueType != null ? "pChembl " + pchemblCondition + " " + currentPchemblValue: '';
+    //activity
+    filtersString += activity != null || condition != null || currentActivityValue != null || unit != null ? " Activity: " :  '';
+    filtersString += activity != null ? activity + " " : '';
+    filtersString += condition != null ? condition + " " : '';
+    filtersString += currentActivityValue != null ? currentActivityValue + " " : '';
+    filtersString += unit != null ? unit + " " : '';
+    if (activityRelations.length > 0) {
+      filtersString += " Relations: ";
+      $.each(activityRelations, function(index, relation) {
+        filtersString += relation + " ";
+      });
+    }
+
+    //filtersString += activityRelation != null ? " Relations: " + activityRelation + " " : ''
+    //organisms
+    filtersString += assayOrganism != null ? " Assay Organsim: " + assayOrganism: '';
+    filtersString += targetOrganism != null ? " Target Organsim: " + targetOrganism: '';
+
+    filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
+
     var thisCompound = this.get('content');
 	var tsvCreateRequest = $.ajax({
 		url: tsvCreateUrl,
@@ -456,7 +479,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), 'filters');
+            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {

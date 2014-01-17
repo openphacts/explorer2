@@ -7,7 +7,7 @@ Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a class='btn' target='_blank' href=' title='TSV file ready. Click button to download.'" + tsvDownloadUrl + "uuid=" + uuid + "'>Download</a>");
+    return new Handlebars.SafeString("<a class='btn' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "' title='TSV file ready. Click button to download.'>Download</a>");
   } else {
     return new Handlebars.SafeString("<button type='button' class='btn btn-disabled' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
   }
