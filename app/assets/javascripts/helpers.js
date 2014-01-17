@@ -1,3 +1,9 @@
+Ember.Handlebars.registerBoundHelper('chemblLink', function(chemblLink) {
+  if (chemblLink != null) {
+    var chembl = chemblLink.split('/').pop();
+    return new Handlebars.SafeString('<a href="' + chemblLink + '" target="_blank">' + chembl + '</a>');
+  }
+});
 Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
   return new Handlebars.SafeString('<td title="' + job.filters + '">' + job.label + '</td>');
 });
