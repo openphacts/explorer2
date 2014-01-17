@@ -452,8 +452,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
     //filtersString += activityRelation != null ? " Relations: " + activityRelation + " " : ''
     //organisms
-    filtersString += assayOrganism != null ? " Assay Organsim: " + assayOrganism: '';
-    filtersString += targetOrganism != null ? " Target Organsim: " + targetOrganism: '';
+    filtersString += assayOrganism != null ? " Assay Organism: " + assayOrganism: '';
+    filtersString += targetOrganism != null ? " Target Organism: " + targetOrganism: '';
 
     filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
