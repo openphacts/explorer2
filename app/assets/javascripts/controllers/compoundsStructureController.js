@@ -56,6 +56,142 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 	return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
+  biotransSortASC: function() {
+	return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === "biotransformationItem";
+  }.property('sortedHeader'),
+
+  biotransSortDESC: function() {
+	return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  toxicitySortASC: function() {
+	return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === "toxicity";
+  }.property('sortedHeader'),
+
+  toxicitySortDESC: function() {
+	return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  proteinBindingSortASC: function() {
+	return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === "proteinBinding";
+  }.property('sortedHeader'),
+
+  proteinBindingSortDESC: function() {
+	return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  smilesSortASC: function() {
+	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === "smiles";
+  }.property('sortedHeader'),
+
+  smilesSortDESC: function() {
+	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  chemblURISortASC: function() {
+	return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === "chemblURI";
+  }.property('sortedHeader'),
+
+  chemblURISortDESC: function() {
+	return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  fullMWTSortASC: function() {
+	return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === "fullMWT";
+  }.property('sortedHeader'),
+
+  fullMWTSortDESC: function() {
+	return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  hbaSortASC: function() {
+	return this.get('currentHeader') === "hba" && this.get('sortedHeader') === "hba";
+  }.property('sortedHeader'),
+
+  hbaSortDESC: function() {
+	return this.get('currentHeader') === "hba" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  hbdSortASC: function() {
+	return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === "hbd";
+  }.property('sortedHeader'),
+
+  hbdSortDESC: function() {
+	return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  inchiSortASC: function() {
+	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === "inchi";
+  }.property('sortedHeader'),
+
+  inchiSortDESC: function() {
+	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  inchiKeySortASC: function() {
+	return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === "inchiKey";
+  }.property('sortedHeader'),
+
+  inchiKeySortDESC: function() {
+	return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  logpSortASC: function() {
+	return this.get('currentHeader') === "logp" && this.get('sortedHeader') === "logp";
+  }.property('sortedHeader'),
+
+  logpSortDESC: function() {
+	return this.get('currentHeader') === "logp" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  molformSortASC: function() {
+	return this.get('currentHeader') === "molform" && this.get('sortedHeader') === "molform";
+  }.property('sortedHeader'),
+
+  molformSortDESC: function() {
+	return this.get('currentHeader') === "molform" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  mwFreebaseSortASC: function() {
+	return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === "mwFreebase";
+  }.property('sortedHeader'),
+
+  mwFreebaseSortDESC: function() {
+	return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  psaSortASC: function() {
+	return this.get('currentHeader') === "psa" && this.get('sortedHeader') === "psa";
+  }.property('sortedHeader'),
+
+  psaSortDESC: function() {
+	return this.get('currentHeader') === "psa" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  ro5ViolationsSortASC: function() {
+	return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === "ro5Violations";
+  }.property('sortedHeader'),
+
+  ro5ViolationsSortDESC: function() {
+	return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  rtbSortASC: function() {
+	return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === "rtb";
+  }.property('sortedHeader'),
+
+  rtbSortDESC: function() {
+	return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  relevanceSortASC: function() {
+	return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === "relevance";
+  }.property('sortedHeader'),
+
+  relevanceSortDESC: function() {
+	return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
   actions: {
      structureSearchType: function(type) {
        console.log("Set structure search type: " + type);
