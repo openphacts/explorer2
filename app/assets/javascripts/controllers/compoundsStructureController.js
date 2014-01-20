@@ -195,6 +195,11 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   actions: {
      structureSearchType: function(type) {
        console.log("Set structure search type: " + type);
+       //reset sorting
+       this.get('structure').set('sortProperties', null);
+       this.get('structure').set('sortAscending', null);
+	   this.set('sortedHeader', null);
+	   this.set('currentHeader', null);
        this.set('structureSearchType', type);
        var me = this;
        var thisCompound = this.get('content');
@@ -219,8 +224,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                  $.each(results, function(index, result) {
                    var about = result.about;
                    var relVal = result.relevance;
-                   relevance[about] = relVal;
+                   result['relevance'] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
+                       compound.set('relevance', relVal);
 		               thisCompound.get('structure').pushObject(compound);
                    });
                  }); 
@@ -231,8 +237,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                  $.each(results, function(index, result) {
                    var about = result.about;
                    var relVal = result.relevance;
-                   relevance[about] = relVal;
+                   result['relevance'] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
+                       compound.set('relevance', relVal);
 		               thisCompound.get('structure').pushObject(compound);
                    });
                  });
@@ -262,15 +269,15 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        sortHeader.push(header);
        if (this.get('currentHeader') === header && this.get('sortedHeader') === header) {
          this.get('structure').set('sortProperties', sortHeader);
-         this.get('structure').set('sortAscending', true);
-         //ascending
-         //reset so next time for same one will be descending
+         this.get('structure').set('sortAscending', false);
+         //descending
+         //reset so next time for same one will be ascending
          this.set('sortedHeader', null);
        } else {
-         //descending
-         //next time will be ascending
+         //ascending
+         //next time will be descending
          this.get('structure').set('sortProperties', sortHeader);
-         this.get('structure').set('sortAscending', false);
+         this.get('structure').set('sortAscending', true);
 	     this.set('sortedHeader', header);
 	     this.set('currentHeader', header);
        }
