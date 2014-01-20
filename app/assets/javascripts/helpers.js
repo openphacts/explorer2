@@ -1,7 +1,19 @@
-Ember.Handlebars.registerBoundHelper('chemblLink', function(chemblLink) {
-  if (chemblLink != null) {
-    var chembl = chemblLink.split('/').pop();
-    return new Handlebars.SafeString('<a href="' + chemblLink + '" target="_blank">' + chembl + '</a>');
+Ember.Handlebars.registerBoundHelper('pathwayOrganismLink', function(link, label) {
+  if (link != null && label != null) {
+    return new Handlebars.SafeString('<a href="' + link + '" target="_blank">' + label + '</a>');
+  }
+});
+Ember.Handlebars.registerBoundHelper('pathwayRevision', function(link) {
+  if (link != null) {
+    var text = link.split('/').pop();
+    var rev = text.split('_')[1];
+    return new Handlebars.SafeString('<a href="' + link + '" target="_blank">' + rev + '</a>');
+  }
+});
+Ember.Handlebars.registerBoundHelper('textLink', function(link) {
+  if (link != null) {
+    var text = link.split('/').pop();
+    return new Handlebars.SafeString('<a href="' + link + '" target="_blank">' + text + '</a>');
   }
 });
 Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {

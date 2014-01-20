@@ -25,8 +25,10 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
     controller.set('model', model);
     var me = controller;
     var thisPathway = model;
+    me.set('fetching', true);
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
     var compoundCallback=function(success, status, response){
+        me.set('fetching', false);
         if (success && response) {
           var compoundResults = searcher.parseGetCompoundsResponse(response);
           $.each(compoundResults.metabolites, function(index, uri) {

@@ -3,6 +3,8 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
 
   page: null,
 
+  fetching: false,
+
   currentCount: function() {
     return this.get('model.pathways.length');
   }.property('model.pathways.length'),
@@ -18,6 +20,7 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
 actions: {
   fetchMore: function() {
     if (this.get('model.pathways.length') < this.totalCount) {
+        me.set('fetching', true);
     var me = this;
     var thisCompound = this.get('content');
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
@@ -40,6 +43,9 @@ actions: {
     };
     searcher.byCompound(thisCompound.get('URI'), null, null, me.page + 1, 50, null, pathwaysByCompoundCallback);
     }
+  },
+  goToTop: function() {
+      window.scrollTo(0,0);
   }
   }
 
