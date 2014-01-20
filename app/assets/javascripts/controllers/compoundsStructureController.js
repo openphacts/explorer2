@@ -12,6 +12,18 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   fetching: false,
 
+  sortedHeader: null,
+
+  currentHeader: null,
+
+  structure: (function() {
+    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+      sortProperties: null,
+      sortAscending: false,
+      content: this.get('content.structure')
+    });
+  }).property('content.structure'),
+
   notEmpty: function() {
     return this.get('totalCount') > 0;
   }.property('totalCount'),
@@ -27,6 +39,22 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   simSearch: function() {
     return this.get('structureSearchType') === "similarity";
   }.property('structureSearchType'),
+
+  prefLabelSortASC: function() {
+	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
+  }.property('sortedHeader'),
+
+  prefLabelSortDESC: function() {
+	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  descriptionSortASC: function() {
+	return this.get('currentHeader') === "description" && this.get('sortedHeader') === "description";
+  }.property('sortedHeader'),
+
+  descriptionSortDESC: function() {
+	return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
 
   actions: {
      structureSearchType: function(type) {
@@ -91,6 +119,26 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
      fetchMore: function() {
        console.log('fetch more structures');
-     }
+     },
+
+     sortHeader: function(header) {
+       var sortHeader=[];
+       sortHeader.push(header);
+       if (this.get('currentHeader') === header && this.get('sortedHeader') === header) {
+         this.get('structure').set('sortProperties', sortHeader);
+         this.get('structure').set('sortAscending', true);
+         //ascending
+         //reset so next time for same one will be descending
+         this.set('sortedHeader', null);
+       } else {
+         //descending
+         //next time will be ascending
+         this.get('structure').set('sortProperties', sortHeader);
+         this.get('structure').set('sortAscending', false);
+	     this.set('sortedHeader', header);
+	     this.set('currentHeader', header);
+       }
+    },
+
   }
 });

@@ -57,8 +57,8 @@
 		</div>
 		</div>
 	</div>
-<div class="row btn-group span2 medium-margin-top medium-margin-bottom" data-toggle="buttons-radio">
-    <div class="span4 big-padding-left">
+<div class="btn-group medium-margin-top medium-margin-bottom" data-toggle="buttons-radio">
+    <div class="big-padding-left">
         <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
         <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
         <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
@@ -68,12 +68,14 @@
 	<table class="mytable">
 		<thead id="tablehead" class="headingstyle">
 <tr>
-    <th>URI</th>
-    <th>description</th>
-    <th>biotransformationItem</th>
+				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
+				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th width="10%" {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+    <th>biotransformation</th>
     <th>toxicity</th>
     <th>proteinBinding</th>
-    <th>prefLabel</th>
     <th>smiles</th>
     <th>chemblURI</th>
     <th>fullMWT</th>
@@ -83,9 +85,9 @@
     <th>inchiKey</th>
     <th>logp</th>
     <th>molform</th>
-    <th>mwFreebase</th>
+    <th>mw Freebase</th>
     <th>psa</th>
-    <th>ro5Violations</th>
+    <th>ro5 Violations</th>
     <th>rtb</th>
     {{#if subSearch}}
         <th>relevance</th>
@@ -98,30 +100,29 @@
 <tbody>
 {{#each structureRecord in structure}}
 <tr class="record-deco">
-    <td>{{structureRecord.URI}}</td>
-    <td>{{structureRecord.description}}</td>
-    <td>{{structureRecord.biotransformationItem}}</td>
-    <td>{{structureRecord.toxicity}}</td>
-    <td>{{structureRecord.proteinBinding}}</td>
-    <td>{{objectLink 'compounds' '' structureRecord.prefLabel structureRecord}}</td>
-    <td>{{structureRecord.smiles}}</td>
-    <td>{{chemblLink structureRecord.chemblURI}}</td>
-    <td>{{structureRecord.fullMWT}}</td>
-    <td>{{structureRecord.hba}}</td>
-    <td>{{structureRecord.hbd}}</td>
-    <td>{{structureRecord.inchi}}</td>
-    <td>{{structureRecord.inchiKey}}</td>
-    <td>{{structureRecord.logp}}</td>
-    <td>{{formatMolecularFormula structureRecord.molform}}</td>
-    <td>{{structureRecord.mwFreebase}}</td>
-    <td>{{structureRecord.psa}}</td>
-    <td>{{structureRecord.ro5Violations}}</td>
-    <td>{{structureRecord.rtb}}</td>
+    <td class="cell-basictext">{{objectLink 'compounds' '' structureRecord.prefLabel structureRecord}}</td>
+    <td class="cell-basictext">{{structureRecord.description}}</td>
+    <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
+    <td class="cell-basictext">{{structureRecord.toxicity}}</td>
+    <td class="cell-basictext">{{structureRecord.proteinBinding}}</td>
+    <td class="cell-basictext">{{structureRecord.smiles}}</td>
+    <td class="cell-basictext">{{chemblLink structureRecord.chemblURI}}</td>
+    <td class="cell-basictext">{{structureRecord.fullMWT}}</td>
+    <td class="cell-basictext">{{structureRecord.hba}}</td>
+    <td class="cell-basictext">{{structureRecord.hbd}}</td>
+    <td class="cell-basictext">{{structureRecord.inchi}}</td>
+    <td class="cell-basictext">{{structureRecord.inchiKey}}</td>
+    <td class="cell-basictext">{{structureRecord.logp}}</td>
+    <td class="cell-basictext">{{formatMolecularFormula structureRecord.molform}}</td>
+    <td class="cell-basictext">{{structureRecord.mwFreebase}}</td>
+    <td class="cell-basictext">{{structureRecord.psa}}</td>
+    <td class="cell-basictext">{{structureRecord.ro5Violations}}</td>
+    <td class="cell-basictext">{{structureRecord.rtb}}</td>
     {{#if subSearch}}
-        <td>{{structureRecord.relevance}}</td>
+        <td class="cell-basictext">{{structureRecord.relevance}}</td>
     {{/if}}
     {{#if simSearch}}
-        <td>{{structureRecord.relevance}}</td>
+        <td class="cell-basictext">{{structureRecord.relevance}}</td>
     {{/if}}
 </tr>
 {{/each}}
