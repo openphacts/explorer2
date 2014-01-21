@@ -73,6 +73,8 @@ actions: {
 			this.get('content').set('opened', true);
 		} else {
 			// user wants to open the branch for the first time
+			this.set('opened', true);
+			this.get('content').set('opened', true);
 			var name, uri;
 			var me = this;
             var parent = this.get('content');
