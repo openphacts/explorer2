@@ -281,7 +281,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 	     this.set('sortedHeader', header);
 	     this.set('currentHeader', header);
        }
-    },
+    }
 
   }
 });
