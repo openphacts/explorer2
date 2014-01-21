@@ -97,6 +97,7 @@ actions: {
 				        var membersWithSingleName = [];
 				        $.each(members.children, function(index, member) {
 							var enzyme = me.get('controller').store.createRecord('tree');
+                            if (member.uri != null && member.names[0] != null) {
 						    enzyme.set('uri', member.uri);
 							enzyme.set('name', member.names[0]);
 							enzyme.set('id', member.uri.split('/').pop());
@@ -116,6 +117,7 @@ actions: {
                               }
 			                }
                             searcher.getChildNodes(member.uri, innerCallback);
+                            }
 				        });
 					    //var index = me.get('parentView').indexOf(me) + 1;
                         //me.get('parentView').get('childViews').pushObject(treeBranchView)

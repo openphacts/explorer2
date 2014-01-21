@@ -96,7 +96,7 @@ Ember.Handlebars.registerBoundHelper('getIndentLevel', function(view) {
 });
 Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
   if (uri) {
-    return new Handlebars.SafeString(uri.split('/')[uri.split('/').length - 1]);	
+    return new Handlebars.SafeString(uri.split('/').pop());	
   }	
 });
 Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, options) {

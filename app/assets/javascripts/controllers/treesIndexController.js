@@ -4,6 +4,17 @@ App.TreesIndexController = Ember.ArrayController.extend({
   selectedTree: 'enzyme',
   treeTypes: ["enzyme", "chembl", "chebi", "go"],
   childTreeNodes: [],
+  sortProperties: ['uri'],
+  sortAscending: true,
+  sortFunction: function(x,y) {
+    console.log('sorting ' + x + ' ' + y);
+    var a = x.split('/').pop();
+    var b = y.split('/').pop();
+    if (a === b) {
+      return 0;
+    }
+    return a < b ? -1 : 1;
+  },
 
   selectedTreeChanged: function() {
     if(this.get('selectedTree') !== null) {
@@ -11,7 +22,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
         $.each(this.get('childTreeNodes'), function(index, childTreeNode) {
           console.log('inside child tree node');
         });
-        this.clear();
+        this.get('model').clear();
         var me = this;
 	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
