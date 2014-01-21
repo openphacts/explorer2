@@ -95,37 +95,43 @@ actions: {
 			        if (success && response) {
 				        var members = searcher.parseChildNodes(response);
 				        var membersWithSingleName = [];
+                        var allMembers = [];
+                        //firstly find all the children
 				        $.each(members.children, function(index, member) {
 							var enzyme = me.get('controller').store.createRecord('tree');
                             if (member.uri != null && member.names[0] != null) {
-						    enzyme.set('uri', member.uri);
-							enzyme.set('name', member.names[0]);
-							enzyme.set('id', member.uri.split('/').pop());
-                            enzyme.set('hasChildren', false);
-                            enzyme.set('level', parent.get('level') + 1);
-                            controller.get('content').insertAt(contentIndex + 1, enzyme);
-                            controller.get('content')[contentIndex].get('children').pushObject(enzyme);
-		                    //treeBranchView.get('content').pushObject(enzyme);
-                            // now figure out if this node has children
-		                    var innerCallback = function(success, status, response) {
-			                  if (success && response) {
-			                    var members = searcher.parseChildNodes(response);
-                                //does the node have children
-                                enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-				              } else {
-                                enzyme.set('hasChildren', false);
-                              }
-			                }
+						      enzyme.set('uri', member.uri);
+							  enzyme.set('name', member.names[0]);
+							  enzyme.set('id', member.uri.split('/').pop());
+                              enzyme.set('hasChildren', false);
+                              enzyme.set('level', parent.get('level') + 1);
+                              allMembers.push(enzyme);
+                              // now figure out if this node has children
+		                      var innerCallback = function(success, status, response) {
+			                    if (success && response) {
+			                      var members = searcher.parseChildNodes(response);
+                                  //does the node have children
+                                  enzyme.set('hasChildren', members.children.length > 0 ? true : false);
+				                } else {
+                                  enzyme.set('hasChildren', false);
+                                }
+			                  }
                             searcher.getChildNodes(member.uri, innerCallback);
                             }
 				        });
-					    //var index = me.get('parentView').indexOf(me) + 1;
-                        //me.get('parentView').get('childViews').pushObject(treeBranchView)
-					    //me.get('parentView').insertAt(index, treeBranchView);
-					    controller.get('content')[contentIndex].set('opened', true);
-					    //parent.set('opened', true);
-					    //me.set('subBranch', treeBranchView);
-					    controller.get('content')[contentIndex].set('fetchedData', true);
+                        //then sort them
+                        allMembers.sort(function(a, b) {
+                            var x = a.get('uri').split('/').pop();
+                            var y = b.get('uri').split('/').pop();
+                            if (x === y) {
+                              return 0;
+                            }
+                            return y < x ? -1 : 1;
+                        });
+                        $.each(allMembers, function(index, member) {
+                            controller.get('content').insertAt(contentIndex + 1, member);
+                            controller.get('content')[contentIndex].get('children').pushObject(member);
+                        });
 				    }
 			    }
 			    searcher.getChildNodes(uri, callback);

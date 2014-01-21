@@ -8,13 +8,14 @@ App.TreesIndexRoute = Ember.Route.extend({
 	    var callback = function(success, status, response) {
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
+                var allRoot = [];
 			    $.each(root, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('hasChildren', false);
                     enzyme.set('level', 1);
                     enzyme.set('opened', false);
-				    controller.addObject(enzyme);
+                    allRoot.push(enzyme);
                     var innerCallback = function(success, status, response) {
 			          if (success && response) {
 			              var members = searcher.parseChildNodes(response);
@@ -24,6 +25,18 @@ App.TreesIndexRoute = Ember.Route.extend({
 			        }
                     searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
 			    });
+                allRoot.sort(function(a,b) {
+                    var x = a.get('uri').split('/').pop();
+                    var y = b.get('uri').split('/').pop();
+                    if (x === y) {
+                      return 0;
+                    }
+                    return x > y ? 1 : -1;
+
+                });
+                $.each(allRoot, function(index, member) {
+				    controller.addObject(member);
+                });
 			}
 		}
 	    searcher.getRootNodes('enzyme', callback);

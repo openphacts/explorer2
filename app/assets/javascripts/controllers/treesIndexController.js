@@ -4,17 +4,6 @@ App.TreesIndexController = Ember.ArrayController.extend({
   selectedTree: 'enzyme',
   treeTypes: ["enzyme", "chembl", "chebi", "go"],
   childTreeNodes: [],
-  sortProperties: ['uri'],
-  sortAscending: true,
-  sortFunction: function(x,y) {
-    console.log('sorting ' + x + ' ' + y);
-    var a = x.split('/').pop();
-    var b = y.split('/').pop();
-    if (a === b) {
-      return 0;
-    }
-    return a < b ? -1 : 1;
-  },
 
   selectedTreeChanged: function() {
     if(this.get('selectedTree') !== null) {
