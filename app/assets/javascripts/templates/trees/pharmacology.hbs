@@ -1,3 +1,82 @@
+<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+</div>
+<div>
+	<!-- Modal -->
+	<div id="enzymePharmaFilterModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
+	  </div>
+	  <div class="modal-body" style="overflow-y: visible;">
+        <div id="activity-filters">
+	    <p><h4>Activity Filter</h4></p>
+		{{view Ember.Select
+		       content=activityTypes
+		       optionLabelPath="content.label"
+		       prompt="Select an activity"
+		       value=selectedActivity
+		       selection=selectedActivity
+		}}
+		{{view Ember.Select
+		       content=conditions
+		       prompt="Select an operator"
+               value=selectedCondition
+		       selection=selectedCondition
+		}}
+		{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+		{{view Ember.Select
+		       content=activityUnits
+		       optionLabelPath="content.label"
+		       prompt="Select a unit"
+               value=selectedUnit
+		       selection=selectedUnit
+		}}
+        </div>
+        <div>
+<h5>Return activities with the following relation(s) only</h5>
+<p class="small-padding-right activity-relation-operator">></p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator">>=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+<p class="small-padding-right activity-relation-operator"><=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+        </div>
+        <div id="pchembl-filters">
+	    <p><h4>pChembl Filter</h4></p>
+		{{view Ember.Select
+		       content=pchemblConditions
+		       prompt="Select an operator"
+               value=selectedPchemblCondition
+		       selection=selectedPchemblCondition
+		}}
+		{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+        </div>
+        <div>
+	    <p><h4>Organism filters</h4></p>
+            <div>
+                <h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box"}}
+            </div>
+            <div>
+                <h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box"}}
+            </div>
+        </div>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+	    <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+	  </div>
+	</div>
+	<!-- End of Modal -->
+<div class="goto-button" id="top"><button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
+<div>
 <div>
 
 	<ul class="breadcrumb">
@@ -15,6 +94,8 @@
 	</ul>	
 	
 </div>
+<a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+<a href="#enzymePharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted target class pharmacology results">Create TSV</a>
 Loaded {{currentCount}} of {{totalCount}}
 {{#link-to 'trees.index'}}Tree view{{/link-to}}
 
@@ -42,12 +123,15 @@ Loaded {{currentCount}} of {{totalCount}}
 
 			<tr>
 			<tr>
+				<!-- Each header can have an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
 				<th>Structure</th>
-				<th>Name</th>
+				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th>Names</th>
 				<th>Organisms</th>
 				<th>Organisms</th>
-				<th align="left" width="300px">Description</th>
+				<th  align="left" width="300px" {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th>Type</th>
 			 	<th>Relation</th>
 				<th>Value</th>
