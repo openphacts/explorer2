@@ -6,9 +6,13 @@ App.SearchController = Ember.ArrayController.extend({
 
     currentPage: 0,
 
-    totalResults: 0,
+    totalResults: function() {
+      return this.get('model.length');
+    }.property('model.length'),
 
     current_query: '',
+
+    previous_query: null,
 
     query: '',
 
@@ -26,6 +30,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     setCurrentQuery: function(query) {
         this.current_query=query;
+        // ensure the search box is bound to the query when using 'back' button
         this.get('controllers.application').set('searchQuery', query);
     },
 
@@ -33,10 +38,16 @@ App.SearchController = Ember.ArrayController.extend({
         return this.current_query;
     },
 
+    setPreviousQuery: function(query) {
+        this.previous_query=query;
+    },
+
+    getPreviousQuery: function() {
+        return this.previous_query;
+    },
+
     resetPageCount: function(query) {
-        this.totalResults = 0;
         this.currentPage = 0;
-        //this.search(query);
         this.set('query', query);
         this.conceptWikiSearch(query);
         App.Router.router.transitionTo('search');
@@ -55,10 +66,8 @@ App.SearchController = Ember.ArrayController.extend({
                       if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                           compound.set('exactMatch', true);
       			          me.addExactMatch(compound);
-                          me.set('totalResults', me.get('totalResults') + 1);
                       } else {
                           me.addSearchResult(compound);
-                          me.set('totalResults', me.get('totalResults') + 1);
                       } 
                   });
                 });
@@ -75,10 +84,8 @@ App.SearchController = Ember.ArrayController.extend({
                     me.store.find('target', result.uri).then(function(target) {
                       if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                           target.set('exactMatch', true);
-                          me.set('totalResults', me.get('totalResults') + 1);
                           me.addExactMatch(target);
                       } else {
-                          me.set('totalResults', me.get('totalResults') + 1);
                           me.addSearchResult(target);
                       }
                     });
