@@ -2,16 +2,17 @@
 
 App.CompoundsIndexRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
+  //observesParameters: ['uri'],
 	
   setupController: function(controller, model) {
    console.log('compound index controller');
    controller.set('model', model);	
   },
 
-  model: function() {
+  model: function(params) {
 	console.log('compound index model')
-    var uri = this.get('queryParameters').uri;
+    //var uri = this.get('queryParameters').uri;
+    var uri = params.queryParams.uri
     var compound = this.controllerFor('compounds').store.find('compound', uri);
     var uriParams = Ember.Router.QueryParameters.create({ "uri": uri });
     return compound;
@@ -20,7 +21,7 @@ App.CompoundsIndexRoute = Ember.Route.extend({
 
 App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
+  //observesParameters: ['uri'],
 
   setupController: function(controller, model) {
     controller.set('content', model);
