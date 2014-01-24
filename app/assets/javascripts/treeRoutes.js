@@ -4,6 +4,7 @@ App.TreesIndexRoute = Ember.Route.extend({
     setupController: function(controller, model) {
 	    console.log('enzymes index route setup controller');
 	    controller.set('content', model);
+        var me = controller;
 	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
 		    if (success && response) {
@@ -76,7 +77,24 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
             }
         }
     };
+    var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+    var activityTypesCallback=function(success, status, response){
+        if (success && response) {
+                var activityTypes = activitySearcher.parseTypes(response);
+            me.set('activityTypes', activityTypes);
+        }
+    };
+    activitySearcher.getTypes(null, null, null, null, null, activityTypesCallback);
 
+    // fetch all activity units for default in filter select
+    var allUnitsCallback=function(success, status, response){
+                if (success && response) {
+                    var units = activitySearcher.parseAllUnits(response);
+                    me.set('activityUnits', units);
+            //me.set('defaultUnitFilters', units);
+                }
+    };
+    activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
     searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
   },
 
