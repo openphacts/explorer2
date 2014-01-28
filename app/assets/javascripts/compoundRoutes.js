@@ -1,8 +1,6 @@
 // Compound Routes
 
 App.CompoundsIndexRoute = Ember.Route.extend({
-
-  //observesParameters: ['uri'],
 	
   setupController: function(controller, model) {
    console.log('compound index controller');
@@ -20,8 +18,6 @@ App.CompoundsIndexRoute = Ember.Route.extend({
 });
 
 App.CompoundsPharmacologyRoute = Ember.Route.extend({
-
-  //observesParameters: ['uri'],
 
   setupController: function(controller, model) {
     controller.set('content', model);

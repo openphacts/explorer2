@@ -2,6 +2,10 @@
 <html lang='en'>
   <head>
     <%= stylesheet_link_tag :application, :media => :all %>
+  <script type="text/javascript">
+    // enable the query parameters
+    ENV = {FEATURES: {'query-params-new': true}};
+  </script>
     <%= javascript_include_tag :application %>
     <title>Open PHACTS Explorer</title>
   <%= csrf_meta_tags %>

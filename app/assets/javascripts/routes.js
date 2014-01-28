@@ -2,10 +2,10 @@
 // you have to set location to 'history'. This means that you must also tell rails
 // what your routes are and to redirect them to whatever template contains the ember
 // outlet
-App.Router.reopen({
-  location: 'history',
-  rootURL: '/'
-});
+//App.Router.reopen({
+//  location: 'history',
+//  rootURL: '/'
+//});
 
 App.Router.map(function() { 
     this.route("search", { path: "/search" }, function() {
@@ -34,7 +34,7 @@ App.SearchRoute = Ember.Route.extend({
 
   //observesParameters: ['query'],
 
-  setupController: function(controller, model, queryParams) {
+  setupController: function(controller, model, params) {
     console.log('search route setup');
     controller.clear();
     controller.set('totalResults', 0);
@@ -43,9 +43,7 @@ App.SearchRoute = Ember.Route.extend({
 
   model: function(params) {
     console.log('search route model');
-    //this.controllerFor('search').setCurrentQuery(this.get('queryParameters').query);
-    this.controllerFor('search').set('query', params.queryParams.query);
-    this.controllerFor('search').setCurrentQuery(params.queryParams.query);
+    this.controllerFor('search').setCurrentQuery(params.query);
     return [];
   },
 

@@ -1,6 +1,6 @@
 App.SearchController = Ember.ArrayController.extend({
 
-    queryParams: ['query', 'uri'],
+    queryParams: ['query'],
 
     needs: 'application',
 
@@ -12,9 +12,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     current_query: '',
 
-    query: null,
-
-    uri: null,
+    query: '',
 
     contract: function() {
       this.set('isExpanded', false);
