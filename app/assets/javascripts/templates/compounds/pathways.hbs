@@ -13,7 +13,7 @@
 <div>
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
-  			<li>{{objectLink 'compounds' '' this.prefLabel this}} <span class="divider">/</span></li>
+  			<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
   			<li class="active">Pathways</li>
 			
 			<div class="row pull-right"> 
@@ -35,9 +35,9 @@
 			<div class="row">
 				<div class="span8">
                     {{#if notEmpty}}
-    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
                     {{else}}
-    				<h3>{{objectLink 'compounds' '' this.prefLabel this}}</h3>
+    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</h3>
                     {{/if}}
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>

@@ -11,7 +11,7 @@
 <div>
     <ul class="breadcrumb">
         <li><a href="/">Home</a> <span class="divider">/</span></li>
-        <li>{{objectLink 'compounds' '' this.prefLabel this}} <span class="divider">/</span></li>
+        <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
         <li class="active">Compound Structure</li>
         <div class="row pull-right"> 
             <div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -30,7 +30,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{objectLink 'compounds' '' this.prefLabel this}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
@@ -100,7 +100,7 @@
 <tbody>
 {{#each structureRecord in structure}}
 <tr class="record-deco">
-    <td class="cell-basictext">{{objectLink 'compounds' '' structureRecord.prefLabel structureRecord}}</td>
+    <td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}</td>
     <td class="cell-basictext">{{structureRecord.description}}</td>
     <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
     <td class="cell-basictext">{{structureRecord.toxicity}}</td>
