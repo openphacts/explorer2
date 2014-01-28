@@ -79,7 +79,7 @@
 <div>
 		<ul class="breadcrumb">
   			<li><a href="/">Home</a> <span class="divider">/</span></li>
-  			<li>{{objectLink 'targets' '' this.prefLabel this}}<span class="divider">/</span></li>
+  			<li>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}<span class="divider">/</span></li>
   			<li class="active">Target Phamacology</li>
 			
 			<div class="row pull-right"> 
@@ -100,7 +100,7 @@
 			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
-    				<h3>{{objectLink 'targets' '' this.prefLabel this}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
     				</div>
@@ -156,7 +156,7 @@
 		<tbody>
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
-				<td class="cell-basictext">{{compoundLink pharmaRecord.csCompoundUri pharmaRecord.compoundPrefLabel}}</td>
+				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{pharmaRecord.assayOrganism}}</td>
 				<td class="cell-longtext">{{pharmaRecord.assayDescription}}</td>

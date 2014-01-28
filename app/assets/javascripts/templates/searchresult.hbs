@@ -29,7 +29,7 @@
 {{else}}
 <div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
-			<h2>{{objectLink 'targets' '' result.prefLabel result}}</h2>
+			<h2>{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
 			<p><small><em>Target</em></small></p>
 		</div>
 		
@@ -39,8 +39,8 @@
 		<div class="row span7">
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>{{objectLink 'targets' 'pharmacology' 'Pharmacology' result}}</p>
-                <p>{{objectLink 'targets' 'pathways' 'Pathways' result}}</p>
+				<p>{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
+                <p>{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}</p>
 			</div>
 		</div>
 	

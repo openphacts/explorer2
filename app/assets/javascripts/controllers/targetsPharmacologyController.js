@@ -1,6 +1,10 @@
 App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
-  needs: ['targets', 'application'],
+  needs: ['application'],
+
+  queryParams: ['uri'],
+
+  uri: '',
 
   greaterThan: false,
 

@@ -165,7 +165,7 @@
 		<tbody>
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70">{{#each target in pharmaRecord.targets}}<p>{{targetLink target.about target.title}}</p>{{/each}}</td>
+				<td style="vertical-align:middle;" height="70">{{#each target in pharmaRecord.targets}}<p>{{#link-to "targets.index" (query-params uri=target.about)}}{{target.title}}{{/link-to}}</p>{{/each}}</td>
 				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{pharmaRecord.assayOrganism}}</td>
 				<td class="cell-longtext">{{pharmaRecord.assayDescription}}</td>

@@ -1,29 +1,23 @@
 // Target Routes
 
 App.TargetsIndexRoute = Ember.Route.extend({
-
-  observesParameters: ['uri'],
 	
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     console.log('target index controller');
     controller.set('model', model);	
   },
 
-  model: function() {
+  model: function(params) {
     console.log('target index model')
-    var uri = this.get('queryParameters').uri;
-    var target = this.controllerFor('targets').store.find('target', uri);
-    var uriParams = Ember.Router.QueryParameters.create({ "uri": uri });
-    return target;
+    var uri = params.uri;
+    return this.get('store').find('target', uri);
   }
 
 });
 
 App.TargetsPharmacologyRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     console.log('target index route setup controller');
     var me = controller;
     // set all the current filters
@@ -172,7 +166,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
   },
   model: function(params) {
     console.log('target pharma index route');
-    var uri = this.get('queryParameters').uri;
+    var uri = params.uri;
     return this.get('store').find('target', uri);
   }
 
@@ -180,7 +174,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
 
 App.TargetsPathwaysRoute = Ember.Route.extend({
 
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('content', model);
     controller.clear();
     var me = controller;
@@ -211,7 +205,8 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
     }
     searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
   },
-  model: function() {
-    return this.modelFor('target').get('pathways');
+  model: function(params) {
+    var uri = params.uri;
+    return this.get('store').find('target', uri);
   }
 });
