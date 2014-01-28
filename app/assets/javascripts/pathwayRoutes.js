@@ -2,26 +2,21 @@
 
 App.PathwaysIndexRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('model', model);
   },
 
   model: function(params) {
     console.log('pathway model');
-    var uri = this.get('queryParameters').uri;
-    var pathway = this.get('store').find('pathway', uri);
-    return pathway;
+    var uri = params.uri;
+    return this.get('store').find('pathway', uri);
   }
 
 });
 
 App.PathwaysCompoundsRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('model', model);
     var me = controller;
     var thisPathway = model;
@@ -47,9 +42,8 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
 
   model: function(params) {
     console.log('pathway compounds index');
-    var uri = this.get('queryParameters').uri;
-    var pathway = this.get('store').find('pathway', uri);
-    return pathway;
+    var uri = params.uri;
+    return this.get('store').find('pathway', uri);
   }
 
 });

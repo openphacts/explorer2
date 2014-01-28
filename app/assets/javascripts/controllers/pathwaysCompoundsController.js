@@ -1,24 +1,30 @@
 App.PathwaysCompoundsController = Ember.ObjectController.extend({
 
+  queryParams: ['uri'],
+
+  uri: '',
+
   fetching: false,
 
   currentCount: function() {
     return this.get('model.compounds.length');
   }.property('model.compounds.length'),
 
-  totalCount: null,
+  totalCount: function() {
+    return this.get('model.compounds.length');
+  }.property('model.compounds.length'),
 
   notEmpty: function() {
-    return this.get('totalCount') > 0;
-  }.property('totalCount'),
+    return this.get('model.compounds.length') > 0;
+  }.property('model.compounds.length'),
 
-  compounds: (function() {
-    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-      sortProperties: null,
-      sortAscending: false,
-      content: this.get('content.compounds')
-    });
-  }).property('content.compounds'),
+//  compounds: (function() {
+//    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+//      sortProperties: null,
+//      sortAscending: false,
+//      content: this.get('content.compounds')
+//    });
+//  }).property('content.compounds'),
 
   prefLabelSortASC: function() {
 	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
