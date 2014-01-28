@@ -12,9 +12,8 @@
 //
 //= require modernizr
 //= require jquery
-//= require handlebars
-//= require ember-1.3.1
-//= require Router
+//= require handlebars-v1.3.0
+//= require ember-latest
 //= require ember-data-1.0.0-beta5
 //= require bootstrap
 //= require combined

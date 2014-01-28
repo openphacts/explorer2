@@ -1,5 +1,7 @@
 App.SearchController = Ember.ArrayController.extend({
 
+    queryParams: ['query'],
+
     needs: 'application',
 
     isSearching: false,

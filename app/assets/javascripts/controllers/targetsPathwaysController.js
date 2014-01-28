@@ -1,5 +1,9 @@
 App.TargetsPathwaysController = Ember.ObjectController.extend({
 
+  queryParams: ['uri'],
+
+  uri: '',
+
   page: null,
 
   currentCount: function() {

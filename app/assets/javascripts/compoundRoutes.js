@@ -1,28 +1,24 @@
 // Compound Routes
 
 App.CompoundsIndexRoute = Ember.Route.extend({
-
-  observesParameters: ['uri'],
 	
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
    console.log('compound index controller');
    controller.set('model', model);	
   },
 
-  model: function() {
+  model: function(params) {
 	console.log('compound index model')
-    var uri = this.get('queryParameters').uri;
+    //var uri = this.get('queryParameters').uri;
+    var uri = params.uri
     var compound = this.controllerFor('compounds').store.find('compound', uri);
-    var uriParams = Ember.Router.QueryParameters.create({ "uri": uri });
     return compound;
  }
 });
 
 App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('content', model);
       var me = controller;
     // set all the current filters
@@ -192,7 +188,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
   },
   model: function(params) {
     console.log('compounds pharma controller model');
-    var uri = this.get('queryParameters').uri;
+    var uri = params.uri;
     return this.get('store').find('compound', uri);
   }
 
@@ -200,9 +196,8 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
 App.CompoundsStructureRoute = Ember.Route.extend({
 
-  observesParameters: ['type', 'uri'],
 
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('content', model);
     var me = controller;
     var thisCompound = model;
@@ -262,11 +257,11 @@ App.CompoundsStructureRoute = Ember.Route.extend({
   },
   model: function(params) {
     //the route can come in with a ?type=structureSearchType param, default is exact
-    var type = this.get('queryParameters').type;
+    var type = params.type;
     if (type) {
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
     }
-    var uri = this.get('queryParameters').uri;
+    var uri = params.uri;
     return this.get('store').find('compound', uri);
   }
 
@@ -274,9 +269,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
 
 App.CompoundsPathwaysRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     controller.set('content', model);
     var me = controller;
     var thisCompound = model;
@@ -333,8 +326,8 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
 
 
   },
-  model: function() {
-    var uri = this.get('queryParameters').uri;
+  model: function(params) {
+    var uri = params.uri;
     return this.get('store').find('compound', uri);
   }
 });

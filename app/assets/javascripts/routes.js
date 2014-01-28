@@ -32,26 +32,22 @@ App.Router.map(function() {
 
 App.SearchRoute = Ember.Route.extend({
 
-  observesParameters: ['query'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     console.log('search route setup');
     controller.clear();
-    // there are cases where the setup will be called twice, once where it is called without model which means search could be carried out twice
-    // so only carry out the search if it is a new query. Seems to be a 'quirk' of the Router.js code.
-    if (controller.getCurrentQuery() !== this.get('queryParameters').query) {
-      controller.setCurrentQuery(this.get('queryParameters').query);
-      controller.doSearch();
-    }
+    controller.doSearch();
   },
 
   model: function(params) {
     console.log('search route model');
-    // track the previous query - the Router.js params sometimes hits this model during a new transition.
-    //var previousQuery = this.controllerFor('search').getCurrentQuery();
-    //this.controllerFor('search').setPreviousQuery(previousQuery);
-    //this.controllerFor('search').setCurrentQuery(this.get('queryParameters').query);
+    this.controllerFor('search').setCurrentQuery(params.query);
     return [];
+  },
+
+  actions: {
+    queryParamsDidChange: function() {
+      this.refresh();
+    }
   }
 	
 });

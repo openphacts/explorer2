@@ -2,6 +2,12 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   structureSearchType: "exact",
 
+  queryParams: ['uri', 'type'],
+
+  uri: '',
+
+  type: '',
+
   page: null,
 
   currentCount: function() {

@@ -12,7 +12,7 @@
 <div>
 		<ul class="breadcrumb">
   	<li><a href="/">Home</a> <span class="divider">/</span></li>
-  	<li>{{objectLink 'pathways' '' this.title this}}<span class="divider">/</span></li>
+  	<li>{{#link-to "pathways.index" (query-params uri=URI)}}{{title}}{{/link-to}}<span class="divider">/</span></li>
   	<li class="active">Compounds</li>
 			
 			<div class="row pull-right"> 
@@ -30,7 +30,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{objectLink 'pathways' '' this.title this}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+    				<h3>{{#link-to "pathways.index" (query-params uri=URI)}}{{title}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
    					<div class="row">
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
     				</div>
@@ -77,7 +77,7 @@
 <tbody>
 {{#each compound in compounds}}
 <tr class="record-deco">
-    <td class="cell-basictext">{{objectLink 'compounds' '' compound.prefLabel compound}}</td>
+    <td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}</td>
     <td class="cell-basictext">{{compound.description}}</td>
     <td class="cell-basictext">{{compound.biotransformationItem}}</td>
     <td class="cell-basictext">{{compound.toxicity}}</td>

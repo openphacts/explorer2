@@ -65,5 +65,9 @@ module Explorer2
     
     #application specific settings
     AppSettings.config = YAML.load_file("config/app_settings.yml")[Rails.env]
+
+    #handlebars file
+    #HandlebarsAssets::Config.compiler = 'handlebars-v1.3.0.js'
+    #HandlebarsAssets::Config.compiler_path = Rails.root.join('vendor/assets/javascripts')
   end
 end
