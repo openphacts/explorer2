@@ -1,8 +1,8 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
-  thresholdTypes: ['Tanimoto', 'Tversky', 'Euclidian'],
+  thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
-  selectedThresholdType: 'Tanimoto',
+  selectedThresholdType: 0,
 
   structureSearchType: "exact",
 
