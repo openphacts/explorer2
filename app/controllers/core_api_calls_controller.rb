@@ -37,7 +37,23 @@ class CoreApiCallsController < ApplicationController
     response = {"uuid" => uuid}
     respond_to do |format|
       format.json {
-        #render :json => "[{'uuid' : '#{uuid}'}]"   
+        render :json => response
+      }
+    end
+  end
+
+  # Given a list of chemspider ids, grab the data about each
+  # id from the Linked Data API, create the tsv file and return it
+  def chemspider_tab_separated_file
+    puts params[:csids]
+    uuid = UUIDTools::UUID.random_create.to_s
+    tsv_file = TsvFile.new
+    tsv_file.save
+    tsv_file.update_attributes(:uuid => uuid)
+    tsv_file.process_chemspider params
+    response = {"uuid" => uuid}
+    respond_to do |format|
+      format.json {
         render :json => response
       }
     end

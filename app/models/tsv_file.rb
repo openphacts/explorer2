@@ -82,17 +82,18 @@ class TsvFile < ActiveRecord::Base
     app_version = AppSettings.config["tsv"]["api_version"]
     url_path = ''
     all_headers = []
-    domain = AppSettings.config["tsv"]["tsv_url"]
+    domain = AppSettings.config["tsv"]["url"]
     path = "/compound"
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
     first = true
     i = 1
-    total = JSON.parse(params[:csids]).size
+    puts "uris are " + params[:uris].first
+    total = params[:total]
     CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       #tab << all_headers
-      JSON.parse(params[:csids]).each do |csid|
+      params[:uris].each do |uri|
         
-        url_params = "uri=" + CGI::escape("http://ops.rsc-us.org/#{csid}") + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
+        url_params = "uri=" + CGI::escape(uri) + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
           if app_version == ""
             url_path = "#{path}?".concat(url_params)

@@ -1,5 +1,7 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
+  needs: ['application'],
+
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
   selectedThresholdType: 0,
@@ -211,7 +213,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        console.log("Set structure search type: " + type);
        var structureType = type;
        if (structureType == null ) {
-         structureType = this.type;
+         structureType = this.structureSearchType;
        }
        if (structureType == null) {
          structureType = "exact";
@@ -303,6 +305,59 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 	     this.set('sortedHeader', header);
 	     this.set('currentHeader', header);
        }
+    },
+
+    tsvDownload: function() {
+    var me = this;
+    var uris = [];
+    $.each(this.get('content').get('structure').get('content'), function(index, compound) {
+        uris.push(compound.get('URI'));
+    });
+    
+    var filtersString = "";
+    if (this.structureSearchType === "similarity") {
+        filtersString += "Similarity structure search";
+        switch(this.selectedThresholdType)
+        {
+        case 0:
+          filtersString += ": threshold type=Tanimoto";
+          break;
+        case 1:
+          filtersString += ": threshold type=Tversky";
+          break;
+        case 2:
+          filtersString += ": threshold type=Euclidian";
+          break;
+        }
+        filtersString += ": threshold=" + this.thresholdPercent;
+        filtersString += ": max records=" + this.maxRecords;
+    } else if (this.structureSearchType === "substructure") {
+        filtersString += "Sub-structure search";
+        filtersString += ": max records=" + this.maxRecords;
+    } else {
+        filtersString += "Exact structure search";
+    }
+
+    var thisCompound = this.get('content');
+	var tsvCreateRequest = $.ajax({
+		url: cs_download_url,
+        dataType: 'json',
+		cache: true,
+        type: "POST",
+		data: {
+			_format: "json",
+			uris: uris,
+            total: me.get('totalCount')
+		},
+		success: function(response, status, request) {
+			console.log('tsv create request success');
+            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
+            //me.monitorTSVCreation(response.uuid);
+		},
+		error: function(request, status, error) {
+			console.log('tsv create request success');
+		}
+	});
     }
 
   }
