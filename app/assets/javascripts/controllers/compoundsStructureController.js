@@ -18,6 +18,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   page: null,
 
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
+
   totalCount: null,
 
   fetching: false,
@@ -25,10 +29,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   sortedHeader: null,
 
   currentHeader: null,
-
-  failedRecords: function() {
-   return (this.get('totalCount') - this.get('model.structure.length')); 
-  },
 
   structure: (function() {
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
@@ -275,7 +275,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
            searcher.exact(thisCompound.get('smiles'), null, callback);
        } else if (structureType == "similarity") {
            this.set('fetching', true);
-           searcher.similarity(thisCompound.get('smiles'), selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
+           searcher.similarity(thisCompound.get('smiles'), this.selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
        } else if (structureType == "substructure") {
            this.set('fetching', true);
            searcher.substructure(thisCompound.get('smiles'), null, 1, this.maxRecords, callback);
