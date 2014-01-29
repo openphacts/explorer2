@@ -1,18 +1,22 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
+  thresholdTypes: ['Tanimoto', 'Tversky', 'Euclidian'],
+
+  selectedThresholdType: 'Tanimoto',
+
   structureSearchType: "exact",
 
   queryParams: ['uri', 'type'],
 
-  uri: '',
+  thresholdPercent: 90,
 
-  type: '',
+  maxRecords: 100,
+
+  uri: null,
+
+  type: null,
 
   page: null,
-
-  currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
 
   totalCount: null,
 
@@ -21,6 +25,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   sortedHeader: null,
 
   currentHeader: null,
+
+  failedRecords: function() {
+   return (this.get('totalCount') - this.get('model.structure.length')); 
+  },
 
   structure: (function() {
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
@@ -201,21 +209,31 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   actions: {
      structureSearchType: function(type) {
        console.log("Set structure search type: " + type);
+       var structureType = type;
+       if (structureType == null ) {
+         structureType = this.type;
+       }
+       if (structureType == null) {
+         structureType = "exact";
+       }
        //reset sorting
        this.get('structure').set('sortProperties', null);
        this.get('structure').set('sortAscending', null);
 	   this.set('sortedHeader', null);
 	   this.set('currentHeader', null);
-       this.set('structureSearchType', type);
+       this.set('structureSearchType', structureType);
        var me = this;
        var thisCompound = this.get('content');
        thisCompound.get('structure').clear();
+       // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
+       this.set('thresholdPercent', $('#threshold-percent')[0].value);
+       this.set('maxRecords', $('#max-records')[0].value);
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
          if (success && response) {
             me.set('fetching', false);
              var results = null;
-             if (type == "exact") {
+             if (structureType == "exact") {
                  results = searcher.parseExactResponse(response);
                  me.set('totalCount', results.length);
                  $.each(results, function(index, result) {
@@ -223,7 +241,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		               thisCompound.get('structure').pushObject(compound);
                    });
                  });
-             } else if (type == "similarity") {
+             } else if (structureType == "similarity") {
                  results = searcher.parseSimilarityResponse(response);
                  me.set('totalCount', results.length);
                  var relevance = {};
@@ -236,7 +254,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		               thisCompound.get('structure').pushObject(compound);
                    });
                  }); 
-             } else if (type == "substructure") {
+             } else if (structureType == "substructure") {
                  results = searcher.parseSubstructureResponse(response);
                  me.set('totalCount', results.length);
                  var relevance = {};
@@ -252,17 +270,15 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
              }
          }
        };
-       if (type == "exact") {
+       if (structureType == "exact") {
            this.set('fetching', true);
            searcher.exact(thisCompound.get('smiles'), null, callback);
-       } else if (type == "similarity") {
+       } else if (structureType == "similarity") {
            this.set('fetching', true);
-           // TODO fix start and count at 1 and 100 for the moment
-           searcher.similarity(thisCompound.get('smiles'), null, null, null, null, 1, 100, callback);
-       } else if (type == "substructure") {
+           searcher.similarity(thisCompound.get('smiles'), selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
+       } else if (structureType == "substructure") {
            this.set('fetching', true);
-           // TODO fix start and count at 1 and 100 for the moment
-           searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
+           searcher.substructure(thisCompound.get('smiles'), null, 1, this.maxRecords, callback);
        }
      },
 

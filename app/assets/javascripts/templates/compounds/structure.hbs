@@ -8,7 +8,6 @@
      <div></div>
      <div></div>
 </div>
-<div>
     <ul class="breadcrumb">
         <li><a href="/">Home</a> <span class="divider">/</span></li>
         <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
@@ -30,7 +29,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
@@ -63,6 +62,15 @@
         <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
         <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
     </div>
+</div>
+<div class="big-padding-left">
+        Maximimum records to retrieve: <input id="max-records" type="number" min="0" step="10" value="100" name="max-records-spinner" />
+		Similarity threshold type: {{view Ember.Select
+		       content=thresholdTypes
+               value=selectedThresholdType
+		}}
+        Similarity threshold <input id="threshold-percent" type="number" min="0" max="100" step="1" value="90" name="threshold-percent-spinner"/>
+        <button class="btn" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button>
 </div>
 	<div style="padding:30px">	
 	<table class="mytable">

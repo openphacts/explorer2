@@ -13,7 +13,13 @@ App.CompoundsIndexRoute = Ember.Route.extend({
     var uri = params.uri
     var compound = this.controllerFor('compounds').store.find('compound', uri);
     return compound;
- }
+ },
+
+  actions: {
+    queryParamsDidChange: function() {
+      this.refresh();
+    }
+  }
 });
 
 App.CompoundsPharmacologyRoute = Ember.Route.extend({
@@ -263,6 +269,12 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     }
     var uri = params.uri;
     return this.get('store').find('compound', uri);
+  },
+
+  actions: {
+    queryParamsDidChange: function() {
+      this.refresh();
+    }
   }
 
 });
