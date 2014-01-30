@@ -17,7 +17,7 @@ App.TreeNodeView = Ember.View.extend({
   }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['hidden', 'opened: tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted: highlight-on'],
+  classNameBindings: ['hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
   classNames: ['treerow'],
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to

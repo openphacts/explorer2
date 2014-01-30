@@ -20,6 +20,8 @@ Explorer2::Application.routes.draw do
 
 #  match 'compound/:id/pharmacology' => 'home#index'
 
+  match 'trees' => 'home#index'
+
   resources :search, :only => [:index] do
     collection do
       get 'typeahead'
