@@ -51,9 +51,7 @@ App.TreesIndexRoute = Ember.Route.extend({
 
 App.TreesPharmacologyRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     console.log('tree pharma controller setup');
     var me = controller;
     controller.set('content', model);
@@ -100,7 +98,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
 
   model: function(params) {
     console.log('tree pharma controller model');
-    var uri = this.get('queryParameters').uri;
+    var uri = params.uri;
     var tree = this.controllerFor('trees').store.find('tree', uri);
     return tree;
   }
@@ -109,9 +107,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
 
 App.TreesPharmacologyIndexRoute = Ember.Route.extend({
 
-  observesParameters: ['uri'],
-
-  setupController: function(controller, model) {
+  setupController: function(controller, model, params) {
     console.log('enzyme index route setup controller');
     var me = controller;
     controller.set('model', model);

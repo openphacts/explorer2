@@ -2,6 +2,10 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 
   needs: "trees",
 
+  queryParams: ['uri'],
+
+  uri: '',
+
   page: null,
 
   currentCount: function() {
