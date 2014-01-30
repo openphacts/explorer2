@@ -28,10 +28,12 @@
 <div class="navbar navbar-static-top navbar-inverse" style="border-bottom:medium solid #888888 ;">
 <div class="navbar-inner">
     <a class="brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer<sup class="release-status">Alpha</sup></a>
-    <div class="navbar-search pull-left" action="">
+<form class="form-search no-margin">
+    <div class="navbar-search pull-left input-append">
 			  {{input type="text" placeholder="search" value=searchQuery action="query" id="search_box" class="search-query span4"}}
-	
+              <button type="submit" class="btn" {{action 'query'}}>Search</button>	
     </div>	
+</form>
     <ul class="nav pull-right">
         <li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
         <li id="search-only" class="active">{{#link-to 'search'}}Search{{/link-to}}</li>
