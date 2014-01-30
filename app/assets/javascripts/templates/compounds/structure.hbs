@@ -1,13 +1,3 @@
-<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
-     <div></div>
-     <div></div>
-     <div></div>
-     <div></div>
-     <div></div>
-     <div></div>
-     <div></div>
-     <div></div>
-</div>
     <ul class="breadcrumb">
         <li><a href="/">Home</a> <span class="divider">/</span></li>
         <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>

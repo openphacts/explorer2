@@ -26,8 +26,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   totalCount: null,
 
-  fetching: false,
-
   sortedHeader: null,
 
   currentHeader: null,
@@ -233,7 +231,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
          if (success && response) {
-            me.set('fetching', false);
+            me.get('controllers.application').set('fetching', false);
              var results = null;
              if (structureType == "exact") {
                  results = searcher.parseExactResponse(response);
@@ -273,13 +271,13 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
          }
        };
        if (structureType == "exact") {
-           this.set('fetching', true);
+           this.get('controllers.application').set('fetching', true);
            searcher.exact(thisCompound.get('smiles'), null, callback);
        } else if (structureType == "similarity") {
-           this.set('fetching', true);
+           this.get('controllers.application').set('fetching', true);
            searcher.similarity(thisCompound.get('smiles'), this.selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
        } else if (structureType == "substructure") {
-           this.set('fetching', true);
+           this.get('controllers.application').set('fetching', true);
            searcher.substructure(thisCompound.get('smiles'), null, 1, this.maxRecords, callback);
        }
      },

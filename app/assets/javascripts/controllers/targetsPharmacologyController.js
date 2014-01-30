@@ -60,13 +60,9 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
   totalCount: null,
 
-  fetching: false,
-
   notEmpty: function() {
     return this.get('totalCount') > 0;
   }.property('totalCount'),
-
-  fetching: false,
 
   inchikeySortASC: function() {
 	return this.get('currentHeader') === "inchi_key" && this.get('sortedHeader') === "inchi_key";
@@ -276,7 +272,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	    var thisTarget = this.get('content');
 	    thisTarget.get('pharmacology').clear();
 	    this.set('page', 0);
-	    this.set('fetching', true);
+	    this.get('controllers.application').set('fetching', true);
 	    var sortBy = '';
 	    if (this.get('sortedHeader') === header) {
 		    sortBy = 'DESC(?' + header + ')';
@@ -297,10 +293,12 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	          var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
 		      thisTarget.get('pharmacology').pushObject(pharmaRecord);
 	        });
-	        me.set('fetching', false);
+	        me.get('controllers.application').set('fetching', false);
+            enable_scroll();
 	      } else {
 	        //failed response so scrolling is now allowed
-	        me.set('fetching', false);
+	        me.get('controllers.application').set('fetching', false);
+            enable_scroll();
 	      }
 	    };
 	    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.get('page') + 1, 50, sortBy, lens, pharmaCallback);
@@ -309,7 +307,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   fetchMore: function() {
     console.log('fetching more');
     if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
-      this.set('fetching', true)
+      this.get('controllers.application').set('fetching', true)
 	    //first set all the current filters
 	    var assayOrganism = this.get('assayOrganismQuery');
 	    var targetOrganism = this.get('targetOrganismQuery');
@@ -417,10 +415,12 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
 	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
         //failed response so scrolling is now allowed
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.get('page') + 1, 50, sortBy, lens, pharmaCallback);
@@ -520,7 +520,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
     me.set('page', 0);
     var thisTarget = this.get('content');
     thisTarget.get('pharmacology').clear();
-    me.set('fetching', true);
+    this.get('controllers.application').set('fetching', true);
     var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
@@ -530,10 +530,12 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('targetPharmacology', pharma);
 	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
         //failed response so scrolling is now allowed
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     // get the count for these filters then get the first page of results

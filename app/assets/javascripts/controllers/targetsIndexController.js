@@ -1,5 +1,7 @@
 App.TargetsIndexController = Ember.ObjectController.extend({
 
+  needs: ['application'],
+
   queryParams: ['uri'],
 
   uri: '',

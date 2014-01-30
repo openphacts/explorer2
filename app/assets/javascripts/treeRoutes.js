@@ -46,7 +46,12 @@ App.TreesIndexRoute = Ember.Route.extend({
    model: function(params) {
      console.log('enzymes route model');
      return [];
-   }	
+   },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  }
 });
 
 App.TreesPharmacologyRoute = Ember.Route.extend({
@@ -101,6 +106,11 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
     var uri = params.uri;
     var tree = this.controllerFor('trees').store.find('tree', uri);
     return tree;
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });
@@ -141,6 +151,11 @@ App.TreesPharmacologyIndexRoute = Ember.Route.extend({
     var uri = this.get('queryParameters').uri;
     var tree = this.controllerFor('trees').store.find('tree', uri);
     return tree.get('pharmacology');
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });

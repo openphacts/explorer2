@@ -394,6 +394,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 			compound_inchi_item = null,
 			compound_inchikey_item = null,
 			compound_pref_label_item = null;
+		//during testing there have been cases where em is null
 		var chemblMolecule = em != null ? em[constants.ABOUT] : null;
 		if (em != null) {
 			$.each(em, function(index, match) {
@@ -952,9 +953,13 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 					});
 				}
 				if (uniprotData.seeAlso) {
-					$.each(uniprotData.seeAlso, function(j, see) {
-						seeAlso.push(see);
-					});
+                    if ($.isArray(uniprotData.seeAlso)) {
+					  $.each(uniprotData.seeAlso, function(j, see) {
+						  seeAlso.push(see);
+					  });
+                    } else {
+				      seeAlso.push(uniprotData.seeAlso);
+                    }
 				}
                 molecularWeight =  uniprotData.molecularWeight ? uniprotData.molecularWeight: null;
 	            functionAnnotation = uniprotData.Function_Annotation ? uniprotData.Function_Annotation : null;

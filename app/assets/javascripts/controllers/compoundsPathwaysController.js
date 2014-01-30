@@ -1,12 +1,12 @@
 App.CompoundsPathwaysController = Ember.ObjectController.extend({
 
+  needs: ['application'],
+
   queryParams: ['uri'],
 
   uri: '',
 
   page: null,
-
-  fetching: false,
 
   currentCount: function() {
     return this.get('model.pathways.length');
@@ -23,7 +23,7 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
 actions: {
   fetchMore: function() {
     if (this.get('model.pathways.length') < this.totalCount) {
-        me.set('fetching', true);
+        me.get('controllers.application').set('fetching', true);
     var me = this;
     var thisCompound = this.get('content');
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
@@ -38,10 +38,12 @@ actions: {
               thisCompound.get('pathways').pushObject(pathway);
             });
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
         //failed response so scrolling is now allowed
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     searcher.byCompound(thisCompound.get('URI'), null, null, me.page + 1, 50, null, pathwaysByCompoundCallback);

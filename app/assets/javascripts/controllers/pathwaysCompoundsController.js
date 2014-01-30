@@ -1,10 +1,10 @@
 App.PathwaysCompoundsController = Ember.ObjectController.extend({
 
+  needs: ['application'],
+
   queryParams: ['uri'],
 
   uri: '',
-
-  fetching: false,
 
   currentCount: function() {
     return this.get('model.compounds.length');
@@ -17,14 +17,6 @@ App.PathwaysCompoundsController = Ember.ObjectController.extend({
   notEmpty: function() {
     return this.get('model.compounds.length') > 0;
   }.property('model.compounds.length'),
-
-//  compounds: (function() {
-//    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-//      sortProperties: null,
-//      sortAscending: false,
-//      content: this.get('content.compounds')
-//    });
-//  }).property('content.compounds'),
 
   prefLabelSortASC: function() {
 	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";

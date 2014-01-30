@@ -11,6 +11,11 @@ App.TargetsIndexRoute = Ember.Route.extend({
     console.log('target index model')
     var uri = params.uri;
     return this.get('store').find('target', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });
@@ -127,9 +132,9 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
               thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
         controller.set('page', 1);
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
       } else {
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
       }
     };
     var countCallback=function(success, status, response){
@@ -137,7 +142,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
           var count = searcher.parseTargetPharmacologyCountResponse(response);
           controller.set('totalCount', count);
           if (count > 0 && controller.get('page') == null) {
-              me.set('fetching', true);
+              me.get('controllers.application').set('fetching', true);
               searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
           }
       }
@@ -168,6 +173,11 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
     console.log('target pharma index route');
     var uri = params.uri;
     return this.get('store').find('target', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });
@@ -208,5 +218,10 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
   model: function(params) {
     var uri = params.uri;
     return this.get('store').find('target', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 });

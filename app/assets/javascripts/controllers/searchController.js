@@ -2,9 +2,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     queryParams: ['query'],
 
-    needs: 'application',
-
-    isSearching: false,
+    needs: ['application'],
 
     currentPage: 0,
 
@@ -59,6 +57,7 @@ App.SearchController = Ember.ArrayController.extend({
     var me = this;
     var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey); 
 	var cwCompoundCallback=function(success, status, response){
+            me.get('controllers.application').set('fetching', false);
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
@@ -76,9 +75,9 @@ App.SearchController = Ember.ArrayController.extend({
             } else {
                 // an error in the response, ignore for now
             }
-            me.set('isSearching', false);
         };
         var cwTargetCallback=function(success, status, response){
+            me.get('controllers.application').set('fetching', false);
             if(success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
@@ -95,9 +94,9 @@ App.SearchController = Ember.ArrayController.extend({
             } else {
                 // an error in the response, ignore for now
             }
-            me.set('isSearching', false);
         }; 
         //targets
+          me.get('controllers.application').set('fetching', true);
           searcher.byTag(me.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
           searcher.byTag(me.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
 

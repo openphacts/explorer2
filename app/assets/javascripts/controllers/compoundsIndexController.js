@@ -1,5 +1,7 @@
 App.CompoundsIndexController = Ember.ObjectController.extend({
 
+  needs: ['application'],
+
   queryParams: ['uri'],
   uri: '',
 

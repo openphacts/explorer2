@@ -1,6 +1,6 @@
 App.TreesPharmacologyController = Ember.ObjectController.extend({
 
-  needs: "trees",
+  needs: ['trees', 'application'],
 
   queryParams: ['uri'],
 
@@ -17,8 +17,6 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
   notEmpty: function() {
     return this.get('model.pharmacology.length') > 0;
   }.property('model.pharmacology.length'),
-
-  fetching: false,
 
   sortedHeader: null,
 
@@ -77,11 +75,14 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
 	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
+    this.get('controllers.application').set('fetching', true);
     searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
     }
   },
@@ -180,7 +181,7 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 	    var thisTargetClass = this.get('content');
 	    thisTargetClass.get('pharmacology').clear();
 	    this.set('page', 0);
-	    this.set('fetching', true);
+	    this.get('controllers.application').set('fetching', true);
 	    var sortBy = '';
 	    if (this.get('sortedHeader') === header) {
 		    sortBy = 'DESC(?' + header + ')';
@@ -200,9 +201,11 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
 	      thisTargetClass.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);

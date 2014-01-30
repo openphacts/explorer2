@@ -70,8 +70,6 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   totalCount: null,
 
-  fetching: false,
-
   notEmpty: function() {
     return this.get('totalCount') > 0;
   }.property('totalCount'),
@@ -298,7 +296,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	    var thisCompound = this.get('content');
 	    thisCompound.get('pharmacology').clear();
 	    this.set('page', 0);
-	    this.set('fetching', true);
+	    this.get('controllers.application').set('fetching', true);
 	    var sortBy = '';
 	    if (this.get('sortedHeader') === header) {
 		    sortBy = 'DESC(?' + header + ')';
@@ -319,10 +317,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 	          var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 		      thisCompound.get('pharmacology').pushObject(pharmaRecord);
 	        });
-	        me.set('fetching', false);
+	        me.get('controllers.application').set('fetching', false);
+            enable_scroll();
 	      } else {
 	        //failed response so scrolling is now allowed
-	        me.set('fetching', false);
+	        me.get('controllers.application').set('fetching', false);
+            enable_scroll();
 	      }
 	    };
 	    searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.page + 1, 50, sortBy, lens, pharmaCallback);	
@@ -495,7 +495,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   fetchMore: function() {
     if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
-    this.set('fetching', true)
+    this.get('controllers.application').set('fetching', true)
     //first set all the current filters
     var assayOrganism = this.get('assayOrganismQuery');
     var targetOrganism = this.get('targetOrganismQuery');
@@ -595,7 +595,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     var me = this;
     var thisCompound = this.get('content');
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
-    me.set('fetching', true);
+    me.get('controllers.application').set('fetching', true);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
         me.page++;
@@ -604,10 +604,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
         //failed response so scrolling is now allowed
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     //searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, sortBy, null, pharmaCallback);
@@ -708,7 +710,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     me.set('page', 0);
     var thisCompound = this.get('content');
     thisCompound.get('pharmacology').clear();
-    me.set('fetching', true);
+    me.get('controllers.application').set('fetching', true);
     var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
     var pharmaCallback=function(success, status, response){
       if (success && response) {
@@ -718,10 +720,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
           var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
 	      thisCompound.get('pharmacology').pushObject(pharmaRecord);
         });
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       } else {
         //failed response so scrolling is now allowed
-        me.set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
       }
     };
     // get the count for these filters then get the first page of results

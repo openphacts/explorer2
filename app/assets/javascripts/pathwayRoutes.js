@@ -10,6 +10,11 @@ App.PathwaysIndexRoute = Ember.Route.extend({
     console.log('pathway model');
     var uri = params.uri;
     return this.get('store').find('pathway', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });
@@ -44,6 +49,11 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
     console.log('pathway compounds index');
     var uri = params.uri;
     return this.get('store').find('pathway', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });

@@ -15,6 +15,11 @@ App.CompoundsIndexRoute = Ember.Route.extend({
     return compound;
  },
 
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  },
+
   actions: {
     queryParamsDidChange: function() {
       this.refresh();
@@ -196,6 +201,11 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
     console.log('compounds pharma controller model');
     var uri = params.uri;
     return this.get('store').find('compound', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 
 });
@@ -271,6 +281,11 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     return this.get('store').find('compound', uri);
   },
 
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  },
+
   actions: {
     queryParamsDidChange: function() {
       this.refresh();
@@ -341,5 +356,10 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
   model: function(params) {
     var uri = params.uri;
     return this.get('store').find('compound', uri);
+  },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
   }
 });

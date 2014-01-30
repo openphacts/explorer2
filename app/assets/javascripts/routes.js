@@ -44,6 +44,11 @@ App.SearchRoute = Ember.Route.extend({
     return [];
   },
 
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  },
+
   actions: {
     queryParamsDidChange: function() {
       this.refresh();

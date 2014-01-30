@@ -61,6 +61,7 @@ App.CompoundsPathwaysView = Ember.View.extend({
 
   didScroll: function() {
     if(this.isScrolledToBottom() && !this.get('controller').get('fetching')) {
+      disable_scroll();
       this.get('controller').send('fetchMore');
     }
   },

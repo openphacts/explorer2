@@ -1,9 +1,13 @@
 App.TreesIndexController = Ember.ArrayController.extend({
 
+  needs: ['application'],
+
   defaultTree: 'enzyme',
   selectedTree: 'enzyme',
   treeTypes: ["enzyme", "chembl", "chebi", "go"],
   childTreeNodes: [],
+
+  fetching: false,
 
   selectedTreeChanged: function() {
     if(this.get('selectedTree') !== null) {
