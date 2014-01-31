@@ -3,6 +3,8 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
   needs: "compound",
 
   page: null,
+  
+  showProvenance: false,
 
   currentCount: function() {
     return this.get('model.content.length');
@@ -40,6 +42,18 @@ App.CompoundPathwaysIndexController = Ember.ArrayController.extend({
     };
     searcher.byCompound('http://www.conceptwiki.org/concept/' + thisCompound.id, null, null, 1, 50, null, pathwaysByCompoundCallback);
     }
+  },
+
+    actions: {
+  	  enableProvenance: function() {
+    	this.set('showProvenance', true);
+    	console.log("Compound pathway provenance enabled " + this.get('showProvenance'));
+	  },
+
+  	  disableProvenance: function() {
+      	this.set('showProvenance', false);
+    	console.log("Compound pathway provenance disabled " + this.get('showProvenance'));
+  	  }
   }
 
 });
