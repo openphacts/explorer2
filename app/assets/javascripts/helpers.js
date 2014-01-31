@@ -178,7 +178,12 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
 			case 'uniprot':
 				linkout = createUniprotLink(item);
 				break;
-				
+			
+			case 'wikipathways':
+			  	console.log(" wikipathways datasource");
+				linkout = createWikipathwaysLink(item);
+				break;
+			
 			default:
 				console.log("source unrecognised: " + source);
 		}
@@ -225,6 +230,11 @@ function createUniprotLink(item) {
 	return dbLink;	
 }
 
+function createWikipathwaysLink(item) {
+	var dbLink;
+	dbLink = '<a href="' + item + '" target="_blank"><img src="/assets/wikipathwaysProvIcon.png" title="WikiPathways" height="15" width="15"></a>'
+	return dbLink;
+}
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
 var scrollOnThisPage = false;
 
