@@ -2187,6 +2187,15 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
 	$.each(partsComplete, function(i, part) {
             parts.push({about: part["_about"], type: part.type});
 	});
+	
+	var wikipathwaysProvenance;
+	wikipathwaysProvenance = {};
+	// provenance
+    wikipathwaysProvenance = {};
+    wikipathwaysProvenance['source'] = 'wikipathways';
+    wikipathwaysProvenance['description'] = identifier;
+    wikipathwaysProvenance['organismLabel'] = organism;
+	
 	return {
                    'URI': URI,
                    'title': title, 
@@ -2196,7 +2205,8 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
                    'pathwayOntologies': pathwayOntologies,
                    'organism': organism, 
                    'organismLabel': organismLabel, 
-                   'parts': parts
+                   'parts': parts,
+                   'wikipathwaysProvenance': wikipathwaysProvenance
                 };
 }
 
@@ -2218,6 +2228,7 @@ Openphacts.PathwaySearch.prototype.parseByCompoundResponse = function(response) 
           organismLabel = item.pathway_organism.label;
           description = item.description ? item.description : null;
           pathwayOntology = item.pathwayOntology ? item.pathwayOntology : null;
+        
           pathways.push({
                            'title': title, 
                            'identifier': identifier,
@@ -2229,6 +2240,7 @@ Openphacts.PathwaySearch.prototype.parseByCompoundResponse = function(response) 
                            'geneProductURI': geneProductURI,
                            'geneProductCWURI': geneProductCWURI,
                            'about': about
+                           
                         });
         });
 	return pathways;
