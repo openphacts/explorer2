@@ -1,3 +1,41 @@
+	<!-- Modal -->
+	<div id="compoundStructureFilterModalView" class="modal hide fade"  style="width: inherit;"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Filters for {{this.prefLabel}} {{structureSearchType}}</h3>
+	  </div>
+	  <div class="modal-body" style="overflow-y: visible;">
+        <table>
+        <tbody>
+        <tr><td>{{input type="text" placeholder="Lower molecular weight value" value=mwLowerValue id="mwLowerValueInput"}}</td><td><p style=
+"display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= Molecular Weight <= </p></td><td>{{input type="text" placeholder="Higher molecular weight value" value=mvHigherValue id="mwHigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower molecular weight freebase value" value=mwFreebaseLowerValue id="mwFreebaseLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= Molecular Weight Freebase <= </p></td><td>{{input type="text" placeholder="Higher molecular weight value" value=mvFreebaseHigherValue id="mwFreebaseHigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower H-bond Receptors value" value=hBondReceptorsLowerValue id="hBondReceptorsLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= H-bond Receptors <= </p></td><td>{{input type="text" placeholder="Higher H-bond receptors value" value=hBondReceptorsHigherValue id="hBondReceptorsHigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower H-bond Donors value" value=hBondDonorsLowerValue id="hBondDonorsLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= H-bond Donors <= </p></td><td>{{input type="text" placeholder="Higher H-bond donors value" value=hBondDonorsHigherValue id="hBondDonorsHigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower logP value" value=logPLowerValue id="logPLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= logP <= </p></td><td>{{input type="text" placeholder="Higher logP value" value=logPHigherValue id="logPHigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower Polar Surface Area value" value=polarSurfaceAreaLowerValue id="polarSurfaceAreaLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= Polar Surface Area <= </p></td><td>{{input type="text" placeholder="Higher Polar surface Area value" value=polarSurfaceAreaHigherValue id="polarSurfaceAreaHigherValueInput"}}</td>
+	    </div>
+        <tr><td>{{input type="text" placeholder="Lower ro5 value" value=ro5LowerValue id="ro5LowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= Rule of 5 Violations <= </p></td><td>{{input type="text" placeholder="Higher ro5 value" value=ro5HigherValue id="ro5HigherValueInput"}}</td>
+	    </tr>
+        <tr><td>{{input type="text" placeholder="Lower Rotable Bonds value" value=rbLowerValue id="rbLowerValueInput"}}</td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;"> <= Number of Rotatable Bonds <= </p></td><td>{{input type="text" placeholder="Higher Rotatable Bonds value" value=rbHigherValue id="rbHigherValueInput"}}</td>
+	    </tr>
+        <tr><td></td><td><p style="display: inline; vertical-align: text-bottom; font-weight: bolder;">Number of Rotatable Bonds >= </p></td><td>{{input type="text" placeholder="Relevance value" value=relValue id="relValueInput"}}</td>
+	    </tr>
+        </tbody>
+        </table>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+	    <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+	  </div>
+    </div>
+	<!-- End of Modal -->
     <ul class="breadcrumb">
         <li><a href="/">Home</a> <span class="divider">/</span></li>
         <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
@@ -19,7 +57,7 @@
 			<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csUri}}</div>
 			<div class="row">
 				<div class="span8">
-    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+    				<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundStructureFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
    					<div class="row">
       					<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
