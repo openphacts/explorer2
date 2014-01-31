@@ -20,6 +20,234 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   page: null,
 
+  mwLowerValue: null,
+
+  mwHigherValue: null,
+
+  maxMWT: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('fullMWT') > currentMax ? compound.get('fullMWT') : currentMax;
+    });
+    this.set('mwHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minMWT: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('fullMWT');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('fullMWT') > currentMin ? compound.get('fullMWT') : currentMin;
+      });
+    this.set('mwLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  mwFreebaseLowerValue: null,
+
+  mwFreebaseHigherValue: null,
+
+  maxMWFreebase: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('mwFreebase') > currentMax ? compound.get('mwFreebase') : currentMax;
+    });
+    this.set('mwFreebaseHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minMWFreebase: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('mwFreebase');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('mwFreebase') > currentMin ? compound.get('mwFreebase') : currentMin;
+      });
+    this.set('mwFreebaseLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
+
+  hBondAcceptorsLowerValue: null,
+
+  hBondAcceptorsHigherValue: null,
+
+  maxHBondAcceptors: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('hba') > currentMax ? compound.get('hba') : currentMax;
+    });
+    this.set('hBondAcceptorsHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minHBondAcceptors: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('hba');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('hba') > currentMin ? compound.get('hba') : currentMin;
+      });
+    this.set('hBondAcceptorsLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  hBondDonorsLowerValue: null,
+
+  hBondDonorsHigherValue: null,
+
+  maxHBondDonors: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('hbd') > currentMax ? compound.get('hbd') : currentMax;
+    });
+    this.set('hBondDonorsHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minHBondDonors: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('hbd');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('hbd') > currentMin ? compound.get('hbd') : currentMin;
+      });
+    this.set('hBondDonorsLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
+
+  logPLowerValue: null,
+
+  logPHigherValue: null,
+
+  maxLogPDonors: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('logp') > currentMax ? compound.get('logp') : currentMax;
+    });
+    this.set('logPHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minLogPDonors: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('logp');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('logp') > currentMin ? compound.get('logp') : currentMin;
+      });
+    this.set('logPLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
+
+  polarSurfaceAreaLowerValue: null,
+
+  polarSurfaceAreaHigherValue: null,
+
+  maxPSA: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('psa') > currentMax ? compound.get('psa') : currentMax;
+    });
+    this.set('PSAHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minPSA: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('psa');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('psa') > currentMin ? compound.get('psa') : currentMin;
+      });
+    this.set('PSaLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  ro5LowerValue: null,
+
+  ro5HigherValue: null,
+
+  maxRO5: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('ro5Violations') > currentMax ? compound.get('ro5Violations') : currentMax;
+    });
+    this.set('ro5HigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minRO5: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('ro5Violations');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('ro5Violations') > currentMin ? compound.get('ro5Violations') : currentMin;
+      });
+    this.set('ro5LowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  rbLowerValue: null,
+
+  rbHigherValue: null,
+
+  maxRB: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('rtb') > currentMax ? compound.get('rtb') : currentMax;
+    });
+    this.set('rbHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minRB: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('rtb');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('rtb') > currentMin ? compound.get('rtb') : currentMin;
+      });
+    this.set('rbLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
+  relLowerValue: null,
+
+  relHigherValue: null,
+
+  maxRel: function() {
+    var currentMax = 0;
+    $.each(this.get('content.structure').get('content'), function(index, compound) {
+      currentMax = compound.get('relevance') > currentMax ? compound.get('relevance') : currentMax;
+    });
+    this.set('relHigherValue', currentMax);
+    return currentMax;
+  }.property('content.structure.length'),
+
+  minRel: function() {
+    if (this.get('content.structure.length') > 0) {
+      var currentMin = this.get('content.structure').get('content')[0].get('relevance');
+      $.each(this.get('content.structure').get('content'), function(index, compound) {
+        currentMin = compound.get('relevance') > currentMin ? compound.get('relevance') : currentMin;
+      });
+    this.set('relLowerValue', currentMin);
+    return currentMin;
+    }
+  }.property('content.structure.length'),
+
   currentCount: function() {
     return this.get('model.structure.length');
   }.property('model.structure.length'),

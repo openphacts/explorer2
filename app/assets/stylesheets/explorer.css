@@ -361,3 +361,9 @@ sub {
     right: 3%;
     bottom: 3%;
 }
+
+.structure-filter-para {
+    display: inline;
+    vertical-align: text-bottom;
+    font-weight: bolder;
+}
