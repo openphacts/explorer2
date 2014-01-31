@@ -13,7 +13,8 @@ App.Pathway = DS.Model.extend({
   parts: DS.attr(),
   compounds: DS.hasMany('compound', { async: true }),
   targets: DS.hasMany('target', { async: true }),
-  revision: DS.attr('string')
+  revision: DS.attr('string'),
+  wikipathwaysProvenance: DS.attr()
 });
 //App.Pathway.reopenClass({
 //    find: function(id) {
