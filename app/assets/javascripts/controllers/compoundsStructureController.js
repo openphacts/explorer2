@@ -585,8 +585,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    var mwFreebaseFilter = false;
 		    var hbaFilter = false;
 		    var hbdFilter = false;
-			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && me.get('mwLowerValue') <= me.get('mwHigherValue')) {
-              if (compound.get('fullMWT') >= me.get('mwLowerValue') && compound.get('fullMWT') <= me.get('mwHigherValue')) {
+			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && Number(me.get('mwLowerValue')) <= Number(me.get('mwHigherValue'))) {
+              if (Number(compound.get('fullMWT')) >= Number(me.get('mwLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwHigherValue'))) {
 	            // compound is within the params so we add it 
 	            mwFilter = true;          
               }
@@ -594,32 +594,32 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 			  // this filter is valid since we are not checking it so we would add the compound regardless
 			  mwFilter = true;
 		    }
-			if (me.get('mwFreebaseLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseLowerValue') != null && me.get('mwFreebaseHigherValue') != null && me.get('mwFreebaseLowerValue') <= me.get('mwFreebaseHigherValue')) {
-              if (compound.get('mwFreebase') >= me.get('mwFreebaseLowerValue') && compound.get('mwFreebase') <= me.get('mwFreebaseHigherValue')) {
+			if (me.get('mwFreebaseLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseLowerValue') != null && me.get('mwFreebaseHigherValue') != null && Number(me.get('mwFreebaseLowerValue')) <= Number(me.get('mwFreebaseHigherValue'))) {
+              if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseHigherValue'))) {
                 mwFreebaseFilter = true;
               }
 		    } else {
 			  mwFreebaseFilter = true;
 		    }	      	
-			if (me.get('hBondAcceptorsLowerValue') != "" && me.get('hBondAcceptorsHigherValue') != "" && me.get('hBondAcceptorsLowerValue') != null && me.get('hBondAcceptorsHigherValue') != null && me.get('hBondAcceptorsLowerValue') <= me.get('hBondAcceptorsHigherValue')) {
-              if (compound.get('hba') >= me.get('hBondAcceptorsLowerValue') && compound.get('hba') <= me.get('hBondAcceptorsHigherValue')) {
+			if (me.get('hBondAcceptorsLowerValue') != "" && me.get('hBondAcceptorsHigherValue') != "" && me.get('hBondAcceptorsLowerValue') != null && me.get('hBondAcceptorsHigherValue') != null && Number(me.get('hBondAcceptorsLowerValue')) <= Number(me.get('hBondAcceptorsHigherValue'))) {
+              if (Number(compound.get('hba')) >= Number(me.get('hBondAcceptorsLowerValue')) && Number(compound.get('hba')) <= Number(me.get('hBondAcceptorsHigherValue'))) {
                 hbaFilter = true;
               }
 		    } else {
 			  hbaFilter = true;
 		    }
-			if (me.get('hBondDonorsLowerValue') != "" && me.get('hBondDonorsHigherValue') != "" && me.get('hBondDonorsLowerValue') != null && me.get('hBondDonorsHigherValue') != null && me.get('hBondDonorsLowerValue') <= me.get('hBondDonorsHigherValue')) {
-              if (compound.get('hbd') >= me.get('hBondDonorsLowerValue') && compound.get('hbd') <= me.get('hBondDonorsHigherValue')) {
+			if (me.get('hBondDonorsLowerValue') != "" && me.get('hBondDonorsHigherValue') != "" && me.get('hBondDonorsLowerValue') != null && me.get('hBondDonorsHigherValue') != null && Number(me.get('hBondDonorsLowerValue')) <= Number(me.get('hBondDonorsHigherValue'))) {
+              if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsHigherValue'))) {
                 hbdFilter = true;
               }
 		    } else {
 			  hbdFilter = true;
 		    }
+		    // check all the filter flags and add the compound if all are true
 		    console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter);    	
 		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true) {
 			  me.get('filteredCompounds').pushObject(compound);
 		    }
-		    // check all the filter flags and add the compound if all are true
 	  });	
 	  // mwLowerValue: null,
 	  // 
