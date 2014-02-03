@@ -218,6 +218,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();
+    me.set('filteredCompounds', []);
 	//var activeCompounds = thisCompound.get('structure').filter(function(compound) {
 	      //if (comment.get('isActive')) { return true; }
 	//      return true;
@@ -233,6 +234,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                $.each(results, function(index, result) {
                    me.get('store').find('compound', result).then(function(compound) {
 		               thisCompound.get('structure').pushObject(compound);
+		               me.get('filteredCompounds').pushObject(compound);
                    });
                });
            } else if (structureSearchType === "similarity") {
@@ -245,6 +247,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 		               thisCompound.get('structure').pushObject(compound);
+		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
            } else if (structureSearchType === "substructure") {
@@ -257,10 +260,11 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 		               thisCompound.get('structure').pushObject(compound);
+		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
            }
-		me.set('filteredCompounds', thisCompound.get('structure'));
+		//me.set('filteredCompounds', thisCompound.get('structure'));
        }
      };
      if (structureSearchType === "exact") {

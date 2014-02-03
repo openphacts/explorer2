@@ -14,13 +14,19 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   maxRecords: 100,
 
-  filteredCompounds: null,
+  filteredCompounds: [],
 
   uri: null,
 
   type: null,
 
   page: null,
+
+  totalCount: null,
+
+  sortedHeader: null,
+
+  currentHeader: null,
 
   mwLowerValue: null,
 
@@ -59,8 +65,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   relHigherValue: null,
 
   currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
+    return this.get('filteredCompounds.length');
+  }.property('filteredCompounds.length'),
 
   maxMWT: function() {
     var currentMax = 0;
@@ -241,16 +247,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     return currentMin;
     }
   }.property('content.structure.length'),
-
-  currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
-
-  totalCount: null,
-
-  sortedHeader: null,
-
-  currentHeader: null,
 
   structure: (function() {
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
@@ -582,6 +578,49 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
     applyFilters: function() {
 	  console.log('compound structure filters');
+	  var me = this;
+	  me.get('filteredCompounds').clear();
+	  $.each(me.get('content.structure.content'), function(index, compound) {
+		    var mwFilter = false;
+		    var mwFreebaseFilter = false;
+		    var hbaFilter = false;
+		    var hbdFilter = false;
+			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && me.get('mwLowerValue') <= me.get('mwHigherValue')) {
+              if (compound.get('fullMWT') >= me.get('mwLowerValue') && compound.get('fullMWT') <= me.get('mwHigherValue')) {
+	            // compound is within the params so we add it 
+	            mwFilter = true;          
+              }
+		    } else {
+			  // this filter is valid since we are not checking it so we would add the compound regardless
+			  mwFilter = true;
+		    }
+			if (me.get('mwFreebaseLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseLowerValue') != null && me.get('mwFreebaseHigherValue') != null && me.get('mwFreebaseLowerValue') <= me.get('mwFreebaseHigherValue')) {
+              if (compound.get('mwFreebase') >= me.get('mwFreebaseLowerValue') && compound.get('mwFreebase') <= me.get('mwFreebaseHigherValue')) {
+                mwFreebaseFilter = true;
+              }
+		    } else {
+			  mwFreebaseFilter = true;
+		    }	      	
+			if (me.get('hBondAcceptorsLowerValue') != "" && me.get('hBondAcceptorsHigherValue') != "" && me.get('hBondAcceptorsLowerValue') != null && me.get('hBondAcceptorsHigherValue') != null && me.get('hBondAcceptorsLowerValue') <= me.get('hBondAcceptorsHigherValue')) {
+              if (compound.get('hba') >= me.get('hBondAcceptorsLowerValue') && compound.get('hba') <= me.get('hBondAcceptorsHigherValue')) {
+                hbaFilter = true;
+              }
+		    } else {
+			  hbaFilter = true;
+		    }
+			if (me.get('hBondDonorsLowerValue') != "" && me.get('hBondDonorsHigherValue') != "" && me.get('hBondDonorsLowerValue') != null && me.get('hBondDonorsHigherValue') != null && me.get('hBondDonorsLowerValue') <= me.get('hBondDonorsHigherValue')) {
+              if (compound.get('hbd') >= me.get('hBondDonorsLowerValue') && compound.get('hbd') <= me.get('hBondDonorsHigherValue')) {
+                hbdFilter = true;
+              }
+		    } else {
+			  hbdFilter = true;
+		    }
+		    console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter);    	
+		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true) {
+			  me.get('filteredCompounds').pushObject(compound);
+		    }
+		    // check all the filter flags and add the compound if all are true
+	  });	
 	  // mwLowerValue: null,
 	  // 
 	  // mwHigherValue: null,
