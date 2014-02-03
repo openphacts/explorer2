@@ -588,8 +588,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    var logpFilter = false;
 		    var ro5Filter = false;
 		    var psaFilter = false;
-		    var rtbFilter = true;
-		    var relFilter = true;
+		    var rtbFilter = false;
+		    var relFilter = false;
 			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && Number(me.get('mwLowerValue')) <= Number(me.get('mwHigherValue'))) {
               if (Number(compound.get('fullMWT')) >= Number(me.get('mwLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwHigherValue'))) {
 	            // compound is within the params so we add it 
