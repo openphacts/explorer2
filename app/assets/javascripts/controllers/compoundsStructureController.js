@@ -585,6 +585,11 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    var mwFreebaseFilter = false;
 		    var hbaFilter = false;
 		    var hbdFilter = false;
+		    var logpFilter = false;
+		    var ro5Filter = false;
+		    var psaFilter = false;
+		    var rtbFilter = true;
+		    var relFilter = true;
 			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && Number(me.get('mwLowerValue')) <= Number(me.get('mwHigherValue'))) {
               if (Number(compound.get('fullMWT')) >= Number(me.get('mwLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwHigherValue'))) {
 	            // compound is within the params so we add it 
@@ -615,9 +620,47 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    } else {
 			  hbdFilter = true;
 		    }
+			if (me.get('logPLowerValue') != "" && me.get('logPHigherValue') != "" && me.get('logPLowerValue') != null && me.get('logPHigherValue') != null && Number(me.get('logPLowerValue')) <= Number(me.get('logPHigherValue'))) {
+              if (Number(compound.get('logp')) >= Number(me.get('logPLowerValue')) && Number(compound.get('logp')) <= Number(me.get('logPHigherValue'))) {
+                logpFilter = true;
+              }
+		    } else {
+			  logpFilter = true;
+		    }
+			if (me.get('ro5LowerValue') != "" && me.get('ro5HigherValue') != "" && me.get('ro5LowerValue') != null && me.get('ro5HigherValue') != null && Number(me.get('ro5LowerValue')) <= Number(me.get('ro5HigherValue'))) {
+              if (Number(compound.get('ro5Violations')) >= Number(me.get('ro5LowerValue')) && Number(compound.get('ro5Violations')) <= Number(me.get('ro5HigherValue'))) {
+                ro5Filter = true;
+              }
+		    } else {
+			  ro5Filter = true;
+		    }
+			if (me.get('polarSurfaceAreaLowerValue') != "" && me.get('polarSurfaceAreaHigherValue') != "" && me.get('polarSurfaceAreaLowerValue') != null && me.get('polarSurfaceAreaHigherValue') != null && Number(me.get('polarSurfaceAreaLowerValue')) <= Number(me.get('polarSurfaceAreaHigherValue'))) {
+              if (Number(compound.get('psa')) >= Number(me.get('polarSurfaceAreaLowerValue')) && Number(compound.get('psa')) <= Number(me.get('polarSurfaceAreaHigherValue'))) {
+                psaFilter = true;
+              }
+		    } else {
+			  psaFilter = true;
+		    }
+			if (me.get('rbLowerValue') != "" && me.get('rbHigherValue') != "" && me.get('rbLowerValue') != null && me.get('rbHigherValue') != null && Number(me.get('rbLowerValue')) <= Number(me.get('rbHigherValue'))) {
+              if (Number(compound.get('rtb')) >= Number(me.get('rbLowerValue')) && Number(compound.get('rtb')) <= Number(me.get('rbHigherValue'))) {
+                rtbFilter = true;
+              }
+		    } else {
+			  rtbFilter = true;
+		    }
+			if (me.get('relHigherValue') != "" && me.get('relHigherValue') != null) {
+              if (Number(compound.get('relevance')) >= Number(me.get('relHigherValue'))) {
+                relFilter = true;
+              }
+		    } else {
+			  relFilter = true;
+		    }
+		
+		
+		
 		    // check all the filter flags and add the compound if all are true
-		    console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter);    	
-		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true) {
+		    console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter + ' logp ' + logpFilter + ' ro5 ' + ro5Filter + ' psa ' + psaFilter + ' rtb ' + rtbFilter + ' rel ' + relFilter);    	
+		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true && logpFilter == true && ro5Filter == true && psaFilter == true && rtbFilter == true && relFilter == true) {
 			  me.get('filteredCompounds').pushObject(compound);
 		    }
 	  });	
