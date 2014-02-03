@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('structureSearchHasRelevance', function(type) {
+  if (type === "substructure" || type === "similarity") {
+    return true;
+  }
+});
 Ember.Handlebars.registerBoundHelper('pathwayOrganismLink', function(link, label) {
   if (link != null && label != null) {
     return new Handlebars.SafeString('<a href="' + link + '" target="_blank">' + label + '</a>');

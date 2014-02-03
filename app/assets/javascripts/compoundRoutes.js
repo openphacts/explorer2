@@ -246,6 +246,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    var relVal = result.relevance;
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
+	                   compound.set('relevance', relevance[about]);
 		               thisCompound.get('structure').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
@@ -259,6 +260,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    var relVal = result.relevance;
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
+	                   compound.set('relevance', relevance[about]);
 		               thisCompound.get('structure').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });

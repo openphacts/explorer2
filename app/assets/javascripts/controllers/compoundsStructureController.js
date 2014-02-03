@@ -28,6 +28,110 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   currentHeader: null,
 
+  mwPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('mwLowerValue');	
+  }.property('mwLowerValue'),
+
+  mwPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('mwHigherValue');	
+  }.property('mwHigherValue'),
+
+  freebasePlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('mwFreebaseLowerValue');	
+  }.property('mwFreebaseLowerValue'),
+
+  freebasePlaceholderHigh: function(){
+	return 'Lowest value: ' + this.get('mwFreebaseHigherValue');	
+  }.property('mwFreebaseHigherValue'),
+
+  hbaPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('hBondAcceptorsLowerValue');	
+  }.property('hBondAcceptorsLowerValue'),
+
+  hbaPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('hBondAcceptorsHigherValue');	
+  }.property('hBondAcceptorsHigherValue'),
+
+  hbdPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('hBondDonorsLowerValue');	
+  }.property('hBondDonorsLowerValue'),
+
+  hbdPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('hBondDonorsHigherValue');	
+  }.property('hBondDonorsHigherValue'),
+
+  logpPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('logPLowerValue');	
+  }.property('mwLowerValue'),
+
+  logpPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('logPHigherValue');	
+  }.property('logPHigherValue'),
+
+  psaPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('polarSurfaceAreaLowerValue');	
+  }.property('polarSurfaceAreaLowerValue'),
+
+  psaPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('polarSurfaceAreaHigherValue');	
+  }.property('polarSurfaceAreaHigherValue'),
+
+  ro5PlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('ro5LowerValue');	
+  }.property('ro5LowerValue'),
+
+  ro5PlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('ro5HigherValue');	
+  }.property('ro5HigherValue'),
+
+  rbPlaceholderLow: function(){
+	return 'Lowest value: ' + this.get('rbLowerValue');	
+  }.property('rbLowerValue'),
+
+  rbPlaceholderHigh: function(){
+	return 'Highest value: ' + this.get('rbHigherValue');	
+  }.property('rbHigherValue'),
+
+  relPlaceholder: function(){
+	return 'Lowest value: ' + this.get('relLowerValue');	
+  }.property('relLowerValue'),
+
+  mwSelectedLowerValue: null,
+
+  mwSelectedHigherValue: null,
+
+  mwSelectedFreebaseLowerValue: null,
+
+  mwSelectedFreebaseHigherValue: null,
+
+  hBondAcceptorsSelectedLowerValue: null,
+
+  hBondAcceptorsSelectedHigherValue: null,
+
+  hBondDonorsSelectedLowerValue: null,
+
+  hBondDonorsSelectedHigherValue: null,
+
+  logPSelectedLowerValue: null,
+
+  logPSelectedHigherValue: null,
+
+  polarSurfaceAreaSelectedLowerValue: null,
+
+  polarSurfaceAreaSelectedHigherValue: null,
+
+  ro5SelectedLowerValue: null,
+
+  ro5SelectedHigherValue: null,
+
+  rbSelectedLowerValue: null,
+
+  rbSelectedHigherValue: null,
+
+  relSelectedLowerValue: null,
+
+  relSelectedHigherValue: null,
+
   mwLowerValue: null,
 
   mwHigherValue: null,
@@ -590,8 +694,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    var psaFilter = false;
 		    var rtbFilter = false;
 		    var relFilter = false;
-			if (me.get('mwLowerValue') != "" && me.get('mwHigherValue') != "" && me.get('mwLowerValue') != null && me.get('mwHigherValue') != null && Number(me.get('mwLowerValue')) <= Number(me.get('mwHigherValue'))) {
-              if (Number(compound.get('fullMWT')) >= Number(me.get('mwLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwHigherValue'))) {
+			if (me.get('mwSelectedLowerValue') != "" && me.get('mwSelectedHigherValue') != "" && me.get('mwSelectedLowerValue') != null && me.get('mwSelectedHigherValue') != null && Number(me.get('mwSelectedLowerValue')) <= Number(me.get('mwSelectedHigherValue'))) {
+              if (Number(compound.get('fullMWT')) >= Number(me.get('mwSelectedLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwSelectedHigherValue'))) {
 	            // compound is within the params so we add it 
 	            mwFilter = true;          
               }
@@ -599,57 +703,57 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 			  // this filter is valid since we are not checking it so we would add the compound regardless
 			  mwFilter = true;
 		    }
-			if (me.get('mwFreebaseLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseLowerValue') != null && me.get('mwFreebaseHigherValue') != null && Number(me.get('mwFreebaseLowerValue')) <= Number(me.get('mwFreebaseHigherValue'))) {
-              if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseHigherValue'))) {
+			if (me.get('mwFreebaseSelectedSelectedLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseSelectedLowerValue') != null && me.get('mwFreebaseSelectedSelectedHigherValue') != null && Number(me.get('mwFreebaseLowerValue')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
+              if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseSelectedLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
                 mwFreebaseFilter = true;
               }
 		    } else {
 			  mwFreebaseFilter = true;
 		    }	      	
-			if (me.get('hBondAcceptorsLowerValue') != "" && me.get('hBondAcceptorsHigherValue') != "" && me.get('hBondAcceptorsLowerValue') != null && me.get('hBondAcceptorsHigherValue') != null && Number(me.get('hBondAcceptorsLowerValue')) <= Number(me.get('hBondAcceptorsHigherValue'))) {
-              if (Number(compound.get('hba')) >= Number(me.get('hBondAcceptorsLowerValue')) && Number(compound.get('hba')) <= Number(me.get('hBondAcceptorsHigherValue'))) {
+			if (me.get('hBondAcceptorsSelectedLowerValue') != "" && me.get('hBondAcceptorsSelectedHigherValue') != "" && me.get('hBondAcceptorsSelectedLowerValue') != null && me.get('hBondAcceptorsSelectedHigherValue') != null && Number(me.get('hBondAcceptorsSelectedLowerValue')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
+              if (Number(compound.get('hba')) >= Number(me.get('hBondAcceptorsSelectedLowerValue')) && Number(compound.get('hba')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
                 hbaFilter = true;
               }
 		    } else {
 			  hbaFilter = true;
 		    }
-			if (me.get('hBondDonorsLowerValue') != "" && me.get('hBondDonorsHigherValue') != "" && me.get('hBondDonorsLowerValue') != null && me.get('hBondDonorsHigherValue') != null && Number(me.get('hBondDonorsLowerValue')) <= Number(me.get('hBondDonorsHigherValue'))) {
-              if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsHigherValue'))) {
+			if (me.get('hBondDonorsSelectedLowerValue') != "" && me.get('hBondDonorsSelectedHigherValue') != "" && me.get('hBondDonorsSelectedSelectedLowerValue') != null && me.get('hBondDonorsSelectedHigherValue') != null && Number(me.get('hBondDonorsSelectedLowerValue')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
+              if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsSelectedLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
                 hbdFilter = true;
               }
 		    } else {
 			  hbdFilter = true;
 		    }
-			if (me.get('logPLowerValue') != "" && me.get('logPHigherValue') != "" && me.get('logPLowerValue') != null && me.get('logPHigherValue') != null && Number(me.get('logPLowerValue')) <= Number(me.get('logPHigherValue'))) {
-              if (Number(compound.get('logp')) >= Number(me.get('logPLowerValue')) && Number(compound.get('logp')) <= Number(me.get('logPHigherValue'))) {
+			if (me.get('logPSelectedLowerValue') != "" && me.get('logPSelectedHigherValue') != "" && me.get('logPSelectedLowerValue') != null && me.get('logPSelectedHigherValue') != null && Number(me.get('logPSelectedLowerValue')) <= Number(me.get('logPSelectedHigherValue'))) {
+              if (Number(compound.get('logp')) >= Number(me.get('logPSelectedLowerValue')) && Number(compound.get('logp')) <= Number(me.get('logPSelectedHigherValue'))) {
                 logpFilter = true;
               }
 		    } else {
 			  logpFilter = true;
 		    }
-			if (me.get('ro5LowerValue') != "" && me.get('ro5HigherValue') != "" && me.get('ro5LowerValue') != null && me.get('ro5HigherValue') != null && Number(me.get('ro5LowerValue')) <= Number(me.get('ro5HigherValue'))) {
-              if (Number(compound.get('ro5Violations')) >= Number(me.get('ro5LowerValue')) && Number(compound.get('ro5Violations')) <= Number(me.get('ro5HigherValue'))) {
+			if (me.get('ro5SelectedLowerValue') != "" && me.get('ro5SelectedHigherValue') != "" && me.get('ro5SelectedLowerValue') != null && me.get('ro5SelectedHigherValue') != null && Number(me.get('ro5SelectedLowerValue')) <= Number(me.get('ro5SelectedHigherValue'))) {
+              if (Number(compound.get('ro5Violations')) >= Number(me.get('ro5SelectedLowerValue')) && Number(compound.get('ro5Violations')) <= Number(me.get('ro5SelectedHigherValue'))) {
                 ro5Filter = true;
               }
 		    } else {
 			  ro5Filter = true;
 		    }
-			if (me.get('polarSurfaceAreaLowerValue') != "" && me.get('polarSurfaceAreaHigherValue') != "" && me.get('polarSurfaceAreaLowerValue') != null && me.get('polarSurfaceAreaHigherValue') != null && Number(me.get('polarSurfaceAreaLowerValue')) <= Number(me.get('polarSurfaceAreaHigherValue'))) {
-              if (Number(compound.get('psa')) >= Number(me.get('polarSurfaceAreaLowerValue')) && Number(compound.get('psa')) <= Number(me.get('polarSurfaceAreaHigherValue'))) {
+			if (me.get('polarSurfaceAreaSelectedLowerValue') != "" && me.get('polarSurfaceAreaSelectedHigherValue') != "" && me.get('polarSurfaceAreaSelectedLowerValue') != null && me.get('polarSurfaceAreaSelectedHigherValue') != null && Number(me.get('polarSurfaceAreaSelectedLowerValue')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
+              if (Number(compound.get('psa')) >= Number(me.get('polarSurfaceAreaSelectedLowerValue')) && Number(compound.get('psa')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
                 psaFilter = true;
               }
 		    } else {
 			  psaFilter = true;
 		    }
-			if (me.get('rbLowerValue') != "" && me.get('rbHigherValue') != "" && me.get('rbLowerValue') != null && me.get('rbHigherValue') != null && Number(me.get('rbLowerValue')) <= Number(me.get('rbHigherValue'))) {
-              if (Number(compound.get('rtb')) >= Number(me.get('rbLowerValue')) && Number(compound.get('rtb')) <= Number(me.get('rbHigherValue'))) {
+			if (me.get('rbSelectedLowerValue') != "" && me.get('rbSelectedHigherValue') != "" && me.get('rbSelectedLowerValue') != null && me.get('rbSelectedHigherValue') != null && Number(me.get('rbSelectedLowerValue')) <= Number(me.get('rbSelectedHigherValue'))) {
+              if (Number(compound.get('rtb')) >= Number(me.get('rbSelectedLowerValue')) && Number(compound.get('rtb')) <= Number(me.get('rbSelectedHigherValue'))) {
                 rtbFilter = true;
               }
 		    } else {
 			  rtbFilter = true;
 		    }
-			if (me.get('relHigherValue') != "" && me.get('relHigherValue') != null) {
-              if (Number(compound.get('relevance')) >= Number(me.get('relHigherValue'))) {
+			if (me.get('relSelectedHigherValue') != "" && me.get('relSelectedHigherValue') != null) {
+              if (Number(compound.get('relevance')) >= Number(me.get('relSelectedHigherValue'))) {
                 relFilter = true;
               }
 		    } else {
@@ -663,44 +767,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true && logpFilter == true && ro5Filter == true && psaFilter == true && rtbFilter == true && relFilter == true) {
 			  me.get('filteredCompounds').pushObject(compound);
 		    }
-	  });	
-	  // mwLowerValue: null,
-	  // 
-	  // mwHigherValue: null,
-	  // 
-	  // mwFreebaseLowerValue: null,
-	  // 
-	  // mwFreebaseHigherValue: null,
-	  // 
-	  // hBondAcceptorsLowerValue: null,
-	  // 
-	  // hBondAcceptorsHigherValue: null,
-	  // 
-	  // hBondDonorsLowerValue: null,
-	  // 
-	  // hBondDonorsHigherValue: null,
-	  // 
-	  // logPLowerValue: null,
-	  // 
-	  // logPHigherValue: null,
-	  // 
-	  // polarSurfaceAreaLowerValue: null,
-	  // 
-	  // polarSurfaceAreaHigherValue: null,
-	  // 
-	  // ro5LowerValue: null,
-	  // 
-	  // ro5HigherValue: null,
-	  // 
-	  // rbLowerValue: null,
-	  // 
-	  // rbHigherValue: null,
-	  // 
-	  // relLowerValue: null,
-	  // 
-	  // relHigherValue: null,
-	
-	
+	  });		
     }
 
   }
