@@ -218,6 +218,10 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();
+	//var activeCompounds = thisCompound.get('structure').filter(function(compound) {
+	      //if (comment.get('isActive')) { return true; }
+	//      return true;
+	//});
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
@@ -256,6 +260,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    });
                  });
            }
+		me.set('filteredCompounds', thisCompound.get('structure'));
        }
      };
      if (structureSearchType === "exact") {

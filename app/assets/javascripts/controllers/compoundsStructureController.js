@@ -14,6 +14,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   maxRecords: 100,
 
+  filteredCompounds: null,
+
   uri: null,
 
   type: null,
@@ -23,6 +25,42 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   mwLowerValue: null,
 
   mwHigherValue: null,
+
+  mwFreebaseLowerValue: null,
+
+  mwFreebaseHigherValue: null,
+
+  hBondAcceptorsLowerValue: null,
+
+  hBondAcceptorsHigherValue: null,
+
+  hBondDonorsLowerValue: null,
+
+  hBondDonorsHigherValue: null,
+
+  logPLowerValue: null,
+
+  logPHigherValue: null,
+
+  polarSurfaceAreaLowerValue: null,
+
+  polarSurfaceAreaHigherValue: null,
+
+  ro5LowerValue: null,
+
+  ro5HigherValue: null,
+
+  rbLowerValue: null,
+
+  rbHigherValue: null,
+
+  relLowerValue: null,
+
+  relHigherValue: null,
+
+  currentCount: function() {
+    return this.get('model.structure.length');
+  }.property('model.structure.length'),
 
   maxMWT: function() {
     var currentMax = 0;
@@ -44,10 +82,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     }
   }.property('content.structure.length'),
 
-  mwFreebaseLowerValue: null,
-
-  mwFreebaseHigherValue: null,
-
   maxMWFreebase: function() {
     var currentMax = 0;
     $.each(this.get('content.structure').get('content'), function(index, compound) {
@@ -67,14 +101,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     return currentMin;
     }
   }.property('content.structure.length'),
-
-  currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
-
-  hBondAcceptorsLowerValue: null,
-
-  hBondAcceptorsHigherValue: null,
 
   maxHBondAcceptors: function() {
     var currentMax = 0;
@@ -96,10 +122,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     }
   }.property('content.structure.length'),
 
-  hBondDonorsLowerValue: null,
-
-  hBondDonorsHigherValue: null,
-
   maxHBondDonors: function() {
     var currentMax = 0;
     $.each(this.get('content.structure').get('content'), function(index, compound) {
@@ -120,15 +142,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     }
   }.property('content.structure.length'),
 
-  currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
-
-  logPLowerValue: null,
-
-  logPHigherValue: null,
-
-  maxLogPDonors: function() {
+  maxLogP: function() {
     var currentMax = 0;
     $.each(this.get('content.structure').get('content'), function(index, compound) {
       currentMax = compound.get('logp') > currentMax ? compound.get('logp') : currentMax;
@@ -137,7 +151,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     return currentMax;
   }.property('content.structure.length'),
 
-  minLogPDonors: function() {
+  minLogP: function() {
     if (this.get('content.structure.length') > 0) {
       var currentMin = this.get('content.structure').get('content')[0].get('logp');
       $.each(this.get('content.structure').get('content'), function(index, compound) {
@@ -148,20 +162,12 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     }
   }.property('content.structure.length'),
 
-  currentCount: function() {
-    return this.get('model.structure.length');
-  }.property('model.structure.length'),
-
-  polarSurfaceAreaLowerValue: null,
-
-  polarSurfaceAreaHigherValue: null,
-
   maxPSA: function() {
     var currentMax = 0;
     $.each(this.get('content.structure').get('content'), function(index, compound) {
       currentMax = compound.get('psa') > currentMax ? compound.get('psa') : currentMax;
     });
-    this.set('PSAHigherValue', currentMax);
+    this.set('polarSurfaceAreaHigherValue', currentMax);
     return currentMax;
   }.property('content.structure.length'),
 
@@ -171,14 +177,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
       $.each(this.get('content.structure').get('content'), function(index, compound) {
         currentMin = compound.get('psa') > currentMin ? compound.get('psa') : currentMin;
       });
-    this.set('PSaLowerValue', currentMin);
+    this.set('polarSurfaceAreaLowerValue', currentMin);
     return currentMin;
     }
   }.property('content.structure.length'),
-
-  ro5LowerValue: null,
-
-  ro5HigherValue: null,
 
   maxRO5: function() {
     var currentMax = 0;
@@ -200,10 +202,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     }
   }.property('content.structure.length'),
 
-  rbLowerValue: null,
-
-  rbHigherValue: null,
-
   maxRB: function() {
     var currentMax = 0;
     $.each(this.get('content.structure').get('content'), function(index, compound) {
@@ -223,10 +221,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     return currentMin;
     }
   }.property('content.structure.length'),
-
-  relLowerValue: null,
-
-  relHigherValue: null,
 
   maxRel: function() {
     var currentMax = 0;
@@ -262,9 +256,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
       sortProperties: null,
       sortAscending: false,
-      content: this.get('content.structure')
+      content: this.get('filteredCompounds')
     });
-  }).property('content.structure'),
+  }).property('filteredCompounds'),
 
   notEmpty: function() {
     return this.get('totalCount') > 0;
@@ -584,6 +578,47 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 			console.log('tsv create request success');
 		}
 	});
+    },
+
+    applyFilters: function() {
+	  console.log('compound structure filters');
+	  // mwLowerValue: null,
+	  // 
+	  // mwHigherValue: null,
+	  // 
+	  // mwFreebaseLowerValue: null,
+	  // 
+	  // mwFreebaseHigherValue: null,
+	  // 
+	  // hBondAcceptorsLowerValue: null,
+	  // 
+	  // hBondAcceptorsHigherValue: null,
+	  // 
+	  // hBondDonorsLowerValue: null,
+	  // 
+	  // hBondDonorsHigherValue: null,
+	  // 
+	  // logPLowerValue: null,
+	  // 
+	  // logPHigherValue: null,
+	  // 
+	  // polarSurfaceAreaLowerValue: null,
+	  // 
+	  // polarSurfaceAreaHigherValue: null,
+	  // 
+	  // ro5LowerValue: null,
+	  // 
+	  // ro5HigherValue: null,
+	  // 
+	  // rbLowerValue: null,
+	  // 
+	  // rbHigherValue: null,
+	  // 
+	  // relLowerValue: null,
+	  // 
+	  // relHigherValue: null,
+	
+	
     }
 
   }
