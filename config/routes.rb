@@ -22,6 +22,9 @@ Explorer2::Application.routes.draw do
 
   match 'trees' => 'home#index'
 
+  match 'pathways' => 'home#index'
+
+
   resources :search, :only => [:index] do
     collection do
       get 'typeahead'
