@@ -1,10 +1,4 @@
-App.PathwaysIndexController = Ember.ObjectController.extend({
-
-  needs: ['application'],
-
-  queryParams: ['uri'],
-
-  uri: '',
+App.PathwayIndexController = Ember.ObjectController.extend({
 
   showProvenance: false,
 
@@ -19,5 +13,5 @@ App.PathwaysIndexController = Ember.ObjectController.extend({
     	console.log("Pathway info provenance disabled");
   	  }
   }
-	
+  	
 });

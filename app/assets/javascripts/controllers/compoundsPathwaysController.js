@@ -7,6 +7,8 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
   uri: '',
 
   page: null,
+  
+  showProvenance: false,
 
   currentCount: function() {
     return this.get('model.pathways.length');
@@ -49,9 +51,20 @@ actions: {
     searcher.byCompound(thisCompound.get('URI'), null, null, me.page + 1, 50, null, pathwaysByCompoundCallback);
     }
   },
+
+  enableProvenance: function() {
+  	this.set('showProvenance', true);
+   	console.log("Compound pathway provenance enabled " + this.get('showProvenance'));
+  },
+
+  disableProvenance: function() {
+    this.set('showProvenance', false);
+    console.log("Compound pathway provenance disabled " + this.get('showProvenance'));
+  },
+
   goToTop: function() {
       window.scrollTo(0,0);
   }
-  }
+}
 
 });

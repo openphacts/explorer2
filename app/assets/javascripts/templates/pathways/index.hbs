@@ -12,7 +12,13 @@
 		<li><span class="divider">/</span>{{title}}<span class="divider">/</span></li>
   		<li class="active">Pathway Information</li>
 
-		<!-- to add provenance toggle here	-->
+		<div class="row pull-right" > 
+			<div class="span1 small-padding-top small-padding-right">Provenance </div>
+  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  				<button {{action 'enableProvenance'}} class="btn" >On</button>
+  				<button {{action 'disableProvenance'}} class="btn active" >Off</button>
+  			</div>
+		</div>
 
 	</ul>
 
@@ -27,7 +33,11 @@
 				<!--title-->
 				<div>
 					<div style="padding:20px 0 0 0">
-						<h1>{{title}}</h1>
+						{{#if showProvenance}}
+							<h1>{{title}} {{provenanceLinkout wikipathwaysProvenance.title wikipathwaysProvenance.source}}</h1>
+                  		{{else}}
+                  			<h1>{{title}}</h1>
+                  		{{/if}}
 					</div>
 					
 					<div style="padding:30px 0 0 0;text-align:left;">
@@ -38,7 +48,12 @@
 				<!--description-->
 				<div class="summary-descriptive-text large-top-spacing">
         			{{#if description}}
-            			<p>{{description}}</p>
+        				{{#if showProvenance}}
+        					<p>{{description}} {{provenanceLinkout wikipathwaysProvenance.description wikipathwaysProvenance.source}}</p>	
+        				{{else}}
+        					<p>{{description}}</p>
+						{{/if}}
+            			
         			{{/if}}
 				</div>
 				
@@ -77,7 +92,7 @@
 							<dt>Parts</dt>
 							<dd>
 							{{#each part in parts}}
-								<p>{{vocabPart part.type}} ({{pathwayShortLink part.about}}) </p>
+								<p>{{vocabPart part.type}} {{#if showProvenance}}({{pathwayShortLink part.about}}) {{provenanceLinkout part.about wikipathwaysProvenance.source}}{{else}}({{pathwayShortLink part.about}}){{/if}}</p>
 							{{/each}}
 							</dd>
 						{{/if}}

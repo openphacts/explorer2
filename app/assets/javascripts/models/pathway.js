@@ -14,5 +14,6 @@ App.Pathway = DS.Model.extend({
   compounds: DS.hasMany('compound', { async: true }),
   targets: DS.hasMany('target', { async: true }),
   revision: DS.attr('string'),
-  URI: DS.attr('string')
+  URI: DS.attr('string'),
+  wikipathwaysProvenance: DS.attr()
 });

@@ -9,8 +9,8 @@
 			<div class="row pull-right"> 
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
   				<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-  					<button class="btn">On</button>
-  					<button class="btn active">Off</button>
+  					<button  {{action 'enableProvenance'}} class="btn">On</button>
+  					<button  {{action 'disableProvenance'}} class="btn active">Off</button>
   				</div>
 			</div>
 		</ul>
@@ -62,9 +62,9 @@
 	<table class="mytable">
 		<thead id="tablehead" class="headingstyle">
 			<tr>
-				<th>Title</th>
+				<th align="left">Title</th>
 				<th width="10%">Identifier</th>
-				<th width="300px">Description</th>
+				<th align="left" width="300px">Description</th>
 				<th>Ontology</th>
 			 	<th>Organism</th>
 				<th>Gene Product</th>
@@ -72,6 +72,19 @@
 			</tr>
 		</thead>
 		<tbody>
+		{{#if showProvenance}}
+			{{#each  pathway in pathways}}
+			<tr class="record-deco">
+				<td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
+				<td class="cell-basictext">{{textLink pathway.identifier}}</td>
+				<td class="cell-longtext">{{pathway.description}} {{provenanceLinkout pathway.wikipathwaysProvenance.description pathway.wikipathwaysProvenance.source}}</td>
+				<td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
+                <td class="cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}} {{provenanceLinkout pathway.wikipathwaysProvenance.organismLabel pathway.wikipathwaysProvenance.source}}</td>
+				<td class="cell-basictext">{{pathway.geneProduct}}</td>
+                <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
+			</tr>
+			{{/each}}
+          {{else}}
 			{{#each pathway in pathways}}
 			<tr class="record-deco">
 				<td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
@@ -83,6 +96,7 @@
                 <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
 			</tr>
 			{{/each}}
+        {{/if}}
 		</tbody>
 	</table>
 	</div>
