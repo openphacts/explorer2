@@ -2193,6 +2193,7 @@ Openphacts.PathwaySearch.prototype.parseInformationResponse = function(response)
 	// provenance
     wikipathwaysProvenance = {};
     wikipathwaysProvenance['source'] = 'wikipathways';
+    wikipathwaysProvenance['title'] = identifier;
     wikipathwaysProvenance['description'] = identifier;
     wikipathwaysProvenance['organismLabel'] = organism;
 	
