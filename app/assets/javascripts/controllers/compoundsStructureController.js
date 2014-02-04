@@ -703,7 +703,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 			  // this filter is valid since we are not checking it so we would add the compound regardless
 			  mwFilter = true;
 		    }
-			if (me.get('mwFreebaseSelectedSelectedLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseSelectedLowerValue') != null && me.get('mwFreebaseSelectedSelectedHigherValue') != null && Number(me.get('mwFreebaseLowerValue')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
+			if (me.get('mwFreebaseSelectedLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseSelectedLowerValue') != null && me.get('mwFreebaseSelectedHigherValue') != null && Number(me.get('mwFreebaseSelectedLowerValue')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
               if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseSelectedLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
                 mwFreebaseFilter = true;
               }
@@ -717,7 +717,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    } else {
 			  hbaFilter = true;
 		    }
-			if (me.get('hBondDonorsSelectedLowerValue') != "" && me.get('hBondDonorsSelectedHigherValue') != "" && me.get('hBondDonorsSelectedSelectedLowerValue') != null && me.get('hBondDonorsSelectedHigherValue') != null && Number(me.get('hBondDonorsSelectedLowerValue')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
+			if (me.get('hBondDonorsSelectedLowerValue') != "" && me.get('hBondDonorsSelectedHigherValue') != "" && me.get('hBondDonorsSelectedLowerValue') != null && me.get('hBondDonorsSelectedHigherValue') != null && Number(me.get('hBondDonorsSelectedLowerValue')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
               if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsSelectedLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
                 hbdFilter = true;
               }
