@@ -28,74 +28,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   currentHeader: null,
 
-  mwPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('mwLowerValue');	
-  }.property('mwLowerValue'),
-
-  mwPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('mwHigherValue');	
-  }.property('mwHigherValue'),
-
-  freebasePlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('mwFreebaseLowerValue');	
-  }.property('mwFreebaseLowerValue'),
-
-  freebasePlaceholderHigh: function(){
-	return 'Lowest value: ' + this.get('mwFreebaseHigherValue');	
-  }.property('mwFreebaseHigherValue'),
-
-  hbaPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('hBondAcceptorsLowerValue');	
-  }.property('hBondAcceptorsLowerValue'),
-
-  hbaPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('hBondAcceptorsHigherValue');	
-  }.property('hBondAcceptorsHigherValue'),
-
-  hbdPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('hBondDonorsLowerValue');	
-  }.property('hBondDonorsLowerValue'),
-
-  hbdPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('hBondDonorsHigherValue');	
-  }.property('hBondDonorsHigherValue'),
-
-  logpPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('logPLowerValue');	
-  }.property('mwLowerValue'),
-
-  logpPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('logPHigherValue');	
-  }.property('logPHigherValue'),
-
-  psaPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('polarSurfaceAreaLowerValue');	
-  }.property('polarSurfaceAreaLowerValue'),
-
-  psaPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('polarSurfaceAreaHigherValue');	
-  }.property('polarSurfaceAreaHigherValue'),
-
-  ro5PlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('ro5LowerValue');	
-  }.property('ro5LowerValue'),
-
-  ro5PlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('ro5HigherValue');	
-  }.property('ro5HigherValue'),
-
-  rbPlaceholderLow: function(){
-	return 'Lowest value: ' + this.get('rbLowerValue');	
-  }.property('rbLowerValue'),
-
-  rbPlaceholderHigh: function(){
-	return 'Highest value: ' + this.get('rbHigherValue');	
-  }.property('rbHigherValue'),
-
-  relPlaceholder: function(){
-	return 'Lowest value: ' + this.get('relLowerValue');	
-  }.property('relLowerValue'),
-
   mwSelectedLowerValue: null,
 
   mwSelectedHigherValue: null,
@@ -132,225 +64,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   relSelectedHigherValue: null,
 
-  mwLowerValue: null,
-
-  mwHigherValue: null,
-
-  mwFreebaseLowerValue: null,
-
-  mwFreebaseHigherValue: null,
-
-  hBondAcceptorsLowerValue: null,
-
-  hBondAcceptorsHigherValue: null,
-
-  hBondDonorsLowerValue: null,
-
-  hBondDonorsHigherValue: null,
-
-  logPLowerValue: null,
-
-  logPHigherValue: null,
-
-  polarSurfaceAreaLowerValue: null,
-
-  polarSurfaceAreaHigherValue: null,
-
-  ro5LowerValue: null,
-
-  ro5HigherValue: null,
-
-  rbLowerValue: null,
-
-  rbHigherValue: null,
-
-  relLowerValue: null,
-
-  relHigherValue: null,
-
   currentCount: function() {
     return this.get('filteredCompounds.length');
   }.property('filteredCompounds.length'),
-
-  maxMWT: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('fullMWT') > currentMax ? compound.get('fullMWT') : currentMax;
-    });
-    this.set('mwHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minMWT: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('fullMWT');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('fullMWT') > currentMin ? compound.get('fullMWT') : currentMin;
-      });
-    this.set('mwLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxMWFreebase: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('mwFreebase') > currentMax ? compound.get('mwFreebase') : currentMax;
-    });
-    this.set('mwFreebaseHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minMWFreebase: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('mwFreebase');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('mwFreebase') > currentMin ? compound.get('mwFreebase') : currentMin;
-      });
-    this.set('mwFreebaseLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxHBondAcceptors: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('hba') > currentMax ? compound.get('hba') : currentMax;
-    });
-    this.set('hBondAcceptorsHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minHBondAcceptors: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('hba');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('hba') > currentMin ? compound.get('hba') : currentMin;
-      });
-    this.set('hBondAcceptorsLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxHBondDonors: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('hbd') > currentMax ? compound.get('hbd') : currentMax;
-    });
-    this.set('hBondDonorsHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minHBondDonors: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('hbd');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('hbd') > currentMin ? compound.get('hbd') : currentMin;
-      });
-    this.set('hBondDonorsLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxLogP: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('logp') > currentMax ? compound.get('logp') : currentMax;
-    });
-    this.set('logPHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minLogP: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('logp');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('logp') > currentMin ? compound.get('logp') : currentMin;
-      });
-    this.set('logPLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxPSA: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('psa') > currentMax ? compound.get('psa') : currentMax;
-    });
-    this.set('polarSurfaceAreaHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minPSA: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('psa');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('psa') > currentMin ? compound.get('psa') : currentMin;
-      });
-    this.set('polarSurfaceAreaLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxRO5: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('ro5Violations') > currentMax ? compound.get('ro5Violations') : currentMax;
-    });
-    this.set('ro5HigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minRO5: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('ro5Violations');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('ro5Violations') > currentMin ? compound.get('ro5Violations') : currentMin;
-      });
-    this.set('ro5LowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxRB: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('rtb') > currentMax ? compound.get('rtb') : currentMax;
-    });
-    this.set('rbHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minRB: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('rtb');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('rtb') > currentMin ? compound.get('rtb') : currentMin;
-      });
-    this.set('rbLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
-
-  maxRel: function() {
-    var currentMax = 0;
-    $.each(this.get('content.structure').get('content'), function(index, compound) {
-      currentMax = compound.get('relevance') > currentMax ? compound.get('relevance') : currentMax;
-    });
-    this.set('relHigherValue', currentMax);
-    return currentMax;
-  }.property('content.structure.length'),
-
-  minRel: function() {
-    if (this.get('content.structure.length') > 0) {
-      var currentMin = this.get('content.structure').get('content')[0].get('relevance');
-      $.each(this.get('content.structure').get('content'), function(index, compound) {
-        currentMin = compound.get('relevance') > currentMin ? compound.get('relevance') : currentMin;
-      });
-    this.set('relLowerValue', currentMin);
-    return currentMin;
-    }
-  }.property('content.structure.length'),
 
   structure: (function() {
     return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
@@ -767,7 +483,30 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true && logpFilter == true && ro5Filter == true && psaFilter == true && rtbFilter == true && relFilter == true) {
 			  me.get('filteredCompounds').pushObject(compound);
 		    }
-	  });		
+	  });
+      $('#compoundStructureFilterModalView').modal('toggle');
+    },
+
+    resetFilters: function() {
+      console.log('reset structure filters');
+      this.set('mwSelectedLowerValue', null);
+      this.set('mwSelectedHigherValue', null);
+      this.set('mwSelectedFreebaseLowerValue', null);
+      this.set('mwSelectedFreebaseHigherValue', null);
+      this.set('hBondAcceptorsSelectedLowerValue', null);
+      this.set('hBondAcceptorsSelectedHigherValue', null);
+      this.set('hBondDonorsSelectedLowerValue', null);
+      this.set('hBondDonorsSelectedHigherValue', null);
+      this.set('logPSelectedLowerValue', null);
+      this.set('logPSelectedHigherValue', null);
+      this.set('polarSurfaceAreaSelectedLowerValue', null);
+      this.set('polarSurfaceAreaSelectedHigherValue', null);
+      this.set('ro5SelectedLowerValue', null);
+      this.set('ro5SelectedHigherValue', null);
+      this.set('rbSelectedLowerValue', null);
+      this.set('rbSelectedHigherValue', null);
+      this.set('relSelectedLowerValue', null);
+      this.set('relSelectedHigherValue', null);
     }
 
   }
