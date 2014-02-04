@@ -247,6 +247,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   actions: {
      structureSearchType: function(type) {
        console.log("Set structure search type: " + type);
+	   this.get('filteredCompounds').clear();
        var structureType = type;
        if (structureType == null ) {
          structureType = this.structureSearchType;
@@ -263,6 +264,25 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        var me = this;
        var thisCompound = this.get('content');
        thisCompound.get('structure').clear();
+       // reset all the filters
+       this.set('mwSelectedLowerValue', null);
+       this.set('mwSelectedHigherValue', null);
+       this.set('mwSelectedFreebaseLowerValue', null);
+       this.set('mwSelectedFreebaseHigherValue', null);
+       this.set('hBondAcceptorsSelectedLowerValue', null);
+       this.set('hBondAcceptorsSelectedHigherValue', null);
+       this.set('hBondDonorsSelectedLowerValue', null);
+       this.set('hBondDonorsSelectedHigherValue', null);
+       this.set('logPSelectedLowerValue', null);
+       this.set('logPSelectedHigherValue', null);
+       this.set('polarSurfaceAreaSelectedLowerValue', null);
+       this.set('polarSurfaceAreaSelectedHigherValue', null);
+       this.set('ro5SelectedLowerValue', null);
+       this.set('ro5SelectedHigherValue', null);
+       this.set('rbSelectedLowerValue', null);
+       this.set('rbSelectedHigherValue', null);
+       this.set('relSelectedLowerValue', null);
+       this.set('relSelectedHigherValue', null);
        // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
        this.set('thresholdPercent', $('#threshold-percent')[0].value);
        this.set('maxRecords', $('#max-records')[0].value);
@@ -277,6 +297,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                  $.each(results, function(index, result) {
                    me.get('store').find('compound', result).then(function(compound) {
 		               thisCompound.get('structure').pushObject(compound);
+                       me.get('filteredCompounds').pushObject(compound);
                    });
                  });
              } else if (structureType == "similarity") {
@@ -290,6 +311,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                    me.get('store').find('compound', about).then(function(compound) {
                        compound.set('relevance', relVal);
 		               thisCompound.get('structure').pushObject(compound);
+                       me.get('filteredCompounds').pushObject(compound);
                    });
                  }); 
              } else if (structureType == "substructure") {
@@ -303,6 +325,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                    me.get('store').find('compound', about).then(function(compound) {
                        compound.set('relevance', relVal);
 		               thisCompound.get('structure').pushObject(compound);
+                       me.get('filteredCompounds').pushObject(compound);
                    });
                  });
              }
