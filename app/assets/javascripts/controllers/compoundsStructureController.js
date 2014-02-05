@@ -369,7 +369,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     tsvDownload: function() {
     var me = this;
     var uris = [];
-    $.each(this.get('content').get('structure').get('content'), function(index, compound) {
+    $.each(this.get('filteredCompounds'), function(index, compound) {
         uris.push(compound.get('URI'));
     });
     
@@ -389,10 +389,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
           break;
         }
         filtersString += ": threshold=" + this.thresholdPercent;
-        filtersString += ": max records=" + this.maxRecords;
+        //filtersString += ": max records=" + this.maxRecords;
     } else if (this.structureSearchType === "substructure") {
         filtersString += "Sub-structure search";
-        filtersString += ": max records=" + this.maxRecords;
+        //filtersString += ": max records=" + this.maxRecords;
     } else {
         filtersString += "Exact structure search";
     }
@@ -402,11 +402,12 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		url: cs_download_url,
         dataType: 'json',
 		cache: true,
+		// send as post because it can be a really long query string
         type: "POST",
 		data: {
 			_format: "json",
 			uris: uris,
-            total: me.get('totalCount')
+            total: me.get('filteredCompounds').length
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');

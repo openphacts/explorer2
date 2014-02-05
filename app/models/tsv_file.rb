@@ -76,7 +76,6 @@ class TsvFile < ActiveRecord::Base
   
   # Use with delayed job to process chemspider tsv downloads in the background
   def process_chemspider params
-    # no guarantee you will get all the headers so here is a complete list, might change in the future so be aware
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
     app_version = AppSettings.config["tsv"]["api_version"]
@@ -87,7 +86,6 @@ class TsvFile < ActiveRecord::Base
     file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
     first = true
     i = 1
-    puts "uris are " + params[:uris].first
     total = params[:total]
     CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       #tab << all_headers
@@ -100,6 +98,7 @@ class TsvFile < ActiveRecord::Base
           else
             url_path = "/#{app_version}#{path}?".concat(url_params)
           end
+          logger.info "********* CS URL is " + url_path.to_s
           response = Net::HTTP.get(domain, url_path)
           tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true})
           if i == 1 
