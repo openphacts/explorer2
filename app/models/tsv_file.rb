@@ -1,8 +1,3 @@
-# For reasons unknown this model causes apache/passenger to fail with 'missing method handle_asynchronously', no amount of
-# debugging has found the cause. We have used this method in other apps with no problems. An explicit require is required to fix it
-# See http://dev.mygrid.org.uk/blog/?p=201 for details
-
-require 'delayed_job'
 require 'cgi'
 require 'csv'
 require 'net/http'
