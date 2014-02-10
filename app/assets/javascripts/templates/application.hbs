@@ -41,6 +41,7 @@
   </div>
 </div>
 </div>
+{{#if notOldIE}}
 <div {{bind-attr class="fetching::invisible :spinner :bar"}}>
      <div></div>
      <div></div>
@@ -51,7 +52,9 @@
      <div></div>
      <div></div>
 </div>
-
+{{else}}
+<div {{bind-attr class="fetching::invisible :loading-info"}}>LOADING</div>
+{{/if}}
 <div class='content'>
 	{{outlet}}
 </div>

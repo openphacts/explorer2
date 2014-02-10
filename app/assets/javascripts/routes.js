@@ -2,10 +2,16 @@
 // you have to set location to 'history'. This means that you must also tell rails
 // what your routes are and to redirect them to whatever template contains the ember
 // outlet
-App.Router.reopen({
-  location: 'history',
-  rootURL: '/'
-});
+//App.Router.reopen({
+//  location: 'history',
+//  rootURL: '/'
+//});
+if (window.history && window.history.pushState) {
+    App.Router.reopen({
+      location: 'history',
+      rootURL: '/'
+    });
+}
 
 App.Router.map(function() { 
     this.route("search", { path: "/search" }, function() {
@@ -26,6 +32,15 @@ App.Router.map(function() {
     this.resource('pathways', { path: '/pathways' }, function() {
         this.route('compounds', { path: '/compounds' }, function(){});
     });
+});
+
+App.ApplicationRoute = Ember.Route.extend({
+
+  setupController: function(controller, model, params) {
+    console.log('application route setup controller');
+    controller.set('iex', !oldIE);
+  }
+
 });
 
 // Search

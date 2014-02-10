@@ -7,6 +7,12 @@ App.ApplicationController = Ember.Controller.extend({
     jobsList: [],
     alertsAvailable: false,
 
+    iex: false,
+
+    notOldIE: function() {
+      return this.get('iex');
+    }.property('iex'),
+
     anyJobs: function() {
       return this.jobsList.get('length') > 0;
     }.property('jobsList.@each'),

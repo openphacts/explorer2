@@ -21,9 +21,24 @@
     var tsvDownloadUrl = '<%= tsv_download_core_api_calls_url -%>?';
     var organismsUrl = '<%= organisms_core_api_calls_url -%>?';
     var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
+    jQuery.support.cors = true;
   </script>
+  <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js'></script> -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
   <body>
+<script type="text/javascript">var oldIE = false;</script>
+    <!--[if lt IE 9]>
+    
+    <script type="text/javascript">
+        oldIE = true;
+    </script>
+
+    <![endif]-->
     <%= yield %>
   </body>
 </html>

@@ -10,8 +10,10 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require ConsoleDummy.min
 //= require modernizr
 //= require jquery
+//= require jqXDomain
 //= require handlebars-v1.3.0
 //= require ember-latest
 //= require ember-data-1.0.0-beta5

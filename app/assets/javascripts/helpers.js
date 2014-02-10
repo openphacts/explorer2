@@ -35,7 +35,7 @@ Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
     return new Handlebars.SafeString("<button type='button' class='btn btn-disabled' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
   }
 });
-Handlebars.registerHelper("log", function(context) {
+Ember.Handlebars.registerHelper("log", function(context) {
   return console.log(context);
 });
 Ember.Handlebars.registerBoundHelper('pathwayLink', function(uri, label) {
