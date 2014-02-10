@@ -259,9 +259,12 @@ sub {
 /* For IE6,7,8 */
 .loading-info{
      position: absolute;
-     top: 35px;
-     left: 45px;
+     top: 50%;
+     left: 40%;
      z-index: 2000;
+     font-size: xx-large;
+     font-weight: bold;
+     background-color: white;
 }
 
 /* ==========================================================
