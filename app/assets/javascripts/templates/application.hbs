@@ -23,7 +23,11 @@
 </div>
 </div>
 <!-- End of Modal for alerts -->
-
+{{#view App.FlashView id="flash-view"}}
+  <div id="message">
+    {{view.content.message}}
+  </div>
+{{/view}}
 <div style="padding:0 0 20px 0;">
 <div class="navbar navbar-static-top navbar-inverse" style="border-bottom:medium solid #888888 ;">
 <div class="navbar-inner">

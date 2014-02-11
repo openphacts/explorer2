@@ -719,10 +719,12 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 		success: function(response, status, request) {
 			console.log('tsv create request success');
             me.get('controllers.application').addJob(response.uuid, thisTarget.get('prefLabel'), filtersString);
+			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {
-			console.log('tsv create request success');
+			console.log('tsv create request error');
+			  App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
 		}
 	});
   }

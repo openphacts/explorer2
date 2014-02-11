@@ -53,9 +53,11 @@ App.ApplicationController = Ember.Controller.extend({
             if (status === "finished") {
               me.jobsList.findBy("uuid", jobID).set('status', 'complete');
               me.set('alertsAvailable', true);
+			  App.FlashQueue.pushFlash('notice', 'TSV file is ready for download, click the "Alerts Bell" for more info.');
               runAgain = false;
             } else if (status === "failed") {
               me.jobsList.findBy("uuid", jobID).set('status', 'failed');
+			  App.FlashQueue.pushFlash('error', 'TSV file failed during creation, click the "Alerts Bell" for more info.');
               runAgain = false;
             }
             } else {
