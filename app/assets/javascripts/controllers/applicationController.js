@@ -1,6 +1,3 @@
-//Developers = [{name: 'Yehuda'},{name: 'Tom'}, {name: 'Paul'}];
-//App.jobsList = [];
-//App.jobsStatus = {};
 App.ApplicationController = Ember.Controller.extend({
 
     //jobsList used in the view to loop over the entries
