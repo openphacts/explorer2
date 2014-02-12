@@ -10,51 +10,64 @@ Explorer2::Application.routes.draw do
 
   match 'search/typeaheadTargets' => 'search#typeaheadTargets'
 
-#  match 'compounds' => 'home#index'
+  match 'compounds' => 'home#index'
+  match 'compounds/pharmacology' => 'home#index'
+  match 'compounds/structure' => 'home#index'
+  match 'compounds/pathways' => 'home#index'
+
+  match 'targets' => 'home#index'
+  match 'targets/pharmacology' => 'home#index'
+  match 'targets/pathways' => 'home#index'
+
+  match 'trees' => 'home#index'
+  match 'trees/pharmacology' => 'home#index'
+
+  match 'pathways' => 'home#index'
+  match 'pathways/compounds' => 'home#index'
 
 #  match 'compounds/:id' => 'home#index'
 
 #  match 'compounds/:id/pharmacology' => 'home#index'
 
-  match 'compound/:id' => 'home#index'
+#  match 'compound/:id' => 'home#index'
 
 #  match 'compound/:id/pharmacology' => 'home#index'
 
-  match 'trees' => 'home#index'
+#  match 'trees' => 'home#index'
 
-  match 'pathways' => 'home#index'
+#  match 'pathways' => 'home#index'
 
 
-  resources :search, :only => [:index] do
+  resources :search, :only => [ :index ] do
     collection do
       get 'typeahead'
     end
   end
 
-  match 'search/:query' => 'home#index'
+#  match 'search/:query' => 'home#index'
 
-  resources :compounds, :only => [:show, :index] do
-    member do
-      get 'pharmacology'
-      get 'structure'
-      get 'pathways'
-    end
-  end
+#  resources :compounds, :only => [ :index ] do
+#    member do
+#      get 'pharmacology'
+#      get 'structure'
+#      get 'pathways'
+#    end
+#  end
 
-  resources :targets, :only => [:show, :index] do
-    member do
-      get 'pharmacology'
-      get 'pathways'
-    end
-  end
+#  resources :targets, :only => [ :index ] do
+#    member do
+#      get 'pharmacology'
+#      get 'pathways'
+#    end
+#  end
   
-  resources :enzymes, :id => /[^\/]+/, :only => [ :show, :index ] do
-    member do
-      get 'pharmacology'
-    end
-  end
+#  resources :trees, :only => [ :index ] do
+#    member do
+#      get 'pharmacology'
+#    end
+#  end
 
-  resources :core_api_calls do
+  resources :core_api_calls, :except => [ :index, :show, :create, :new, :edit, :update, :destroy ] do
     collection do
       get :tab_separated_file
       get :tsv_download
@@ -64,8 +77,8 @@ Explorer2::Application.routes.draw do
     end
   end
 
-  resources :pathways, :only => :show do
-  end
+#  resources :pathways, :only => [ :index ]do
+#  end
 
 #  match 'targets' => 'home#index'
 

@@ -18,6 +18,16 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
     return this.get('model.pharmacology.length') > 0;
   }.property('model.pharmacology.length'),
 
+  conditions: [">", "<", "=", "<=", ">="],
+
+  activityRelations: [">", "<", "=", "<=", ">="],
+
+  pchemblConditions: [">", "<", "=", "<=", ">="],
+
+  activityTypes: null,
+
+  activityUnits: null,
+
   sortedHeader: null,
 
   currentHeader: null,
