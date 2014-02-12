@@ -31,6 +31,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('content', model);
+    controller.set('totalCount', null);
       var me = controller;
     // set all the current filters
     var assayOrganism = me.get('assayOrganismQuery');
@@ -215,6 +216,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('content', model);
+    controller.set('totalCount', null);
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();
@@ -309,6 +311,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('content', model);
+    controller.set('totalCount', null);
     var me = controller;
     var thisCompound = model;
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);

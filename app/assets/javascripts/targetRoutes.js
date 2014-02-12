@@ -24,6 +24,8 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     console.log('target index route setup controller');
+    controller.set('content', model);
+    controller.set('totalCount', null);
     var me = controller;
     // set all the current filters
     var assayOrganism = me.get('assayOrganismQuery');
@@ -121,7 +123,6 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
       //we have previously sorted on a header
       sortBy = '?' + me.get('currentHeader');
     }
-    controller.set('content', model);
       var thisTarget = model;
       var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
@@ -186,7 +187,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('content', model);
-    controller.clear();
+    controller.set('totalCount', null);
     var me = controller;
     var thisTarget = model;
     var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
