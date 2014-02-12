@@ -49,6 +49,8 @@ actions: {
       }
     };
     searcher.byCompound(thisCompound.get('URI'), null, null, me.page + 1, 50, null, pathwaysByCompoundCallback);
+    } else {
+        enable_scroll();
     }
   },
 

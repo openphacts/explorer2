@@ -424,6 +424,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
       }
     };
     searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, this.get('page') + 1, 50, sortBy, lens, pharmaCallback);
+    } else {
+        enable_scroll();
     }
   },
   applyFilters: function() {

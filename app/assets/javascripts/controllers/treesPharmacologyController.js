@@ -94,6 +94,8 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
     };
     this.get('controllers.application').set('fetching', true);
     searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
+    } else {
+        enable_scroll();
     }
   },
 
