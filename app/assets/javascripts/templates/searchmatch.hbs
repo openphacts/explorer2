@@ -1,5 +1,6 @@
 <div style="padding:10px 0px 0px 200px;">  
 {{#if result.isCompound}}
+
 	<div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
 			<h2>{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
@@ -15,7 +16,7 @@
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
 				<p>{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
-				<p>{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}</p>
+				<p>{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}</p>
 				<p>{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}Structure{{/link-to}}</p>
 			</div>
 		</div>

@@ -70,6 +70,17 @@ App.SearchController = Ember.ArrayController.extend({
                       } else {
                           me.addSearchResult(compound);
                       } 
+                      return compound;
+                  }).then(function(compound){
+                      //how many pathways for this compound
+                      var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+                      var countCallback=function(success, status, response){
+                          if (success && response) {
+                            var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
+                            compound.set('pathwayRecords', count);
+                          }
+                      };
+                      pathwaysSearcher.countPathwaysByCompound(compound.get('URI'), null, null, countCallback);
                   });
                 });
             } else {
