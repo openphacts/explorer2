@@ -73,7 +73,7 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
   actions: {
 
   fetchMore: function() {
-    if (this.get('model.pharmacology.length') < this.totalCount) {
+    if (this.get('model.pharmacology.length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
     var me = this;
     var thisEnzyme = this.get('content');
     var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);

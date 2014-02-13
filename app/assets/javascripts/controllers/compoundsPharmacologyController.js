@@ -496,7 +496,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   },
 
   fetchMore: function() {
-    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
+    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
     this.get('controllers.application').set('fetching', true)
     //first set all the current filters
     var assayOrganism = this.get('assayOrganismQuery');
@@ -622,7 +622,6 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   },
 
   applyFilters: function() {
-    console.log('apply filters');	
     var assayOrganism = this.get('assayOrganismQuery');
     var targetOrganism = this.get('targetOrganismQuery');
     var targetType = null;
@@ -748,7 +747,6 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   },
   resetFilters: function() {
-      console.log('reset filters');
       this.set('selectedActivity',null);
       this.set('selectedUnit', null);
       this.set('selectedCondition', null);
@@ -766,12 +764,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   },
   enableProvenance: function() {
       this.set('showPharmaProvenance', true);
-      console.log("Compound pharma provenance enabled");
   },
 
   disableProvenance: function() {
       this.set('showPharmaProvenance', false);
-      console.log("Compound pharma provenance disabled");
   }
   }
 

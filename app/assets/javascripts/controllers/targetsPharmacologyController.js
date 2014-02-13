@@ -179,7 +179,6 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   actions: {
 	
 	sortHeader: function(header) {
-	    console.log('sorting by ' + header);
     //first set all the current filters
     var assayOrganism = this.get('assayOrganismQuery');
     var targetOrganism = this.get('targetOrganismQuery');
@@ -305,8 +304,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 	},
 
   fetchMore: function() {
-    console.log('fetching more');
-    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0) {
+    if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
       this.get('controllers.application').set('fetching', true)
 	    //first set all the current filters
 	    var assayOrganism = this.get('assayOrganismQuery');
@@ -429,7 +427,6 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
     }
   },
   applyFilters: function() {
-    console.log('apply filters');	
     var sortBy = null;
     var assayOrganism = this.get('assayOrganismQuery');
     var targetOrganism = this.get('targetOrganismQuery');
@@ -556,7 +553,6 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
   },
   resetFilters: function() {
-      console.log('reset filters');
       this.set('selectedActivity',null);
       this.set('selectedUnit', null);
       this.set('selectedCondition', null);
@@ -574,12 +570,10 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   },
   enableProvenance: function() {
       this.set('showPharmaProvenance', true);
-      console.log("Target pharma provenance enabled");
   },
 
   disableProvenance: function() {
       this.set('showPharmaProvenance', false);
-      console.log("Target pharma provenance disabled");
   },
 
   tsvDownload: function(target) {
@@ -719,13 +713,11 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             target_organism: targetOrganism
 		},
 		success: function(response, status, request) {
-			console.log('tsv create request success');
             me.get('controllers.application').addJob(response.uuid, thisTarget.get('prefLabel'), filtersString);
 			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {
-			console.log('tsv create request error');
 			  App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
 		}
 	});

@@ -24,7 +24,7 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
 
 actions: {
   fetchMore: function() {
-    if (this.get('model.pathways.length') < this.totalCount) {
+    if (this.get('model.pathways.length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
         me.get('controllers.application').set('fetching', true);
     var me = this;
     var thisCompound = this.get('content');
