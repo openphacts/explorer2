@@ -16,7 +16,17 @@
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
 				<p>{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
-				<p>{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}</p>
+				<p>
+                   {{#if result.pathwayInfoAvailable}}
+                     {{#if result.hasPathways}}
+                       {{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
+                     {{else}}
+                       Pathways ({{result.pathwayRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pathway Count</em></small>
+                   {{/if}}
+                </p>
 				<p>{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}Structure{{/link-to}}</p>
 			</div>
 		</div>
@@ -37,7 +47,17 @@
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
 				<p>{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
-                <p>{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}</p>
+				<p>
+                   {{#if result.pathwayInfoAvailable}}
+                     {{#if result.hasPathways}}
+                       {{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
+                     {{else}}
+                       Pathways ({{result.pathwayRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pathway Count</em></small>
+                   {{/if}}
+                </p>
 			</div>
 		</div>
 	

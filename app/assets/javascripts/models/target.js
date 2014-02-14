@@ -23,5 +23,16 @@ App.Target = App.SearchResult.extend({
     chemblProvenance: DS.attr(),
     drugbankProvenance: DS.attr(),
     uniprotProvenance: DS.attr(),
-    conceptwikiProvenance: DS.attr()
+    conceptwikiProvenance: DS.attr(),
+
+    pathways: DS.hasMany('pathway', { async: true }),
+    pathwayRecords: DS.attr('number'),
+
+    pathwayInfoAvailable: function() {
+        return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);
+    }.property('pathwayRecords'),
+
+    hasPathways: function() {
+        return this.get('pathwayRecords') > 0;
+    }.property('pathwayRecords')
 });

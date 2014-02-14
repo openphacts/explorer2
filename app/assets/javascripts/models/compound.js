@@ -32,5 +32,13 @@ App.Compound = App.SearchResult.extend({
     uri: DS.attr('string'),
     chemspiderProvenance: DS.attr(),
     chemblProvenance: DS.attr(),
-    drugbankProvenance: DS.attr()
+    drugbankProvenance: DS.attr(),
+
+    pathwayInfoAvailable: function() {
+        return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);
+    }.property('pathwayRecords'),
+
+    hasPathways: function() {
+        return this.get('pathwayRecords') > 0;
+    }.property('pathwayRecords')
 });
