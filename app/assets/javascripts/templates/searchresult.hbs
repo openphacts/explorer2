@@ -14,7 +14,17 @@
 			<div id="formula1" class="lead" style="padding:5px 0px 0px 0px;max-height:15px">{{formatMolecularFormula result.molform}}</div>
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
+				<p>
+                   {{#if result.pharmacologyInfoAvailable}}
+                     {{#if result.hasPharmacology}}
+                       {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
+                     {{else}}
+                       Pharmacology ({{result.pharmacologyRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pharmacology Count</em></small>
+                   {{/if}}
+                </p>
 				<p>
                    {{#if result.pathwayInfoAvailable}}
                      {{#if result.hasPathways}}
@@ -48,7 +58,17 @@
 		<div class="row span7">
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
 			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}</p>
+				<p>
+                   {{#if result.pharmacologyInfoAvailable}}
+                     {{#if result.hasPharmacology}}
+                       {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
+                     {{else}}
+                       Pharmacology ({{result.pharmacologyRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pharmacology Count</em></small>
+                   {{/if}}
+                </p>
 				<p>
                    {{#if result.pathwayInfoAvailable}}
                      {{#if result.hasPathways}}

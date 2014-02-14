@@ -69,18 +69,27 @@ App.SearchController = Ember.ArrayController.extend({
       			          me.addExactMatch(compound);
                       } else {
                           me.addSearchResult(compound);
-                      } 
-                      return compound;
-                  }).then(function(compound){
-                      //how many pathways for this compound
+                      }
+                      //how many pathways & pharmacology for this compound
                       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                      var countCallback=function(success, status, response){
+                      var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+
+                      var pathwaysCountCallback=function(success, status, response){
                           if (success && response) {
                             var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
                             compound.set('pathwayRecords', count);
                           }
                       };
-                      pathwaysSearcher.countPathwaysByCompound(compound.get('URI'), null, null, countCallback);
+
+                      var pharmaCountCallback=function(success, status, response){
+                          if (success && response) {
+                            var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
+                            compound.set('pharmacologyRecords', count);
+                          }
+                      };
+                      var compoundURI = compound.get('URI');
+                      compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
+                      pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
                   });
                 });
             } else {
@@ -100,18 +109,28 @@ App.SearchController = Ember.ArrayController.extend({
                       } else {
                           me.addSearchResult(target);
                       }
-                      return target;
-                    }).then(function(target){
-                      //how many pathways for this compound
+                      //how many pathways & pharmacology for this target
                       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                      var countCallback=function(success, status, response){
+                      var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+
+                      var pathwaysCountCallback=function(success, status, response){
                           if (success && response) {
                             var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
                             target.set('pathwayRecords', count);
                           }
                       };
-                      pathwaysSearcher.countPathwaysByTarget(target.get('URI'), null, null, countCallback);
-                  });
+
+                      var pharmaCountCallback=function(success, status, response){
+                          if (success && response) {
+                            var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
+                            target.set('pharmacologyRecords', count);
+                          }
+                      };
+
+                      var targetURI = target.get('URI');
+                      targetSearcher.targetPharmacologyCount(targetURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
+                      pathwaysSearcher.countPathwaysByTarget(targetURI, null, null, pathwaysCountCallback);
+                    });
                 });
             } else {
                 // an error in the response, ignore for now

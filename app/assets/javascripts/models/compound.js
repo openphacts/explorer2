@@ -40,5 +40,13 @@ App.Compound = App.SearchResult.extend({
 
     hasPathways: function() {
         return this.get('pathwayRecords') > 0;
-    }.property('pathwayRecords')
+    }.property('pathwayRecords'),
+
+    pharmacologyInfoAvailable: function() {
+        return (this.get('pharmacologyRecords') !== null && this.get('pharmacologyRecords') >= 0);
+    }.property('pharmacologyRecords'),
+
+    hasPharmacology: function() {
+        return this.get('pharmacologyRecords') > 0;
+    }.property('pharmacologyRecords')
 });
