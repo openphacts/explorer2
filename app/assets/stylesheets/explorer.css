@@ -378,3 +378,7 @@ sub {
     vertical-align: text-bottom;
     font-weight: bolder;
 }
+
+.table-header-structure-image {
+    min-width:130px;
+}

@@ -183,6 +183,7 @@
 				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
+                <th class="table-header-structure-image"></th>
 				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "biotransformationItem"}} {{bind-attr class="biotransSortASC:sortASC biotransSortDESC:sortDESC"}}>Bio Transformation{{#if biotransSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if biotransSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
@@ -212,6 +213,7 @@
 <tbody>
 {{#each structureRecord in structure}}
 <tr class="record-deco">
+    <td>{{cs_image_src structureRecord.URI}}</td>
     <td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}</td>
     <td class="cell-basictext">{{structureRecord.description}}</td>
     <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
