@@ -27,6 +27,35 @@ App.CompoundsIndexRoute = Ember.Route.extend({
   }
 });
 
+App.CompoundsDrawRoute = Ember.Route.extend({
+	
+  setupController: function(controller, model, params) {
+   console.log('compound ketcher controller');
+   controller.set('model', model);	
+   //controller.initKetcher();
+  },
+
+  model: function(params) {
+	console.log('compound ketcher model')
+    //var uri = this.get('queryParameters').uri;
+    var smiles = params.smiles
+    var structureInfo = {'smiles': smiles};
+    var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
+    return structure;
+ },
+
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  },
+
+  actions: {
+    queryParamsDidChange: function() {
+      this.refresh();
+    }
+  }
+});
+
 App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {

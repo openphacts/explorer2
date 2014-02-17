@@ -58,6 +58,9 @@ $huge: 40px;
 .medium-margin-bottom {
     margin-bottom: $medium;
 }
+.medium-margin-left {
+    margin-left: $medium;
+}
 .big-margin {
     margin: $big;
 }
@@ -74,6 +77,9 @@ $huge: 40px;
 }
 .big-padding-bottom {
 	padding-bottom: $big;
+}
+.big-padding-right {
+	padding-right: $big;
 }
 .big-margin-top {
     margin-top: $big;
@@ -98,4 +104,9 @@ $huge: 40px;
 /* remove all margins */
 .no-margin {
   margin: 0;
+}
+
+/* remove all padding */
+.no-padding {
+  padding: 0;
 }

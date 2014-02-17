@@ -382,3 +382,12 @@ sub {
 .table-header-structure-image {
     min-width:130px;
 }
+
+/* Remove max width for ketcher buttons */
+.no-max-width {
+    max-width: none;
+}
+
+.ketcher-button {
+    list-style-type: none;
+}
