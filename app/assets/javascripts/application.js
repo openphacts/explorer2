@@ -30,7 +30,7 @@
 //= require purl
 //= require_tree ./templates
 //= require_tree ./views
-//=require ketcher/raphael-min
+//=require ketcher/raphael
 //=require ketcher/chem/common
 //=require ketcher/chem/vec2
 //=require ketcher/chem/map

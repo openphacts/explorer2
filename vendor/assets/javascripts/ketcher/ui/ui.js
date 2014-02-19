@@ -59,15 +59,15 @@ ui.initButton = function (el)
 {
     el.mousedown(function (event) 
     {
-        if (this.hasClassName('buttonDisabled'))
+        if ($(this).hasClass('buttonDisabled'))
             return;
-        this.addClassName('buttonPressed');
+        $(this).addClass('buttonPressed');
     });
     el.mouseover(function (event) 
     {
-        if (this.hasClassName('buttonDisabled'))
+        if ($(this).hasClass('buttonDisabled'))
             return;
-        this.addClassName('buttonHighlight');
+        $(this).addClass('buttonHighlight');
         
         var status = this.getAttribute('status');
         if (status != null)
@@ -75,15 +75,15 @@ ui.initButton = function (el)
     });
     el.mouseout(function (event) 
     {
-        this.removeClassName('buttonPressed');
-        this.removeClassName('buttonHighlight');
+        $(this).removeClass('buttonPressed');
+        $(this).removeClass('buttonHighlight');
         window.status = '';
     });
 };
 
 ui.onClick_SideButton = function (event)
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
     ui.selectMode(this.id);
 };
@@ -271,25 +271,37 @@ ui.init = function ()
     ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
     ui.base_url = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
     //TODO change to jquery ajax
-    var request = new Ajax.Request(ui.path + 'knocknock',
-                    {
-                        method: 'get',
-                        asynchronous : false,
-                        onComplete: function (res)
-                        {
-                            if (res.responseText == 'You are welcome!')
-                                ui.standalone = false;
-                        }
-                    });
+//    var request = new Ajax.Request(ui.path + 'knocknock',
+//                    {
+//                        method: 'get',
+//                        asynchronous : false,
+//                        onComplete: function (res)
+//                        {
+//                            if (res.responseText == 'You are welcome!')
+//                                ui.standalone = false;
+//                        }
+//                    });
+        var request = $.ajax({
+		url: ui.path + 'knocknock',
+        async: false,
+		success: function(response, status, request) {
+			if (res.responseText == 'You are welcome!') {
+              ui.standalone = false;
+            }
+		},
+		error: function(request, status, error) {
+			//do nothing
+		}
+	});
                     
     if (this.standalone)
     {
-        $('.serverRequired').each(function (index, el)
+        $('.serverRequired').each(function ()
         {
-            if (el.hasClassName('toolButton'))
-                el.addClassName('buttonDisabled');
+            if ($(this).hasClass('toolButton'))
+                $(this).addClass('buttonDisabled');
             else
-                el.hide();
+                $(this).hide();
         });
         document.title += ' (standalone)';
     } else
@@ -407,7 +419,7 @@ ui.selectMode = function (mode)
 {
     if (mode != null)
     {
-        if ($(mode).hasClassName('buttonDisabled'))
+        if ($(mode).hasClass('buttonDisabled'))
             return;
         
         if (ui.selected())
@@ -448,7 +460,7 @@ ui.selectMode = function (mode)
     else
     {
         this.mode_button = $(mode);
-        this.mode_button.addClassName('buttonSelected');
+        $(this.mode_button).addClass('buttonSelected');
     }
 }
 
@@ -529,7 +541,7 @@ ui.pattern = function ()
 //
 ui.onClick_NewFile = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
     
     if (ui.modeType() == ui.MODE.PASTE)
@@ -744,7 +756,7 @@ ui.onKeyUp = function (event)
                     ui.updateSelection();
                 ui.selectMode('select_simple');
             }
-        } else if (this.hasClassName('dialogWindow'))
+        } else if ($(this).hasClass('dialogWindow'))
             ui.hideDialog(this.id);
         else
             this.hide();
@@ -896,7 +908,7 @@ ui.onKeyPress_InputLabel = function (event)
 //
 ui.onClick_OpenFile = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
     if (ui.modeType() == ui.MODE.PASTE)
     {
@@ -934,29 +946,55 @@ ui.loadMolecule = function (mol_string, force_layout)
             }
             return;
         }
-        var request = new Ajax.Request(ui.path + 'layout?smiles=' + encodeURIComponent(smiles),
-                {
-                    method: 'get',
-                    asynchronous : true,
-                    onComplete: function (res)
-                    {
-                        if (res.responseText.startsWith('Ok.'))
-                            ui.updateMolecule(ui.parseMolfile(res.responseText));
-                    }
-                });
+//        var request = new Ajax.Request(ui.path + 'layout?smiles=' + encodeURIComponent(smiles),
+//                {
+//                    method: 'get',
+//                    asynchronous : true,
+//                    onComplete: function (res)
+//                    {
+//                        if (res.responseText.startsWith('Ok.'))
+//                            ui.updateMolecule(ui.parseMolfile(res.responseText));
+//                    }
+//                });
+        var request = $.ajax({
+		url: ui.path + 'layout?smiles=' + encodeURIComponent(smiles),
+		success: function(response, status, request) {
+			if (res.responseText.startsWith('Ok.')) {
+              ui.updateMolecule(ui.parseMolfile(res.responseText));
+            }
+		},
+		error: function(request, status, error) {
+			//do nothing
+		}
+        });
     } else if (!ui.standalone && force_layout)
     {
-        var request = new Ajax.Request(ui.path + 'layout',
-                {
-                    method: 'post',
-                    asynchronous : true,
-                    parameters: {moldata: mol_string},
-                    onComplete: function (res)
-                    {
-                        if (res.responseText.startsWith('Ok.'))
-                            ui.updateMolecule(ui.parseMolfile(res.responseText));
-                    }
-                });
+//        var request = new Ajax.Request(ui.path + 'layout',
+//                {
+//                    method: 'post',
+//                    asynchronous : true,
+//                    parameters: {moldata: mol_string},
+//                    onComplete: function (res)
+//                    {
+//                        if (res.responseText.startsWith('Ok.'))
+//                            ui.updateMolecule(ui.parseMolfile(res.responseText));
+//                    }
+//                });
+        var params = {};
+	    params['moldata'] = mol_string;
+        var request = $.ajax({
+		url: ui.path + 'layout',
+        type: 'post',
+        data: params,
+		success: function(response, status, request) {
+			if (res.responseText.startsWith('Ok.')) {
+              ui.updateMolecule(ui.parseMolfile(res.responseText));
+            }
+		},
+		error: function(request, status, error) {
+			//do nothing
+		}
+        });
     } else {
         ui.updateMolecule(ui.parseMolfile(mol_string));
     }
@@ -1013,7 +1051,7 @@ ui.onChange_Input = function ()
 //
 ui.onClick_SaveFile = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
     if (ui.modeType() == ui.MODE.PASTE)
     {
@@ -1063,14 +1101,14 @@ ui.onChange_FileFormat = function (event, update)
 //
 ui.onClick_ZoomIn = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.scale += ui.SCALE_INCR;
         
     if (ui.scale >= ui.SCALE_MAX)
-        this.addClassName('buttonDisabled');
-    $('#zoom_out').removeClassName('buttonDisabled');
+        $(this).addClass('buttonDisabled');
+    $($('#zoom_out')).removeClass('buttonDisabled');
 
     ui.render.setScale(ui.scale);
     ui.render.update();
@@ -1078,14 +1116,14 @@ ui.onClick_ZoomIn = function ()
 
 ui.onClick_ZoomOut = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.scale -= ui.SCALE_INCR;
         
     if (ui.scale <= ui.SCALE_MIN)
-        this.addClassName('buttonDisabled');
-    $('#zoom_in').removeClassName('buttonDisabled');
+        $(this).addClass('buttonDisabled');
+    $($('#zoom_in')).removeClass('buttonDisabled');
 
     ui.render.setScale(ui.scale);
     ui.render.update();
@@ -1096,7 +1134,7 @@ ui.onClick_ZoomOut = function ()
 //
 ui.onClick_CleanUp = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     if (ui.modeType() == ui.MODE.PASTE)
@@ -2200,18 +2238,18 @@ ui.isClipboardEmpty = function ()
 ui.updateClipboardButtons = function ()
 {
     if (ui.isClipboardEmpty())
-        $('#paste').addClassName('buttonDisabled');
+        $($('#paste')).addClass('buttonDisabled');
     else
-        $('#paste').removeClassName('buttonDisabled');
+        $($('#paste')).removeClass('buttonDisabled');
 
     if (ui.selected())
     {
-        $('#copy').removeClassName('buttonDisabled');
-        $('#cut').removeClassName('buttonDisabled');
+        $($('#copy')).removeClass('buttonDisabled');
+        $($('#cut')).removeClass('buttonDisabled');
     } else
     {
-        $('#copy').addClassName('buttonDisabled');
-        $('#cut').addClassName('buttonDisabled');
+        $($('#copy')).addClass('buttonDisabled');
+        $($('#cut')).addClass('buttonDisabled');
     }
 }
 
@@ -2310,7 +2348,7 @@ ui.paste = function ()
         ui.render.sGroupSetAttr(sid, 'connectivity', sgroup.connectivity);
         ui.render.sGroupSetAttr(sid, 'name', sgroup.name);
         
-        sgroup.atoms.each(function(index, id)
+        $(sgroup.atoms).each(function(index, id)
         {
             ui.render.atomSetSGroup(mapping[id], sid);
         }, this);    
@@ -2324,12 +2362,12 @@ ui.paste = function ()
 
 ui.cancelPaste = function ()
 {
-    ui.pasted.sgroups.each(function (index, id)
+    $(ui.pasted.sgroups).each(function (index, id)
     {
         ui.render.sGroupDelete(id);
     });
     
-    ui.pasted.atoms.each(function (index, id)
+    $(ui.pasted.atoms).each(function (index, id)
     {
         ui.render.atomRemove(id);
     });
@@ -2344,7 +2382,7 @@ ui.cancelPaste = function ()
 
 ui.onClick_Cut = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.copy();
@@ -2353,7 +2391,7 @@ ui.onClick_Cut = function ()
 
 ui.onClick_Copy = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.copy();
@@ -2362,7 +2400,7 @@ ui.onClick_Copy = function ()
 
 ui.onClick_Paste = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     if (ui.modeType() == ui.MODE.PASTE)
@@ -3545,14 +3583,14 @@ ui.removeDummyAction = function ()
 ui.updateActionButtons = function ()
 {
     if (ui.undoStack.length == 0)
-        $('#undo').addClassName('buttonDisabled');
+        $($('#undo')).addClass('buttonDisabled');
     else
-        $('#undo').removeClassName('buttonDisabled');
+        $($('#undo')).removeClass('buttonDisabled');
 
     if (ui.redoStack.length == 0)
-        $('#redo').addClassName('buttonDisabled');
+        $($('#redo')).addClass('buttonDisabled');
     else
-        $('#redo').removeClassName('buttonDisabled');
+        $($('#redo')).removeClass('buttonDisabled');
 }
 
 ui.undo = function ()
@@ -3571,7 +3609,7 @@ ui.redo = function ()
 
 ui.onClick_Undo = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.undo();
@@ -3579,7 +3617,7 @@ ui.onClick_Undo = function ()
 
 ui.onClick_Redo = function ()
 {
-    if (this.hasClassName('buttonDisabled'))
+    if ($(this).hasClass('buttonDisabled'))
         return;
         
     ui.redo();
