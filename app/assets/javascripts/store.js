@@ -9,6 +9,7 @@ App.CompoundAdapter = DS.Adapter.extend({
         if (success) {
 	        compoundResult = searcher.parseCompoundResponse(response);
             compoundResult['pathways'] = [];
+            //compoundResult['molfile'] = App.Molfile != null ? App.Molfile : null;
             resolve(compoundResult);
         } else {
             reject(status);

@@ -4,7 +4,9 @@ App.CompoundsIndexRoute = Ember.Route.extend({
 	
   setupController: function(controller, model, params) {
    console.log('compound index controller');
-   controller.set('model', model);	
+   controller.set('model', model);
+   var molfile = this.controllerFor('application').get('molfile');
+   model.set('molfile', molfile);
   },
 
   model: function(params) {
@@ -39,7 +41,8 @@ App.CompoundsDrawRoute = Ember.Route.extend({
 	console.log('compound ketcher model')
     //var uri = this.get('queryParameters').uri;
     var smiles = params.smiles
-    var structureInfo = {'smiles': smiles};
+    var molfile = params.molfile;
+    var structureInfo = {'smiles': smiles, 'molfile': molfile};
     var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
     return structure;
  },
@@ -319,8 +322,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     if (type) {
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
     }
-    var uri = params.uri;
-    return this.get('store').find('compound', uri);
+    return this.get('store').find('compound', params.uri);
   },
 
   beforeModel: function() {

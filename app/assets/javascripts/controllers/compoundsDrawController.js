@@ -8,41 +8,26 @@ App.CompoundsDrawController = Ember.ObjectController.extend({
 
   fetching: false,
 
-  radioOpenFromInput: false,
-
-  onSelectOpenFromInput: function() {
-      $('open_from_input').show();
-      $('open_from_file').hide();
-      ui.onChange_Input.call($('input_mol'));
-      $('input_mol').activate();
-  },
-
-  initKetcher: function() {
-    ketcher.init();
-  },
-
   actions: {
 
-    newFile: function() {
-        ui.modeType() === ui.MODE.PASTE ? ui.cancelPaste() : '';
-        ui.selectMode('select_simple');
-    
-        if (ui.ctab.atoms.count() !== 0) {
-          ui.addUndoAction(ui.Action.fromNewCanvas(new chem.Molecule()));
-          ui.render.update();
-        }
-    },
+      useMolecule: function() {
+          var me = this;
+          var smiles = document.getElementById('ketcher-iframe').contentWindow.ketcher.getSmiles();
+          //var molfile = document.getElementById('ketcher-iframe').contentWindow.ketcher.getMolfile();
+          //App.Molfile = smiles;
+          var structureSearcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+          var structureCallback = function(success, status, response) {
+              if (success) {
+                var uri = structureSearcher.parseSmilesToURLResponse(response);
+                // got the uri from the smiles so now fetch the compound
+	            me.transitionToRoute('compounds.structure', {queryParams: {'uri': uri, 'type': 'exact'}});
+              } else {
+			    App.FlashQueue.pushFlash('error', 'No compound found with this structure');
+              }
+          }
+          structureSearcher.smilesToURL(smiles, structureCallback);
+      }
 
-    openFile: function() {
-        if (ui.modeType() == ui.MODE.PASTE)
-        {
-          ui.cancelPaste();
-          ui.selectMode('select_simple');
-        }
-        ui.showDialog('open_file');
-        this.radioOpenFromInput = true;
-        this.onSelectOpenFromInput();
-    }
   }
 
 });

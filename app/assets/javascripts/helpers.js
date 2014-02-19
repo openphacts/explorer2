@@ -1,3 +1,10 @@
+Ember.Handlebars.registerBoundHelper('insertKetcherIframe', function(molfile) {
+    if (molfile != null) {
+      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?molfile=' + molfile + '" id="ketcher-iframe"></iframe>');
+    } else {
+      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html" id="ketcher-iframe"></iframe>');
+    }
+});
 Ember.Handlebars.registerBoundHelper('structureSearchHasRelevance', function(type) {
   if (type === "substructure" || type === "similarity") {
     return true;

@@ -163,6 +163,7 @@
         <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
         <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
         <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
+        {{#link-to "compounds.draw" (query-params smiles=this.smiles molfile=this.molfile) class="btn big-margin-left"}}Draw Molecule{{/link-to}}
     </div>
 </div>
 <div class="big-padding-left">

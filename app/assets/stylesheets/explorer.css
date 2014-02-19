@@ -388,6 +388,7 @@ sub {
     max-width: none;
 }
 
-.ketcher-button {
-    list-style-type: none;
+#ketcher-iframe {
+    min-width: 100%;
+    min-height: 650px
 }

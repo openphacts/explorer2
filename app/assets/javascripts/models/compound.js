@@ -33,6 +33,7 @@ App.Compound = App.SearchResult.extend({
     chemspiderProvenance: DS.attr(),
     chemblProvenance: DS.attr(),
     drugbankProvenance: DS.attr(),
+    molfile: DS.attr('string'),
 
     pathwayInfoAvailable: function() {
         return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);

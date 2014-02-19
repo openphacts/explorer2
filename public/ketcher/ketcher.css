@@ -8,8 +8,8 @@ body > div:first-child
     position: absolute;
     width: 100%;
     height: 100%;
-    max-width: 900px;
-    max-height: 720px;
+    /* max-width: 900px;
+    max-height: 720px; */
 }
 
 a, img 
@@ -25,7 +25,7 @@ table#ketcher_window
     position: absolute;
     z-index: 1;
     width: 100%;
-    height: auto;
+    height: 100%;
     table-layout: fixed;
     background-color: #E0E0E0;
     border-color: white;
@@ -122,11 +122,11 @@ td.sideButton
     white-space: nowrap;
 }
 
-/* input#input_label
+input#input_label
 {
     position: absolute;
     z-index:  2;
-} */
+}
 
 div#window_cover
 {
@@ -140,14 +140,14 @@ div#window_cover
     filter:     alpha(opacity=15);
 }
 
-/* div#loading
+div#loading
 {
     width:  100%;
     height: 100%;
     background-image:    url('loading.gif');
     background-repeat:   no-repeat;
     background-position: center center;
-} */
+}
 
 .dialogWindow
 {
@@ -168,6 +168,10 @@ div#window_cover
     background-color: #D0D0D0;
 }
 
+.fileDialog
+{
+}
+
 .chemicalText
 {
     width: 320px;
@@ -179,4 +183,8 @@ div#window_cover
 .chemicalText_IE
 {
     white-space: pre;
+}
+
+.propDialog
+{
 }

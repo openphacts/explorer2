@@ -30,29 +30,8 @@
 //= require purl
 //= require_tree ./templates
 //= require_tree ./views
-//=require ketcher/raphael
-//=require ketcher/chem/common
-//=require ketcher/chem/vec2
-//=require ketcher/chem/map
-//=require ketcher/chem/pool
-//=require ketcher/chem/element
-//=require ketcher/chem/molecule
-//=require ketcher/chem/molfile
-//=require ketcher/chem/sgroup
-//=require ketcher/chem/dfs
-//=require ketcher/chem/cis_trans
-//=require ketcher/chem/stereocenters
-//=require ketcher/chem/smiles
-//=require ketcher/rnd/events
-//=require ketcher/rnd/visel
-//=require ketcher/rnd/moldata
-//=require ketcher/rnd/moldata_valence
-//=require ketcher/rnd/drawing
-//=require ketcher/rnd/render
-//=require ketcher/ui/log
-//=require ketcher/ui/ui
-//=require ketcher/ketcher
 
 window.App = Ember.Application.create({
     LOG_TRANSITIONS: true
 })
+App.Molfile = null;

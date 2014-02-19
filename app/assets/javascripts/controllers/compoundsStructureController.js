@@ -64,6 +64,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   relSelectedHigherValue: null,
 
+  getMolfile: function() {
+    return this.get('controllers.application').get('molfile');
+  },
+
   currentCount: function() {
     return this.get('filteredCompounds.length');
   }.property('filteredCompounds.length'),

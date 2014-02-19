@@ -710,3 +710,108 @@ chem.SmilesSaver.prototype._writeRadicals = function (mol)
          }
    }
 }
+
+/*
+void SmilesSaver::_writeStereogroups (const Molecule &mol, const Array<_Atom> &atoms)
+{
+   MoleculeStereocenters &stereocenters = mol.getStereocenters();
+   int i, j;
+   int single_and_group = -1;
+
+   for (i = stereocenters.begin(); i != stereocenters.end(); i = stereocenters.next(i))
+   {
+      int idx, type, group;
+
+      stereocenters.get(i, idx, type, group, 0);
+
+      if (type < MoleculeStereocenters::ATOM_ANY)
+         continue;
+      if (type != MoleculeStereocenters::ATOM_AND)
+         break;
+      if (single_and_group == -1)
+         single_and_group = group;
+      else if (single_and_group != group)
+         break;
+   }
+
+   if (i == stereocenters.end())
+      return;
+
+   int and_group_idx = 1;
+   int or_group_idx = 1;
+   
+   QS_DEF(Array<int>, marked);
+
+   marked.clear_resize(_written_atoms.size());
+   marked.zerofill();
+
+   for (i = 0; i < _written_atoms.size(); i++)
+   {
+      if (marked[i])
+         continue;
+
+      int type = stereocenters.getType(_written_atoms[i]);
+
+      if (type > 0)
+      {
+         if (_comma)
+            _output.writeChar(',');
+         else
+         {
+            _output.writeString(" |");
+            _comma = true;
+         }
+      }
+
+      if (type == MoleculeStereocenters::ATOM_ANY)
+      {
+         _output.printf("w:%d", i);
+
+         for (j = i + 1; j < _written_atoms.size(); j++)
+            if (stereocenters.getType(_written_atoms[j]) == MoleculeStereocenters::ATOM_ANY)
+            {
+               marked[j] = 1;
+               _output.printf(",%d", j);
+            }
+      }
+      else if (type == MoleculeStereocenters::ATOM_ABS)
+      {
+         _output.printf("a:%d", i);
+
+         for (j = i + 1; j < _written_atoms.size(); j++)
+            if (stereocenters.getType(_written_atoms[j]) == MoleculeStereocenters::ATOM_ABS)
+            {
+               marked[j] = 1;
+               _output.printf(",%d", j);
+            }
+      }
+      else if (type == MoleculeStereocenters::ATOM_AND)
+      {
+         int group = stereocenters.getGroup(_written_atoms[i]);
+         
+         _output.printf("&%d:%d", and_group_idx++, i);
+         for (j = i + 1; j < _written_atoms.size(); j++)
+            if (stereocenters.getType(_written_atoms[j]) == MoleculeStereocenters::ATOM_AND &&
+                stereocenters.getGroup(_written_atoms[j]) == group)
+            {
+               marked[j] = 1;
+               _output.printf(",%d", j);
+            }
+      }
+      else if (type == MoleculeStereocenters::ATOM_OR)
+      {
+         int group = stereocenters.getGroup(_written_atoms[i]);
+
+         _output.printf("o%d:%d", or_group_idx++, i);
+         for (j = i + 1; j < _written_atoms.size(); j++)
+            if (stereocenters.getType(_written_atoms[j]) == MoleculeStereocenters::ATOM_OR &&
+                stereocenters.getGroup(_written_atoms[j]) == group)
+            {
+               marked[j] = 1;
+               _output.printf(",%d", j);
+            }
+      }
+   }
+}
+*/
+

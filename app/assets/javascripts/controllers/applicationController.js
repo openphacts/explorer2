@@ -6,6 +6,9 @@ App.ApplicationController = Ember.Controller.extend({
 
     iex: false,
 
+    // use for structure drawing
+    molfile: null,
+
     notOldIE: function() {
       return this.get('iex');
     }.property('iex'),

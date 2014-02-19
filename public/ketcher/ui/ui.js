@@ -15,7 +15,7 @@ if (typeof(ui) == 'undefined')
 
 ui.standalone = true;
 
-ui.path = '/';
+ui.path = '/localhost:8080';
 ui.base_url = '';
 
 ui.scale = 40;
@@ -57,33 +57,37 @@ ui.patterns =
 //
 ui.initButton = function (el)
 {
-    el.mousedown(function (event) 
+    el.observe('mousedown', function (event) 
     {
-        if ($(this).hasClass('buttonDisabled'))
+        if (this.hasClassName('buttonDisabled'))
             return;
-        $(this).addClass('buttonPressed');
+        this.addClassName('buttonPressed');
     });
-    el.mouseover(function (event) 
+    el.observe('mouseup', function (event) 
     {
-        if ($(this).hasClass('buttonDisabled'))
+        this.removeClassName('buttonPressed');
+    });
+    el.observe('mouseover', function (event) 
+    {
+        if (this.hasClassName('buttonDisabled'))
             return;
-        $(this).addClass('buttonHighlight');
+        this.addClassName('buttonHighlight');
         
         var status = this.getAttribute('status');
         if (status != null)
             window.status = status;
     });
-    el.mouseout(function (event) 
+    el.observe('mouseout', function (event) 
     {
-        $(this).removeClass('buttonPressed');
-        $(this).removeClass('buttonHighlight');
+        this.removeClassName('buttonPressed');
+        this.removeClassName('buttonHighlight');
         window.status = '';
     });
 };
 
 ui.onClick_SideButton = function (event)
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
     ui.selectMode(this.id);
 };
@@ -100,208 +104,177 @@ ui.init = function ()
         this.selectMode('select_simple');
         return;
     }
-
-    // Ian removed all the keypresses
-    // Document events
-   // document.observe('keypress', ui.onKeyPress_Ketcher);
-    //document.observe('keydown', ui.onKeyDown_IE);
-    //document.observe('keyup', ui.onKeyUp);
-    //document.observe('mouseup', ui.onMouseUp_Ketcher);
     
-    // Ian - don't bind any of these events
+    this.is_osx = (navigator.userAgent.indexOf('Mac OS X') != -1);
+    
+    // IE specific styles
+    if (Prototype.Browser.IE)
+    {
+        $$('.chemicalText').each(function (el)
+        {
+            el.addClassName('chemicalText_IE');
+        });
+
+        // IE6
+        if (navigator.userAgent.indexOf('MSIE 6.0') != -1)
+        {
+            $$('.dialogWindow').each(function (dlg)
+            {
+                dlg.style.width = "300px";
+            });
+        }
+    }
+    
+    // OS X specific stuff
+    if (ui.is_osx)
+    {
+        $$('.toolButton > img, .sideButton').each(function (button)
+        {
+            button.title = button.title.replace("Ctrl", "Cmd");
+        }, this);
+    }
+
+    // Document events
+    document.observe('keypress', ui.onKeyPress_Ketcher);
+    document.observe('keydown', ui.onKeyDown_IE);
+    document.observe('keyup', ui.onKeyUp);
+    document.observe('mouseup', ui.onMouseUp_Ketcher);
+    
     // Button events
-    //$('.toolButton').each(function(index, el) {
-    //    ui.initButton(el);
-    //});
-    //$('.sideButton').each(function (index, el)
-   //{
-   //     ui.initButton(el);
-   //     el.click(function() {
-   //         ui.onClick_SideButton;
-   //     });
-   // });
-    $('#new').click(function() {
-        ui.onClick_NewFile;
+    $$('.toolButton').each(ui.initButton);
+    $$('.sideButton').each(function (el)
+    {
+        ui.initButton(el);
+        el.observe('click', ui.onClick_SideButton);
     });
-    $('#open').click(function() {
-        ui.onClick_OpenFile;
-    });
-    $('#save').click(function() {
-        ui.onClick_SaveFile;
-    });
-    $('#undo').click(function() {
-        ui.onClick_Undo;
-    });
-    $('#redo').click(function() {
-        ui.onClick_Redo;
-    });
-    $('#cut').click(function() {
-        ui.onClick_Cut;
-    });
-    $('#copy').click(function() {
-        ui.onClick_Copy;
-    });
-    $('#paste').click(function() {
-        ui.onClick_Paste;
-    });
-    $('#zoom_in').click(function() {
-        ui.onClick_ZoomIn;
-    });
-    $('#zoom_out').click(function() {
-        ui.onClick_ZoomOut;
-    });
-    $('#clean_up').click(function() {
-        ui.onClick_CleanUp;
-    });
+    $('new').observe('click', ui.onClick_NewFile);
+    $('open').observe('click', ui.onClick_OpenFile);
+    $('save').observe('click', ui.onClick_SaveFile);
+    $('undo').observe('click', ui.onClick_Undo);
+    $('redo').observe('click', ui.onClick_Redo);
+    $('cut').observe('click', ui.onClick_Cut);
+    $('copy').observe('click', ui.onClick_Copy);
+    $('paste').observe('click', ui.onClick_Paste);
+    $('zoom_in').observe('click', ui.onClick_ZoomIn);
+    $('zoom_out').observe('click', ui.onClick_ZoomOut);
+    $('clean_up').observe('click', ui.onClick_CleanUp);
     
     // Client area events
-    this.client_area = $('#client_area');
-    this.client_area.scroll(function() {
-        ui.onScroll_ClientArea;
-    });
+    this.client_area = $('client_area');
+    this.client_area.observe('scroll', ui.onScroll_ClientArea);
     
-// TODO Ian - not really sure what the point of this bit is - remove for the moment
     // Dialog events
-//    $('.dialogWindow').each(function (index, el)
-//    {
-//        el.keypress(function() {
-//            ui.onKeyPress_Dialog;
-//        });
-//        el.keyup(function() {
-//            ui.onKeyUp;
-//        });
-//    });
+    $$('.dialogWindow').each(function (el)
+    {
+        el.observe('keypress', ui.onKeyPress_Dialog);
+        el.observe('keyup', ui.onKeyUp);
+    });
     
     // Atom properties dialog events
-    $('#atom_label').change(function() {
-        ui.onChange_AtomLabel;
-    });
-    $('#atom_charge').change(function() {
-        ui.onChange_AtomCharge;
-    });
-    $('#atom_isotope').change(function() {
-        ui.onChange_AtomIsotope;
-    });
-    $('#atom_valence').change(function() {
-        ui.onChange_AtomValence;
-    });
-    $('#atom_prop_cancel').click(function() {
+    $('atom_label').observe('change', ui.onChange_AtomLabel);
+    $('atom_charge').observe('change', ui.onChange_AtomCharge);
+    $('atom_isotope').observe('change', ui.onChange_AtomIsotope);
+    $('atom_valence').observe('change', ui.onChange_AtomValence);
+    $('atom_prop_cancel').observe('click', function ()
+    {
         ui.hideDialog('atom_properties');
     });
-    $('#atom_prop_ok').click(function() {
+    $('atom_prop_ok').observe('click', function ()
+    {
         ui.applyAtomProperties();
     });
     
     // S-group properties dialog events
-    $('#sgroup_type').change(function() {
-        ui.onChange_SGroupType;
-    });
-    $('#sgroup_label').change(function() {
-        ui.onChange_SGroupLabel;
-    });
-    $('#sgroup_prop_cancel').click(function() {
+    $('sgroup_type').observe('change', ui.onChange_SGroupType);
+    $('sgroup_label').observe('change', ui.onChange_SGroupLabel);
+    $('sgroup_prop_cancel').observe('click', function ()
+    {
         ui.hideDialog('sgroup_properties');
     });
-    $('#sgroup_prop_ok').click(function ()
+    $('sgroup_prop_ok').observe('click', function ()
     {
         ui.applySGroupProperties();
     });
     
     // Label input events
-    $('#input_label').blur(function ()
+    $('input_label').observe('blur', function ()
     {
         this.hide();
     });
-    $('#input_label').keypress(function() {
-        ui.onKeyPress_InputLabel;
-    });
-    $('#input_label').keyup(function() {
-        ui.onKeyUp;
-    });
+    $('input_label').observe('keypress', ui.onKeyPress_InputLabel);
+    $('input_label').observe('keyup', ui.onKeyUp);
     
     // Load dialog events
-    $('#radio_open_from_input').click(function() {
-         ui.onSelect_OpenFromInput;
+    $('radio_open_from_input').observe('click', ui.onSelect_OpenFromInput);
+    $('radio_open_from_file').observe('click', ui.onSelect_OpenFromFile);
+    $('input_mol').observe('keyup', ui.onChange_Input);
+    $('input_mol').observe('click', ui.onChange_Input);
+    $('read_cancel').observe('click', function ()
+    {
+        ui.hideDialog('open_file');
     });
-    $('#radio_open_from_file').click(function() {
-         ui.onSelect_OpenFromFile;
-    });
-    $('#input_mol').keyup(function() {
-        ui.onChange_Input;
-    });
-    $('#input_mol').click(function() {
-         ui.onChange_Input;
-    });
-    $('#read_cancel').click(function() {
-         ui.hideDialog('open_file');
-    });
-    $('#read_ok').click(function ()
+    $('read_ok').observe('click', function ()
     {
         ui.loadMoleculeFromInput();
     });
-    $('#upload_mol').submit(function ()
+    $('upload_mol').observe('submit', function ()
     {
         ui.hideDialog('open_file');
         setTimeout(ui.loadMoleculeFromFile, 500);
     });
-    $('#upload_cancel').click(function ()
+    $('upload_cancel').observe('click', function ()
     {
         ui.hideDialog('open_file');
     });
 
     // Save dialog events
-    $('#file_format').change(function() {
-        ui.onChange_FileFormat;
-    });
-    $('#save_ok').click(function ()
+    $('file_format').observe('change', ui.onChange_FileFormat);
+    $('save_ok').observe('click', function ()
     {
         ui.hideDialog('save_file');
     });
     
     ui.onResize_Ketcher();
-//TODO - Ian not sure if this browser detection is needed any more
-//    if (Prototype.Browser.IE)
-//    {
-//        ui.client_area.absolutize(); // Needed for clipping and scrollbars in IE
-//        $('#ketcher_window').resize(function() {
-//            ui.onResize_Ketcher;
-//        });
-//    }
+    if (Prototype.Browser.IE)
+    {
+        ui.client_area.absolutize(); // Needed for clipping and scrollbars in IE
+        $('ketcher_window').observe('resize', ui.onResize_Ketcher);
+    }
     
-    ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
+    //ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
+    ui.path = 'http://localhost:8080/ketcher/';
     ui.base_url = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
-    //TODO change to jquery ajax
-//    var request = new Ajax.Request(ui.path + 'knocknock',
-//                    {
-//                        method: 'get',
-//                        asynchronous : false,
-//                        onComplete: function (res)
-//                        {
-//                            if (res.responseText == 'You are welcome!')
-//                                ui.standalone = false;
-//                        }
-//                    });
-        var request = $.ajax({
-		url: ui.path + 'knocknock',
-        async: false,
-		success: function(response, status, request) {
-			if (res.responseText == 'You are welcome!') {
-              ui.standalone = false;
+    
+    var request = new Ajax.Request(ui.path + 'knocknock',
+                    {
+                        method: 'get',
+                        asynchronous : false,
+                        onComplete: function (res)
+                        {
+                            if (res.responseText == 'You are welcome!')
+                                ui.standalone = false;
+                        },
+            onCreate: function(response) { // here comes the fix
+                var t = response.transport; 
+                t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
+                    if (/^(accept|accept-language|content-language)$/i.test(k)) 
+                        return original(k, v); 
+                    if (/^content-type$/i.test(k) && 
+                        /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v)) 
+                        return original(k, v); 
+                    return; 
+                }); 
             }
-		},
-		error: function(request, status, error) {
-			//do nothing
-		}
-	});
+                    });
                     
     if (this.standalone)
     {
-        $('.serverRequired').each(function ()
+        $$('.serverRequired').each(function (el)
         {
-            if ($(this).hasClass('toolButton'))
-                $(this).addClass('buttonDisabled');
+            if (el.hasClassName('toolButton'))
+                el.addClassName('buttonDisabled');
             else
-                $(this).hide();
+                el.hide();
         });
         document.title += ' (standalone)';
     } else
@@ -348,26 +321,26 @@ ui.init = function ()
 
 ui.showDialog = function (name)
 {
-    $('#window_cover').show();
+    $('window_cover').show();
     $(name).show();
 }
 
 ui.hideDialog = function (name)
 {
     $(name).hide();
-    $('#window_cover').hide();
+    $('window_cover').hide();
 }
-//TODO Not sure this is really needed
+
 ui.onResize_Ketcher = function ()
 {
-//    $('#window_cover').style.width = $('#ketcher_window').width().toString() + 'px';
-//    $('#window_cover').style.height = $('#ketcher_window').height().toString() + 'px';
-//    
-//    if (Prototype.Browser.IE)
-//        ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
-//    
-//    //ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
-//    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';
+    $('window_cover').style.width = $('ketcher_window').getWidth().toString() + 'px';
+    $('window_cover').style.height = $('ketcher_window').getHeight().toString() + 'px';
+    
+    if (Prototype.Browser.IE)
+        ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
+    
+    //ui.client_area.style.width = (Element.getWidth(ui.client_area.parentNode) - 2).toString() + 'px';
+    ui.client_area.style.height = (Element.getHeight(ui.client_area.parentNode) - 2).toString() + 'px';
 }
 
 //
@@ -419,7 +392,7 @@ ui.selectMode = function (mode)
 {
     if (mode != null)
     {
-        if ($(mode).hasClass('buttonDisabled'))
+        if ($(mode).hasClassName('buttonDisabled'))
             return;
         
         if (ui.selected())
@@ -460,7 +433,7 @@ ui.selectMode = function (mode)
     else
     {
         this.mode_button = $(mode);
-        $(this.mode_button).addClass('buttonSelected');
+        this.mode_button.addClassName('buttonSelected');
     }
 }
 
@@ -541,7 +514,7 @@ ui.pattern = function ()
 //
 ui.onClick_NewFile = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
     
     if (ui.modeType() == ui.MODE.PASTE)
@@ -748,7 +721,7 @@ ui.onKeyUp = function (event)
                 ui.updateSelection();
         } else if (this == document)
         {
-            if (!$('#window_cover').visible())
+            if (!$('window_cover').visible())
             {
                 if (ui.modeType() == ui.MODE.PASTE)
                     ui.cancelPaste();
@@ -756,7 +729,7 @@ ui.onKeyUp = function (event)
                     ui.updateSelection();
                 ui.selectMode('select_simple');
             }
-        } else if ($(this).hasClass('dialogWindow'))
+        } else if (this.hasClassName('dialogWindow'))
             ui.hideDialog(this.id);
         else
             this.hide();
@@ -908,7 +881,7 @@ ui.onKeyPress_InputLabel = function (event)
 //
 ui.onClick_OpenFile = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
     if (ui.modeType() == ui.MODE.PASTE)
     {
@@ -916,7 +889,7 @@ ui.onClick_OpenFile = function ()
         ui.selectMode('select_simple');
     }
     ui.showDialog('open_file');
-    $('#radio_open_from_input').checked = true;
+    $('radio_open_from_input').checked = true;
     ui.onSelect_OpenFromInput();
 }
 
@@ -924,8 +897,8 @@ ui.getFile = function ()
 {
     var frame_body;
 
-    if ('contentDocument' in $('#buffer_frame'))
-        frame_body = $('#buffer_frame').contentDocument.body;
+    if ('contentDocument' in $('buffer_frame'))
+        frame_body = $('buffer_frame').contentDocument.body;
     else // IE7
         frame_body = document.frames['buffer_frame'].document.body;
 
@@ -946,55 +919,53 @@ ui.loadMolecule = function (mol_string, force_layout)
             }
             return;
         }
-//        var request = new Ajax.Request(ui.path + 'layout?smiles=' + encodeURIComponent(smiles),
-//                {
-//                    method: 'get',
-//                    asynchronous : true,
-//                    onComplete: function (res)
-//                    {
-//                        if (res.responseText.startsWith('Ok.'))
-//                            ui.updateMolecule(ui.parseMolfile(res.responseText));
-//                    }
-//                });
-        var request = $.ajax({
-		url: ui.path + 'layout?smiles=' + encodeURIComponent(smiles),
-		success: function(response, status, request) {
-			if (res.responseText.startsWith('Ok.')) {
-              ui.updateMolecule(ui.parseMolfile(res.responseText));
+        var decodedSmiles = decodeURIComponent(smiles);
+        var request = new Ajax.Request(ui.path + 'layout',
+                {
+                    method: 'get',
+                    asynchronous : true,
+                    parameters: {smiles: decodedSmiles},
+                    onSuccess: function (res)
+                    {
+                        if (res.responseText.startsWith('Ok.'))
+                            ui.updateMolecule(ui.parseMolfile(res.responseText));
+                    },
+            onCreate: function(response) { // here comes the fix
+                var t = response.transport; 
+                t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
+                    if (/^(accept|accept-language|content-language)$/i.test(k)) 
+                        return original(k, v); 
+                    if (/^content-type$/i.test(k) && 
+                        /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v)) 
+                        return original(k, v); 
+                    return; 
+                }); 
             }
-		},
-		error: function(request, status, error) {
-			//do nothing
-		}
-        });
+                });
     } else if (!ui.standalone && force_layout)
     {
-//        var request = new Ajax.Request(ui.path + 'layout',
-//                {
-//                    method: 'post',
-//                    asynchronous : true,
-//                    parameters: {moldata: mol_string},
-//                    onComplete: function (res)
-//                    {
-//                        if (res.responseText.startsWith('Ok.'))
-//                            ui.updateMolecule(ui.parseMolfile(res.responseText));
-//                    }
-//                });
-        var params = {};
-	    params['moldata'] = mol_string;
-        var request = $.ajax({
-		url: ui.path + 'layout',
-        type: 'post',
-        data: params,
-		success: function(response, status, request) {
-			if (res.responseText.startsWith('Ok.')) {
-              ui.updateMolecule(ui.parseMolfile(res.responseText));
+        var request = new Ajax.Request(ui.path + 'layout',
+                {
+                    method: 'post',
+                    asynchronous : true,
+                    parameters: {moldata: mol_string},
+                    onComplete: function (res)
+                    {
+                        if (res.responseText.startsWith('Ok.'))
+                            ui.updateMolecule(ui.parseMolfile(res.responseText));
+                    },
+            onCreate: function(response) { // here comes the fix
+                var t = response.transport; 
+                t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
+                    if (/^(accept|accept-language|content-language)$/i.test(k)) 
+                        return original(k, v); 
+                    if (/^content-type$/i.test(k) && 
+                        /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v)) 
+                        return original(k, v); 
+                    return; 
+                }); 
             }
-		},
-		error: function(request, status, error) {
-			//do nothing
-		}
-        });
+                });
     } else {
         ui.updateMolecule(ui.parseMolfile(mol_string));
     }
@@ -1010,22 +981,22 @@ ui.loadMoleculeFromFile = function ()
 ui.loadMoleculeFromInput = function ()
 {
     ui.hideDialog('open_file');
-    ui.loadMolecule($('#input_mol').value);
+    ui.loadMolecule($('input_mol').value);
 };
 
 ui.onSelect_OpenFromInput = function ()
 {
-    $('#open_from_input').show();
-    $('#open_from_file').hide();
-    ui.onChange_Input.call($('#input_mol'));
-    $('#input_mol').activate();
+    $('open_from_input').show();
+    $('open_from_file').hide();
+    ui.onChange_Input.call($('input_mol'));
+    $('input_mol').activate();
 };
 
 ui.onSelect_OpenFromFile = function ()
 {
-    $('#open_from_file').show();
-    $('#open_from_input').hide();
-    $('#molfile_path').focus();
+    $('open_from_file').show();
+    $('open_from_input').hide();
+    $('molfile_path').focus();
 };
 
 ui.onChange_Input = function ()
@@ -1051,7 +1022,7 @@ ui.onChange_Input = function ()
 //
 ui.onClick_SaveFile = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
     if (ui.modeType() == ui.MODE.PASTE)
     {
@@ -1064,8 +1035,8 @@ ui.onClick_SaveFile = function ()
 
 ui.onChange_FileFormat = function (event, update)
 {
-    var output = $('#output_mol');
-    var el = $('#file_format');
+    var output = $('output_mol');
+    var el = $('file_format');
     
     if (update == true)
     {
@@ -1092,7 +1063,7 @@ ui.onChange_FileFormat = function (event, update)
         output.style.wordWrap = 'break-word';
     }
 
-    $('#mol_data').value = el.value + '\n' + output.value;
+    $('mol_data').value = el.value + '\n' + output.value;
     output.activate();
 }
 
@@ -1101,14 +1072,14 @@ ui.onChange_FileFormat = function (event, update)
 //
 ui.onClick_ZoomIn = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.scale += ui.SCALE_INCR;
         
     if (ui.scale >= ui.SCALE_MAX)
-        $(this).addClass('buttonDisabled');
-    $($('#zoom_out')).removeClass('buttonDisabled');
+        this.addClassName('buttonDisabled');
+    $('zoom_out').removeClassName('buttonDisabled');
 
     ui.render.setScale(ui.scale);
     ui.render.update();
@@ -1116,14 +1087,14 @@ ui.onClick_ZoomIn = function ()
 
 ui.onClick_ZoomOut = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.scale -= ui.SCALE_INCR;
         
     if (ui.scale <= ui.SCALE_MIN)
-        $(this).addClass('buttonDisabled');
-    $($('#zoom_in')).removeClass('buttonDisabled');
+        this.addClassName('buttonDisabled');
+    $('zoom_in').removeClassName('buttonDisabled');
 
     ui.render.setScale(ui.scale);
     ui.render.update();
@@ -1134,7 +1105,7 @@ ui.onClick_ZoomOut = function ()
 //
 ui.onClick_CleanUp = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     if (ui.modeType() == ui.MODE.PASTE)
@@ -1202,8 +1173,8 @@ ui.scrollTop = null;
 
 ui.onScroll_ClientArea = function ()
 {
-    if ($('#input_label').visible())
-        $('#input_label').hide();
+    if ($('input_label').visible())
+        $('input_label').hide();
         
     if (ui.scrollLeft != null && ui.isDrag())
     {
@@ -1260,7 +1231,7 @@ ui.onClick_Atom = function (event, id)
             }
             */
             
-            var input_el = $('#input_label');
+            var input_el = $('input_label');
 
             var offset_client = ui.client_area.cumulativeOffset();
             var atom_pos = ui.render.atomGetPos(id);
@@ -1501,7 +1472,7 @@ ui.atomForNewBond = function (id)
     var neighbours = new Array();
     var pos = ui.render.atomGetPos(id);
     
-    ui.render.atomGetNeighbors(id).each(function (index, nei)
+    ui.render.atomGetNeighbors(id).each(function (nei)
     {
         var nei_pos = ui.render.atomGetPos(nei.aid);
         
@@ -1549,7 +1520,7 @@ ui.atomForNewBond = function (id)
                 var nei_v = chem.Vec2.diff(pos, nei_pos);
                 var nei_angle = Math.atan2(nei_v.y, nei_v.x);
                 
-                ui.render.atomGetNeighbors(nei.aid).each(function (index, nei_nei)
+                ui.render.atomGetNeighbors(nei.aid).each(function (nei_nei)
                 {
                     var nei_nei_pos = ui.render.atomGetPos(nei_nei.aid);
                     
@@ -1605,9 +1576,9 @@ ui.onOffsetChanged = function (newOffset, oldOffset)
     ui.client_area.scrollLeft += delta.x;
     ui.client_area.scrollTop += delta.y;
     
-    ui.undoStack.each(function (index, action)
+    ui.undoStack.each(function (action)
     {
-        action.operations.each(function (index, op)
+        action.operations.each(function (op)
         {
             if (op.type == ui.Action.OPERATION.ATOM_POS || op.type == ui.Action.OPERATION.ATOM_ADD)
             {
@@ -1687,11 +1658,11 @@ ui.selectAll = function ()
 
     var alist = [], blist = [];
     
-    ui.ctab.atoms.each(function(index, aid) {
+    ui.ctab.atoms.each(function(aid) {
         alist.push(aid);
     });
 
-    ui.ctab.bonds.each(function(index, bid) {
+    ui.ctab.bonds.each(function(bid) {
         blist.push(bid);
     });
 
@@ -1709,8 +1680,8 @@ ui.removeSelected = function ()
 
 ui.onMouseDown_Atom = function (event, aid)
 {
-    if ($('#input_label').visible())
-        $('#input_label').hide();
+    if ($('input_label').visible())
+        $('input_label').hide();
 
     if (ui.modeType() == ui.MODE.PASTE)
         return false;
@@ -1737,8 +1708,8 @@ ui.onMouseDown_Atom = function (event, aid)
 
 ui.onMouseDown_Bond = function (event, bid)
 {
-    if ($('#input_label').visible())
-        $('#input_label').hide();
+    if ($('input_label').visible())
+        $('input_label').hide();
 
     if (ui.modeType() == ui.MODE.PASTE)
         return false;
@@ -1765,8 +1736,8 @@ ui.onMouseDown_Bond = function (event, bid)
 
 ui.onMouseDown_Canvas = function (event)
 {
-    if ($('#input_label').visible())
-        $('#input_label').hide();
+    if ($('input_label').visible())
+        $('input_label').hide();
     
     if (ui.modeType() == ui.MODE.PASTE)
     {
@@ -2040,7 +2011,7 @@ ui.highlightSGroup = function (sid, highlight)
     
     var atoms = ui.render.sGroupGetAtoms(sid);
     
-    atoms.each(function (index, id)
+    atoms.each(function (id)
     {
         ui.render.atomSetSGroupHighlight(id, highlight);
     }, this);
@@ -2064,33 +2035,33 @@ ui.onMouseOut_SGroup = function (event, sid)
 //
 ui.showAtomProperties = function (id)
 {
-    $('#atom_properties').atom_id = id;
-    $('#atom_label').value = ui.render.atomGetAttr(id, 'label');
-    ui.onChange_AtomLabel.call($('#atom_label'));
-    $('#atom_charge').value = ui.render.atomGetAttr(id, 'charge');
+    $('atom_properties').atom_id = id;
+    $('atom_label').value = ui.render.atomGetAttr(id, 'label');
+    ui.onChange_AtomLabel.call($('atom_label'));
+    $('atom_charge').value = ui.render.atomGetAttr(id, 'charge');
     var value = ui.render.atomGetAttr(id, 'isotope');
-    $('#atom_isotope').value = (value == 0 ? '' : value);
+    $('atom_isotope').value = (value == 0 ? '' : value);
     value = ui.render.atomGetAttr(id, 'valence');
-    $('#atom_valence').value = (value == 0 ? '' : value);
-    $('#atom_radical').value = ui.render.atomGetAttr(id, 'radical');
+    $('atom_valence').value = (value == 0 ? '' : value);
+    $('atom_radical').value = ui.render.atomGetAttr(id, 'radical');
     
     ui.showDialog('atom_properties');
-    $('#atom_label').activate();
+    $('atom_label').activate();
 }
 
 ui.applyAtomProperties = function ()
 {
     ui.hideDialog('atom_properties');
     
-    var id = $('#atom_properties').atom_id;
+    var id = $('atom_properties').atom_id;
     
     ui.addUndoAction(ui.Action.fromAtomAttrs(id, 
     {
-        label: $('#atom_label').value,
-        charge: parseInt($('#atom_charge').value),
-        isotope: $('#atom_isotope').value == '' ? 0 : parseInt($('#atom_isotope').value),
-        valence: $('#atom_valence').value == '' ? 0 : parseInt($('#atom_valence').value),
-        radical: parseInt($('#atom_radical').value)
+        label: $('atom_label').value,
+        charge: parseInt($('atom_charge').value),
+        isotope: $('atom_isotope').value == '' ? 0 : parseInt($('atom_isotope').value),
+        valence: $('atom_valence').value == '' ? 0 : parseInt($('atom_valence').value),
+        radical: parseInt($('atom_radical').value)
     }), true);
         
     ui.render.update();
@@ -2111,11 +2082,11 @@ ui.onChange_AtomLabel = function ()
     }
     
     if (this.value == 'A')
-        chem.setElementTextContent($('#atom_number'), "any");
+        chem.setElementTextContent($('atom_number'), "any");
     else if (this.value == '*')
-        chem.setElementTextContent($('#atom_number'), "*");
+        chem.setElementTextContent($('atom_number'), "*");
     else
-        chem.setElementTextContent($('#atom_number'), element.toString());
+        chem.setElementTextContent($('atom_number'), element.toString());
 }
 
 ui.onChange_AtomCharge = function ()
@@ -2124,10 +2095,10 @@ ui.onChange_AtomCharge = function ()
 
 ui.onChange_AtomIsotope = function ()
 {
-    if (this.value == chem.getElementTextContent($('#atom_number')) || this.value.strip() == '' || this.value == '0')
+    if (this.value == chem.getElementTextContent($('atom_number')) || this.value.strip() == '' || this.value == '0')
         this.value = '';
     else if (!this.value.match(/^[1-9][0-9]{0,2}$/))
-        this.value = ui.render.atomGetAttr($('#atom_properties').atom_id, 'isotope');
+        this.value = ui.render.atomGetAttr($('atom_properties').atom_id, 'isotope');
 }
 
 ui.onChange_AtomValence = function ()
@@ -2135,7 +2106,7 @@ ui.onChange_AtomValence = function ()
     if (this.value.strip() == '' || this.value == '0')
         this.value = '';
     else if (!this.value.match(/^[1-9]$/))
-        this.value = ui.render.atomGetAttr($('#atom_properties').atom_id, 'valence');
+        this.value = ui.render.atomGetAttr($('atom_properties').atom_id, 'valence');
 }
 
 //
@@ -2143,35 +2114,35 @@ ui.onChange_AtomValence = function ()
 //
 ui.showSGroupProperties = function (id)
 {
-    if ($('#sgroup_properties').visible())
+    if ($('sgroup_properties').visible())
         return;
         
     var type = (id == null) ? 'GEN' : ui.render.sGroupGetType(id);
     
-    $('#sgroup_properties').sgroup_id = id;
-    $('#sgroup_type').value = type;
+    $('sgroup_properties').sgroup_id = id;
+    $('sgroup_type').value = type;
     ui.onChange_SGroupType.call($('sgroup_type'));
     
     if (type == 'SRU')
     {
-        $('#sgroup_connection').value = ui.render.sGroupGetAttr(id, 'connectivity');
-        $('#sgroup_label').value = ui.render.sGroupGetAttr(id, 'subscript');
+        $('sgroup_connection').value = ui.render.sGroupGetAttr(id, 'connectivity');
+        $('sgroup_label').value = ui.render.sGroupGetAttr(id, 'subscript');
     } else if (type == 'MUL')
-        $('#sgroup_label').value = ui.render.sGroupGetAttr(id, 'mul');
+        $('sgroup_label').value = ui.render.sGroupGetAttr(id, 'mul');
     else if (type == 'SUP')
-        $('#sgroup_label').value = ui.render.sGroupGetAttr(id, 'name');
+        $('sgroup_label').value = ui.render.sGroupGetAttr(id, 'name');
     
     ui.showDialog('sgroup_properties');
-    $('#sgroup_type').activate();
+    $('sgroup_type').activate();
 }
 
 ui.applySGroupProperties = function ()
 {
     ui.hideDialog('sgroup_properties');
     
-    var id = $('#sgroup_properties').sgroup_id;
+    var id = $('sgroup_properties').sgroup_id;
     
-    var type = $('#sgroup_type').value;
+    var type = $('sgroup_type').value;
     var attrs = 
     {
         mul: null,
@@ -2182,12 +2153,12 @@ ui.applySGroupProperties = function ()
 
     if (type == 'SRU')
     {
-        attrs.connectivity = $('#sgroup_connection').value;
-        attrs.subscript = $('#sgroup_label').value;
+        attrs.connectivity = $('sgroup_connection').value;
+        attrs.subscript = $('sgroup_label').value;
     } else if (type == 'MUL')
-        attrs.mul = parseInt($('#sgroup_label').value);
+        attrs.mul = parseInt($('sgroup_label').value);
     else if (type == 'SUP')
-        attrs.name = $('#sgroup_label').value;
+        attrs.name = $('sgroup_label').value;
 
     if (id == null)
     {
@@ -2208,19 +2179,19 @@ ui.onChange_SGroupLabel = function ()
 
 ui.onChange_SGroupType = function ()
 {
-    var type = $('#sgroup_type').value;
+    var type = $('sgroup_type').value;
 
-    $('#sgroup_label').disabled = (type != 'SRU') && (type != 'MUL') && (type != 'SUP');
-    $('#sgroup_connection').disabled = (type != 'SRU');
+    $('sgroup_label').disabled = (type != 'SRU') && (type != 'MUL') && (type != 'SUP');
+    $('sgroup_connection').disabled = (type != 'SRU');
     
-    if (type == 'MUL' && !$('#sgroup_label').value.match(/^[1-9][0-9]{0,2}$/))
-        $('#sgroup_label').value = '1';
+    if (type == 'MUL' && !$('sgroup_label').value.match(/^[1-9][0-9]{0,2}$/))
+        $('sgroup_label').value = '1';
     else if (type == 'SRU')
-        $('#sgroup_label').value = 'n';
+        $('sgroup_label').value = 'n';
     else if (type == 'GEN')
-        $('#sgroup_label').value = '';
+        $('sgroup_label').value = '';
     else if (type == 'SUP')
-        $('#sgroup_label').value = 'name';
+        $('sgroup_label').value = 'name';
 }
 
 //
@@ -2238,18 +2209,18 @@ ui.isClipboardEmpty = function ()
 ui.updateClipboardButtons = function ()
 {
     if (ui.isClipboardEmpty())
-        $($('#paste')).addClass('buttonDisabled');
+        $('paste').addClassName('buttonDisabled');
     else
-        $($('#paste')).removeClass('buttonDisabled');
+        $('paste').removeClassName('buttonDisabled');
 
     if (ui.selected())
     {
-        $($('#copy')).removeClass('buttonDisabled');
-        $($('#cut')).removeClass('buttonDisabled');
+        $('copy').removeClassName('buttonDisabled');
+        $('cut').removeClassName('buttonDisabled');
     } else
     {
-        $($('#copy')).addClass('buttonDisabled');
-        $($('#cut')).addClass('buttonDisabled');
+        $('copy').addClassName('buttonDisabled');
+        $('cut').addClassName('buttonDisabled');
     }
 }
 
@@ -2265,7 +2236,7 @@ ui.copy = function ()
     var mapping = {};
     var sgroup_counts = {};
 
-    ui.selection.atoms.each(function (index, id)
+    ui.selection.atoms.each(function (id)
     {
         var new_atom = Object.clone(ui.ctab.atoms.get(id));
         new_atom.pos = ui.render.atomGetPos(id);
@@ -2276,7 +2247,7 @@ ui.copy = function ()
         mapping[id] = ui.clipboard.atoms.push(new chem.Molecule.Atom(new_atom)) - 1;
     });
     
-    ui.selection.bonds.each(function (index, id)
+    ui.selection.bonds.each(function (id)
     {
         var new_bond = Object.clone(ui.ctab.bonds.get(id));
         new_bond.begin = mapping[new_bond.begin];
@@ -2285,7 +2256,7 @@ ui.copy = function ()
     });
 
     // determine selected sgroups
-    ui.selection.atoms.each(function (index, id)
+    ui.selection.atoms.each(function (id)
     {
         var sg = ui.render.atomGetSGroups(id);
         
@@ -2297,7 +2268,7 @@ ui.copy = function ()
                 sgroup_counts[sg[0]] = 1;
         }
     });
-    //TODO what type of object is this sgroup - need to do each jquery style
+    
     ui.ctab.sgroups.each(function (sid, sg)
     {
         if ((sid in sgroup_counts) && (sgroup_counts[sid] == ui.render.sGroupGetAttr(sid, 'atoms').length))
@@ -2340,7 +2311,7 @@ ui.paste = function ()
         ui.pasted.bonds.push(ui.render.bondAdd(mapping[bond.begin], mapping[bond.end], bond));
     }
     
-    ui.clipboard.sgroups.each(function (index, sgroup)
+    ui.clipboard.sgroups.each(function (sgroup)
     {
         var sid = ui.render.sGroupCreate(sgroup.type);
         
@@ -2348,7 +2319,7 @@ ui.paste = function ()
         ui.render.sGroupSetAttr(sid, 'connectivity', sgroup.connectivity);
         ui.render.sGroupSetAttr(sid, 'name', sgroup.name);
         
-        $(sgroup.atoms).each(function(index, id)
+        sgroup.atoms.each(function(id)
         {
             ui.render.atomSetSGroup(mapping[id], sid);
         }, this);    
@@ -2362,12 +2333,12 @@ ui.paste = function ()
 
 ui.cancelPaste = function ()
 {
-    $(ui.pasted.sgroups).each(function (index, id)
+    ui.pasted.sgroups.each(function (id)
     {
         ui.render.sGroupDelete(id);
     });
     
-    $(ui.pasted.atoms).each(function (index, id)
+    ui.pasted.atoms.each(function (id)
     {
         ui.render.atomRemove(id);
     });
@@ -2382,7 +2353,7 @@ ui.cancelPaste = function ()
 
 ui.onClick_Cut = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.copy();
@@ -2391,7 +2362,7 @@ ui.onClick_Cut = function ()
 
 ui.onClick_Copy = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.copy();
@@ -2400,7 +2371,7 @@ ui.onClick_Copy = function ()
 
 ui.onClick_Paste = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     if (ui.modeType() == ui.MODE.PASTE)
@@ -2469,7 +2440,7 @@ ui.Action.prototype.perform = function ()
     var prev_op = null;
     var idx = 0;
     
-    this.operations.each(function (index, op)
+    this.operations.each(function (op)
     {
         switch (op.type)
         {
@@ -2579,17 +2550,17 @@ ui.Action.prototype.perform = function ()
                 op.params.bond_map = new Array();
                 op.params.sgroup_map = new Array();
                 
-                op.params.ctab.atoms.each(function (index, aid)
+                op.params.ctab.atoms.each(function (aid)
                 {
                     op.params.atom_map.push(parseInt(aid));
                 }, this);
                 
-                op.params.ctab.bonds.each(function (index, bid)
+                op.params.ctab.bonds.each(function (bid)
                 {
                     op.params.bond_map.push(parseInt(bid));
                 }, this);
 
-                op.params.ctab.sgroups.each(function (index, sid)
+                op.params.ctab.sgroups.each(function (sid)
                 {
                     op.params.sgroup_map.push(parseInt(sid));
                 }, this);
@@ -2634,7 +2605,7 @@ ui.Action.prototype.perform = function ()
                 ui.render.sGroupSetType(id, op.params.type);
                 
             var attrs_hash = new Hash(op.params.attrs);
-            attrs_hash.each(function (index, attr)
+            attrs_hash.each(function (attr)
             {
                 ui.render.sGroupSetAttr(id, attr.key, attr.value);
             }, this);
@@ -2666,12 +2637,12 @@ ui.Action.prototype.perform = function ()
             var id = ui.render.sGroupCreate(op.params.type);
             
             var attrs_hash = new Hash(op.params.attrs);
-            attrs_hash.each(function (index, attr)
+            attrs_hash.each(function (attr)
             {
                 ui.render.sGroupSetAttr(id, attr.key, attr.value);
             }, this);
             
-            op.params.atoms.each(function (index, aid)
+            op.params.atoms.each(function (aid)
             {
                 ui.render.atomSetSGroup(ui.atomMap[aid], id);
             }, this);
@@ -2787,7 +2758,7 @@ ui.Action.fromSelectedAtomsPos = function ()
 {
     var action = new ui.Action();
 
-    ui.selection.atoms.each(function (index, id)
+    ui.selection.atoms.each(function (id)
     {
         action.addOperation(ui.Action.OPERATION.ATOM_POS,
         {
@@ -2825,7 +2796,7 @@ ui.Action.fromAtomAttrs = function (id, attrs)
 
     attrs = new Hash(attrs);
     
-    attrs.each(function (index, attr)
+    attrs.each(function (attr)
     {
         action.addOperation(ui.Action.OPERATION.ATOM_ATTR,
         {
@@ -2845,11 +2816,11 @@ ui.Action.fromSelectedAtomsAttrs = function (attrs)
     
     attrs = new Hash(attrs);
         
-    ui.selection.atoms.each(function (index, id)
+    ui.selection.atoms.each(function (id)
     {
         var id_map = ui.atomMap.indexOf(id);
 
-        attrs.each(function (index, attr)
+        attrs.each(function (attr)
         {
             action.addOperation(ui.Action.OPERATION.ATOM_ATTR,
             {
@@ -2871,7 +2842,7 @@ ui.Action.fromBondAttrs = function (id, attrs)
 
     attrs = new Hash(attrs);
 
-    attrs.each(function (index, attr)
+    attrs.each(function (attr)
     {
         action.addOperation(ui.Action.OPERATION.BOND_ATTR,
         {
@@ -2890,11 +2861,11 @@ ui.Action.fromSelectedBondsAttrs = function (attrs)
 
     attrs = new Hash(attrs);
 
-    ui.selection.bonds.each(function (index, id)
+    ui.selection.bonds.each(function (id)
     {
         var id_map = ui.bondMap.indexOf(id);
 
-        attrs.each(function (index, attr)
+        attrs.each(function (attr)
         {
             action.addOperation(ui.Action.OPERATION.BOND_ATTR,
             {
@@ -3022,7 +2993,7 @@ ui.Action.fromAtomDeletion = function (id)
     var action = new ui.Action();
     var atoms_to_remove = new Array();
     
-    ui.render.atomGetNeighbors(id).each(function (index, nei)
+    ui.render.atomGetNeighbors(id).each(function (nei)
     {
         action.addOperation(ui.Action.OPERATION.BOND_DEL,
         {
@@ -3108,7 +3079,7 @@ ui.Action.fromFragmentAddition = function (atoms, bonds, sgroups)
     
     // TODO: merge close atoms and bonds
     
-    sgroups.each(function (index, sid)
+    sgroups.each(function (sid)
     {
         var idx = ui.sgroupMap.indexOf(sid);
         
@@ -3122,7 +3093,7 @@ ui.Action.fromFragmentAddition = function (atoms, bonds, sgroups)
     }, this);
     
 
-    bonds.each(function (index, bid)
+    bonds.each(function (bid)
     {
         var idx = ui.bondMap.indexOf(bid);
         
@@ -3136,7 +3107,7 @@ ui.Action.fromFragmentAddition = function (atoms, bonds, sgroups)
     }, this);
     
 
-    atoms.each(function (index, aid)
+    atoms.each(function (aid)
     {
         var idx = ui.atomMap.indexOf(aid);
         
@@ -3157,16 +3128,16 @@ ui.Action.fromFragmentDeletion = function ()
     var action = new ui.Action();
     var atoms_to_remove = new Array();
     
-    ui.selection.atoms.each(function (index, aid)
+    ui.selection.atoms.each(function (aid)
     {
-        ui.render.atomGetNeighbors(aid).each(function (index, nei)
+        ui.render.atomGetNeighbors(aid).each(function (nei)
         {
             if (ui.selection.bonds.indexOf(nei.bid) == -1)
                 ui.selection.bonds = ui.selection.bonds.concat([nei.bid]);
         }, this);
     }, this);
     
-    ui.selection.bonds.each(function (index, bid)
+    ui.selection.bonds.each(function (bid)
     {
         action.addOperation(ui.Action.OPERATION.BOND_DEL,
         {
@@ -3198,7 +3169,7 @@ ui.Action.fromFragmentDeletion = function ()
     }, this);
     
 
-    ui.selection.atoms.each(function (index, aid)
+    ui.selection.atoms.each(function (aid)
     {
         if (action.removeAtomFromSgroupIfNeeded(aid))
             atoms_to_remove.push(aid);
@@ -3219,7 +3190,7 @@ ui.Action.fromAtomMerge = function (src_id, dst_id)
     var action = new ui.Action();
     var dst_idx = ui.atomMap.indexOf(dst_id);
     
-    ui.render.atomGetNeighbors(src_id).each(function (index, nei)
+    ui.render.atomGetNeighbors(src_id).each(function (nei)
     {
         var bond = ui.ctab.bonds.get(nei.bid);
         var begin, end;
@@ -3250,7 +3221,7 @@ ui.Action.fromAtomMerge = function (src_id, dst_id)
     
     var attrs = new Hash(ui.ctab.atoms.get(src_id));
     
-    attrs.each(function (index, attr)
+    attrs.each(function (attr)
     {
         action.addOperation(ui.Action.OPERATION.ATOM_ATTR,
         {
@@ -3293,7 +3264,7 @@ ui.Action.fromPatternOnCanvas = function (pos, pattern)
 
     var action = new ui.Action();
 
-    pattern.each(function (index, pattern)
+    pattern.each(function ()
     {
         action.addOperation(ui.Action.OPERATION.ATOM_DEL,
         {
@@ -3305,7 +3276,7 @@ ui.Action.fromPatternOnCanvas = function (pos, pattern)
     
     var i = 0;
     
-    action.operations.each(function (index, op)
+    action.operations.each(function (op)
     {
         var begin = ui.atomMap[op.params.id];
         var end = ui.atomMap[action.operations[(i + 1) % pattern.length].params.id];
@@ -3378,7 +3349,7 @@ ui.Action.fromPatternOnElement = function (id, pattern, on_atom)
         var cnt_sym = 0, bcnt_sym = 0;
         
         // TODO: improve this enumeration
-        ui.ctab.atoms.each(function (index, a_id)
+        ui.ctab.atoms.each(function (a_id)
         {
             if (chem.Vec2.dist(pos, ui.render.atomGetPos(a_id)) < l * 1.1)
             {
@@ -3583,14 +3554,14 @@ ui.removeDummyAction = function ()
 ui.updateActionButtons = function ()
 {
     if (ui.undoStack.length == 0)
-        $($('#undo')).addClass('buttonDisabled');
+        $('undo').addClassName('buttonDisabled');
     else
-        $($('#undo')).removeClass('buttonDisabled');
+        $('undo').removeClassName('buttonDisabled');
 
     if (ui.redoStack.length == 0)
-        $($('#redo')).addClass('buttonDisabled');
+        $('redo').addClassName('buttonDisabled');
     else
-        $($('#redo')).removeClass('buttonDisabled');
+        $('redo').removeClassName('buttonDisabled');
 }
 
 ui.undo = function ()
@@ -3609,7 +3580,7 @@ ui.redo = function ()
 
 ui.onClick_Undo = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.undo();
@@ -3617,7 +3588,7 @@ ui.onClick_Undo = function ()
 
 ui.onClick_Redo = function ()
 {
-    if ($(this).hasClass('buttonDisabled'))
+    if (this.hasClassName('buttonDisabled'))
         return;
         
     ui.redo();
