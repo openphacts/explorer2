@@ -254,6 +254,7 @@ ui.init = function ()
                             if (res.responseText == 'You are welcome!')
                                 ui.standalone = false;
                         },
+            // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045
             onCreate: function(response) { // here comes the fix
                 var t = response.transport; 
                 t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
@@ -930,6 +931,7 @@ ui.loadMolecule = function (mol_string, force_layout)
                         if (res.responseText.startsWith('Ok.'))
                             ui.updateMolecule(ui.parseMolfile(res.responseText));
                     },
+            // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045
             onCreate: function(response) { // here comes the fix
                 var t = response.transport; 
                 t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
@@ -954,6 +956,7 @@ ui.loadMolecule = function (mol_string, force_layout)
                         if (res.responseText.startsWith('Ok.'))
                             ui.updateMolecule(ui.parseMolfile(res.responseText));
                     },
+            // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045
             onCreate: function(response) { // here comes the fix
                 var t = response.transport; 
                 t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
