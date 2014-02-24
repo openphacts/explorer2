@@ -2,6 +2,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
 
+  smilesValue: null,
+
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
   selectedThresholdType: 0,
@@ -537,6 +539,31 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
       this.set('rbSelectedHigherValue', null);
       this.set('relSelectedLowerValue', null);
       this.set('relSelectedHigherValue', null);
+    },
+
+    searchForSMILES: function() {
+      var me = this;
+      if (this.get('smilesValue') != null ) {
+        var smiles = this.get('smilesValue');
+        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+        var callback=function(success, status, response){
+          if (success && response) {
+            var url = searcher.parseSmilesToURLResponse(response);
+            me.transitionToRoute('compounds.index', {queryParams: {uri: url}});
+          } else {
+            me.get('controllers.application').set('fetching', false);
+            App.FlashQueue.pushFlash('error', 'No compound found for that SMILES value, please enter a different value and try again.');
+          }
+        };
+        searcher.smilesToURL(smiles, callback);
+      } else {
+        App.FlashQueue.pushFlash('error', 'SMILES cannot be empty, please enter a value and try again.');
+      }
+    },
+
+    drawThisSMILES: function() {
+      var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+      this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue'), path: kPath}});
     }
 
   }

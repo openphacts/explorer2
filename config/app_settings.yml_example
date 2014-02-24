@@ -15,6 +15,11 @@ defaults: &defaults
     compound_path: "/compound/pharmacology/pages" # or equivalent for compound pharma paginated
     tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
 
+  ketcher:
+    path: "ketcher"
+    port: "10000"
+    protocol: "http"
+
 development:
   <<: *defaults
 

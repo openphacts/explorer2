@@ -215,6 +215,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 	var drugbankData, chemspiderData, chemblData, conceptWikiData;
 	uri = response.primaryTopic[constants.ABOUT];
 
+    // check if we already have the CS URI
+    var possibleURI = 'http://' + new URI(uri).hostname();
+    csURI = constants.SRC_CLS_MAPPINGS[possibleURI] === 'chemspiderValue' ? uri : null;
+
 	var drugbankProvenance, chemspiderProvenance, chemblProvenance;
 	var descriptionItem, toxicityItem, proteinBindingItem, hbaItem, hbdItem, inchiItem, logpItem, psaItem, ro5VioloationsItem, smilesItem, inchiKeyItem, molformItem, fullMWTItem, mwFreebaseItem;
 	var drugbankLinkout, chemspiderLinkOut, chemblLinkOut;

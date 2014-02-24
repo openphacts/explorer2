@@ -7,7 +7,7 @@ from SimpleHTTPServer import *
 from BaseHTTPServer import *
 import indigo
 
-port = 8080
+port = 10000
 indigo = indigo.Indigo()
 
 class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):

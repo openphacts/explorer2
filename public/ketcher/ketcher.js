@@ -16,8 +16,10 @@ ketcher = function () {
 
 ketcher.init = function ()
 {
+    var path = document.URL.toQueryParams().path;
+    ui.setPath(unescape(path));
     ui.init();
-    encoded_molfile = window.location.search.substring(window.location.search.indexOf('molfile') + 8);
+    encoded_molfile = document.URL.toQueryParams().smiles;
     if (encoded_molfile != '') {
         unencoded_molfile = unescape(encoded_molfile);
         this.setMolecule(unencoded_molfile);

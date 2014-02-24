@@ -15,7 +15,9 @@ if (typeof(ui) == 'undefined')
 
 ui.standalone = true;
 
-ui.path = '/localhost:8080';
+ui.ketcherPath = null;
+
+ui.path = null;
 ui.base_url = '';
 
 ui.scale = 40;
@@ -91,6 +93,10 @@ ui.onClick_SideButton = function (event)
         return;
     ui.selectMode(this.id);
 };
+
+ui.setPath = function(path) {
+  ui.ketcherPath = path;
+}
 
 ui.init = function ()
 {
@@ -242,10 +248,10 @@ ui.init = function ()
     }
     
     //ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
-    ui.path = 'http://localhost:8080/ketcher/';
+    //ui.path = 'http://localhost:8080/ketcher/';
     ui.base_url = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
     
-    var request = new Ajax.Request(ui.path + 'knocknock',
+    var request = new Ajax.Request(ui.ketcherPath + '/knocknock',
                     {
                         method: 'get',
                         asynchronous : false,
@@ -280,7 +286,7 @@ ui.init = function ()
         document.title += ' (standalone)';
     } else
     {
-        if (ui.path != '/')
+        if (ui.ketcherPath != '/')
         {
             $('upload_mol').action = ui.base_url + 'open';
             $('download_mol').action = ui.base_url + 'save';
@@ -921,7 +927,7 @@ ui.loadMolecule = function (mol_string, force_layout)
             return;
         }
         var decodedSmiles = decodeURIComponent(smiles);
-        var request = new Ajax.Request(ui.path + 'layout',
+        var request = new Ajax.Request(ui.ketcherPath + '/layout',
                 {
                     method: 'get',
                     asynchronous : true,
@@ -946,7 +952,7 @@ ui.loadMolecule = function (mol_string, force_layout)
                 });
     } else if (!ui.standalone && force_layout)
     {
-        var request = new Ajax.Request(ui.path + 'layout',
+        var request = new Ajax.Request(ui.ketcherPath + '/layout',
                 {
                     method: 'post',
                     asynchronous : true,

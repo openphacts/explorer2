@@ -1,6 +1,6 @@
-Ember.Handlebars.registerBoundHelper('insertKetcherIframe', function(molfile) {
-    if (molfile != null) {
-      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?molfile=' + molfile + '" id="ketcher-iframe"></iframe>');
+Ember.Handlebars.registerBoundHelper('insertKetcherIframe', function(structure) {
+    if (structure != null) {
+      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?smiles=' + structure.smiles + '&path=' + structure.path + '" id="ketcher-iframe"></iframe>');
     } else {
       return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html" id="ketcher-iframe"></iframe>');
     }

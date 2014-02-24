@@ -140,6 +140,8 @@ App.SearchController = Ember.ArrayController.extend({
           me.get('controllers.application').set('fetching', true);
           searcher.byTag(me.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
           searcher.byTag(me.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
+          //maybe we can add generic search by smiles?
+          //structureSearcher.smilesToURL(me.getCurrentQuery(), structureSearchCallback);
 
    }
 });

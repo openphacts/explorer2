@@ -40,9 +40,9 @@ App.CompoundsDrawRoute = Ember.Route.extend({
   model: function(params) {
 	console.log('compound ketcher model')
     //var uri = this.get('queryParameters').uri;
-    var smiles = params.smiles
-    var molfile = params.molfile;
-    var structureInfo = {'smiles': smiles, 'molfile': molfile};
+    var smiles = params.smiles;
+    var path = params.path;
+    var structureInfo = {'smiles': smiles, 'path': path};
     var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
     return structure;
  },
@@ -252,11 +252,8 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();
+    controller.set('smilesValue', thisCompound.get('smiles'));
     me.set('filteredCompounds', []);
-	//var activeCompounds = thisCompound.get('structure').filter(function(compound) {
-	      //if (comment.get('isActive')) { return true; }
-	//      return true;
-	//});
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
