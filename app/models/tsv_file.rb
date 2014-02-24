@@ -31,7 +31,7 @@ class TsvFile < ActiveRecord::Base
     number_of_pages = params[:total_count].to_i / 250
     number_of_pages += params[:total_count].to_i%250 > 0 ? 1 : 0 
     i = 1
-    file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
+    file = File.new(File.join(Rails.root, "filestore", "tsv", self.uuid), "w")
     # download the tsv file 250 records at a time
     all_headers = []
     begin
@@ -78,7 +78,7 @@ class TsvFile < ActiveRecord::Base
     all_headers = []
     domain = AppSettings.config["tsv"]["url"]
     path = "/compound"
-    file = File.new(File.join(Rails.root, "filestore", self.uuid), "w")
+    file = File.new(File.join(Rails.root, "filestore", "tsv", self.uuid), "w")
     first = true
     i = 1
     total = params[:total]
