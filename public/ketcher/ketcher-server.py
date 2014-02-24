@@ -15,8 +15,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     if self.path.endswith("knocknock"):
       self.send_response(200)
       self.send_header('Content-type',	'text/plain')
-      # Allow CORS
+      # Allow CORS and x-json
       self.send_header('Access-Control-Allow-Origin', '*')
+      self.send_header('Access-Control-Expose-Headers', 'x-json')
       self.end_headers()
       self.wfile.write("You are welcome!")
       return
@@ -31,8 +32,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     if self.path.endswith("layout"):
       self.send_response(200)
       self.send_header('Content-type', 'text/plain')
-      # Allow CORS
+      # Allow CORS and x-json
       self.send_header('Access-Control-Allow-Origin', '*')
+      self.send_header('Access-Control-Expose-Headers', 'x-json')
       self.end_headers()
       mol = indigo.loadQueryMolecule(self.globals['smiles'])
       mol.layout()
@@ -49,8 +51,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         query = cgi.parse_multipart(self.rfile, pdict)
         self.send_response(200)
         self.send_header('Content-type', 'text/plain')
-        # Allow CORS
+        # Allow CORS and x-json
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Expose-Headers', 'x-json')
         self.end_headers()
         self.wfile.write("Ok.\n");
         self.wfile.write(query['filedata'][0]);
@@ -70,8 +73,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
           self.send_header('Content-type', 'text/plain')
 
         self.send_header('Content-Disposition', 'attachment; filename=ketcher.' + first)
-        # Allow CORS
+        # Allow CORS and x-json
         self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Expose-Headers', 'x-json')
         self.end_headers()
         self.wfile.write(rest)
       return
@@ -81,8 +85,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
       self.globals = dict(cgi.parse_qsl(self.rfile.read(length)))
       self.send_response(200)
       self.send_header('Content-type', 'text/plain')
-      # Allow CORS
+      # Allow CORS and x-json
       self.send_header('Access-Control-Allow-Origin', '*')
+      self.send_header('Access-Control-Expose-Headers', 'x-json')
       self.end_headers()
       mol = indigo.loadQueryMolecule(self.globals['moldata'])
       mol.layout()
