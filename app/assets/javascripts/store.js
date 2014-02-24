@@ -9,7 +9,8 @@ App.CompoundAdapter = DS.Adapter.extend({
         if (success) {
 	        compoundResult = searcher.parseCompoundResponse(response);
             compoundResult['pathways'] = [];
-            //compoundResult['molfile'] = App.Molfile != null ? App.Molfile : null;
+            var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+            compoundResult['ketcherPath'] = kPath;
             resolve(compoundResult);
         } else {
             reject(status);

@@ -34,6 +34,8 @@ App.Compound = App.SearchResult.extend({
     chemblProvenance: DS.attr(),
     drugbankProvenance: DS.attr(),
     molfile: DS.attr('string'),
+    // path to the ketcher drawing server
+    ketcherPath: DS.attr('string'),
 
     pathwayInfoAvailable: function() {
         return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);

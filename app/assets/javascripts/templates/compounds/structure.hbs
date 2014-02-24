@@ -130,17 +130,17 @@
 	    <div id="summary" class="compound_summary collapse in">		
 	        <div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csURI}}</div>
 		    <div class="row">
-		        <div class="span8">
+		        <div>
     		        <h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)
                         <a href="#compoundStructureFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
                         <a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
                     </h3>
    				    <div class="row">
-      			        <div id="formula" class="span2 lead">{{formatMolecularFormula molform}}</div>
+      			        <div id="formula" class="inline lead">{{formatMolecularFormula molform}}</div>
       			        <div class="input-append">
                             <div>SMILES {{input type="text" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
-                                <button type="submit" class="btn" title="Search for compounds with the SMILES string entered" {{action "searchForSMILES"}}>Search for SMILES</button>
-                                <button type="submit" class="btn" title="Draw the SMILES entered in the box" {{action "drawThisSMILES"}}>Draw SMILES</button>
+                                <button type="submit" class="btn" title="Search for compounds with the SMILES string entered" {{action "searchForSMILES"}}>Search with SMILES</button>
+                                <button type="submit" class="btn" title="Draw a compound starting with the SMILES entered in the box" {{action "drawThisSMILES"}}>Draw Structure</button>
                             </div>
                         </div>
     			    </div>
@@ -210,7 +210,7 @@
     <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
     <td class="cell-basictext">{{structureRecord.toxicity}}</td>
     <td class="cell-basictext">{{structureRecord.proteinBinding}}</td>
-    <td class="cell-basictext">{{structureRecord.smiles}}</td>
+    <td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles path=structureRecord.ketcherPath) title="Draw the compound with this structure"}}{{structureRecord.smiles}}{{/link-to}}</td>
     <td class="cell-basictext">{{textLink structureRecord.chemblURI}}</td>
     <td class="cell-basictext">{{structureRecord.fullMWT}}</td>
     <td class="cell-basictext">{{structureRecord.hba}}</td>

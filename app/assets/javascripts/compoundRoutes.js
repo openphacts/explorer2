@@ -33,13 +33,13 @@ App.CompoundsDrawRoute = Ember.Route.extend({
 	
   setupController: function(controller, model, params) {
    console.log('compound ketcher controller');
+   //var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+   //controller.set('ketcherPath', kPath);
    controller.set('model', model);	
-   //controller.initKetcher();
   },
 
   model: function(params) {
 	console.log('compound ketcher model')
-    //var uri = this.get('queryParameters').uri;
     var smiles = params.smiles;
     var path = params.path;
     var structureInfo = {'smiles': smiles, 'path': path};
@@ -249,6 +249,8 @@ App.CompoundsStructureRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
     controller.set('content', model);
     controller.set('totalCount', null);
+    var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+    controller.set('ketcherPath', kPath);
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();

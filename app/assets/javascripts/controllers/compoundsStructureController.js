@@ -2,6 +2,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
 
+  ketcherPath: null,
+
   smilesValue: null,
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
