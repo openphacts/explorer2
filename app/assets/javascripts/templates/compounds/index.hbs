@@ -161,18 +161,18 @@
 				<div class="dl-horizontal" style="font-size:13px;">
 					<dl>
                         <!--Chemspider ID-->
-						{{#if csUri}}
+						{{#if csURI}}
   							<dt class="medium-padding-top">ChemSpider ID</dt>
-  							<dd class="medium-padding-top">{{linkableChemspiderID csUri}}</dd>
+  							<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
 						{{/if}}
 
                         <!--SMILES-->
 						{{#if smiles}}
 							<dt class="medium-padding-top">SMILES</dt>
 							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{smiles}} {{provenanceLinkout chemspiderProvenance.smiles chemspiderProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout chemspiderProvenance.smiles chemspiderProvenance.source}}</dd>
                             {{else}}
-                                <dd class="medium-padding-top">{{smiles}}</dd>
+                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
                             {{/if}}
 						{{/if}}
   						
