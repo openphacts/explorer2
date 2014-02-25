@@ -44,7 +44,8 @@ class TsvFile < ActiveRecord::Base
           end
           logger.info "Retrieving: " + url_path
           response = Net::HTTP.get(domain, url_path)
-          tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true})
+          # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true, :quote_char => "\a"})
           # only need the header line from the first response
           if i == 1 
             all_headers = tab_data.headers
@@ -95,7 +96,8 @@ class TsvFile < ActiveRecord::Base
           end
           logger.info "********* CS URL is " + url_path.to_s
           response = Net::HTTP.get(domain, url_path)
-          tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true})
+          # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
+          tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true, :quote_char => "\a"})
           if i == 1 
             all_headers = tab_data.headers
             all_headers.delete(nil)
