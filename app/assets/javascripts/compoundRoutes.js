@@ -249,7 +249,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
     controller.set('content', model);
     controller.set('totalCount', null);
-    var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+    var kPath = ketcherPath;
     controller.set('ketcherPath', kPath);
     var me = controller;
     var thisCompound = model;

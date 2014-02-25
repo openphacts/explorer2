@@ -564,7 +564,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     },
 
     drawThisSMILES: function() {
-      var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+      var kPath = ketcherPath;
       this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue'), path: kPath}});
     }
 

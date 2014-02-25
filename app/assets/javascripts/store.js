@@ -9,7 +9,7 @@ App.CompoundAdapter = DS.Adapter.extend({
         if (success) {
 	        compoundResult = searcher.parseCompoundResponse(response);
             compoundResult['pathways'] = [];
-            var kPath = ketcherProtocol + '://' + document.location.hostname + ':' + ketcherPort + '/' + ketcherPath;
+            var kPath = ketcherPath;
             compoundResult['ketcherPath'] = kPath;
             resolve(compoundResult);
         } else {
