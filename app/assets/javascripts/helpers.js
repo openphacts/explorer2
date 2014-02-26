@@ -1,3 +1,10 @@
+Ember.Handlebars.registerBoundHelper('pdbLink', function(link) {
+  if (link != null) {
+	var id = link.split("/").pop();
+	var aLink = '<a href="' + link +'" target="_blank">' + id +'</a>'
+    return new Handlebars.SafeString(aLink);
+  }
+});
 Ember.Handlebars.registerBoundHelper('insertKetcherIframe', function(structure) {
     if (structure != null) {
       return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?smiles=' + structure.smiles + '&path=' + structure.path + '" id="ketcher-iframe"></iframe>');

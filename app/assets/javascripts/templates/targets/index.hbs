@@ -23,8 +23,6 @@
 		</div>
 	</ul>
 	
-    <div> &larr; {{#link-to 'search'}} back to search{{/link-to}}</div>
-	
 	<!-- main -->
 	<div class="container">
 	<div class="container-fluid large-top-spacing">
@@ -150,9 +148,9 @@
                                                   {{#if seeAlso}}
                                                           <dt>PDB</dt>
                                                           {{#if showProvenance}}
-                                                                <dd>{{seeAlso}} {{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}}</dd> 
+                                                                <dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each seeAlso}} {{pdbLink this}} {{/each}}</dd> 
                                                         {{else}}
-                                                                  <dd>{{seeAlso}}</dd> 
+                                                                  <dd>{{#each seeAlso}} {{pdbLink this}} {{/each}}</dd> 
                                                         {{/if}}
                                                   {{/if}}        
                                                   
