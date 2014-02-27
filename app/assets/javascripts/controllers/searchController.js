@@ -178,9 +178,10 @@ App.SearchController = Ember.ArrayController.extend({
         }; 
         //targets
           me.get('controllers.application').set('fetching', true);
-          searcher.byTag(me.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
-          searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
-          searcher.byTag(me.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
+          //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
+          searcher.freeText(me.getCurrentQuery(), '20', '3', cwTargetCallback);
+          //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
+          searcher.freeText(me.getCurrentQuery(), '20', '4', cwCompoundCallback);
           //maybe we can add generic search by smiles?
           //structureSearcher.smilesToURL(me.getCurrentQuery(), structureSearchCallback);
 
