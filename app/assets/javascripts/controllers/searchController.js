@@ -136,9 +136,50 @@ App.SearchController = Ember.ArrayController.extend({
                 // an error in the response, ignore for now
             }
         }; 
+        var cwGeneTargetCallback=function(success, status, response){
+            me.get('controllers.application').set('fetching', false);
+            if(success && response) {
+                var results = searcher.parseResponse(response);
+                $.each(results, function(index, result) {
+                    //find the target then add to the search results when the 'promise' returns
+                    me.store.find('target', result.uri).then(function(target) {
+                      if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
+                          target.set('exactMatch', true);
+                          me.addExactMatch(target);
+                      } else {
+                          me.addSearchResult(target);
+                      }
+                      //how many pathways & pharmacology for this target
+                      var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+                      var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+
+                      var pathwaysCountCallback=function(success, status, response){
+                          if (success && response) {
+                            var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
+                            target.set('pathwayRecords', count);
+                          }
+                      };
+
+                      var pharmaCountCallback=function(success, status, response){
+                          if (success && response) {
+                            var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
+                            target.set('pharmacologyRecords', count);
+                          }
+                      };
+
+                      var targetURI = target.get('URI');
+                      targetSearcher.targetPharmacologyCount(targetURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
+                      pathwaysSearcher.countPathwaysByTarget(targetURI, null, null, pathwaysCountCallback);
+                    });
+                });
+            } else {
+                // an error in the response, ignore for now
+            }
+        }; 
         //targets
           me.get('controllers.application').set('fetching', true);
           searcher.byTag(me.getCurrentQuery(), '20', '3', 'eeaec894-d856-4106-9fa1-662b1dc6c6f1', cwTargetCallback);
+          searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
           searcher.byTag(me.getCurrentQuery(), '20', '4', '07a84994-e464-4bbf-812a-a4b96fa3d197', cwCompoundCallback);
           //maybe we can add generic search by smiles?
           //structureSearcher.smilesToURL(me.getCurrentQuery(), structureSearchCallback);
