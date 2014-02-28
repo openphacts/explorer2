@@ -8,6 +8,8 @@ class SearchController < ApplicationController
   def typeahead
     puts "inside typeahead"
     results = []
+    #@compounds = Rails.cache.fetch(params[:query], :expires_in => 6.months) { Compound.where('lower(label) LIKE ?', params[:query).downcase).all }
+    Compound.where('lower(label) LIKE ?', params[:query).downcase).all
     File.open(File.join(Rails.root, "filestore", "compounds.txt")).each do |row|
        if row.downcase.starts_with? params[:query].downcase
          results.push(row) 
