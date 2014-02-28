@@ -4,6 +4,8 @@ App.SearchController = Ember.ArrayController.extend({
 
     needs: ['application'],
 
+    listView: true,
+
     currentPage: 0,
 
     totalResults: function() {

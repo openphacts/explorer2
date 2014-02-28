@@ -1,6 +1,13 @@
-<div style="padding:20px 0px 0px 200px;">  
-
+<div class="offset2">
 {{#if result.isCompound}}
+    {{#if listView}}
+	<div class="row medium-margin-bottom">
+		<div>
+			<h2 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>        
+			<p class="inline"><small><em>Compound</em></small></p>
+		</div>
+    </div>
+    {{else}}
 	<div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
 			<h2>{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
@@ -44,8 +51,16 @@
 
 <!-- The views are rendered in the index template and it looks like you cannot add actions to
      the IndexController (ember complains if you try to create your own IndexController -->
-
+    {{/if}}
 {{else}}
+    {{#if listView}}
+<div class="row medium-margin-bottom">
+		<div>
+			<h2 class="inline">{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
+			<p class="inline"><small><em>Target</em></small></p>
+		</div>
+</div>
+    {{else}}
 <div class="single-search-result row" style="max-width:800px">
 		<div class="span9">
 			<h2>{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
@@ -84,6 +99,7 @@
 		</div>
 	
 	</div>
+    {{/if}}
 {{/if}}
     
 </div>
