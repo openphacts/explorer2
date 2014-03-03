@@ -16,6 +16,15 @@ App.TargetsIndexRoute = Ember.Route.extend({
   beforeModel: function() {
     this.controllerFor('application').set('fetching', false);
     enable_scroll();
+  },
+
+  actions: {
+    error: function(error, transition) {
+        // TODO need to navigate back somewhere if there is an error, however using window.history.back()
+        // might not go back to the correct place because the browser window might have been at a different
+        // starting point than the ember app.
+        App.FlashQueue.pushFlash('error', 'This target is not available, please try a different one');
+    }
   }
 
 });
