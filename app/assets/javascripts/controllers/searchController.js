@@ -6,6 +6,8 @@ App.SearchController = Ember.ArrayController.extend({
 
     listView: true,
 
+    numberOfResults: 50,
+
     currentPage: 0,
 
     totalResults: function() {
@@ -17,6 +19,14 @@ App.SearchController = Ember.ArrayController.extend({
     previous_query: null,
 
     query: '',
+
+    listViewActive: function() {
+      return this.get('listView') === true;
+    }.property('listView'),
+
+    objectViewActive: function() {
+      return this.get('listView') === false;
+    }.property('listView'),
 
     contract: function() {
       this.set('isExpanded', false);
@@ -181,11 +191,20 @@ App.SearchController = Ember.ArrayController.extend({
         //targets
           me.get('controllers.application').set('fetching', true);
           //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
-          searcher.freeText(me.getCurrentQuery(), '20', '3', cwTargetCallback);
+          searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
           //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
-          searcher.freeText(me.getCurrentQuery(), '20', '4', cwCompoundCallback);
+          searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '4', cwCompoundCallback);
           //maybe we can add generic search by smiles?
           //structureSearcher.smilesToURL(me.getCurrentQuery(), structureSearchCallback);
 
+   },
+
+   actions: {
+
+       switchView: function() {
+           this.set('listView', !this.get('listView'));
+       }
+
    }
+
 });

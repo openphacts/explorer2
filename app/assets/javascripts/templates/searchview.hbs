@@ -5,18 +5,29 @@
 	
 		<div class="row pull-right"> 
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-  				<button class="btn active">List</button>
-  				<button class="btn ">Object</button>
+  				<button {{action switchView}} {{bind-attr class=":btn listViewActive:active"}}>List</button>
+  				<button {{action switchView}} {{bind-attr class=":btn objectViewActive:active"}}>Object</button>
   			</div>
 		</div>
 </ul>
-	
+	<ul style="list-style-type: none">
     {{#each result in controller}}
-		<div class="row">
+    {{#if listView}}
+		<li>
 			{{#if result.exactMatch}}
   				{{view App.SearchMatch}}
 			{{else}}
   				{{view App.SearchResult resultBinding='result'}}
 			{{/if}}
-		</div>
+		</li>
+    {{else}}
+		<li class="inline">
+			{{#if result.exactMatch}}
+  				{{view App.SearchMatch}}
+			{{else}}
+  				{{view App.SearchResult resultBinding='result'}}
+			{{/if}}
+		</li>
+    {{/if}}
 	{{/each}}
+</ul>
