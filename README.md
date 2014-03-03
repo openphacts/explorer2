@@ -22,6 +22,24 @@ Setup
 
 Run rails s to start the server and navigate your browser to localhost:3000
 
+Autocompleter
+-------------
+There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
+
+* Gunzip filestore/compounds.tar.gz
+* Start a rails console (rails c)
+* Enter the following commands to add compound models to the database  
+
+    file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")  
+    file.each_line do |line|  
+    c = Compound.new  
+    c.label = line.chomp  
+    c.save  
+    end
+
+
+It will probably take the console a few hours to get through them all (there are now over 1 million!). Do the same for Target & Organism.
+
 Ketcher
 -------
 The Explorer uses an embedded version of the [Ketcher](http://ggasoftware.com/opensource/ketcher "Ketcher tool for drawing chemical compounds") compound drawing tool by [GGA Software Services](http://ggasoftware.com "GGA Software Services"). If you require users to be able to draw compounds that they have found using the Explorer then you will need to install the Indigo C libraries on your machine
