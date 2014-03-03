@@ -8,13 +8,9 @@ class CoreApiCallsController < ApplicationController
   def organisms
     organisms = []
     query = params[:query]
-    f = File.open(File.join(Rails.root,'filestore','organisms.txt'),'r')
-    f.each_line do |line|
-      if line.downcase.starts_with? query.downcase
-       organisms.push(line)
-      end
+    Rails.cache.fetch('org_' + params[:query], :expires_in => 6.months) { Organism.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |organism|
+      organisms.push(organism.label)
     end
-    f.close
 
     respond_to do |format|
       format.html

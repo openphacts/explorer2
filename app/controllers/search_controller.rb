@@ -8,17 +8,13 @@ class SearchController < ApplicationController
   def typeahead
     puts "inside typeahead"
     results = []
-    #@compounds = Rails.cache.fetch(params[:query], :expires_in => 6.months) { Compound.where('lower(label) LIKE ?', params[:query).downcase).all }
-    Compound.where('lower(label) LIKE ?', params[:query).downcase).all
-    File.open(File.join(Rails.root, "filestore", "compounds.txt")).each do |row|
-       if row.downcase.starts_with? params[:query].downcase
-         results.push(row) 
-       end
+    Rails.cache.fetch('comp_' + params[:query], :expires_in => 6.months) { Compound.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |compound|
+      puts 'compound ' + compound.label
+      results.push(compound.label)
     end
-    File.open(File.join(Rails.root, "filestore", "targets.txt")).each do |row|
-       if row.downcase.starts_with? params[:query].downcase
-         results.push(row) 
-       end
+    Rails.cache.fetch('tar_' + params[:query], :expires_in => 6.months) { Target.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |target|
+      puts 'target ' + target.label
+      results.push(target.label)
     end
     # shuffle the results so that compounds and targets get mixed up since we
     # are not doing any relevancy matches
