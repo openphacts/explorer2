@@ -69,5 +69,21 @@ module Explorer2
     #handlebars file
     #HandlebarsAssets::Config.compiler = 'handlebars-v1.3.0.js'
     #HandlebarsAssets::Config.compiler_path = Rails.root.join('vendor/assets/javascripts')
+    
+    #active support cache has problems unmarshalling objects in development which results in
+    #undefined class/module errors
+    #http://alisdair.mcdiarmid.org/2013/02/02/fixing-rails-auto-loading-for-serialized-objects.html
+    # Eager load all value objects, as they may be instantiated from
+    # YAML before the symbol is referenced
+    config.before_initialize do |app|
+      app.config.paths.add 'app/models', :eager_load => true
+    end
+    # Reload cached/serialized classes before every request (in development
+    # mode) or on startup (in production mode)
+    config.to_prepare do
+      Dir[ File.expand_path(Rails.root.join("app/models/*.rb")) ].each do |file|
+        require_dependency file
+      end
+    end
   end
 end
