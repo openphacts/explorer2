@@ -2,6 +2,12 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
 
+  exactMatch: true,
+
+  substructureMatch: false,
+
+  similarityMatch: false,
+
   ketcherPath: null,
 
   smilesValue: null,
@@ -93,15 +99,34 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('totalCount'),
 
   exactSearch: function() {
-    return this.get('structureSearchType') === "exact";
+    if (this.get('structureSearchType') === "exact") {
+	  this.set('exactMatch', true);
+	  return true;
+    } else {
+	  this.set('exactMatch', false);
+	  return false;
+    }
   }.property('structureSearchType'),
 
   subSearch: function() {
-    return this.get('structureSearchType') === "substructure";
+    if (this.get('structureSearchType') === "substructure") {
+	  this.set('substructureMatch', true);
+	  return true;
+    } else {
+	  this.set('substructureMatch', false);
+	  return false;
+    }
+
   }.property('structureSearchType'),
 
   simSearch: function() {
-    return this.get('structureSearchType') === "similarity";
+    if (this.get('structureSearchType') === "similarity") {
+	  this.set('similarityMatch', true);
+	  return true;
+    } else {
+	  this.set('similarityMatch', false);
+	  return false;
+    }
   }.property('structureSearchType'),
 
   prefLabelSortASC: function() {
@@ -295,8 +320,11 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        this.set('rbSelectedHigherValue', null);
        this.set('relSelectedLowerValue', null);
        this.set('relSelectedHigherValue', null);
+       // TODO turn the thresholdPercent and maxRecords input into ember views
        // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
-       this.set('thresholdPercent', $('#threshold-percent')[0].value);
+       if (this.get('similarityMatch') === true) {
+	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
+	   }
        this.set('maxRecords', $('#max-records')[0].value);
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
