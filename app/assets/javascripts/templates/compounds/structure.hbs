@@ -157,6 +157,12 @@
     </div>
 </div>
 <div class="big-padding-left">
+	Match type: {{view Ember.Select
+	       content=matchTypes
+           value=selectedMatchType
+           optionValuePath="content.id"
+           optionLabelPath="content.type"
+	}}
         Maximimum records to retrieve: <input id="max-records" type="number" min="10" step="10" value="100" name="max-records-spinner" />
 		Similarity threshold type: {{view Ember.Select
 		       content=thresholdTypes

@@ -8,6 +8,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
+  matchTypes: [{type: 'exact', id: 0}, {type: 'All Tautomers', id: 1}, {type: 'Same skeleton including H', id: 2}, {type: 'Same skeleton excluding H', id: 3}, {type: 'Isomers', id: 4}],
+
+  selectedMatchType: 0,
+
   selectedThresholdType: 0,
 
   structureSearchType: "exact",
@@ -337,11 +341,14 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
                    });
                  });
              }
+         } else {
+	        me.get('controllers.application').set('fetching', false);
+		    App.FlashQueue.pushFlash('error', 'No compound(s) found. Please try again using different parameters');
          }
        };
        if (structureType == "exact") {
            this.get('controllers.application').set('fetching', true);
-           searcher.exact(thisCompound.get('smiles'), null, callback);
+           searcher.exact(thisCompound.get('smiles'), this.get('selectedMatchType'), callback);
        } else if (structureType == "similarity") {
            this.get('controllers.application').set('fetching', true);
            searcher.similarity(thisCompound.get('smiles'), this.selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
