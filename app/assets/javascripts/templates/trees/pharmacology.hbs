@@ -150,7 +150,7 @@ Loaded {{currentCount}} of {{totalCount}}
 			    <td class="lead cell-basictext">{{enzymePharma.activityUnits}}</td>
 			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
 			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
-			    <td class="cell-longtext">{{enzymePharma.smiles}}</td>
+			    <td class="cell-longtext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw the compound with this structure"}}{{enzymePharma.smiles}}{{/link-to}}</td>
 			    <td class="cell-longtext">{{enzymePharma.inchi}}</td>
 			    <td class="cell-longtext">{{enzymePharma.inchiKey}}</td>
 			    <td class="cell-longtext">{{enzymePharma.pChembl}}</td>

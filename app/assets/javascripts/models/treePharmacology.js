@@ -27,5 +27,6 @@ App.TreePharmacology = DS.Model.extend({
    activityType: DS.attr('string'),
    activityValue: DS.attr('number'),
    activityRelation: DS.attr('string'),
-   activityUnits: DS.attr('string')
+   activityUnits: DS.attr('string'),
+   ketcherPath: DS.attr('string')
 });
