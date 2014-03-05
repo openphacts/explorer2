@@ -226,7 +226,146 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 
   goToTop: function() {
       window.scrollTo(0,0);
-  }
+  },
+  applyFilters: function() {
+    var sortBy = null;
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
+    var targetType = null;
+    var lens = null;
+    var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+    var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+    var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+    var activityRelation = null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+    // only set activity filter if all filter boxes have been selected
+    if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+	switch(condition)
+	{
+	case '>':
+  	  minExActivityValue = currentActivityValue;
+	  break;
+	case '<':
+      maxExActivityValue = currentActivityValue;
+  	  break;
+	case '=':
+      activityValue = currentActivityValue;
+	  break;
+	case '<=':
+      maxActivityValue = currentActivityValue;
+	  break;
+	case '>=':
+      minActivityValue = currentActivityValue;
+	  break;
+	}
+    }
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
+    var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    if (pchemblCondition != null && currentPchemblValue != null) {
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  minExPchemblValue = currentPchemblValue;
+	  break;
+	case '<':
+      maxExPchemblValue = currentPchemblValue;
+  	  break;
+	case '=':
+      actualPchemblValue = currentPchemblValue;
+	  break;
+	case '<=':
+      maxPchemblValue = currentPchemblValue;
+	  break;
+	case '>=':
+      minPchemblValue = currentPchemblValue;
+	  break;
+	}
+    }
+    var me = this;
+    me.set('page', 0);
+    var thisTarget = this.get('content');
+    thisTarget.get('pharmacology').clear();
+    this.get('controllers.application').set('fetching', true);
+    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+    var pharmaCallback=function(success, status, response){
+      if (success && response) {
+        me.page++;
+        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+        $.each(pharmaResults, function(index, pharma) {
+          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
+	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
+        });
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
+      } else {
+        //failed response so scrolling is now allowed
+        me.get('controllers.application').set('fetching', false);
+        enable_scroll();
+      }
+    };
+    // get the count for these filters then get the first page of results
+    var countCallback=function(success, status, response){
+      $('#enzymePharmaFilterModalView').modal('toggle');
+      $('#enzymePharmaFilterModalView').button('toggle');
+      if (success && response) {
+        var count = searcher.parseTargetClassPharmacologyCount(response);
+        me.set('totalCount', count);
+        if (count > 0) {
+//		    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
+    searcher.getTargetClassPharmacologyPaginated(thisTarget.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
+        }
+      }
+    };
+    searcher.getTargetClassPharmacologyCount(thisTarget.get('uri'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);	
+
+  },
+  resetFilters: function() {
+      this.set('selectedActivity',null);
+      this.set('selectedUnit', null);
+      this.set('selectedCondition', null);
+      this.set('activityValue', null);
+      this.set('selectedRelation', null);
+      this.set('pchemblValue', null);
+      this.set('selectedPchemblCondition', null);
+      this.set('selectedPchemblValue', null);
+      this.set('assayOrganismQuery', null);
+      this.set('targetOrganismQuery', null);
+  },
 
   }
 
