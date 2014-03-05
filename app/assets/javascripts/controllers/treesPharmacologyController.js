@@ -350,6 +350,9 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
         if (count > 0) {
 //		    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
     searcher.getTargetClassPharmacologyPaginated(thisTarget.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
+        } else {
+          me.get('controllers.application').set('fetching', false);
+	      App.FlashQueue.pushFlash('error', 'No target class pharmacology available with those filters. Please apply different filters and try again');
         }
       }
     };
