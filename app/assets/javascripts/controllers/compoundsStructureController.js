@@ -371,7 +371,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
              }
          } else {
 	        me.get('controllers.application').set('fetching', false);
-		    App.FlashQueue.pushFlash('error', 'No compound(s) found. Please try again using different parameters');
+		    App.FlashQueue.pushFlash('error', 'No compound(s) found for this structure search type.');
          }
        };
        if (structureType == "exact") {
