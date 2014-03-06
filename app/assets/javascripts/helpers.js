@@ -169,7 +169,7 @@ Ember.Handlebars.registerBoundHelper('linkableChemspiderID', function(chemspider
 	if (chemspiderId) {
 		var id = chemspiderId.split("/").pop();
 		//console.log(" ID " + id);
-		var fullLink = '<a href="http://www.chemspider.com/' + id +'" target="_blank">' + id +'</a>'
+		var fullLink = '<a href="' + chemspiderId +'" target="_blank">' + id +'</a>'
 		return new Handlebars.SafeString(fullLink);;
 	}
 });
