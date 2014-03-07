@@ -4,8 +4,6 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
-#  match 'search/typeahead' => 'search#typeahead'
-
   match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
   match 'search/typeaheadTargets' => 'search#typeaheadTargets'
@@ -26,47 +24,18 @@ Explorer2::Application.routes.draw do
   match 'pathways' => 'home#index'
   match 'pathways/compounds' => 'home#index'
 
-#  match 'compounds/:id' => 'home#index'
-
-#  match 'compounds/:id/pharmacology' => 'home#index'
-
-#  match 'compound/:id' => 'home#index'
-
-#  match 'compound/:id/pharmacology' => 'home#index'
-
-#  match 'trees' => 'home#index'
-
-#  match 'pathways' => 'home#index'
-
-
   resources :search, :only => [ :index ] do
     collection do
       get 'typeahead'
     end
   end
 
-#  match 'search/:query' => 'home#index'
-
-#  resources :compounds, :only => [ :index ] do
-#    member do
-#      get 'pharmacology'
-#      get 'structure'
-#      get 'pathways'
-#    end
-#  end
-
-#  resources :targets, :only => [ :index ] do
-#    member do
-#      get 'pharmacology'
-#      get 'pathways'
-#    end
-#  end
-  
-#  resources :trees, :only => [ :index ] do
-#    member do
-#      get 'pharmacology'
-#    end
-#  end
+  resources :ketcher, :only => [ :index ] do
+    collection do
+      get :knocknock
+      get :layout
+    end
+  end
 
   resources :core_api_calls, :except => [ :index, :show, :create, :new, :edit, :update, :destroy ] do
     collection do
@@ -77,22 +46,6 @@ Explorer2::Application.routes.draw do
       post :chemspider_tab_separated_file
     end
   end
-
-#  resources :pathways, :only => [ :index ]do
-#  end
-
-#  match 'targets' => 'home#index'
-
-#  match 'targets/:id' => 'home#index'
-
-#  match 'targets/:id/pharmacology' => 'home#index'
-
-#  resources :search do
-#    collection do
-#      get 'compound_info'
-#    end
-#  end
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

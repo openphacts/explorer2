@@ -1,17 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.16'
+gem 'rails', '3.2.17'
 
 gem 'rake', '10.1.1'
 
-group :development, :test do
-  gem 'sqlite3'
-end
-
-group :production do
-  #gem 'pg'
-  gem 'sqlite3'
-end
+#change to your db of choice here
+gem 'sqlite3'
 
 group :assets do
   gem 'sass-rails', '~> 3.2'
