@@ -117,28 +117,28 @@ Loaded {{currentCount}} of {{totalCount}}
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
 				<th>Structure</th>
-				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th>Names</th>
-				<th>Organisms</th>
-				<th>Organisms</th>
-				<th  align="left" width="300px" {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th>Type</th>
-			 	<th>Relation</th>
-				<th>Value</th>
-				<th>Units</th>
-				<th>PubMed Article</th>
-				<th>Mol Weight</th>
-				<th>SMILES</th>
-				<th>InChI</th>
-				<th>InChIKey</th>
-                <th>pChembl</th>
+				<th align="center" style="min-width:300px;" {{action "sortHeader" "compound_name"}} {{bind-attr class="compoundNameSortASC:sortASC compoundNameSortDESC:sortDESC"}}>Name{{#if compoundNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if compoundNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:100px;" {{action "sortHeader" "target_name"}} {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC"}}>Names{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:100px;" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC"}}>Organisms{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:100px;" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC"}}>Organisms{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:250px;" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC"}}>Description{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width:100px;" {{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC"}}>Type{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+			 	<th style="width:100px;" {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC"}}>Relation{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width:100px;" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC"}}>Value{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC"}}>Units{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_unit"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC"}}>PubMed Article{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:80px;" {{action "sortHeader" "molweight"}} {{bind-attr class="molweightSortASC:sortASC molweightSortDESC:sortDESC"}}>Mol Weight{{#if molweightSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molweightSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "smiles"}} {{bind-attr class="smilesSortASC:sortASC smilesSortDESC:sortDESC"}}>SMILES{{#if smilesSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if smilesSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchi"}} {{bind-attr class="inchiSortASC:sortASC inchiSortDESC:sortDESC"}}>InChi{{#if inchiSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchi_key"}} {{bind-attr class="inchikeySortASC:sortASC inchikeySortDESC:sortDESC"}}>InChiKey{{#if inchikeySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchikeySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+                <th {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC"}}>pChembl{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 			</tr>
 		</thead>
 		<tbody>
 			{{#each enzymePharma in pharmacology}}
 			<tr class="record-deco">
 				
-				<td class="cell-basictext">{{cs_image_src enzymePharma.csURI}}</td>
+				<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw the compound with this structure"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>
 				<td class="cell-basictext" style="min-width:300px;">{{enzymePharma.prefLabel}}</td>
 				<td class="cell-basictext">{{#each target in enzymePharma.targets}}<p>{{target.title}}</p>{{/each}}</td>
 				<td class="cell-basictext" style="min-width:120px;">{{#each target in enzymePharma.targets}}<p>{{target.targetOrganismNames}}</p>{{/each}}</td>

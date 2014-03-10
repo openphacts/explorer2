@@ -52,22 +52,128 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 
   targetOrganismQuery: null,
 
+  showPharmaProvenance: false,
+
   // I'm sure all this can be done more elegantly but....
 
-  prefLabelSortASC: function() {
-	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
+  inchikeySortASC: function() {
+	return this.get('currentHeader') === "inchi_key" && this.get('sortedHeader') === "inchi_key";
   }.property('sortedHeader'),
 
-  preflabelSortDESC: function() {
+  inchikeySortDESC: function() {
+	return this.get('currentHeader') === "inchi_key" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  inchiSortASC: function() {
+	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === "inchi";
+  }.property('sortedHeader'),
+
+  inchiSortDESC: function() {
+	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  smilesSortASC: function() {
+	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === "smiles";
+  }.property('sortedHeader'),
+
+  smilesSortDESC: function() {
+	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  molweightSortASC: function() {
+	return this.get('currentHeader') === "molweight" && this.get('sortedHeader') === "molweight";
+  }.property('sortedHeader'),
+
+  molweightSortDESC: function() {
+	return this.get('currentHeader') === "molweight" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  compoundNameSortASC: function() {
+	return this.get('currentHeader') === "prefLAbel" && this.get('sortedHeader') === "prefLabel";
+  }.property('sortedHeader'),
+
+  compoundNameSortDESC: function() {
 	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
-  descriptionSortASC: function() {
+  targetOrganismSortASC: function() {
+	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === "target_organism";
+  }.property('sortedHeader'),
+
+  targetOrganismSortDESC: function() {
+	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  assayOrganismSortASC: function() {
+	return this.get('currentHeader') === "assay_organism" && this.get('sortedHeader') === "assay_organism";
+  }.property('sortedHeader'),
+
+  assayOrganismSortDESC: function() {
+	return this.get('currentHeader') === "assay_organism" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  assayDescriptionSortASC: function() {
 	return this.get('currentHeader') === "description" && this.get('sortedHeader') === "description";
   }.property('sortedHeader'),
 
-  descriptionSortDESC: function() {
+  assayDescriptionSortDESC: function() {
 	return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityTypeSortASC: function() {
+	return this.get('currentHeader') === "activity_type" && this.get('sortedHeader') === "activity_type";
+  }.property('sortedHeader'),
+
+  activityTypeSortDESC: function() {
+	return this.get('currentHeader') === "activity_type" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityRelationSortASC: function() {
+	return this.get('currentHeader') === "activity_relation" && this.get('sortedHeader') === "activity_relation";
+  }.property('sortedHeader'),
+
+  activityRelationSortDESC: function() {
+	return this.get('currentHeader') === "activity_relation" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityValueSortASC: function() {
+	return this.get('currentHeader') === "activity_value" && this.get('sortedHeader') === "activity_value";
+  }.property('sortedHeader'),
+
+  activityValueSortDESC: function() {
+	return this.get('currentHeader') === "activity_value" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  activityUnitSortASC: function() {
+	return this.get('currentHeader') === "activity_unit" && this.get('sortedHeader') === "activity_unit";
+  }.property('sortedHeader'),
+
+  activityUnitSortDESC: function() {
+	return this.get('currentHeader') === "activity_unit" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  pmidSortASC: function() {
+	return this.get('currentHeader') === "pmid" && this.get('sortedHeader') === "pmid";
+  }.property('sortedHeader'),
+
+  pmidSortDESC: function() {
+	return this.get('currentHeader') === "pmid" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  pchemblSortASC: function() {
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === "pChembl";
+  }.property('sortedHeader'),
+
+  pchemblSortDESC: function() {
+	return this.get('currentHeader') === "pChembl" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
+  targetNameSortASC: function() {
+	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === "target_name";
+  }.property('sortedHeader'),
+
+  targetNameSortDESC: function() {
+	return this.get('currentHeader') === "target_name" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
   actions: {
@@ -192,7 +298,7 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
     }
 	    var thisTargetClass = this.get('content');
 	    thisTargetClass.get('pharmacology').clear();
-	    this.set('page', 0);
+	    this.set('page', 1);
 	    this.get('controllers.application').set('fetching', true);
 	    var sortBy = '';
 	    if (this.get('sortedHeader') === header) {
@@ -223,10 +329,6 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
     var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
     searcher.getTargetClassPharmacologyPaginated(thisTargetClass.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page, 50, sortBy, pharmaCallback);	
 	},
-
-  goToTop: function() {
-      window.scrollTo(0,0);
-  },
   applyFilters: function() {
     var sortBy = null;
     var assayOrganism = this.get('assayOrganismQuery');
@@ -317,7 +419,7 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 	}
     }
     var me = this;
-    me.set('page', 0);
+    me.set('page', 1);
     var thisTarget = this.get('content');
     thisTarget.get('pharmacology').clear();
     this.get('controllers.application').set('fetching', true);
@@ -372,6 +474,163 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
       this.set('targetOrganismQuery', null);
   },
 
+  goToTop: function() {
+      window.scrollTo(0,0);
+  },
+  enableProvenance: function() {
+      this.set('showPharmaProvenance', true);
+  },
+
+  disableProvenance: function() {
+      this.set('showPharmaProvenance', false);
+  },
+
+  tsvDownload: function(target) {
+    var me = this;
+    //first set all the current filters
+    var assayOrganism = this.get('assayOrganismQuery');
+    var targetOrganism = this.get('targetOrganismQuery');
+    var targetType = null;
+    var lens = null;
+    var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+    var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+    var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+    var activityRelation = null;
+    var minActivityValue = null;
+    var maxActivityValue = null;
+    var maxExActivityValue = null;
+    var activityValue = null;
+    var minExActivityValue = null;
+    var activityValueType = null;
+    // only set activity filter if all filter boxes have been selected
+    //if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+    if (condition != null) {
+	switch(condition)
+	{
+	case '>':
+  	  activityValueType = "minEx-activity_value";
+	  break;
+	case '<':
+      activityValueType = "maxEx-activity_value";
+  	  break;
+	case '=':
+      activityValueType = "activity_value";
+	  break;
+	case '<=':
+      activityValueType = "max-activity_value";
+	  break;
+	case '>=':
+      activityValueType = "min-activity_value";
+	  break;
+	}
+    }
+    var activityRelations = [];
+    if (this.get('greaterThan') === true) {
+        activityRelations.push(">");
+    }
+    if (this.get('lessThan') === true) {
+        activityRelations.push("<");
+    }
+    if (this.get('greaterThanOrEqual') === true) {
+        activityRelations.push(">=");
+    }
+    if (this.get('lessThanOrEqual') === true) {
+        activityRelations.push("<=");
+    }
+    if (this.get('equalTo') === true) {
+        activityRelations.push("=");
+    }
+    // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+    // a trailing "|" is fine according to tests on the LD API
+    if (activityRelations.length > 0) {
+        activityRelation = "";
+        $.each(activityRelations, function(index, relation) {
+            activityRelation = activityRelation + relation + "|";
+        });
+    }
+    var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+    var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
+    var minPchemblValue = null;
+    var maxPchemblValue = null;
+    var maxExPchemblValue = null;
+    var minExPchemblValue = null;
+    var actualPchemblValue = null;
+    // pchembl filter only valid if all filter bits selected
+    var pChemblValueType = null;
+    if (pchemblCondition != null && currentPchemblValue != null) {
+	switch(pchemblCondition)
+	{
+	case '>':
+  	  pChemblValueType = "minEx-pChembl";
+	  break;
+	case '<':
+      pChemblValueType = "maxEx-pChembl";
+  	  break;
+	case '=':
+      pChemblValueType = "pchembl";
+	  break;
+	case '<=':
+      pChemblValueType = "max-pChembl";
+	  break;
+	case '>=':
+      pChemblValueType = "min-pChembl";
+	  break;
+	}
+    }
+    var filtersString = "";
+    // pchembl
+    filtersString += pChemblValueType != null ? "pChembl " + pchemblCondition + " " + currentPchemblValue: '';
+    //activity
+    filtersString += activity != null || condition != null || currentActivityValue != null || unit != null ? " Activity: " :  '';
+    filtersString += activity != null ? activity + " " : '';
+    filtersString += condition != null ? condition + " " : '';
+    filtersString += currentActivityValue != null ? currentActivityValue + " " : '';
+    filtersString += unit != null ? unit + " " : '';
+    if (activityRelations.length > 0) {
+      filtersString += " Relations: ";
+      $.each(activityRelations, function(index, relation) {
+        filtersString += relation + " ";
+      });
+    }
+
+    //filtersString += activityRelation != null ? " Relations: " + activityRelation + " " : ''
+    //organisms
+    filtersString += assayOrganism != null ? " Assay Organism: " + assayOrganism: '';
+    filtersString += targetOrganism != null ? " Target Organism: " + targetOrganism: '';
+
+    filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
+
+    var thisTarget = this.get('content');
+	var tsvCreateRequest = $.ajax({
+		url: tsvCreateUrl,
+        dataType: 'json',
+		cache: true,
+		data: {
+			_format: "json",
+			uri: this.get('content').get('uri'),
+            total_count: me.totalCount,
+            request_type: 'tree',
+            pchembl_value_type: pChemblValueType,
+            pchembl_value: currentPchemblValue,
+            activity_relation: activityRelation,
+            activity_value_type: activityValueType,
+            activity_value: currentActivityValue,
+            activity_type: activity,
+            activity_unit: unit,
+            assay_organism: assayOrganism,
+            target_organism: targetOrganism
+		},
+		success: function(response, status, request) {
+            me.get('controllers.application').addJob(response.uuid, thisTarget.get('name'), filtersString);
+			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
+            //me.monitorTSVCreation(response.uuid);
+		},
+		error: function(request, status, error) {
+			  App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
+		}
+	});
+  }
   }
 
 });
