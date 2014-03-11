@@ -132,8 +132,8 @@ Loaded {{currentCount}} of {{totalCount}}
 			{{#each enzymePharma in pharmacology}}
 			<tr class="record-deco">
 				
-				<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw the compound with this structure"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>
-				<td class="cell-basictext" style="min-width:300px;">{{enzymePharma.prefLabel}}</td>
+				<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>
+				<td class="cell-basictext" style="min-width:300px;">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#each target in enzymePharma.targets}}<p>{{target.title}}</p>{{/each}}</td>
 				<td class="cell-basictext">{{#each target in enzymePharma.targets}}<p>{{#each component in target.targetComponents}}{{targetComponentLink component}}{{/each}}</p>{{/each}}</td>
 				<td class="cell-basictext" style="min-width:120px;">{{#each target in enzymePharma.targets}}<p>{{targetOrganismLink target}}</p>{{/each}}</td>

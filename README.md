@@ -18,7 +18,7 @@ Setup
 * Run rake db:create:all
 * Run rake db:migrate
 * [Register](http://dev.openphacts.org "Open PHACTS developer home") to get your application keys.
-* Copy config/app_settings.yml_example to config/app_settings.yml and change the app keys and API url. to the appropriate values.
+* Copy config/app_settings.yml_example to config/app_settings.yml and change the app keys and API url to the appropriate values. Add settings for ketcher (see below).
 
 Run rails s to start the server and navigate your browser to localhost:3000
 
@@ -42,7 +42,7 @@ It will probably take the console a few hours to get through them all (there are
 
 Ketcher
 -------
-The Explorer uses an embedded version of the [Ketcher](http://ggasoftware.com/opensource/ketcher "Ketcher tool for drawing chemical compounds") compound drawing tool by [GGA Software Services](http://ggasoftware.com "GGA Software Services"). If you require users to be able to draw compounds that they have found using the Explorer then you will need to install the Indigo C libraries on your machine
+The Explorer uses an embedded version of the [Ketcher](http://ggasoftware.com/opensource/ketcher "Ketcher tool for drawing chemical compounds") compound drawing tool by [GGA Software Services](http://ggasoftware.com "GGA Software Services"). If you require users to be able to draw compounds that they have found using the Explorer then you will need to install the Indigo C libraries on your machine. To avoid any firewall issues the rails side of the application proxies across to the ketcher app and a setting has to be added to app_settings.yml.
 
 * git clone https://github.com/ggasoftware/indigo.git
 * Build the C libraries
@@ -53,6 +53,7 @@ The Explorer uses an embedded version of the [Ketcher](http://ggasoftware.com/op
 Note: change the directory to the appropriate one for your system)
 * Copy api/python/indigo.py to explorer2/public/ketcher/
 * Start with python ketcher-server.py
+* The rails side needs to know what port to call the ketcher app on, add the 'port' parameter to the ketcher settings in app_settings.yml
 
 Licence
 =======

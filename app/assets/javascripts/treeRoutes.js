@@ -66,9 +66,8 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
       if (success && response) {
         var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
+          pharma['ketcherPath'] = ketcherPath;
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
-          var kPath = ketcherPath;
-          pharmaRecord['ketcherPath'] = kPath;
 	      thisEnzyme.get('pharmacology').addObject(pharmaRecord);
         });
       }

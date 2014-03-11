@@ -16,7 +16,6 @@ defaults: &defaults
     tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
 
   ketcher:
-    path: "ketcher"
     port: "10000"
 
 development:
