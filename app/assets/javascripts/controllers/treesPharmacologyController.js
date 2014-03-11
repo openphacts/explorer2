@@ -89,11 +89,11 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
   }.property('sortedHeader'),
 
   compoundNameSortASC: function() {
-	return this.get('currentHeader') === "prefLAbel" && this.get('sortedHeader') === "prefLabel";
+	return this.get('currentHeader') === "compound_name" && this.get('sortedHeader') === "compound_name";
   }.property('sortedHeader'),
 
   compoundNameSortDESC: function() {
-	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === null;
+	return this.get('currentHeader') === "compound_name" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
   targetOrganismSortASC: function() {
@@ -113,11 +113,11 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
   }.property('sortedHeader'),
 
   assayDescriptionSortASC: function() {
-	return this.get('currentHeader') === "description" && this.get('sortedHeader') === "description";
+	return this.get('currentHeader') === "assay_description" && this.get('sortedHeader') === "assay_description";
   }.property('sortedHeader'),
 
   assayDescriptionSortDESC: function() {
-	return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
+	return this.get('currentHeader') === "assay_description" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
   activityTypeSortASC: function() {
