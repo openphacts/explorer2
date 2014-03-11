@@ -1,3 +1,27 @@
+Ember.Handlebars.registerBoundHelper('targetOrganismLink', function(target) {
+  if (target.targetOrganismNames != null && target.uri != null) {
+	var aLink = '<a href="' + target.uri +'" target="_blank">' + target.targetOrganismNames +'</a>'
+    return new Handlebars.SafeString(aLink);
+  } else if (target.targetOrganismNames != null){
+    return new Handlebars.SafeString(target.targetOrganismNames);
+  } else if (target.uri != null){
+    var id = target.uri.split('/').pop();
+	var aLink = '<a href="' + target.uri +'" target="_blank" title="No organism name available for this target">' + id +'</a>';
+    return new Handlebars.SafeString(aLink);
+  }
+});
+Ember.Handlebars.registerBoundHelper('assayOrganismLink', function(pharma) {
+  if (pharma.get('assayOrganismName') != null && pharma.get('assayURI') != null) {
+	var aLink = '<a href="' + pharma.get('assayURI') +'" target="_blank">' + pharma.get('assayOrganismName') +'</a>'
+    return new Handlebars.SafeString(aLink);
+  } else if (pharma.get('assayOrganismName') != null){
+    return new Handlebars.SafeString(pharma.get('assayOrganismName'));
+  } else if (pharma.get('assayURI') != null){
+    var id = pharma.get('assayURI').split('/').pop();
+	var aLink = '<a href="' + pharma.get('assayURI') +'" target="_blank" title="No organism name available for this assay">' + id +'</a>';
+    return new Handlebars.SafeString(aLink);
+  }
+});
 Ember.Handlebars.registerBoundHelper('pdbLink', function(link) {
   if (link != null) {
 	var id = link.split("/").pop();

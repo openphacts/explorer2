@@ -1822,7 +1822,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     var records = [];
     $.each(response.items, function(i, item) {
       var targets = [];
-      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null, activityType = null, activityRelation = null, activityValue = null, activityUnits = null;
+      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, assayOrganism = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null, activityType = null, activityRelation = null, activityValue = null, activityUnits = null;
       chemblActivityURI = item["_about"];
       pmid = item.pmid;
 
@@ -1912,6 +1912,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
       var onAssay = item[constants.ON_ASSAY];
       assayURI = onAssay["_about"] ? onAssay["_about"] : null;
       assayDescription = onAssay.description ? onAssay.description : null;
+      assayOrganismName = onAssay.assayOrganismName ? onAssay.assayOrganismName : null;
       publishedRelation = item.publishedRelation ? item.publishedRelation : null;
       publishedType = item.publishedType ? item.publishedType : null;
       publishedUnits = item.publishedUnits ? item.publishedUnits : null;
@@ -1943,6 +1944,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
           //targetOrganism: targetOrganism,
           'assayURI': assayURI,
           'assayDescription': assayDescription,
+          'assayOrganismName': assayOrganismName,
           'publishedRelation': publishedRelation,
           'publishedType': publishedType,
           'publishedUnits': publishedUnits,
