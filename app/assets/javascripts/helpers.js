@@ -1,3 +1,15 @@
+Ember.Handlebars.registerBoundHelper('targetComponentLink', function(component) {
+  if (component.label != null && component.uri != null) {
+	var aLink = '<a href="' + component.uri +'" target="_blank">' + component.label +'</a>'
+    return new Handlebars.SafeString(aLink);
+  } else if (component.label != null){
+    return new Handlebars.SafeString(component.label);
+  } else if (component.uri != null){
+    var id = component.uri.split('/').pop();
+	var aLink = '<a href="' + component.uri +'" target="_blank" title="No label available for this target component">' + id +'</a>';
+    return new Handlebars.SafeString(aLink);
+  }
+});
 Ember.Handlebars.registerBoundHelper('targetOrganismLink', function(target) {
   if (target.targetOrganismNames != null && target.uri != null) {
 	var aLink = '<a href="' + target.uri +'" target="_blank">' + target.targetOrganismNames +'</a>'

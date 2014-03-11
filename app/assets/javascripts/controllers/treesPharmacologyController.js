@@ -104,6 +104,14 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
 	return this.get('currentHeader') === "target_organism" && this.get('sortedHeader') === null;
   }.property('sortedHeader'),
 
+  targetComponentSortASC: function() {
+	return this.get('currentHeader') === "target_component" && this.get('sortedHeader') === "target_component";
+  }.property('sortedHeader'),
+
+  targetComponentSortDESC: function() {
+	return this.get('currentHeader') === "target_component" && this.get('sortedHeader') === null;
+  }.property('sortedHeader'),
+
   assayOrganismSortASC: function() {
 	return this.get('currentHeader') === "assay_organism" && this.get('sortedHeader') === "assay_organism";
   }.property('sortedHeader'),
