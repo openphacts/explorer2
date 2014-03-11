@@ -24,7 +24,6 @@ class KetcherController < ApplicationController
     domain = "localhost"
     path= "layout?smiles=" + smiles
     response = Net::HTTP.get(domain, path, port)
-    puts response
     if response.start_with? "Ok"
       render text: response
     else
