@@ -58,6 +58,7 @@ Openphacts.Constants.prototype.SMILES = 'smiles';
 Openphacts.Constants.prototype.RELEVANCE = 'relevance';
 Openphacts.Constants.prototype.PATHWAY_COUNT = 'pathway_count';
 Openphacts.Constants.prototype.MOLWT = 'molweight';
+Openphacts.Constants.prototype.EBILINK = 'http://www.ebi.ac.uk';
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
 Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
 	this.baseURL = baseURL;
@@ -216,7 +217,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 	uri = response.primaryTopic[constants.ABOUT];
 
     // check if we already have the CS URI
-    var possibleURI = 'http://' + new URI(uri).hostname();
+    var possibleURI = 'http://' + new URL(uri).hostname;
     csURI = constants.SRC_CLS_MAPPINGS[possibleURI] === 'chemspiderValue' ? uri : null;
 
 	var drugbankProvenance, chemspiderProvenance, chemblProvenance;
@@ -284,7 +285,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 		molform = chemspiderData.molformula != null ? chemspiderData.molformula : molformula;
 
 		// provenance 
-		chemspiderLinkOut = 'http://ops.rsc.org/' + csURI.split('/').pop();
+		chemspiderLinkOut = csURI;
 		chemspiderProvenance = {};
 		chemspiderProvenance['source'] = 'chemspider';
 		chemspiderProvenance['hba'] = chemspiderLinkOut;
@@ -1822,7 +1823,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     var records = [];
     $.each(response.items, function(i, item) {
       var targets = [];
-      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, assayOrganism = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null, activityType = null, activityRelation = null, activityValue = null, activityUnits = null;
+      var chemblActivityURI = null, pmid = null, relation = null, standardUnits = null, standardValue = null, activityType = null, inDataset = null, fullMWT = null, chemblURI = null, cwURI = null, prefLabel = null, csURI = null, inchi = null, inchiKey = null, smiles = null, ro5Violations = null, targetURI = null, targetTitle = null, targetOrganism = null, assayURI = null, assayDescription = null, assayOrganism = null, publishedRelation = null, publishedType = null, publishedUnits = null, publishedValue = null, standardUnits = null, standardValue = null, pChembl = null, activityType = null, activityRelation = null, activityValue = null, activityUnits = null, conceptwikiProvenance = {}, chemspiderProvenance = {}, assayTargetProvenance = {}, assayProvenance = {};
       chemblActivityURI = item["_about"];
       pmid = item.pmid;
 
@@ -1847,6 +1848,9 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
 		if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
             cwURI = match[constants.ABOUT];
             prefLabel = match[constants.PREF_LABEL];
+            var conceptWikiLinkOut = cwURI;
+            conceptwikiProvenance['source'] = 'conceptwiki';
+            conceptwikiProvenance['prefLabel'] = conceptWikiLinkOut;
 		} else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
             csURI = match[constants.ABOUT];
             inchi = match[constants.INCHI];
@@ -1854,6 +1858,17 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             smiles = match[constants.SMILES];
             ro5Violations = match[constants.RO5_VIOLATIONS] !== null ? match[constants.RO5_VIOLATIONS] : null;
             fullMWT = match[constants.MOLWT] ? match[constants.MOLWT] : null;
+		    var chemspiderLinkOut = csURI;
+		    chemspiderProvenance['source'] = 'chemspider';
+		    chemspiderProvenance['hba'] = chemspiderLinkOut;
+		    chemspiderProvenance['hbd'] = chemspiderLinkOut;
+		    chemspiderProvenance['inchi'] = chemspiderLinkOut;
+		    chemspiderProvenance['logp'] = chemspiderLinkOut;
+		    chemspiderProvenance['psa'] = chemspiderLinkOut;
+		    chemspiderProvenance['ro5violations'] = chemspiderLinkOut;
+		    chemspiderProvenance['smiles'] = chemspiderLinkOut;
+		    chemspiderProvenance['inchiKey'] = chemspiderLinkOut;
+		    chemspiderProvenance['molform'] = chemspiderLinkOut;
 		}
       });
       var targets = item.hasAssay.hasTarget;
@@ -1907,12 +1922,19 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                   assayTargetComponents.push({"label": targetComponentLabel, "uri": targetComponentURI});
               }
           }
+          var assayTargetLinkOut = targetURI;
+          assayTargetProvenance['targetOrganismName'] = targetURI;
+          assayTargetProvenance['targetComponents'] = targetURI;
+          assayTargetProvenance['targetTitle'] = targetURI;
           assayTargets.push({"uri": targetURI, "title": targetTitle, "targetComponents": assayTargetComponents,"targetOrganismNames": targetOrganismNames});
       }
       var onAssay = item[constants.ON_ASSAY];
       assayURI = onAssay["_about"] ? onAssay["_about"] : null;
       assayDescription = onAssay.description ? onAssay.description : null;
       assayOrganismName = onAssay.assayOrganismName ? onAssay.assayOrganismName : null;
+      var assayOrganismLinkOut = assayURI;
+      assayProvenance['assayDescription'] = assayOrganismLinkOut;
+      assayProvenance['assayOrganismName'] = assayOrganismLinkOut;
       publishedRelation = item.publishedRelation ? item.publishedRelation : null;
       publishedType = item.publishedType ? item.publishedType : null;
       publishedUnits = item.publishedUnits ? item.publishedUnits : null;
@@ -1949,7 +1971,11 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
           'publishedType': publishedType,
           'publishedUnits': publishedUnits,
           'publishedValue': publishedValue,
-          'pChembl': pChembl
+          'pChembl': pChembl,
+          'conceptWikiProvenance' : conceptwikiProvenance,
+          'chemspiderProvenance': chemspiderProvenance,
+          'assayTargetProvenance': assayTargetProvenance,
+          'assayProvenance': assayProvenance
       });
     });
     return records;
