@@ -10,22 +10,28 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require ConsoleDummy.min
 //= require modernizr
 //= require jquery
-//= require handlebars
+//= require jqXDomain
+//= require handlebars-v1.3.0
 //= require ember-latest
-//= require ember-data-latest
+//= require ember-data-1.0.0-beta5
 //= require bootstrap
 //= require combined
 //= require_self
 //= require store
 //= require routes
+//= require routeSetup
 //= require helpers
 //= require_tree ./controllers
 //= require models
+//= require URI
+//= require purl
 //= require_tree ./templates
 //= require_tree ./views
 
 window.App = Ember.Application.create({
     LOG_TRANSITIONS: true
 })
+App.Molfile = null;

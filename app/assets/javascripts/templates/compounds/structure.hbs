@@ -1,0 +1,246 @@
+<!-- Modal -->
+<div id="compoundStructureFilterModalView" class="modal hide fade"  style="width: inherit;"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">Filters for {{this.prefLabel}} {{structureSearchType}}</h3>
+	</div>
+	<div class="modal-body" style="overflow-y: visible;">
+        <table>
+            <tbody>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum Molecular Weight" value=mwSelectedLowerValue id="mwLowerValueInput"}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">Molecular Weight</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum Molecular Weight" value=mwSelectedHigherValue id="mwHigherValueInput" max=maxMWT min=minMWT}}</td>
+	            </tr>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum MW Freebase" value=mwFreebaseSelectedLowerValue id="mwFreebaseLowerValueInput" max=maxMWFreebase min=minMWFreebase}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">Molecular Weight Freebase</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum MW Freebase" value=mwFreebaseSelectedHigherValue id="mwFreebaseHigherValueInput" max=maxMWFreebase min=minMWFreebase}}</td>
+	            </tr>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum H-Bond Acceptors" value=hBondAcceptorsSelectedLowerValue id="hBondAcceptorsLowerValueInput" max=maxHBondAcceptors min=minHBondAcceptors}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">H-bond Acceptors</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum H-Bond Acceptors" value=hBondAcceptorsSelectedHigherValue id="hBondAcceptorsHigherValueInput"}}</td>
+	            </tr>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum H-Bond Donors" value=hBondDonorsSelectedLowerValue id="hBondDonorsLowerValueInput" max=maxHBondDonors min=minHBondDonors}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">H-bond Donors</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum H-Bond Donors" value=hBondDonorsSelectedHigherValue id="hBondDonorsHigherValueInput" max=maxHBondDonors min=minHBondDonors}}</td>
+	            </tr>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum Log P" value=logPSelectedLowerValue id="logPLowerValueInput" max=maxLogP min=minLogP}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">logP</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum Log P" value=logPSelectedHigherValue id="logPHigherValueInput" max=maxLogP min=minLogP}}</td>
+	            </tr>
+                <tr>
+                    <td class="small-padding-right">{{input type="text" placeholder="Minimum Polar Surface Area" value=polarSurfaceAreaSelectedLowerValue  id="polarSurfaceAreaLowerValueInput" max=maxPSA min=minPSA}}</td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="centre medium-padding-bottom">
+                        <p class="structure-filter-para">Polar Surface Area</p>
+                    </td>
+                    <td class="medium-padding-bottom"><=</td>
+                    <td class="small-padding-left">{{input type="text" placeholder="Maximum Polar Surface Area" value=polarSurfaceAreaSelectedHigherValue id="polarSurfaceAreaHigherValueInput" max=maxPSA min=minPSA}}</td>
+               </tr>
+               <tr>
+                   <td class="small-padding-right">{{input type="text" placeholder="Minimum Rule of 5 Violations" value=ro5SelectedLowerValue id="ro5LowerValueInput" max=maxRO5 min=minRO5}}</td>
+                   <td class="medium-padding-bottom"><=</td>
+                   <td class="centre medium-padding-bottom">
+                       <p class="structure-filter-para">Rule of 5 Violations</p>
+                   </td>
+                   <td class="medium-padding-bottom"><=</td>
+                   <td class="small-padding-left">{{input type="text" placeholder="Maximum Rule of 5 Violations" value=ro5SelectedHigherValue id="ro5HigherValueInput" max=maxRO5 min=minRO5}}</td>
+	           </tr>
+               <tr>
+                   <td class="small-padding-right">{{input type="text" placeholder="Minimum Rotatable Bonds" value=rbSelectedLowerValue id="rbLowerValueInput" max=maxRB min=minRB}}</td>
+                   <td class="medium-padding-bottom"><=</td>
+                   <td class="centre medium-padding-bottom">
+                       <p class="structure-filter-para">Number of Rotatable Bonds</p>
+                   </td>
+                   <td class="medium-padding-bottom"><=</td>
+                   <td class="small-padding-left">{{input type="text" placeholder="Maximum Rotatable Bonds" value=rbSelectedHigherValue  id="rbHigherValueInput" max=maxRB min=minRB}}</td>
+	           </tr>
+	       {{#if subSearch}}
+               <tr>
+                   <td class="small-padding-right"></td>
+                   <td></td>
+                   <td class="centre medium-padding-bottom">
+                       <p class="structure-filter-para">Relevance</p>
+                   </td>
+                   <td class="medium-padding-bottom">>=</td>
+                   <td class="centre">{{input type="text" placeholder="Minimum Relevance" value=relSelectedHigherValue id="relValueInput" max=maxRel min=minRel}}</td>
+	           </tr>
+	       {{/if}}
+	       {{#if simSearch}}
+               <tr>
+                   <td class="small-padding-right"></td>
+                   <td></td>
+                   <td class="centre medium-padding-bottom">
+                       <p class="structure-filter-para">Relevance</p>
+                   </td>
+                   <td class="medium-padding-bottom">>=</td>
+                   <td class="centre">{{input type="text" placeholder="Minimum relevance" value=relSelectedHigherValue id="relValueInput" max=maxRel min=minRel}}</td>
+	           </tr>
+	       {{/if}}
+           </tbody>
+       </table>
+   </div>
+   <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+       <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+       <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+   </div>
+</div>
+<!-- End of Modal -->
+
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
+    <li class="active">Compound Structure</li>
+    <div class="row pull-right"> 
+        <div class="span1 small-padding-top small-padding-right">Provenance</div>
+        <div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+            <button class="btn">On</button>
+            <button class="btn active">Off</button>
+        </div>
+    </div>
+</ul>
+<div>
+<div>
+	<div id="summary-anchor">
+	    <div id="summary" class="compound_summary collapse in">		
+	        <div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csURI}}</div>
+		    <div class="row">
+		        <div>
+    		        <h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)
+                        <a href="#compoundStructureFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+                        <a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
+                    </h3>
+   				    <div class="row">
+      			        <div id="formula" class="inline lead">{{formatMolecularFormula molform}}</div>
+      			        <div class="input-append">
+                            <div>SMILES {{input type="text" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
+                                <button type="submit" class="btn" title="Search for compounds with the SMILES string entered" {{action "searchForSMILES"}}>Search with SMILES</button>
+                                <button type="submit" class="btn" title="Draw a compound starting with the SMILES entered in the box" {{action "drawThisSMILES"}}>Draw Structure</button>
+                            </div>
+                        </div>
+    			    </div>
+  			    </div>
+		    </div>
+	    </div>
+    </div>
+</div>
+<div class="btn-group medium-margin-top medium-margin-bottom" data-toggle="buttons-radio">
+    <div class="big-padding-left">
+        <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
+        <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
+        <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
+    </div>
+</div>
+<div class="big-padding-left">
+	{{#if exactMatch}}
+	Match type: {{view Ember.Select
+	       content=matchTypes
+           value=selectedMatchType
+           optionValuePath="content.id"
+           optionLabelPath="content.type"
+	}}
+	{{/if}}
+        Maximimum records to retrieve: <input id="max-records" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+		{{#if similarityMatch}}
+		Similarity threshold type: {{view Ember.Select
+		       content=thresholdTypes
+               value=selectedThresholdType
+               optionValuePath="content.id"
+               optionLabelPath="content.type"
+		}}
+        Similarity threshold <input id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="1.0" name="threshold-percent-spinner"/>
+        {{/if}}
+        <button class="btn" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button>
+</div>
+	<div style="padding:30px">	
+	<table class="mytable">
+		<thead id="tablehead" class="headingstyle">
+<tr>
+				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
+                <th class="table-header-structure-image"></th>
+				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "biotransformationItem"}} {{bind-attr class="biotransSortASC:sortASC biotransSortDESC:sortDESC"}}>Bio Transformation{{#if biotransSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if biotransSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "toxicity"}} {{bind-attr class="toxicitySortASC:sortASC toxicitySortDESC:sortDESC"}}>Toxicity{{#if toxicitySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if toxicitySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "proteinBinding"}} {{bind-attr class="proteinBindingSortASC:sortASC proteinBindingSortDESC:sortDESC"}}>Protein Binding{{#if proteinBindingSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if proteinBindingSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "smiles"}} {{bind-attr class="smilesSortASC:sortASC smilesSortDESC:sortDESC"}}>SMILES{{#if smilesSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if smilesSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "chemblURI"}} {{bind-attr class="chemblURISortASC:sortASC chemblURISortDESC:sortDESC"}}>Chembl URL{{#if chemblURISortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if chemblURISortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "fullMWT"}} {{bind-attr class="fullMWTSortASC:sortASC fullMWTSortDESC:sortDESC"}}>Molecular Weight{{#if fullMWTSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if fullMWTSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "hba"}} {{bind-attr class="hbaSortASC:sortASC hbaSortDESC:sortDESC"}}>HBA{{#if hbaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "hbd"}} {{bind-attr class="hbdSortASC:sortASC hbdSortDESC:sortDESC"}}>HBD{{#if hbdSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbdSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchi"}} {{bind-attr class="inchiSortASC:sortASC inchiSortDESC:sortDESC"}}>Inchi{{#if inchiSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchiKey"}} {{bind-attr class="inchiKeySortASC:sortASC inchiKeySortDESC:sortDESC"}}>Inchi Key{{#if inchiKeySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiKeySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "logp"}} {{bind-attr class="logpSortASC:sortASC logpSortDESC:sortDESC"}}>logP{{#if logpSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if logpSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "molform"}} {{bind-attr class="molformSortASC:sortASC molformSortDESC:sortDESC"}}>Molecular formula{{#if molformSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molformSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "mwFreebase"}} {{bind-attr class="mwFreebaseSortASC:sortASC mwFreebaseSortDESC:sortDESC"}}>MW Freebase{{#if mwFreebaseSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if mwFreebaseSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "psa"}} {{bind-attr class="psaSortASC:sortASC psaSortDESC:sortDESC"}}>PSA{{#if psaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if psaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "ro5Violations"}} {{bind-attr class="ro5ViolationsSortASC:sortASC ro5ViolationsSortDESC:sortDESC"}}>RO5 Violations{{#if ro5ViolationsSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if ro5ViolationsSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "rtb"}} {{bind-attr class="rtbSortASC:sortASC rtbSortDESC:sortDESC"}}>RTB{{#if rtbSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if rtbSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+    {{#if subSearch}}
+				<th {{action "sortHeader" "relevance"}} {{bind-attr class="relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+    {{/if}}
+    {{#if simSearch}}
+				<th {{action "sortHeader" "relevance"}} {{bind-attr class="relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+    {{/if}}
+</tr>
+</thead>
+<tbody>
+{{#each structureRecord in structure}}
+<tr class="record-deco">
+    <td>{{cs_image_src structureRecord.URI}}</td>
+    <td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}</td>
+    <td class="cell-basictext">{{structureRecord.description}}</td>
+    <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
+    <td class="cell-basictext">{{structureRecord.toxicity}}</td>
+    <td class="cell-basictext">{{structureRecord.proteinBinding}}</td>
+    <td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles path=structureRecord.ketcherPath) title="Draw the compound with this structure"}}{{structureRecord.smiles}}{{/link-to}}</td>
+    <td class="cell-basictext">{{textLink structureRecord.chemblURI}}</td>
+    <td class="cell-basictext">{{structureRecord.fullMWT}}</td>
+    <td class="cell-basictext">{{structureRecord.hba}}</td>
+    <td class="cell-basictext">{{structureRecord.hbd}}</td>
+    <td class="cell-basictext">{{structureRecord.inchi}}</td>
+    <td class="cell-basictext">{{structureRecord.inchiKey}}</td>
+    <td class="cell-basictext">{{structureRecord.logp}}</td>
+    <td class="cell-basictext">{{formatMolecularFormula structureRecord.molform}}</td>
+    <td class="cell-basictext">{{structureRecord.mwFreebase}}</td>
+    <td class="cell-basictext">{{structureRecord.psa}}</td>
+    <td class="cell-basictext">{{structureRecord.ro5Violations}}</td>
+    <td class="cell-basictext">{{structureRecord.rtb}}</td>
+    {{#if subSearch}}
+        <td class="cell-basictext">{{structureRecord.relevance}}</td>
+    {{/if}}
+    {{#if simSearch}}
+        <td class="cell-basictext">{{structureRecord.relevance}}</td>
+    {{/if}}
+</tr>
+{{/each}}
+</tbody>
+</table>
+</div>

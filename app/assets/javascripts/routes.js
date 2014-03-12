@@ -2,87 +2,73 @@
 // you have to set location to 'history'. This means that you must also tell rails
 // what your routes are and to redirect them to whatever template contains the ember
 // outlet
-App.Router.reopen({
-  location: 'history',
-  rootURL: '/'
-});
+//App.Router.reopen({
+//  location: 'history',
+//  rootURL: '/'
+//});
+if (window.history && window.history.pushState) {
+    App.Router.reopen({
+      location: 'history',
+      rootURL: '/'
+    });
+}
 
 App.Router.map(function() { 
-    this.route("search", { path: "/search" });
-    this.resource('compounds'); 
-    this.resource('compound', { path: '/compounds/:compound_id' }, function() {
-        this.resource('compound.pharmacology', { path: '/pharmacology' }, function(){});
+    this.route("search", { path: "/search" }, function() {
+
     });
-    this.resource('targets'); 
-    this.resource('target', { path: '/targets/:target_id' }, function() {
-        this.resource('target.pharmacology', { path: '/pharmacology' }, function(){});
+    this.resource('compounds', { path: '/compounds' }, function() {
+        this.route('pharmacology', { path: '/pharmacology' }, function(){});
+        this.route('pathways', { path: '/pathways' }, function(){});
+        this.route('structure', { path: '/structure' }, function(){});
+        this.route('draw', { path: '/draw' }, function(){});
+    });
+    this.resource('targets', { path: '/targets' }, function() {
+        this.route('pharmacology', { path: '/pharmacology' }, function(){});
+        this.route('pathways', { path: '/pathways' }, function(){});
+    }); 
+    this.resource('trees', { path: '/trees' }, function() {
+        this.route('pharmacology', { path: '/pharmacology' }, function(){});
+    });
+    this.resource('pathways', { path: '/pathways' }, function() {
+        this.route('compounds', { path: '/compounds' }, function(){});
     });
 });
 
-App.CompoundIndexRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.modelFor('compound');
+App.ApplicationRoute = Ember.Route.extend({
+
+  setupController: function(controller, model, params) {
+    console.log('application route setup controller');
+    controller.set('iex', !oldIE);
   }
+
 });
 
-App.CompoundPharmacologyIndexRoute = Ember.Route.extend({
+// Search
 
-  setupController: function(controller, compound) {
-    console.log('pharma index route setup controller');
-    controller.set('content', compound);
-      var thisCompound = compound;
-      var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
-      var pharmaCallback=function(success, status, response){
-      if (success && response) {
-        var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-        $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.CompoundPharmacology.createRecord(pharma);
-	  thisCompound.get('pharmacology').pushObject(pharmaRecord);
-        });
-      }
-    };
-    searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + compound.id, 1, 50, pharmaCallback);
+App.SearchRoute = Ember.Route.extend({
+
+  setupController: function(controller, model, params) {
+    console.log('search route setup');
+    controller.clear();
+    controller.doSearch();
   },
+
   model: function(params) {
-    console.log('comp pharma index route');
-    return this.modelFor('compound');
-  }
-
-});
-
-App.TargetIndexRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.modelFor('target');
-  }
-});
-
-App.TargetPharmacologyIndexRoute = Ember.Route.extend({
-
-  setupController: function(controller, target) {
-    console.log('target index route setup controller');
-    controller.set('content', target);
-      var thisTarget = target;
-      var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
-      var pharmaCallback=function(success, status, response){
-      if (success && response) {
-        var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
-        $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = App.TargetPharmacology.createRecord(pharma);
-	  thisTarget.get('pharmacology').pushObject(pharmaRecord);
-        });
-      }
-    };
-    searcher.targetPharmacology('http://www.conceptwiki.org/concept/' + target.id, 1, 50, pharmaCallback);
+    console.log('search route model');
+    this.controllerFor('search').setCurrentQuery(params.query);
+    return [];
   },
-  model: function(params) {
-    console.log('target pharma index route');
-    return this.modelFor('target');
-  }
 
-});
+  beforeModel: function() {
+    this.controllerFor('application').set('fetching', false);
+    enable_scroll();
+  },
 
-App.IndexRoute = Ember.Route.extend({
-  setupController: function(controller, model) {
-    App.searchController.set('query', '');
+  actions: {
+    queryParamsDidChange: function() {
+      this.refresh();
+    }
   }
+	
 });

@@ -1,38 +1,201 @@
-<h1>Pharmacology for {{#linkTo target.index controllers.target}}{{controllers.target.description}}{{/linkTo}}</h1>
-<table class="table table-striped">
-  <tr><th>Compound Name</th><th>Target Organism</th><th>Assay Organism</th><th>Compound Inchi</th><th>Compound Inchi Key</th><th>Activity Type</th><th>Activity Relation</th><th>Activity Value</th><th>Activity Units</th><th>Compound Full Mwt</th><th>Compound Smiles</th><th>Pubmed ID</th></tr>
-  {{#each targetPharma in pharmacology}}
-  <td>{{compoundSource targetPharma.cwCompoundUri targetPharma.compoundPrefLabel}}</td>
-  <td>Target Organism</td>
-  <td>{{targetPharma.assayOrganism}}</td>
-  <td>{{targetPharma.compoundInchi}}</td>
-  <td>{{targetPharma.compoundInchikey}}</td>
-  <td>{{targetPharma.activityActivityType}}</td>
-  <td>{{targetPharma.activityRelation}}</td>
-  <td>{{targetPharma.activityStandardValue}}</td>
-  <td>{{targetPharma.activityStandardUnits}}</td>
-  <td>{{targetPharma.compoundFullMwt}}</td>
-  <td>{{targetPharma.compoundSmiles}}</td>
-  <td>{{targetPharma.activityPubmedId}}</td></tr>
-  {{/each}}
-</table>
+<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+</div>
+<div>
+		<!-- Modal -->
+		<div id="targetPharmaFilterModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Select filters for {{controllers.target.prefLabel}}</h3>
+		  </div>
+		  <div class="modal-body" style="overflow-y: visible;">
+	        <div id="activity-filters">
+		    <p><h4>Activity Filter</h4></p>
+			{{view Ember.Select
+			       content=activityTypes
+			       optionLabelPath="content.label"
+			       prompt="Select an activity"
+			       value=selectedActivity
+			       selection=selectedActivity
+			}}
+			{{view Ember.Select
+			       content=conditions
+			       prompt="Select an operator"
+	               value=selectedCondition
+			       selection=selectedCondition
+			}}
+			{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+			{{view Ember.Select
+			       content=activityUnits
+			       optionLabelPath="content.label"
+			       prompt="Select a unit"
+	               value=selectedUnit
+			       selection=selectedUnit
+			}}
+	        </div>
+	        <div>
+	<h5>Return activities with the following relation(s) only</h5>
+	<p class="small-padding-right activity-relation-operator">></p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+	<p class="small-padding-right activity-relation-operator"><</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+	<p class="small-padding-right activity-relation-operator">=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+	<p class="small-padding-right activity-relation-operator">>=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+	<p class="small-padding-right activity-relation-operator"><=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+	        </div>
+	        <div id="pchembl-filters">
+		    <p><h4>pChembl Filter</h4></p>
+			{{view Ember.Select
+			       content=pchemblConditions
+			       prompt="Select an operator"
+	               value=selectedPchemblCondition
+			       selection=selectedPchemblCondition
+			}}
+			{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+	        </div>
+	        <div>
+		    <p><h4>Organism filters</h4></p>
+	            <div>
+	                <h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box"}}
+	            </div>
+	            <div>
+	                <h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box"}}
+	            </div>
+	        </div>
+		  </div>
+		  <div class="modal-footer">
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	        <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+		    <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+		  </div>
+		</div>
+		<!-- End of Modal -->
+    <div class="goto-button" id="top"><button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
+		<ul class="breadcrumb">
+  			<li><a href="/">Home</a> <span class="divider">/</span></li>
+  			<li>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}}<span class="divider">/</span></li>
+  			<li class="active">Target Phamacology</li>
+			
+			<div class="row pull-right"> 
+				<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  				<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  					<button {{action 'enableProvenance'}} class="btn">On</button>
+  					<button {{action 'disableProvenance'}} class="btn active">Off</button>
+  				</div>
+			</div>
+		</ul>
+		
+		<div>  
+		
+		<!-- actual results -->
+		<div id="summary-anchor">
+		<div id="summary" class="compound_summary collapse in">
+			
+			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src controllers.target.seeAlso}}</div>
+			<div class="row">
+				<div class="span12">
+    				<h3>{{#linkTo 'target.index' controllers.target}}{{controllers.target.prefLabel}}{{/linkTo}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" controllers.compound}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+   					<div class="row">
+      					<div class="span6 justify normal-font">{{expandableDescription controllers.target.description}}</div>
+    				</div>
+  				</div>
+			</div>
 
-<script type="text/javascript">
-$(window).off("scroll", scrollHandler);
-scrollOnThisPage = true;
-pageScrolling = false;
-scrollHandler = function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        disable_scroll();
-        pageScrolling = true;
-        console.log("Fetching results for scroll " + pageScrolling);
-        //this is not a very pleasant way to get the controller but can find no other method
-        App.__container__.lookup('controller:targetPharmacologyIndex').fetchMore();
-    }
-};
-$(window).scroll(scrollHandler);
-</script>
+			</div>
+	
+		</div>
+		</div>
+	
+	<!-- RESULT LISTING -->
+    {{#if notEmpty}}
+	<div style="padding:30px">	
+	<table class="mytable">
+
+		<thead class="headingstyle">
+	
+			<tr>
+				<th class="lead">Compound</th>
+				<th class="lead">Target</th>
+				<th></th>
+				<th class="lead" style="text-align:left;">Assay</th>
+				<th></th>
+				<th></th>
+				<th class="lead">Activity</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			<tr>
+			<tr>
+				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+				<!-- CSS class is used to style the header when it is selected-->
+				<th align="center" style="min-width:300px;" {{action "sortHeader" "compound_name"}} {{bind-attr class="compoundNameSortASC:sortASC compoundNameSortDESC:sortDESC"}}>Name{{#if compoundNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if compoundNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:100px;" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC"}}>Organism{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:100px;" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC"}}>Organism{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:250px;" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC"}}>Description{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width:100px;" {{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC"}}>Type{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+			 	<th style="width:100px;" {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC"}}>Relation{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width:100px;" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC"}}>Value{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC"}}>Units{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="min-width:80px;" {{action "sortHeader" "molweight"}} {{bind-attr class="molweightSortASC:sortASC molweightSortDESC:sortDESC"}}>Mol Weight{{#if molweightSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molweightSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "smiles"}} {{bind-attr class="smilesSortASC:sortASC smilesSortDESC:sortDESC"}}>SMILES{{#if smilesSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if smilesSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchi"}} {{bind-attr class="inchiSortASC:sortASC inchiSortDESC:sortDESC"}}>InChi{{#if inchiSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th {{action "sortHeader" "inchi_key"}} {{bind-attr class="inchikeySortASC:sortASC inchikeySortDESC:sortDESC"}}>InChiKey{{#if inchikeySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchikeySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+                <th {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC"}}>pChembl{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+
+			</tr>
+		</thead>
+		<tbody>
+		{{#if showPharmaProvenance}}
+			{{#each}}
+			<tr class="record-deco">
+				<td class="cell-basictext">{{compoundSource cwCompoundUri compoundPrefLabel}}</td>
+				<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
+				<td class="cell-basictext">{{assayOrganism}} {{provenanceLinkout assayOrganismItem chemblProvenance.source}}</td>
+				<td class="cell-longtext">{{assayDescription}} {{provenanceLinkout assayDescriptionItem chemblProvenance.source}}</td>
+				<td class="lead cell-basictext">{{activityActivityType}} {{provenanceLinkout activityActivityTypeItem chemblProvenance.source}}</td>
+				<td class="lead cell-basictext">{{activityRelation}} {{provenanceLinkout activityRelationItem chemblProvenance.source}}</td>
+				<td class="lead cell-basictext">{{activityStandardValue}} {{provenanceLinkout activityStandardValueItem chemblProvenance.source}}</td>
+				<td class="lead cell-basictext">{{activityStandardUnits}} {{provenanceLinkout activityStandardUnitsItem chemblProvenance.source}}</td>
+				<td class="cell-basictext" >{{compoundFullMwt}} {{provenanceLinkout compoundFullMwtItem chemblProvenance.source}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundSmiles}} {{provenanceLinkout compoundSmilesItem chemspiderProvenance.source}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchi}} {{provenanceLinkout compoundInchiItem chemspiderProvenance.source}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchikey}} {{provenanceLinkout compoundInchikeyItem chemspiderProvenance.source}}</td>
+				<td class="cell-basictext" >{{pChembl}}</td>
+			</tr>
+			{{/each}}
+		{{else}}
+			{{#each}}
+			<tr class="record-deco">
+				<td class="cell-basictext">{{compoundSource cwCompoundUri compoundPrefLabel}}</td>
+				<td class="cell-basictext">{{#each targetOrganisms}} {{this.organism}} {{/each}}</td>
+				<td class="cell-basictext">{{assayOrganism}}</td>
+				<td class="cell-longtext">{{assayDescription}}</td>
+				<td class="lead cell-basictext">{{activityActivityType}}</td>
+				<td class="lead cell-basictext">{{activityRelation}}</td>
+				<td class="lead cell-basictext">{{activityStandardValue}}</td>
+				<td class="lead cell-basictext">{{activityStandardUnits}}</td>
+				<td class="cell-basictext" >{{compoundFullMwt}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundSmiles}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchi}}</td>
+				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{compoundInchikey}}</td>
+				<td class="cell-basictext" >{{pChembl}}</td>
+			</tr>
+			{{/each}}
+		{{/if}}
+			
+		</tbody>
+	</table>
+	</div>
+    {{else}}
+        <h2 class="centre">There is no pharmacology data for {{controllers.target.prefLabel}}</h2>
+    {{/if}}
+		
+</div>

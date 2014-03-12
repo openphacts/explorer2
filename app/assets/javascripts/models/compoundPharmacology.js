@@ -1,9 +1,9 @@
 App.CompoundPharmacology = DS.Model.extend({
-  compound: DS.belongsTo('App.Compound'),
+  compound: DS.belongsTo('compound'),
   compoundInchikey: DS.attr('string'),
   compoundDrugType: DS.attr('string'),
   compoundGenericName: DS.attr('string'),
-  targets: DS.attr('array'),
+  targets: DS.attr(),
   compoundInchikeySrc: DS.attr('string'),
   compoundDrugTypeSrc: DS.attr('string'),
   compoundGenericNameSrc: DS.attr('string'),
@@ -18,7 +18,7 @@ App.CompoundPharmacology = DS.Model.extend({
   compoundInchi: DS.attr('string'),
   compoundSmiles: DS.attr('string'),
   chemblAssayUri: DS.attr('string'),
-  targetOrganisms: DS.attr('array'),
+  targetOrganisms: DS.attr(),
   assayOrganism: DS.attr('string'),
   assayDescription: DS.attr('string'),
   activityRelation: DS.attr('string'),
@@ -43,25 +43,15 @@ App.CompoundPharmacology = DS.Model.extend({
   activityRelationItem: DS.attr('string'),
   activityStandardValueItem: DS.attr('string'),
   activityStandardUnitsItem: DS.attr('string'),
+  activityValue: DS.attr('string'),
   compoundFullMwtItem: DS.attr('string'),
   compoundSmilesItem: DS.attr('string'),
   compoundInchiItem: DS.attr('string'),
   compoundInchikeyItem: DS.attr('string'),
-  compoundPrefLabelItem: DS.attr('string')
+  compoundPrefLabelItem: DS.attr('string'),
+  pChembl: DS.attr('string'),
+  
+  chemblProvenance: DS.attr()
+  
+
 });
-//App.CompoundPharmacology.reopen({
-//    find: function(uri, page, pageSize) {
-//        // use the lda api to fetch compounds rather than the default behaviour of rails side
-//       var compoundPharmacology = App.CompoundPharmacology.createRecord();
-//        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);  
-//        var callback=function(success, status, response){
-//	    if (response) {	
-//              var compoundPharmacologyResult = searcher.parseCompoundPharmacologyResponse(response); 
-//              compoundPharmacology.setProperties(compoundPharmacologyResult);
-//	    }
-//        };  
-//        searcher.compoundPharmacology('http://www.conceptwiki.org/concept/' + uri, page, pageSize, callback);
-//        compoundPharmacology.set("id", uri);
-//        return compoundPharmacology;
-//    }
-//});

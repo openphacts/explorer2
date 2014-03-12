@@ -1,21 +1,108 @@
-<div class='navbar navbar-inverse navbar-fixed-top'>
-  <div class='navbar-inner' style='padding: 0 20px;'>
-    <a class="brand" href="#">Open PHACTS</a>
-      <div class='nav-collapse collapse'>
-        <ul class='nav'>
-          <li {{bindAttr class="isHome:active"}}>{{#linkTo 'index'}}Home{{/linkTo}}</li>
-        </ul>
-		<div class="navbar-search pull-left">
-	    {{view App.SearchBox
-	           placeholder="Search for compounds and targets" valueBinding="App.searchController.query" id="search_box"}}		
-	    </div>
-      </div>
+<!-- Modal for alerts -->
+<div id="alertsModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true" {{action "dismissAlerts"}}>×</button>
+<h3 id="myModalLabel">Alerts!</h3>
+</div>
+<div class="modal-body" style="overflow-y: visible;">
+    {{#if anyJobs}}
+	<table class="mytable centersummary">
+		<thead id="tablehead" class="headingstyle">
+          <tr><th>Label</th><th>Percentage</th><th>Status</th><th></th><th><th></tr>
+        </thead>
+        <tbody>
+{{#each job in jobsList}}
+          <tr class="record-deco">{{getLabelWithTooltip job}}<td>{{progressBar job.percentage}}</td><td>{{job.status}}</td><td>{{completedJob job.status job.uuid}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
+{{/each}}
+        </tbody>
+    </table>
+    {{else}}
+    There are no alerts
+    {{/if}}
+</div>
+</div>
+</div>
+<!-- End of Modal for alerts -->
+{{#view App.FlashView id="flash-view"}}
+  <div id="message">
+    {{view.content.message}}
+  </div>
+{{/view}}
+<div style="padding:0 0 20px 0;">
+<div class="navbar navbar-static-top navbar-inverse" style="border-bottom:medium solid #888888 ;">
+<div class="navbar-inner">
+    <a class="brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer<sup class="release-status">Alpha</sup></a>
+<form class="form-search no-margin">
+    <div class="navbar-search pull-left input-append">
+			  {{input type="text" placeholder="Enter search terms eg Aspirin" value=searchQuery action="query" id="search_box" class="search-query span4" autocomplete="off"}}
+              <button type="submit" class="btn" title="Click to search using the text you entered in the box. You can also just hit enter when finished typing in text." {{action 'query'}}>Search</button>	
+    </div>	
+</form>
+    <ul class="nav pull-right">
+    	<li id="target-class" title="Click to view target class hierarchy.">{{#link-to 'trees.index'}}Target Class{{/link-to}}</li>
+        <li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
+    </ul>
   </div>
 </div>
-<div class='row offset1' id='main'>
-  <div class='content'>
-<div class="row">
 </div>
-        {{outlet}}
-  </div>
+{{#if notOldIE}}
+<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
+     <div></div>
 </div>
+{{else}}
+<div {{bind-attr class="fetching::invisible :loading-info"}}>LOADING</div>
+{{/if}}
+<div class='content'>
+	{{outlet}}
+</div>
+<script type="text/javascript"> 
+
+	$('#compound-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeaheadCompounds';
+		
+		$('#search_box').attr('placeholder', 'Search for Compounds');
+		
+		$('#compound-only').addClass('active');
+		$('#search-only').removeClass('active');
+		$('#target-only').removeClass('active');
+
+	});
+	
+	$('#target-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeaheadTargets';
+		
+		$('#search_box').attr('placeholder', 'Search for Targets');
+		
+		$('#target-only').addClass('active');
+		$('#search-only').removeClass('active');
+		$('#compound-only').removeClass('active');
+
+	});
+	
+	$('#search-only').click(function(){
+		
+		console.log('click');
+		selectionFilter = 'good test';
+		typeaheadUrl = '/search/typeahead';
+		$('#search_box').attr('placeholder', 'Search');
+		
+		$('#search-only').addClass('active');
+		$('#compound-only').removeClass('active');
+		$('#target-only').removeClass('active');
+
+	});
+	
+</script>

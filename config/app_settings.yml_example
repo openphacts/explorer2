@@ -2,11 +2,21 @@
 defaults: &defaults
 
   api:
-    url : "where.the.api.is.located" #no protocol and no trailing slash
+    url : "where.the.api.is.located" #eg https://beta.openphacts.org
 
   keys:
     app_id: "blahblahblah" #app id from https://dev.openphacts.org
     app_key: "blahblahblahblahblah" #app key from https://dev.openphacts.org
+
+  tsv:
+    api_version: "1.3" # this only works for 1.3 on, 1.2 cannot handle the /1.2 verison number bit, however it can be empty ie "" if required
+    url: "api.location" # no protocol eg beta.openphacts.org 
+    target_path : "/target/pharmacology/pages" # or equivalent for target pharma paginated
+    compound_path: "/compound/pharmacology/pages" # or equivalent for compound pharma paginated
+    tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
+
+  ketcher:
+    port: "10000"
 
 development:
   <<: *defaults

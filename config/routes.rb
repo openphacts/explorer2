@@ -4,40 +4,48 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
-#  match 'compounds' => 'home#index'
+  match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
-#  match 'compounds/:id' => 'home#index'
+  match 'search/typeaheadTargets' => 'search#typeaheadTargets'
 
-#  match 'compounds/:id/pharmacology' => 'home#index'
+  match 'compounds' => 'home#index'
+  match 'compounds/pharmacology' => 'home#index'
+  match 'compounds/structure' => 'home#index'
+  match 'compounds/pathways' => 'home#index'
+  match 'compounds/draw' => 'home#index'
 
-#  match 'compound/:id' => 'home#index'
+  match 'targets' => 'home#index'
+  match 'targets/pharmacology' => 'home#index'
+  match 'targets/pathways' => 'home#index'
 
-#  match 'compound/:id/pharmacology' => 'home#index'
+  match 'trees' => 'home#index'
+  match 'trees/pharmacology' => 'home#index'
 
-  resources :compounds, :only => :show do
-    member do
-      get 'pharmacology'
+  match 'pathways' => 'home#index'
+  match 'pathways/compounds' => 'home#index'
+
+  resources :search, :only => [ :index ] do
+    collection do
+      get 'typeahead'
     end
   end
 
-  resources :targets, :only => :show do
-    member do
-      get 'pharmacology'
+  resources :ketcher, :only => [ :index ] do
+    collection do
+      get :knocknock
+      get :layout
     end
   end
 
-#  match 'targets' => 'home#index'
-
-#  match 'targets/:id' => 'home#index'
-
-#  match 'targets/:id/pharmacology' => 'home#index'
-
-#  resources :search do
-#    collection do
-#      get 'compound_info'
-#    end
-#  end
-
+  resources :core_api_calls, :except => [ :index, :show, :create, :new, :edit, :update, :destroy ] do
+    collection do
+      get :tab_separated_file
+      get :tsv_download
+      get :tsv_status
+      get :organisms
+      post :chemspider_tab_separated_file
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

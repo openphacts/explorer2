@@ -1,0 +1,3408 @@
+Rattus norvegicus
+Homo sapiens
+Mus musculus
+Drosophila melanogaster
+Bos taurus
+Saccharomyces cerevisiae S288c
+Gallus gallus
+Escherichia coli K-12
+Canis lupus familiaris
+Sus scrofa
+Enterobacter cloacae
+Streptococcus pneumoniae
+Human immunodeficiency virus type 1 group M subtype B (isolateARV2/SF2) (HIV-1)
+Clostridium perfringens (strain 13 / Type A)
+Oryctolagus cuniculus
+Human herpesvirus 1 (strain SC16) (HHV-1) (Human herpes simplex virus1)
+Cavia porcellus
+Lactobacillus casei
+Ovis aries
+Toxoplasma gondii
+Woolly monkey sarcoma virus
+Zymomonas mobilis (strain ATCC 31821 / ZM4 / CP4)
+Trypanosoma brucei brucei
+Torpedo californica
+Human herpesvirus 2 (strain 333) (HHV-2) (Human herpes simplex virus2)
+Salmonella typhimurium (strain LT2 / SGSC1412 / ATCC 700720)
+Mesocricetus auratus
+Penicillium chrysogenum
+Cryptococcus neoformans var. neoformans B-3501A
+Mycobacterium tuberculosis
+Agaricus bisporus
+Stenotrophomonas maltophilia
+Human T-cell leukemia virus 1 (strain Japan ATK-1 subtype A) (HTLV-1)
+Streptomyces sp. R61
+Lactobacillus fermentum
+Crithidia fasciculata
+Influenza B virus (strain B/Lee/1940)
+Bacillus thermoproteolyticus
+Aedes aegypti
+Human cytomegalovirus (strain AD169) (HHV-5) (Human herpesvirus 5)
+Human herpesvirus 2 (strain HG52) (HHV-2) (Human herpes simplex virus2)
+Aspergillus niger
+Staphylococcus aureus
+Equus caballus
+Candida albicans
+Sinorhizobium meliloti
+Bacillus subtilis (strain 168)
+Aspergillus aculeatus
+Herpes simplex virus (type 1 / strain 17)
+Staphylococcus aureus subsp. aureus MRSA252
+Human immunodeficiency virus type 1 group M subtype B (isolate HXB2)(HIV-1)
+Candida albicans (strain SC5314 / ATCC MYA-2876) (Yeast)
+Moloney murine leukemia virus isolate Shinnick
+Trypanosoma cruzi
+Thermus aquaticus
+Neisseria gonorrhoeae
+Alicyclobacillus acidocaldarius subsp. acidocaldarius (strain ATCC27009 / DSM 446 / 104-1A) (Bacillus acidocaldarius)
+Staphylococcus aureus subsp. aureus MW2
+Haemophilus influenzae (strain ATCC 51907 / DSM 11121 / KW20 / Rd)
+Streptococcus pyogenes serotype M3 (strain ATCC BAA-595 / MGAS315)
+Staphylococcus aureus subsp. aureus Mu50
+Pseudomonas fluorescens
+Enterobacteria phage lambda
+Luciola lateralis
+Helicobacter pylori (strain ATCC 700392 / 26695) (Campylobacterpylori)
+Pseudomonas aeruginosa (strain ATCC 15692 / PAO1 / 1C / PRS 101 / LMG12228)
+Vibrio proteolyticus
+Human respiratory syncytial virus B (strain 18537)
+Leishmania mexicana
+Enterobacter aerogenes
+Streptococcus pneumoniae serotype 4 (strain ATCC BAA-334 / TIGR4)
+Bombyx mori
+Human respiratory syncytial virus A strain Long
+Methanosarcina thermophila
+Bovine viral diarrhea virus (strain CP7) (BVDV) (Mucosal diseasevirus)
+Plasmodium berghei str. ANKA
+Naja melanoleuca
+Naja mossambica
+Musca domestica
+Human herpesvirus 6A (strain Uganda-1102) (HHV-6 variant A) (Human Blymphotropic virus)
+Lactococcus lactis subsp. lactis (strain IL1403) (Streptococcuslactis)
+Epstein-Barr virus (strain B95-8) (HHV-4) (Human herpesvirus 4)
+Enterococcus faecalis (strain ATCC 700802 / V583)
+Plasmodium falciparum
+Electrophorus electricus
+Streptomyces galbus
+Synechocystis sp. (strain PCC 6803 / Kazusa)
+Paramecium tetraurelia
+Plasmodium falciparum FcB1/Columbia
+Pneumocystis carinii
+Hepatitis B virus adw2/Southern-Africa/Cai
+Aspergillus oryzae (strain ATCC 42149 / RIB 40)
+Canavalia ensiformis
+Wickerhamomyces anomalus
+Streptococcus pyogenes
+Cricetulus longicaudatus
+Bacillus licheniformis
+Bacillus subtilis
+Alteromonas sp.
+Rhizopus microsporus var. chinensis
+Penicillium janthinellum
+Thermus thermophilus
+Bacillus lentus
+Marthasterias glacialis
+Arabidopsis thaliana
+Plasmodium falciparum K1
+Beta vulgaris
+Brassica oleracea var. capitata
+Saccharomyces cerevisiae
+Enterobacteria phage T3
+Catharanthus roseus
+Hordeum vulgare
+Bacillus anthracis
+Spiroplasma monobiae
+Yersinia enterocolitica
+Apis mellifera
+Rhizopus oryzae
+Tetrahymena thermophila
+Zea mays
+Xenopus laevis
+Oryza sativa Japonica Group
+Staphylococcus aureus subsp. aureus N315
+Plasmodium falciparum 3D7
+Glycine max
+Human immunodeficiency virus type 1 group M subtype B (isolate PCV12)(HIV-1)
+Leishmania major
+Caldicellulosiruptor saccharolyticus
+Human papillomavirus type 16
+Thermoanaerobacterium saccharolyticum
+Agrobacterium tumefaciens
+Vibrio harveyi (strain ATCC BAA-1116 / BB120)
+Streptococcus pyogenes serotype M18 (strain MGAS8232)
+Escherichia coli
+Pseudomonas putida
+Streptococcus pyogenes serotype M1
+Ricinus communis
+Carica papaya
+Proteus vulgaris
+Varicella-zoster virus (strain Dumas) (HHV-3) (Human herpesvirus 3)
+Geobacillus stearothermophilus
+Hepatitis B virus genotype D (isolate France/alpha1/1989) (HBV-D)
+Bacteroides fragilis
+Macaca mulatta
+Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 / Vc1)
+Streptococcus pneumoniae R6
+Influenza A virus (strain A/X-31 H3N2)
+Euplotes aediculatus
+Human papillomavirus type 11
+Pichia angusta
+Trimeresurus flavoviridis
+Macaca fascicularis
+Caenorhabditis elegans
+Klebsiella pneumoniae
+SARS coronavirus
+Photuris pennsylvanica
+Abelson murine leukemia virus
+Helicobacter pylori J99
+Clostridium perfringens
+Clostridium botulinum
+Human papillomavirus type 1a
+Human immunodeficiency virus type 2 subtype A (isolate ST) (HIV-2)
+Enterobacteria phage T4
+Coffea arabica
+Escherichia coli O6:H1 (strain CFT073 / ATCC 700928 / UPEC)
+Chlorocebus aethiops
+Streptomyces coelicolor (strain ATCC BAA-471 / A3(2) / M145)
+Human rhinovirus 16
+Clostridium botulinum (strain Hall / ATCC 3502 / NCTC 13319 / Type A)
+Serratia marcescens
+Aliivibrio fischeri
+West Nile virus
+Brucella suis biovar 1 (strain 1330)
+Clostridium tetani (strain Massachusetts / E88)
+Agrocybe aegerita
+Pseudomonas aeruginosa
+Staphylococcus aureus (strain MSSA476)
+Pisum sativum
+Hepatitis C virus genotype 1b (isolate Con1) (HCV)
+Photinus pyralis
+Clostridium histolyticum
+Naja naja
+Saccharomycopsis fibuligera
+Influenza A virus (A/Puerto Rico/8/1934(H1N1))
+Influenza A virus (A/Udorn/307/1972(H3N2))
+Neurospora crassa OR74A
+Vibrio cholerae serotype O1 (strain ATCC 39315 / El Tor Inaba N16961)
+Porphyromonas gingivalis
+Phaseolus vulgaris
+Trypanosoma cruzi (strain CL Brener)
+Methanobacterium thermoautotrophicum
+Fujinami sarcoma virus
+Crotalus adamanteus
+Providencia stuartii
+Streptomyces avidinii
+Thermotoga maritima (strain ATCC 43589 / MSB8 / DSM 3109 / JCM 10099)
+Vaccinia virus (strain Western Reserve) (VACV) (Vaccinia virus (strainWR))
+Yersinia pestis
+Agrobacterium sp. ATCC 21400
+Ureaplasma parvum serovar 3 (strain ATCC 700970)
+Meleagris gallopavo
+Bacillus cereus
+Proteus mirabilis
+Amycolatopsis orientalis
+Aquifex aeolicus (strain VF5)
+Morganella morganii
+Cricetulus griseus
+Cryphonectria parasitica
+Engyodontium album
+Enterobacteria phage T7
+Streptomyces caespitosus
+Human immunodeficiency virus type 1 group M subtype B (isolate BH10)(HIV-1)
+Avian erythroblastosis virus (strain ES4)
+Mouse mammary tumor virus (strain GR) (MMTV)
+Human immunodeficiency virus type 1 group M subtype B (isolateBRU/LAI) (HIV-1)
+Maedi visna virus (strain 1514) (MVV) (Visna lentivirus)
+Bovine leukemia virus (isolate Japanese BLV-1) (BLV)
+Yersinia pseudotuberculosis serotype I (strain IP32953)
+Vibrio fischeri (strain ATCC 700601 / ES114)
+Erwinia chrysanthemi
+Paramecium bursaria Chlorella virus 1
+Bacillus amyloliquefaciens
+Human herpesvirus 1 (strain KOS) (HHV-1) (Human herpes simplex virus1)
+Spinacia oleracea
+Dengue virus type 2 (strain Thailand/16681/1984) (DENV-2)
+Hepatitis GB virus B
+Influenza A virus (A/Memphis/1/1971(H3N2))
+Actinomadura sp. R39
+Schizosaccharomyces pombe 972h-
+Simian virus 40
+Enterococcus faecium
+Hepatitis C virus genotype 1b (isolate BK) (HCV)
+Elizabethkingia meningoseptica
+Nipah virus
+Callithrix jacchus
+Mycobacterium smegmatis (strain ATCC 700084 / mc(2)155)
+Mycobacterium smegmatis
+Magnaporthe oryzae (strain 70-15 / FGSC 8958) (Rice blast fungus)(Pyricularia oryzae)
+Lymnaea stagnalis
+Vibrio harveyi
+Cryptosporidium parvum
+Candida albicans (strain WO-1) (Yeast)
+Human immunodeficiency virus type 1 group M subtype B (isolate YU-2)(HIV-1)
+Leishmania donovani
+Streptococcus dysgalactiae subsp. equisimilis
+Citrobacter freundii
+Danio rerio
+Escherichia coli (strain K12)
+Dictyostelium discoideum
+Manduca sexta
+Human immunodeficiency virus type 1 group M subtype B (isolate WMJ22)(HIV-1)
+Rhodobacter capsulatus
+Moraxella catarrhalis
+Alcaligenes sp. (strain DSM 11172) (Bordetella sp. (strain FB188))
+Influenza A virus (strain A/Wilson-Smith/1933 H1N1) (Influenza A virus(strain A/WS/1933 H1N1))
+Hepatitis C virus genotype 1a (isolate 1) (HCV)
+Macaaca fascicularis
+Human herpesvirus 4 (strain B95-8)
+Flavobacterium meningosepticum
+Borrelia burgdorferi (strain ATCC 35210 / B31 / CIP 102532 / DSM4680)
+Erythrina crista-galli
+Aeromonas hydrophila
+Escherichia coli O157:H7
+Leuconostoc mesenteroides
+Legionella pneumophila
+Plasmodium yoelii yoelii
+Thermus thermophilus (strain HB8 / ATCC 27634 / DSM 579)
+Influenza A virus (A/Aichi/2/1968(H3N2))
+Human poliovirus 1 Mahoney
+Meriones unguiculatus
+Canis familiaris
+Francisella tularensis subsp. tularensis (strain SCHU S4 / Schu 4)
+Lucilia cuprina
+Rous sarcoma virus (strain Prague C) (RSV-PrC)
+Plasmodium falciparum (isolate 3D7)
+Influenza A virus (strain A/Brevig Mission/1/1918 H1N1) (Influenza Avirus (strain A/South Carolina/1/1918 H1N1))
+Ralstonia metallidurans (strain CH34 / ATCC 43123 / DSM 2839)
+Mus caroli
+Humicola insolens
+Nicotiana tabacum
+Influenza A virus (strain A/Puerto Rico/8/1934 H1N1)
+Human herpesvirus 1
+Feline herpesvirus 1
+Influenza A virus (strain A/Aichi/2/1968 H3N2)
+Staphylococcus aureus (strain NCTC 8325)
+Neisseria meningitidis serogroup B (strain MC58)
+Mycoplana ramosa
+Influenza A virus (strain A/Udorn/307/1972 H3N2)
+Anopheles gambiae
+Influenza B virus (B/Lee/40)
+Thermomyces lanuginosus
+Influenza A virus (strain A/Hong Kong/1/1968 H3N2)
+Bothrops asper
+Microtus ochrogaster
+Staphylococcus aureus (strain N315)
+Saccharomyces cerevisiae (strain ATCC 204508 / S288c) (Baker's yeast)
+Bothropoides pauloensis
+Fusarium solani subsp. pisi
+Carassius auratus
+Plasmodium falciparum (isolate K1 / Thailand)
+Solanum tuberosum
+Staphylococcus aureus (strain MRSA252)
+Septoria tritici
+Salmonidae
+Mycobacterium tuberculosis H37Rv
+Plasmodium falciparum D6
+Cryptococcus neoformans
+Mycobacterium intracellulare
+Human immunodeficiency virus 1
+Trypanosoma brucei rhodesiense
+Hepatitis B virus
+Hepatitis A virus
+Pichia kudriavzevii
+Calliphora vicina
+Aphis gossypii
+Bacillus megaterium
+Bacillus circulans
+Spodoptera littoralis
+Artemia
+Aspergillus fumigatus
+Human herpesvirus 2
+Giardia intestinalis
+Staphylococcus epidermidis
+Enterococcus faecalis
+Aeromonas salmonicida
+Botryotinia fuckeliana
+Eschscholzia californica
+Micrococcus luteus
+Alcaligenes faecalis
+Pseudomonas reptilovora
+Proteus
+Gibberella fujikuroi
+Mucor mucedo
+Artemia salina
+Candida
+Human herpesvirus 5
+Ascobolus
+Sindbis virus
+Murid herpesvirus 1
+Human immunodeficiency virus
+Vesicular stomatitis virus
+Spodoptera exigua
+Human parainfluenza virus 3
+Mammalian orthoreovirus 3
+Punta Toro virus
+Human herpesvirus 5 strain AD169
+Aplysia californica
+Trichophyton mentagrophytes
+Oryzias latipes
+Hepatitis C virus
+Staphylococcus
+Streptococcus agalactiae
+Haemophilus influenzae
+Bordetella bronchiseptica
+Enterococcus hirae
+Plasmodium falciparum HB3
+Plasmodium berghei
+Chlorella vulgaris
+Chlorella sorokiniana
+Desmodesmus subspicatus
+Rhizomucor miehei
+Plasmodium falciparum NF54
+Plasmodium yoelii
+Cricetinae
+Serratia fonticola
+Cowpox virus (Brighton Red)
+Vaccinia virus Copenhagen
+Ectromelia virus Moscow
+Plasmodium berghei yoelii
+Nippostrongylus brasiliensis
+Ulva
+Oscillatoria amphibia
+Skeletonema costatum
+Prorocentrum micans
+Brachiomonas submarina
+Salinivibrio costicola
+Phytophthora cinnamomi
+Penicillium expansum
+Salmonella enterica subsp. enterica serovar Typhimurium
+Streptomyces viridochromogenes
+Mycobacterium tuberculosis H37Ra
+Leishmania amazonensis
+Leishmania braziliensis
+Mycobacterium bovis BCG str. Pasteur 1173P2
+Candida parapsilosis
+Clavispora lusitaniae
+Vaccinia virus WR
+Aspergillus flavus
+Arthroderma otae
+Trichophyton rubrum
+Epidermophyton floccosum
+Plutella xylostella
+Cladosporium cucumerinum
+Escherichia coli HB101
+Venturia inaequalis
+Streptococcus
+Gambusia affinis
+Mycobacterium avium
+Moloney murine sarcoma virus
+Prunus dulcis
+Salmonella enterica subsp. enterica serovar Gallinarum
+Eimeria acervulina
+Eimeria mitis
+Blumeria graminis f. sp. tritici
+Avian myeloblastosis virus
+Streptococcus mutans
+Propionibacterium acnes
+Corynebacterium ammoniagenes
+Malassezia
+Phellinus tremulae
+Aspergillus sp.
+Cladosporium
+Klebsiella oxytoca
+Candida glabrata
+Leptinotarsa decemlineata
+Helicobacter pylori
+Ascaris suum
+Salmonella enterica subsp. enterica serovar Typhi
+Amorphotheca resinae
+Sigmodon hispidus
+Biomphalaria glabrata
+Cyberlindnera jadinii
+Schizosaccharomyces pombe
+Plasmodium falciparum D10
+Plasmodium chabaudi
+Asterotremella humicola
+Fusarium oxysporum
+Plasmodium vivax
+Anopheles stephensi
+Pseudomonas aeruginosa PAO1
+HIV-1 M:B_Lai
+Bacillus subtilis subsp. subtilis str. 168
+Listeria monocytogenes
+Rous sarcoma virus
+Echinoidea
+Pluteus
+Oryza sativa
+Human poliovirus 1
+Salmonella enterica subsp. enterica serovar Typhimurium str. SL1344
+Francisella tularensis subsp. tularensis SCHU S4
+Solanum lycopersicum
+Acanthamoeba hatchetti
+Bacillus
+Rhizoctonia bataticola
+Clostridium difficile
+Spodoptera eridania
+Diabrotica undecimpunctata howardi
+Tetranychus urticae
+Human herpesvirus 4
+Acholeplasma laidlawii PG-8A
+Mycoplasma gallisepticum
+Spiroplasma apis
+Spiroplasma citri
+Spiroplasma floricola
+Orf virus
+BK polyomavirus
+Aeromonas caviae
+Acinetobacter baumannii
+Mycobacterium sp.
+Cladosporium cladosporioides
+Cladosporium sphaerospermum
+Helicoverpa zea
+Camelpox virus
+Bacillus pumilus
+Influenza A virus
+Hepatitis C virus subtype 1a
+Dengue virus 2
+Dengue virus
+Lactuca sativa
+Ctenocephalides felis
+Neisseria meningitidis
+Enterococcus faecalis V583
+Enterococcus faecalis OG1RF
+Saccharomyces
+Choristoneura fumiferana
+Panagrellus redivivus
+Bursaphelenchus xylophilus
+Candida maltosa
+Magnaporthe grisea
+Plasmodium yoelii nigeriensis
+Claviceps
+Enterococcus
+Pseudoalteromonas espejiana
+Pseudoalteromonas
+Staphylococcus aureus subsp. aureus COL
+Ostrinia nubilalis
+Hepatitis C virus (isolate Con1)
+Hepatitis C virus subtype 1b
+Toxicodendron vernicifluum
+Toxoplasma gondii RH
+Toxoplasma gondii ME49
+Aspergillus terreus
+Candida tropicalis
+Yersinia
+Shigella sonnei
+Hepatitis C virus genotype 1
+Pseudomonas tolaasii
+Acinetobacter baumannii ATCC 19606
+Hepatitis C virus (isolate BK)
+Providencia rettgeri
+Corynebacterium amycolatum
+Corynebacterium aurimucosum
+Corynebacterium jeikeium
+Corynebacterium minutissimum
+Corynebacterium urealyticum
+Corynebacterium striatum
+Corynebacterium accolens
+Corynebacterium simulans
+Corynebacterium xerosis
+Clostridium clostridioforme
+Clostridium innocuum
+Clostridium malenominatum
+Clostridium sphenoides
+Anaerococcus prevotii
+Anaerococcus tetradius
+Finegoldia magna
+Peptoniphilus asaccharolyticus
+Peptostreptococcus anaerobius
+Parvimonas micra
+Rhizopus
+Trichosporon beigelii
+Lichtheimia corymbifera
+Aspergillus versicolor
+Passalora fulva
+Micrococcus flavus
+Lachesis muta
+Xanthomonas vasicola
+Penicillium funiculosum
+Penicillium ochrochloron
+Hypocrea rufa
+Candida famata
+Streptococcus sanguinis
+Human enterovirus C
+Plasmodium falciparum Dd2
+Shigella dysenteriae
+Poecilia reticulata
+Papio hamadryas
+Streptococcus minor
+Sporothrix schenckii
+Drosophila
+Candida nivariensis
+Bacillus thuringiensis
+Entamoeba histolytica
+Salmonella enterica subsp. enterica serovar Enteritidis
+Gibberella moniliformis
+Leishmania infantum
+Mycobacterium scrofulaceum
+Mycobacterium xenopi
+leishmania tropica line
+leishmania tubulin
+Streptomyces olivoreticuli
+Mycobacterium phlei
+Leuciscus idus
+parainfluenza virus
+mrsa
+leishmania barziliensis
+Litomosoides carinii
+Burkholderia cepacia
+molinema dessetae
+Mus sp.
+Schistosoma mansoni
+Leishmania tropica
+Human rhinovirus sp.
+Locusta migratoria
+Mastomys coucha
+Listeria innocua
+Sphingomonas paucimobilis
+Cercopithecidae
+frog
+human immuno deficiency virus type 2
+rice
+lizard
+human immuno deficiency virus type1
+Meloidogyne incognita
+Mycobacterium kansasii
+Mycobacterium marinum
+Human immunodeficiency virus 2
+HIV-1RF
+human cytomegalo virus
+Human herpesvirus 3
+lizara
+Limulus
+Mycobacterium fortuitum
+Mycobacterium gordonae
+human immunodefficiency virus type 1
+Mycobacterium flavescens
+Acanthocheilonema viteae
+Armoracia rusticana
+Lycopus europaeus
+Mastomys natalensis
+herpes simplex virus
+Cytomegalovirus
+staphylococcus epidermides
+Trypanosoma brucei
+mousemouse
+oncovirus
+murine leukemia retrovirus
+Mucor fragilis
+Mucor
+mucor species
+Mycobacterium
+Mycobacterium bovis
+ochromonas malhamensis
+Lampyridae
+Oesophagostomum columbianum
+Mumps virus
+mycobacterium tubercolosis
+Gerbillinae
+Influenza B virus  (strain: B/Lee/40)
+Influenza B virus
+Torpedo
+Bungarus fasciatus
+Parascaris
+Parascaris equorum
+Calliphoridae
+Phormia regina
+nl4-3 tropic virus
+mycobacterium catarrhalis
+Mycobacterium chelonae
+unidentified influenza virus
+xenopus oocytes
+Mustela putorius furo
+Simiiformes
+fish
+Saimiri
+Hymenolepis nana
+Heligmosomoides polygyrus
+Primates
+Actinomycetaceae
+Eutheria
+Pan troglodytes
+Mammalia
+Callithrix
+Rape-Root
+Respiratory syncytial virus
+Aerococcus
+Saimiri sciureus
+Shigella flexneri
+Balanus improvisus
+Influenza A virus (A/WSN/1933(H1N1))
+Staphylococcus epidermidis ATCC 12228
+Staphylococcus cohnii
+Staphylococcus warneri
+Mycobacterium smegmatis str. MC2 155
+Mycobacterium vaccae
+Hepatitis C virus JFH-1
+Influenza A virus (A/Brevig Mission/1/1918(H1N1))
+Mycotypha microspora
+Eurotium rubrum
+Microbotryum violaceum
+'Chlorella' fusca
+Penicillium marneffei
+Staphylococcus aureus subsp. aureus RN4220
+Microsporum audouinii
+Human immunodeficiency virus type 2 (ISOLATE ROD)
+Microsporum gypseum
+Influenza A virus (A/gull/Pennsylvania/4175/83(H5N1))
+Influenza A virus (A/Hong Kong/213/2003(H5N1))
+Influenza A virus (A/Viet Nam/1203/2004(H5N1))
+Influenza A virus (A/California/07/2009(H1N1))
+Cryptococcus neoformans var. grubii
+Felis catus
+Escherichia coli BL21
+Human T-lymphotropic virus 1
+Vaccinia virus
+Pseudomonas
+Streptococcus mutans UA159
+Vibrio cholerae
+Candida albicans SC5314
+Streptomyces
+Staphylococcus capitis
+Human coxsackievirus B4
+Mammalian orthoreovirus 1
+Streptococcus viridans
+Pectobacterium carotovorum
+Erwinia amylovora
+Phytophthora infestans
+Human herpesvirus 1 strain KOS
+Human herpesvirus 2 strain G
+Feline coronavirus
+Felid herpesvirus 1
+Influenza A virus H3N2
+Bovine viral diarrhea virus 1-NADL
+Plasmodium falciparum FCBR/Columbia
+Papio anubis
+Leishmania peruviana
+Rhodococcus equi
+Brucella suis
+Staphylococcus epidermidis RP62A
+Coxsackievirus B2 (strain Ohio-1)
+Human poliovirus 1 strain Sabin
+Trichophyton longifusum
+Fusarium solani
+Candida zeylanoides
+Bacillus subtilis subsp. spizizenii
+Paracentrotus lividus
+Ochrobactrum pseudogrignonense
+Bacillus sp.
+Rift Valley fever virus
+Staphylococcus aureus subsp. aureus NCTC 8325
+Ureaplasma parvum
+Syncephalastrum racemosum
+Galactomyces geotrichum
+Phytophthora sojae
+Salmonella enterica
+Cebus apella
+Kluyveromyces marxianus
+Staphylococcus hominis
+Aspergillus oryzae
+Uromyces viciae-fabae
+Heliothis virescens
+Mycosphaerella graminicola
+Influenza A virus (A/Weiss/1943(H1N1))
+Mycobacterium bovis BCG
+Saccharomyces carlsbergensis
+Hoplobatrachus tigerinus
+Escherichia coli B
+Ditylenchus myceliophagus
+Staphylococcus haemolyticus
+Entamoeba histolytica HM-1:IMSS
+Escherichia
+Corynephage beta
+Hirudo medicinalis
+Oncorhynchus keta
+Home sapiens
+Conus magus
+wheat germ
+escherichiacoli
+enterobacter faecalis
+enterococcus faecalisbacteria
+Encephalomyocarditis virus
+Equine infectious anemia virus
+Spodoptera frugiperda
+monkey
+Duck hepatitis B virus
+Anas sp.
+Dysdercus cingulatus
+e. faecium strain a1745
+e.faecium strain a1745
+enterobacter cloacae ros
+enterobacter cloacaeros
+enterobactercloacaeros
+enterococcus fecalis
+enterococcus fecium
+enterococcus knothe
+e. coli strain a3228
+Eimeria tenella
+elastase
+phuman
+epstein barr virus
+Cyprinus carpio
+Encephalitozoon cuniculi
+Echinochloa crus-galli
+Edwardsiella tarda
+eel
+Collinsella aerofaciens
+Echovirus
+Enterovirus
+echovirus-9
+Neisseria sicca
+Bacteria
+enterococcus aerogenes
+Enterococcus aerogenes
+enterococcus aureus
+Enterococcus avium
+enterococcus cloacae
+thermus acquitus
+Feline immunodeficiency virus
+plasmodium.falciparum
+enterobacter species
+enterobacter spp.
+Enterobacter
+Enterobacteriaceae
+enterobacteriaceae cloacae
+human papilloma virus
+Emericella nidulans
+escherichia hirae
+Erysipelothrix rhusiopathiae
+Erythrina corallodendron
+Brucella abortus
+Streptococcus sp. 'group A'
+Fasciola hepatica
+epstein-barr-virus
+Gardnerella vaginalis
+erythromycin faecalis
+erythromycin faecium
+Fungi
+trypanosoma mexicana
+Aves
+Bull Frog
+Fonsecaea pedrosoi
+insect
+Schistosoma japonicum
+Human respiratory syncytial virus
+Japanese encephalitis virus
+Klebsiella
+klebsiella pneumoniae a
+klebsiella pneumoniae ottaviani
+klebsiella pneumoniae 4
+Lepidium sativum
+Lactobacillus plantarum
+klebsiella pnuemoniae
+klebsiella spp.
+Leishmania aethiopica
+Brugia pahangi
+Klebsiella pneumonia (MGH-2)
+Leishmania panamensis
+leishmania promastigotes
+trypanosoma rhodesiense
+Plasmodium cynomolgi
+Mink
+Monkeypox virus
+microsimus luteus
+Rana esculenta
+Trypanosoma equiperdum
+Acholeplasma laidlawii
+acinetob
+Acinetobacter
+Alcaligenes
+Lactobacillus kefiri
+Thermoanaerobacter brockii
+Candida tenuis
+Salmonella
+Aspergillus ochraceus
+aspergillus species
+asperigillus
+Capnocytophaga
+bacteriodes gingivalis
+Bacteroides thetaiotaomicron
+beagle
+Benjaminiella
+Prevotella bivia
+Aureobasidium pullulans
+Avena fatua
+bacillus melaninogenicus
+bacillus ovatu
+bacillus ovatus
+mesocricetus auratus (golden hamster)
+shrimp
+Dolichospermum flos-aquae
+bacillus distasonis
+Bacteroides fragilis A22862
+rhizopus mold
+Prevotella buccae
+Pseudoflavonifractor capillosus
+Eikenella corrodens
+Prevotella disiens
+malt
+Hordeum vulgare subsp. vulgare
+Balanus amphitrite
+Agrobacterium
+bacillus valgatus
+gram negative bacteria
+human immuno deficiency virus type 1
+blackberry
+bal macrophage tropic virus
+staphylococcus albus
+Cooperia oncophora
+Meyerozyma guilliermondii
+Asteroidea
+Candida rugosa
+Aplidium
+Clostridium ramosum
+clostridium romosum
+Clostridium septicum
+Clostridium sordellii
+Clostridium sporogenes
+Clostridium tertium
+Citrobacter koseri
+Mycobacterium lufu
+trychophyton mentagrophytes
+Trichoderma
+candida neoformans
+unidentified
+Dermatophagoides pteronyssinus
+Chlamydia
+Chlamydophila pneumoniae
+Enterobacter cloacae GC1
+Callitrichinae
+candida epidermidis
+candida fumigatus
+candida glabatra
+Citrobacter
+Moloney murine leukemia virus
+Pyrococcus furiosus
+corynebacterium rathaii
+squid
+pguinea pig
+Coxsackievirus
+coxsackie virus type b-4
+Arthrodermataceae
+Human coxsackievirus B5
+Lactococcus lactis
+pseudomonas aeruginosa 4
+salmonella typhimurium 3
+streptococcus epidermidis
+crypteroccus neoformans
+cryptoccocus neoformans
+Cryptococcus albidus
+Corynebacterium diphtheriae
+Corynebacterium glutamicum
+corynebacterium serosis
+corynebacterium species
+Cryptococcus laurentii
+cryptococcus neoforma
+Neonectria radicicola
+Anethum graveolens
+pnuemocystis carini
+Cooperia
+cornyebacterium
+corona virus
+Dipetalogaster maximus
+Pichia pastoris
+Mengo virus
+Measles virus
+mmp3
+salmonella schottmuelleri
+Semliki forest virus
+Rhesus monkey
+Moraxella bovis
+mold
+Arthroderma cajetani
+Arthroderma gypseum
+microsporum luteus
+mould
+moraxella glucidolytica
+morganella
+ant
+Arthroderma obtusum
+Umbelopsis ramanniana
+Culicidae
+Pasteurella multocida
+moloney sarcoma virus
+Eudrilus
+Brugia malayi
+bromovinyl deoxyuridine resistant strain
+jack
+clostridium freundii
+Clostridium novyi
+clostridium novyi b
+Aspergillus pulverulentus
+candida pseudotrop
+citrobacter ferundii
+candida species
+actinomadura species
+citrobactor freundii
+cladisporium resinae
+Chlamydia trachomatis
+Chlorella pyrenoidosa
+hamster
+Streptomyces griseus
+Campylobacter jejuni
+Streptococcus pneumoniae TIGR4
+Cochliobolus miyabeanus
+Periplaneta americana
+giunea pig
+Clostridium bifermentans
+Clostridium botulinum A
+Clostridium butyricum
+Clostridium cadaveris
+sponge
+Columba livia
+Human coxsackievirus B3
+Human coxsackievirus B1
+coxsackie type b4 virus
+Cooperia curticei
+human rhinovirus type 14
+varicella-zoster virus ys-r
+varicella-zoster virus oka
+human immunodeficiency virus type1
+herpes simplex vir
+Human rhinovirus 15
+human rhinovirus type 2
+Human rhinovirus 29
+Human rhinovirus 39
+Human rhinovirus 45
+Human rhinovirus 51
+Human rhinovirus 59
+Human rhinovirus 63
+Human rhinovirus 70
+Human rhinovirus 72
+Human rhinovirus 85
+Human rhinovirus 86
+human rhinovirus type 89
+Human rhinovirus 9
+hsv type 2
+human simplex virus
+Marmota monax
+human immunodeficiencyvirus type 1
+human rhinovirus1a
+human rhinovirus2
+herpes simplex type 2
+Haemophilus
+Human rhinovirus 1A
+herpes simplex type 1
+herpes simplex virus type 2 (ms)
+Haemonchus contortus
+herpes simplex type-2 virus
+herpes simplex virus type2
+human immunodeficiency virus type 3b
+human immunodeficiency virus type-3b
+vericella-zoster
+hemophilus influenzae a
+Ajellomyces capsulatus
+helminth
+human immuno deficiency vius type 1
+Influenza A virus (A/X-31(H3N2))
+human rhinovirus type 1
+human rhinovirus-1a, 14
+Hemicentrotus pulcherrimus
+influenza
+Human papillomavirus
+penicillium acremonium
+Penicillium chrysogenum (Penicillium notatum)
+infuenza-a virus
+herpes simplex virus-2
+Rotavirus
+human papilloma virus type 11
+influenza type a2
+human immunodeficiencyvirus
+Hevea brasiliensis
+Maclura pomifera
+plant
+Crassostrea virginica
+jrfl macrophage tropic virus
+Human rhinovirus B (HRV-14)
+bacterium cadaveris
+k.pneunomoniae
+klebsiello pneumoniae
+Proteus sp.
+Proteus inconstans
+propionibacterium species
+prat
+staphylococcus marcesc
+pseudomonas vulgaris
+Gloydius blomhoffi
+croatalusadamanteus
+naja mocambique mocambique
+Naja mossambica mossambica
+Naja atra
+Sporosarcina
+pseudomonas aeruginosa 1
+pseudomonas aeruginosa a
+pseudomonas aeruginosa ifo 3445
+psudomonas auriginisa
+pseudomonas mirabilis
+Puccinia recondita
+Human rhinovirus B
+proteus perfringens
+BK virus variant RF
+Human herpes virus 6
+homo sapiens
+Mycobacterium aurum
+Yersinia sp.
+Alternaria brassicae
+Simplicillium lamellicola
+Raphanus sativus
+Yersinia pseudotuberculosis
+Human adenovirus 5
+Human echovirus 9
+Fonsecaea compacta
+Microsporum
+Benjaminiella poitrasii
+Human herpesvirus 6 (strain GS)
+Human herpesvirus 6 strain Z29
+Human adenovirus 2
+Maize streak virus
+Plasmodium chabaudi chabaudi
+Influenza A virus (A/Guizhou/54/89(H3N2))
+Influenza B virus (B/Ibaraki/2/85)
+Arthroderma benhamiae
+Rubella virus (strain THERIEN)
+Cytospora
+Sclerotinia sclerotiorum
+Rhizoctonia solani
+Magnaporthe oryzae
+Gibberella zeae
+Salmonella enterica subsp. enterica serovar Oranienburg
+Salmonella enterica subsp. enterica serovar Give
+Mycobacterium diernhoferi
+Aquifex aeolicus
+Scedosporium aurantiacum
+Norovirus
+Aleuria aurantia
+Meriones
+Mycoplasma pneumoniae
+Bacteroides sp.
+Bifidobacterium longum
+Gibberella intermedia
+Bifidobacterium pseudolongum
+Bifidobacterium thermophilum
+Bifidobacterium animalis
+Bifidobacterium bifidum
+Bifidobacterium breve
+Enterococcus gallinarum
+Cryptococcus
+Absidia
+Cunninghamella
+Rhizomucor
+Syncephalastrum
+Clonorchis sinensis
+Opisthorchis viverrini
+Mycosphaerella fijiensis
+Cowpox virus
+Ectromelia virus
+Methanothermobacter thermautotrophicus
+Plasmodium falciparum FcB1
+Caulobacter vibrioides
+Francisella tularensis
+Influenza A virus (A/duck/Minnesota/1525/1981(H5N1))
+Nocardia cyriacigeorgica
+Nocardia abscessus
+Nocardia nova
+Nocardia veterana
+Nocardia transvalensis
+Nocardia carnea
+Nocardia brasiliensis
+Nocardia sp.
+Staphylococcus lugdunensis
+Human herpesvirus 6A
+Yellow fever virus
+Tacaribe virus
+Venezuelan equine encephalitis virus
+Enterococcus casseliflavus
+Enterococcus durans
+Parabacteroides distasonis
+Influenza A virus (A/Turkey/15/2006(H5N1))
+Feline infectious peritonitis virus
+Influenza B virus (B/Singapore/222/79)
+Trichomonas vaginalis
+Vibrio
+Streptococcus oralis
+Streptococcus parasanguinis
+Streptococcus salivarius
+Burkholderia pseudomallei
+Streptococcus equinus
+Streptococcus constellatus
+Streptococcus gordonii
+Coccidioides immitis
+Simian immunodeficiency virus
+Mucor hiemalis
+Brassica rapa subsp. campestris
+Xenopus
+Potorous tridactylus
+Streptococcus vestibularis
+Acinetobacter johnsonii
+Murine polyomavirus
+Haemophilus parasuis
+Cirsium arvense
+Sonchus arvensis
+Colpoda steinii
+Leishmania guyanensis
+Brassica oleracea
+Gypsophila
+Myzus persicae
+Pea enation mosaic virus-1
+Pseudomonas syringae
+Aplysia
+Renilla reniformis
+Clupea
+Bovine viral diarrhea virus 1
+Avena sativa
+Tobacco mosaic virus
+Mythimna separata
+Davidiella tassiana
+Eurotium amstelodami
+Leptosphaeria maculans
+Staphylococcus saccharolyticus
+Nadsonia fulvescens
+Eremothecium coryli
+Paecilomyces variotii
+Rhodotorula glutinis
+Cryptosporidium hominis
+Echinochloa frumentacea
+Cucumis sativus
+Acinetobacter calcoaceticus
+Brassica juncea
+Brassica napus
+Calonectria canadensis
+Fusarium avenaceum
+Influenza A virus (A/Singapore/1/1957(H2N2))
+Influenza B virus (B/Mie/1/93)
+Influenza A virus (A/R(duck/Mongolia/54/01-duck/Mongolia/47/01)(H5N1))
+Influenza A virus (A/Yamagata/32/1989(H1N1))
+Medicago sativa
+Digitaria sanguinalis
+Pectinophora gossypiella
+Fusarium tricinctum
+Fusarium culmorum
+Alternaria mali
+Amaranthus retroflexus
+Brassica oleracea var. botrytis
+Alternaria solani
+Physalospora pyricola
+Streptococcus mitis
+Rhodotorula mucilaginosa
+Sporobolomyces
+Torula
+Fusarium sp.
+Legionella
+Bacteroides vulgatus
+Eubacterium limosum
+Fusobacterium nucleatum
+Helminthosporium maydis
+Ophiostoma minus
+Clavibacter michiganensis subsp. michiganensis
+Corynebacterium sp.
+Bemisia tabaci
+Trichoplusia ni
+Mytilus edulis
+Fusarium subglutinans
+Alternaria alternata
+Alternaria citri
+Didymella rabiei
+Aspergillus parasiticus
+Fusarium acuminatum
+Penicillium verrucosum
+Fusarium oxysporum f. sp. lycopersici
+Fusarium incarnatum
+Phoma tracheiphila
+Penicillium brevicompactum
+Kluyveromyces lactis
+Pichia dryadoides
+Helianthus annuus
+Streptomyces coelicolor A3(2)
+Candida shehatae
+Stachybotrys chartarum
+Lecanicillium muscarium
+Lipomyces lipofer
+Leishmania pifanoi
+Eurotium repens
+Triticum aestivum
+Mytilus edulis/galloprovincialis MCLGV-2007
+Chlorophyta
+Helminthosporium
+Leeuwenhoekiella marinoflava
+Alphaproteobacteria
+Human poliovirus 2
+Paenibacillus alvei
+Rauscher murine leukemia virus
+Micrococcus
+Staphylococcus saprophyticus
+Exophiala dermatitidis
+Pseudallescheria boydii
+Echinococcus equinus
+Influenza A virus (A/Japan/305/1957(H2N2))
+Human enterovirus 71
+Ralstonia solanacearum
+Sandfly fever Naples virus
+La Crosse virus
+Gaeumannomyces graminis var. tritici
+Pythium middletonii
+Candida dubliniensis
+Human poliovirus 3
+Junin virus
+Mycosphaerella
+Alternaria
+Blumeria graminis
+Pythium aphanidermatum
+Pyrenophora graminea
+Rhynchosporium secalis
+hampster
+ascaris summ
+Actinomyces viscosus
+Acinetobacter calcoaceticus subsp. anitratus
+aeinetobocteronitrotap
+Actinomyces naeslundii
+Serpentes
+ratrat
+Papio
+Anolis carolinensis
+Stomoxys calcitrans
+Aeromonas sobria
+Aeromonas
+aeromonas spp.
+acinetobacter species
+Abutilon
+Octopus
+acycloguanosine resistant strain
+Agelas clathrodes
+Agelas conifera
+Agelas dispar
+agelas longissima
+Arachis hypogaea
+Amaranthus
+African swine fever virus
+snail
+Mycobacterium microti
+opossum
+escherichia cloacae
+breinlia booliati
+Dekkera bruxellensis
+Brevibacterium linens
+Bacteroides uniformis
+bacteroides vulgatis
+Banzi virus
+Bothrops jararaca
+bacteroides thetaomicron
+coxsackievirusa21
+Bordetella pertussis
+Bothrops jararacussu
+Botrytis allii
+Prevotella loescheii
+bacteroides melaninogenicus
+Prevotella oralis
+Bacteroides ovatus
+and coxsackievirus b3
+b.catarr
+Planktothrix agardhii
+Helix pomatia
+Cephalosporium
+ceratocystis ulmi
+Cercospora beticola
+Chaetomium globosum
+leishmania.tropica
+pdog
+Macaca nemestrina
+enterobacter coccus
+enterococcus spp.
+escherichia cloac
+e.faecali
+e.faecalis strain 29212
+enterobacter cloacae a
+Rodentia sp.
+Eimeria brunetti
+Eimeria maxima
+Eimeria necatrix
+Eimeria
+enterobacteriaceae faecalis
+Pulicinae
+escherichia colacae
+hsv-2
+fusariumsemitectum
+Fusobacterium
+Fusobacterium mortiferum
+enterobactor
+enteroccus aerogenes
+escherichia colin
+escherichia faecalis
+Eggerthella lenta
+Fusobacterium sp.
+fusobacterium species
+fusobacterium symbiosum
+fusobacterium symbosium
+Fusobacterium varium
+Galleria mellonella
+Fusobacterium necrophorum
+Trypanosoma
+erisyphe graminis
+Photobacterium
+Onchocerca volvulus
+rhinovirus 14
+haemophiles influenzae
+human cytomegalo virus type 1
+Coturnix
+Ancylostoma ceylanicum
+Haemophilus ducreyi
+varicella-zoster virus tk-07
+human immuno deficiency virus
+herpesvirus simplex virus 2
+human immuno deficiency virus type i
+human T-lymphotropic virus type 1
+herpesvirus simplex virus 1
+Haemophilus parainfluenzae
+penicilium ctrinum
+Penicillium citrinum
+Teladorsagia circumcincta
+pseudomonas stuartii
+Mannheimia haemolytica
+Phialophora verrucosa
+peptostreptococcus intermedius
+Phoma
+phoma sp
+plasmodium aeruginosa
+Phoma destructiva
+snake
+Kodamaea ohmeri
+Scheffersomyces stipitis
+Pichinde virus
+Human parainfluenza virus 2
+para influenza virus
+para influenza virus type 3
+Paracoccus denitrificans
+phialophora uerrucosa
+parainfluenza type 3
+Herpes simplex virus unknown type
+Porphyridium aerugineum
+streptococcus aureus
+pencillium oxalicum
+hiv
+Daboia russellii russellii
+Pasteurella sp.
+pediococcus cerevisiae
+unidentified phage
+Plakortis simplex
+proteus species
+proteus spp.
+plasmodiumyoleii yoleii
+Plasmopara viticola
+plasmpdium aeruginosa
+Debaryomyces hansenii
+Suid herpesvirus 1
+TARBP
+Chondrostereum purpureum
+streptococcus agalactiae c
+CHRN
+Trypanosoma vivax
+Arcanobacterium pyogenes
+Lytechinus variegatus
+Aphis
+Sorghum bicolor
+Tetranychus cinnabarinus
+Scedosporium prolificans
+Diporeia
+Limulus polyphemus
+Acyrthosiphon pisum
+Pythium debaryanum
+Nocardia asteroides
+Leishmania enriettii
+Acinetobacter sp.
+Actinomyces sp.
+Veillonella atypica
+Phytophthora capsici
+Babesia gibsoni
+Alternaria dianthi
+Guignardia aesculi
+Fusarium brasilicum
+Pythium ultimum
+XMRV
+Tineola bisselliella
+Arabidopsis
+Rhizobium leguminosarum
+Leishmania chagasi
+Fluoribacter gormanii
+Aggregatibacter aphrophilus
+Aggregatibacter segnis
+Haemophilus parahaemolyticus
+Photorhabdus luminescens
+Bacilli
+Haemophilus paraphrohaemolyticus
+Streptococcus dysgalactiae subsp. dysgalactiae
+Trichophyton violaceum
+Trichophyton
+Thermotoga maritima
+Amphiuma tridactylum
+Macacine herpesvirus 1
+Mycobacterium leprae
+Haemophilus haemolyticus
+Pseudopleuronectes americanus
+Acanthamoeba polyphaga
+Thanatephorus cucumeris
+Colletotrichum gloeosporioides
+Aequorea victoria
+Mycobacterium ulcerans
+Pseudomonas sp.
+Glomerella cingulata
+Phytophthora litchii
+Human herpesvirus 8
+Rothia mucilaginosa
+Corynebacterium pseudodiphtheriticum
+Citrobacter gillenii
+Streptococcus intermedius
+Enterobacter sp.
+Streptococcus anginosus
+Hanseniaspora guilliermondii
+Influenza B virus (B/Memphis/3/89)
+Rhipicephalus sanguineus
+Neovison vison
+Tenebrio molitor
+Bovine immunodeficiency virus
+Streptomyces plicatus
+Burkholderia multivorans
+Streptococcus dysgalactiae
+Acinetobacter haemolyticus
+Trichophyton tonsurans
+Trichophyton soudanense
+Bacteroides caccae
+Bacteroides eggerthii
+Bacteroides stercoris
+Parabacteroides merdae
+Thamnocephalus platyurus
+Mycobacterium abscessus
+Peptostreptococcus stomatis
+Human rhinovirus 14
+Human rhinovirus 2
+Pyrococcus horikoshii
+Polyporus
+Rhizopus stolonifer
+Stylophora pistillata
+Yersinia pestis CA88-4125
+Arthrobacter protophormiae
+Caldicellulosiruptor saccharolyticus (strain ATCC 43494 / DSM 8903)
+Clostridium perfringens (strain SM101 / Type A)
+Rheum palmatum
+Ixodes ricinus
+Pseudomonas stutzeri
+Brachyspira pilosicoli
+Halichondria okadai
+Staphylococcus aureus (strain COL)
+Janthinobacterium lividum
+Salmonella choleraesuis (strain SC-B67)
+Candida dubliniensis (strain CD36 / CBS 7987 / NCPF 3949 / NRRLY-17841) (Yeast)
+Streptococcus pneumoniae serotype 2 (strain D39 / NCTC 7466)
+Infectious bronchitis virus
+Salmonella newport
+Burkholderia cenocepacia
+Neosartorya fumigata
+Issatchenkia orientalis
+Acinetobacter genomosp. 3
+Salmonella enterica subsp. enterica serovar Westhampton
+Escherichia coli (strain B / BL21-DE3)
+Trypanosoma brucei brucei (strain 927/4 GUTat10.1)
+Chryseobacterium indologenes
+Neosartorya fumigata (strain ATCC MYA-4609 / Af293 / CBS 101355 / FGSCA1100) (Aspergillus fumigatus)
+Saccharomyces cerevisiae (strain Lalvin EC1118 / Prise de mousse)(Baker's yeast)
+Aeromonas allosaccharophila
+Pseudomonas aeruginosa (strain LESB58)
+Methanococcus maripaludis (strain S2 / LL)
+Human parainfluenza virus 1
+Dirofilaria immitis
+Geotrichum candidum
+Escherichia coli (strain UTI89 / UPEC)
+Dicentrarchus labrax
+Chromobacterium violaceum
+Trametes versicolor
+Clostridium difficile (strain 630)
+Astrosclera willeyana
+Pneumocystis jirovecii
+Sus scrofa domesticus
+Staphylococcus epidermidis (strain ATCC 35984 / RP62A)
+Brevibacillus brevis
+Prunus avium
+Echis carinatus
+Molluscum contagiosum virus subtype 1
+Listeria monocytogenes serotype 4b str. F2365
+Patiria pectinifera
+Streptomyces coelicolor A3
+Bacillus clausii
+Arthrospira platensis
+Mycobacterium tuberculosis (strain ATCC 25177 / H37Ra)
+Candida glabrata CBS 138
+Leishmania donovani donovani
+Cochliobolus lunatus
+Agrostis stolonifera
+Arthrobacter aurescens
+Aspergillus ficuum
+Brontispa longissima
+Entamoeba invadens
+Glomerella
+Helicoverpa armigera
+Kocuria rhizophila
+Kocuria sp. 10-4DEP
+Microdochium nivale
+Oceanobacillus iheyensis
+Parabodo caudatus
+Pseudomonas agarici
+Saprolegnia parasitica
+Stenotrophomonas
+Trypanosoma evansi
+Brevibacterium epidermidis
+Dermabacter hominis
+Onchocerca ochengi
+Onchocerca lienalis
+Prevotella melaninogenica
+Sandfly fever sicilian virus
+Leishmania sp.
+Staphylococcus sp.
+Veillonella parvula
+Xanthomonas campestris
+Diabrotica undecimpunctata
+Actinomyces meyeri
+Oryza sp.
+Salmonella enterica subsp. enterica serovar Paratyphi A
+Plasmodium vinckei vinckei
+Saururus chinensis
+Sternbergia lutea
+Clupeidae
+Listonella anguillarum
+Salmonella enterica subsp. enterica serovar Anatum
+Daboia russellii
+Plumeria rubra
+Streptococcus thermophilus
+Streptococcus sobrinus
+Penicillium oxalicum
+Arthroderma uncinatum
+Rosa chinensis
+Trichophyton quinckeanum
+Taenia pisiformis
+Papio papio
+Tolypocladium inflatum
+Tetrapoda
+Neisseria perflava
+Trichophyton schoenleinii
+Human immunodeficiency virus 3
+Cricetinae gen. sp.
+Panicum virgatum
+Penicillium italicum
+Human rhinovirus 21
+Human rhinovirus 50
+Rathayibacter rathayi
+Cercopithecine herpesvirus 9
+Penicillium digitatum
+Porphyromonas canoris
+Trichostrongylus axei
+Scopulariopsis brevicaulis
+Rumex acetosa
+Oncorhynchus gorbuscha
+Staphylococcus simulans
+Streptococcus equi
+Equus asinus
+Trichophyton interdigitale
+Trimeresurus malabaricus
+Pythium mamillatum
+Providencia alcalifaciens
+Human rhinovirus 6
+Human rhinovirus 5
+Primula vulgaris
+Xestospongia
+Human rhinovirus 22
+Human rhinovirus 30
+Human rhinovirus 41
+Streptomyces aureus
+Streptococcus pyogenes MGAS315
+Oxalobacteraceae bacterium Cafi2
+Brachyspira hyodysenteriae
+Kocuria rosea
+Zygosaccharomyces bailii
+Human rhinovirus 4
+Human rhinovirus 25
+Human rhinovirus 67
+Salmonella enterica subsp. enterica serovar Typhi str. CT18
+Providencia sp.
+San Angelo virus
+Enterobacteria phage phiX174
+Staphylococcus faecalis
+Sulfolobus solfataricus
+Escherichia coli CFT073
+Klebsiella pneumoniae subsp. ozaenae
+Klebsiella sp.
+Providencia
+Salmonella sp.
+Aeromonas sp.
+Vibrio mimicus
+Prunus domestica
+Sorghum halepense
+Alicyclobacillus acidocaldarius
+Xenopus sp.
+Crotalinae
+Coturnix coturnix
+Bovine herpesvirus 1
+Camponotus consobrinus
+Stenostomum acutatum
+Oculimacula yallundae
+Streptococcus equi subsp. zooepidemicus
+Sinapis
+Capsicum
+Dengue virus 3
+Dipodascus capitatus
+Drechslera
+Eastern equine encephalitis virus
+Ehrlichia canis
+Eimeria tenella str. Houghton
+Enterobacter cloacae subsp. dissolvens
+Ephydatia fluviatilis
+Epilachna varivestis
+Euphorbia esula
+Fabaceae
+Fallopia convolvulus
+Feline leukemia virus
+Flavobacterium
+Flavobacterium johnsoniae
+Fusarium
+Fusarium equiseti
+Getah virus
+Gloeophyllum trabeum
+Glomerella graminicola
+Gryllus bimaculatus
+H2N2 subtype
+Haemophilus ducreyi 35000HP
+Halocynthia roretzi
+HBV genotype D
+Helicoverpa punctigera
+Heterobasidion annosum
+Heteropogon contortus
+Human adenovirus 37
+Human coxsackievirus A24
+Human coxsackievirus B6
+Human echovirus 6
+Hypocrea koningii
+Hypocrea lixii
+Influenza C virus
+Ipomoea hederacea
+Iva
+Lasiodiplodia theobromae
+Solanum
+Setaria viridis
+Saprolegnia
+Yarrowia lipolytica
+Aspergillus wentii
+Tritrichomonas suis
+Myrothecium verrucaria
+Ophiostoma ulmi
+Ustilago maydis
+Colletotrichum musae
+Theileria parva
+Tetrahymena pyriformis
+Porifera
+Taenia crassiceps
+Rana pipiens
+Leishmania mexicana venezuelensis
+Leishmania tarentolae
+Lemna paucicostata
+Leptomonas seymouri
+Leptothorax
+Leuconostoc
+Lindra thalassiae
+Lucilia sericata
+Lymantria dispar
+Radix natalensis
+Madracis mirabilis
+Malassezia furfur
+Marinobacterium stanieri
+marmosets
+Measles virus genotype A
+Measles virus genotype D6
+Measles virus genotype D7
+Metapneumovirus
+Microbacterium maritypicum
+Maize chlorotic mottle virus
+Micrococcus sp.
+Microcystis aeruginosa
+Microcystis aeruginosa NIES-88
+Microsporum distortum
+Modoc virus
+Monilinia fructigena
+Mucor circinelloides
+Mucor racemosus
+Mycobacterium avium complex
+Mycobacterium avium-intracellulare
+Mycobacterium conspicuum
+Mycobacterium hiberniae
+Mycobacterium interjectum
+Mycobacterium mageritense
+Mycobacterium novocastrense
+Mycobacterium shimoidei
+Mycobacterium szulgai
+Mycoplasma mycoides subsp. mycoides SC
+Neisseria
+Neospora caninum
+Neurospora crassa
+Nilaparvata lugens
+Nippostrongylus
+Nocardia pseudobrasiliensis
+Ochlerotatus atropalpus
+Oreochromis mossambicus
+Paecilomyces
+Penicillium crustosum
+Penicillium inflatum
+Phaedon cochleariae
+Photobacterium phosphoreum
+Pichia kluyveri
+Pichia nakazawae
+Picornaviridae
+Pimephales promelas
+Pinus radiata
+Plasmodium knowlesi
+Plasmodium vinckei petteri
+Porcine endogenous retrovirus
+Potato virus X
+Pseudoalteromonas haloplanktis
+Pseudomonas cichorii
+Pseudomonas savastanoi
+Pycnoporus sanguineus
+Pyricularia
+Pythium rostratum
+Rana temporaria
+Rheum x hybridum
+Rhizopus microsporus var. rhizopodiformis
+Rhodococcus fascians
+Rhodococcus sp.
+Rhodotorula
+Saccharomycopsis
+Salmonella enterica subsp. enterica
+Schistocerca nitens
+Sclerotinia
+Selenastrum capricornutum
+Senna obtusifolia
+Setaria faberi
+Setaria italica
+Sordaria fimicola
+Spodoptera exempta
+Penicillium
+Clostridium tetani
+Corynebacterium
+Prototheca wickerhamii
+Propionibacterium acidipropionici
+Mycobacterium avium subsp. paratuberculosis
+Mycobacterium malmoense
+Streptomyces coelicolor
+Streptomyces chartreusis
+Molluscum contagiosum virus
+Equid herpesvirus 1
+unidentified baculovirus
+Onchocerca gutturosa
+Spodoptera litura
+Sporotrichum
+Staphylococcus lentus
+Staphylococcus sciuri
+Streptococcus pasteurianus
+Streptomyces lividans
+Strongylocentrotus intermedius
+Strongylocentrotus purpuratus
+Tribolium castaneum
+Trichomonas
+Trichosporon
+Trichosporon asahii
+unidentified herpesvirus
+Ustilago nuda
+Valsa mali
+Verticillium albo-atrum
+Vesicular stomatitis Indiana virus
+Vibrio sp.
+Vibrio splendidus
+Vitis vinifera
+Woodchuck hepatitis virus
+Trichosporon loubieri
+Trichosporon mucoides
+Xanthium strumarium
+Xanthomonas euvesicatoria
+Streptococcus sp. group B
+Chlorella fusca
+Fusarium oxysporum f. sp. vasinfectum
+Gibberella pulicaris
+Glomerella acutata
+Gossypium hirsutum
+H3N2 subtype
+Hafnia alvei
+Halomonas aquamarina
+Hanseniaspora uvarum
+Helicobacter pylori SS1
+Helix aspersa
+Herpes simplex virus (type 1 / strain F)
+Human coxsackievirus B2
+Human echovirus 13
+Human enterovirus 68
+Ipomoea
+Klebsiella pneumoniae subsp. pneumoniae
+Lachnellula
+Leishmania aristidesi
+Leishmania garnhami
+Leishmania mexicana mexicana
+Lemna minor
+Leptospira interrogans serovar Portlandvere
+Lymnaea
+Macrophomina phaseolina
+Magnaporthe oryzae 70-15
+Mycobacterium terrae
+Mycoplasma putrefaciens
+Mycosphaerella arachidis
+Nasturtium officinale
+Neoscytalidium dimidiatum
+Nigrospora oryzae
+Nocardia farcinica
+Nocardia otitidiscaviarum
+Oncopeltus fasciatus
+Oreochromis niloticus
+Pantoea agglomerans
+Pectobacterium atrosepticum
+Penicillium griseofulvum
+Penicillium islandicum
+Penicillium sp.
+Perknaster fuscus
+Phalaris canariensis
+Photobacterium leiognathi
+Phytophthora cactorum
+Phytophthora citrophthora
+Meyerozyma caribbica
+Pichia fermentans
+Pichia norvegensis
+Pinus halepensis
+Plasmodium malariae
+Pleurotus ostreatus
+Pneumonia virus of mice 15
+Postia placenta
+Prevotella intermedia
+Prospect Hill virus
+Pseudomonas coronafaciens
+Pseudomonas savastanoi pv. savastanoi
+Psoroptes cuniculi
+Pythium vexans
+Raoultella planticola
+Rhizopus microsporus var. microsporus
+Rhodococcus corynebacterioides
+Ruminococcus sp.
+Sendai virus
+Serratia sp.
+Sida spinosa
+Streptomyces galilaeus
+Strongylocentrotus nudus
+Sydowia polyspora
+Transmissible gastroenteritis virus
+Trichoderma hamatum
+Trichophyton tonsurans var. sulfureum
+Trichosporon inkin
+Simplexvirus
+Sorghum
+Sphaerechinus granularis
+Sporidiobolus salmonicolor
+Bipolaris leersiae
+Bipolaris sorokiniana
+Botrytis fabae
+Bovine respiratory syncytial virus
+Brochothrix thermosphacta
+Candida africana
+Candida inconspicua
+Candida metapsilosis
+Candida palmioleophila
+Candida stellata
+Capnocytophaga ochracea
+Ceratobasidium cereale
+Chlorella salina
+Colletotrichum coccodes
+Coniophora puteana
+Cornus florida
+Culex pipiens molestus
+Hesperocyparis arizonica
+Cupressus sempervirens
+Curvularia
+Dengue virus 1
+Ranidae
+Trichostrongylus colubriformis
+Trichinella spiralis
+Majidae
+Hexapoda
+Schistocerca gregaria
+Siphonaptera
+Lytechinus pictus
+Anguilliformes
+Anura
+Rana ridibundus
+Lepidosauria
+Suncus murinus
+Platyrrhini
+Gorilla gorilla
+Rattus
+Viruses
+Variola virus
+Human herpesvirus 6
+Human immunodeficiency virus type 1 (RF/HAT ISOLATE)
+Human coxsackievirus A21
+Bufo bufo
+Human rhinovirus 1B
+unidentified adenovirus
+Reovirus sp.
+Simian rotavirus
+Flavivirus
+Dengue virus 4
+Coronavirus
+Murine hepatitis virus
+Murine hepatitis virus strain A59
+Newcastle disease virus
+Retroviridae
+Visna/maedi virus
+Murine leukemia virus
+Human echovirus 11
+Human rhinovirus 89
+Salmonella enterica subsp. enterica serovar Abony
+Tolypocladium
+Trypanosoma brucei gambiense
+Enterococcus sp.
+Phaeosphaeria nodorum
+Rubus
+Saccharomyces pastorianus
+Acinetobacter lwoffii
+Abutilon theophrasti
+Acalymma vittatum
+Acodontaster conspicuus
+Adoxophyes
+Aedes albopictus
+Agrobacterium rhizogenes
+Agrostis alba
+Allium cepa
+Alopecurus myosuroides
+Alternaria tenuis
+Alteromonas
+Amaranthus hypochondriacus
+Ambrosia artemisiifolia
+Amylomyces rouxii
+Anopheles minimus
+Antarctic bacterium
+Aphis craccivora
+Apophysomyces elegans
+Artemia franciscana
+Arthrobacter citreus
+Ascobolus stercorarius
+Bacillus coagulans
+Sigmodon
+Murinae
+Human coronavirus 229E
+Murid herpesvirus 2
+Influenza A virus (H5N1)
+Clavibacter michiganensis
+Plectosphaerella cucumerina
+Xanthomonas oryzae
+Lysinibacillus sphaericus
+Rotifera
+Cochliobolus heterostrophus
+Simian-Human immunodeficiency virus
+Physalospora piricola
+Athelia rolfsii
+Babesia divergens
+Biomphalaria alexandrina
+Biomphalaria pfeifferi
+Bipolaris oryzae
+Blattella germanica
+Brevundimonas diminuta
+Brucella suis 1330
+Bulinus africanus
+Campylobacter fetus
+Candida deformans
+Candida haemulonis
+Candida magnoliae
+Candida orthopsilosis
+Candida sake
+Canine distemper virus
+Carassius carassius
+Carpophilus
+Chaetomium
+Chenopodium album
+Cicer arietinum
+Ciona savignyi
+Clavibacter michiganensis subsp. insidiosus
+Cobetia marina
+Colletotrichum fragariae
+Colletotrichum lagenarium
+Convolvulaceae
+Coptotermes formosanus
+Corynebacterium bovis
+Culex pipiens
+Culex quinquefasciatus
+Hesperocyparis macrocarpa
+Curtobacterium flaccumfaciens
+Cylas formicarius
+Datura stramonium
+Manduca
+Serratia liquefaciens
+Shigella boydii
+Shigella sp.
+Vibrio parahaemolyticus
+Vibrio vulnificus
+Plesiomonas shigelloides
+Peptostreptococcus
+Staphylococcus intermedius
+Zymomonas mobilis
+Morganella
+Serratia
+Shigella
+Vibrio alginolyticus
+Vibrio fluvialis
+Peptostreptococcus sp.
+Sarcina
+Staphylococcus carnosus
+Staphylococcus hyicus
+Streptococcus sp.
+Aspergillus
+Cercopithecine herpsevirus 8
+Streptomyces thermovulgaris
+Caviid herpesvirus 2
+Acanthamoeba castellanii
+Anaerococcus vaginalis
+Balamuthia mandrillaris
+Biomphalaria peregrina
+Candida intermedia
+Cantagalo virus
+Carnobacterium divergens
+Chlamydophila psittaci 6BC
+Clostridium aminovalericum
+Fusobacteria
+Clostridium acetobutylicum
+Arthrobacter oxydans
+Cellulomonas
+Propionibacterium
+Mycobacterium simiae
+Streptomyces sp.
+Actinomadura sp.
+Clostridium paraputrificum
+Corynespora cassiicola
+Cryptococcus gattii
+Cryptosporidium
+Dialister invisus
+Dialister micraerophilus
+Dialister pneumosintes
+Dialister propionicifaciens
+Echinococcus multilocularis
+Enterobacter gergoviae
+Enterobacter hormaechei
+Enterocytozoon bieneusi
+Geotrichum
+Giardia
+Human metapneumovirus
+Human rhinovirus strain Hanks
+Ipomoea purpurea
+Lactobacillus johnsonii
+Lassa virus
+Mycoplasma hominis
+Myxococcus xanthus DK 1622
+Oncomelania hupensis
+Porphyromonas asaccharolytica
+Porphyromonas levii
+Porphyromonas somerae
+Prevotella corporis
+Prevotella denticola
+Prevotella nigrescens
+Sporothrix
+Sporothrix albicans
+Sporothrix globosa
+Streptomyces albulus
+Ureaplasma
+Cyberlindnera saturnus
+Zygosaccharomyces
+Acanthamoeba lenticulata
+Acanthamoeba lugdunensis
+Bacillus mycoides
+Botryosphaeria berengeriana
+Citrobacter amalonaticus
+Cochliobolus australiensis
+Cylindrotheca closterium
+Delftia acidovorans
+Erwinia
+Exanthemachrysis gayraliae
+Exophiala spinifera
+Fowl plague virus
+Human coxsackievirus A9
+Human papillomavirus 16
+Lactobacillus sp.
+Macaca arctoides
+Penicillium roqueforti
+Pleurochrysis roscoffensis
+Polaribacter irgensii
+Pseudoalteromonas elyakovii
+Sargassum muticum
+Scedosporium apiospermum
+Trichophyton erinacei
+Ulva intestinalis
+Vibrio aestuarianus
+Xanthomonas axonopodis
+Vigna radiata var. radiata
+Influenza B virus (B/Perth/211/2001)
+Acinetobacter rhizosphaerae
+Bacillus psychrodurans
+Aerococcus viridans
+Pseudomonas borealis
+Arthrobacter arilaitensis
+Acinetobacter sp. An9
+Psychrobacter
+Plasmodium falciparum 7G8
+Plasmodium falciparum FCR-3/Gambia
+Plasmodium falciparum VS/1
+Babesia caballi
+Clostridium difficile CD196
+Kazachstania pintolopesii
+Cryptococcus neoformans var. neoformans
+Burkholderia ambifaria
+Burkholderia anthina
+Burkholderia vietnamiensis
+Burkholderia dolosa
+Burkholderia stabilis
+Escherichia coli str. K-12 substr. W3110
+Salmonella enterica subsp. enterica serovar Bredeney
+Salmonella enterica subsp. enterica serovar Blockley
+Salmonella enterica subsp. enterica serovar Saintpaul
+Salmonella enterica subsp. enterica serovar Stanley
+Salmonella enterica subsp. enterica serovar Hvittingfoss
+Salmonella enterica subsp. enterica serovar Rissen
+Salmonella enterica subsp. enterica serovar Montevideo
+Escherichia coli str. K-12 substr. DH10B
+Human herpesvirus 2 strain 333
+Borrelia spielmanii
+Enterobacter cancerogenus
+Hartmannella vermiformis
+Salmonella enterica subsp. enterica serovar Virchow
+Salmonella enterica subsp. enterica serovar Heidelberg
+Prevotella sp.
+Influenza A virus (A/Thailand/1(KAN-1)/2004(H5N1))
+Influenza A virus (A/chicken/Yogjakarta/BBVet-IX/2004(H5N1))
+Influenza A virus (A/whooper swan/Mongolia/1/2009(H5N1))
+Influenza A virus (A/duck/Laos/25/2006(H5N1))
+Influenza A virus (A/Turkey/651242/2006(H5N1))
+Streptococcus sp. 'group C'
+Purpureocillium lilacinum
+Thielavia terrestris
+Ajellomyces dermatitidis
+Scedosporium
+Staphylococcus aureus VRS1
+Ureaplasma urealyticum
+Hepatitis C virus subtype 2a
+Hepatitis C virus subtype 2b
+Hepatitis C virus subtype 3a
+Hepatitis C virus subtype 4a
+Hepatitis C virus subtype 6a
+Cunninghamella bertholletiae
+Rhizopus microsporus
+Rhizomucor pusillus
+Rhizomucor variabilis
+Actinomucor
+Apophysomyces
+Vaccinia virus IHD-J
+Aspergillus tubingensis
+Escherichia coli DH5[alpha]
+soya bean
+vericilla zoster virus
+Aggregatibacter actinomycetemcomitans
+acinetobacter calcoacet
+acinetobacter iwoffi
+Cebus
+Actinomyces israelii
+Actinobacillus pleuropneumoniae
+rauscher leukemia virus
+shigella enteritidis
+ritonavir resistant virus
+rhinovirus type 1b
+rhinovirus type 1a
+human immuno deficiency virus-type1
+salmonella typhosa
+scopulariopsis communis
+Herpes simplex virus (type 1 / strain SC16)
+varicella zoster
+streptococcus pneumoniae iii
+streptococcus pneumoniae sv-1
+streptococcus pneumoniae u
+Human immunodeficiency virus type 1 (CLONE 12)
+trichophyton mentagrophyte
+staphylococcus eidermidis
+mushroom
+staphylococcus aureus giorgio
+s.pyogenes c 203
+trichophyton mentagro
+vesicular stomatitis
+trichophyton asteroides
+reo-1 virus
+varicella-zoster virus ys
+trychophyton nanum
+FNT
+PDE3
+PDE7
+mouse
+human
+Septoria
+Acinetobacter species
+PRKA
+Taxus chinensis
+GABR
+pPlasmodiumfalciparum
+Rodentia
+Aspergillus spp.
+Microsporum spp.
+Trichophyton spp.
+Capra hircus
+BACE
+Adra1
+CA5
+CHRNA7
+Asgr
+ESR
+influenza a
+influenza b
+Blattodea
+gram positive bacteria
+enterococcus strain
+human rhinovirus type 1b
+CYP11B
+Grin1
+THR
+Monkey
+Influenza A virus  (strain: A/PR/8/34)
+Candida boidinii
+Pichia
+tricophyton asteroides
+usobacterium necrophorum 6
+peptostreptococcus s
+herpes simplex virus (hsv) -1
+pseudomonas morganii
+providencia stuardii
+pullaria pullulans
+salmonella species
+Pyrrhocoris apterus
+Lactobacillus acidophilus
+Escherichia coli BL21(DE3)
+Histophilus somni
+Lactobacillus jensenii
+Acinetobacter pittii
+Rhizopus microsporus var. oligosporus
+Rhinocladiella aquaspersa
+Clostridium rectum
+Clostridium scindens
+Clostridium sp.
+Clostridium spiroforme
+Propionibacterium avidum
+Propionibacterium propionicum
+Geobacillus toebii
+Chlamydophila pneumoniae CWL029
+Kazachstania exigua
+Candida humicola
+infleunza a virus
+mycobacteria paratuberculosis
+influenza rna virus
+mycobacterium ranae
+torpedo fuscomaculata
+neisseria perfl.
+Candida kruisii
+protozoa
+guanea pig
+Grin2a
+Streptococcus aureus
+Htr3
+human immunodeficiency virus type I
+ADRA1
+EDG
+GRIK
+sea urchin
+Agtr
+Synechocystis sp. PCC 6803
+syncitial virus
+Agrobacterium sp.
+Streptococcus suis
+Fusarium oxysporum f. cubense
+Enterococcus  fecium
+Vancomycin resistant Enterococci faecium
+Methicillin-resistant Staphylococcus aureus
+pneumococci
+varicella zoster virus
+psuedomonas cepacia
+klebsiella species
+Albinaria caerulea
+human rhinovirus16
+Setaria cervi
+escherichia coli a 15119
+echovirus-11
+Carona virus
+shieello flexneri
+Listeria monocytogenes ATCC 19115
+Citrobacter werkmanii
+Achromobacter xylosoxidans
+Lactobacillus crispatus
+Escherichia coli UTI89
+Clostridium symbiosum
+Actinomyces odontolyticus
+Bifidobacterium adolescentis
+Bifidobacterium dentium
+Bifidobacterium longum subsp. infantis
+Bifidobacterium pseudocatenulatum
+Catenibacterium mitsuokai
+Coprobacillus cateniformis
+Paramecium caudatum
+Giardia muris
+Streptococcus sp. 'group B'
+Torulaspora delbrueckii
+influenza A virus
+Norwalk virus
+Bacillus subtilis subsp. subtilis str. NCIB 3610
+Bacillus anthracis str. Sterne
+Hepatitis C virus isolate HC-J4
+Trichoderma viride
+Pseudomonas aeruginosa PA14
+Pseudomonas luteola
+Sporosarcina pasteurii
+Rhizopus homothallicus
+Saccharomyces paradoxus
+Porphyromonas gingivalis ATCC 33277
+Acinetobacter calcoaceticus/baumannii complex
+Streptococcus uberis
+Aeromonas hydrophila subsp. hydrophila ATCC 7966
+Prevotella bergensis
+Fonsecaea monophora
+Streptococcus sp. 'group G'
+Salmonella enterica subsp. enterica serovar Typhimurium str. LT2
+Campylobacter ureolyticus
+Veillonella dispar ATCC 17748
+Desulfovibrio desulfuricans
+Naegleria fowleri
+Salmonella enterica subsp. enterica serovar Choleraesuis
+Helicobacter pylori G27
+Acremonium sp.
+Vibrio anguillarum 775
+Escherichia coli ETEC H10407
+Influenza A virus (A/California/27/2007(H1N1))
+Influenza A virus (A/Mexico/4604/2009(H1N1))
+Salmonella enterica subsp. enterica serovar Newport
+Yellow fever virus 17D
+Human herpesvirus 3 strain Oka vaccine
+Malassezia pachydermatis
+Mycobacterium avium subsp. avium ATCC 25291
+influenza B virus
+saprolegnia species
+salmoneila anatum
+salmoneila onotum
+reverse transcriptase
+human immuno defeciency virus type 2
+staphylococcus aure
+salmonella flexneri
+shig dysentariae
+rhinovirus type 5
+rhinovirus type-2
+staphylococcus mitis
+sarcinea lutea
+sarcinea luteus
+shieello flerneri
+staphyl ococcus species
+staphyl ococcuspyogenes
+human rhinovirus serotype 6
+human rhinovirus serotype 67
+human rhinovirus serotype 86
+human rhinovirus serotype 89
+human rhinovirus serotype 2
+salmonella typhimurium a
+sf-162 macrophage tropic virus
+sf-2 tropic virus
+human immuno deficiency virus type-1
+serratia species
+serratia spp.
+Human herpes virus 2
+staphylococcus aureus a
+human rhinovirus serotype 14
+human rhinovirus serotype 15
+t4 coliphage
+staphylococcus epidermitis
+staphylococcus equisimilis
+staphylococcus faecalis
+staphylococcus faecium
+staphylococcus feacalis
+staphylococcus innsbruck
+herpes simplex virus (hsv) -2
+staphylococcus hemolyticus
+vz virus
+sunflower
+Enterococcus raffinosus
+Physalospora
+shep
+ELA
+human immunodeficiency virus
+Pontoscolex corethrurus
+Salmonella enterica subsp. enterica serovar Setubal
+Alternaria macrospora
+Human echovirus 7
+Suberites domuncula
+Deinococcus radiodurans
+Nephotettix cincticeps
+Hantaan virus
+Sambucus nigra
+Mycoplasma pulmonis
+Angiococcus disciformis
+Prevotella nanceiensis
+Prevotella baroniae
+Salinispora tropica CNB-440
+Escovopsis
+Pseudonocardia
+Bacillus megaterium DSM 319
+Streptomyces sp. A012304
+Streptomyces avermitilis
+Methanosarcina barkeri
+Streptomyces antibioticus
+Escherichia coli 042
+Human immunodeficiency virus type 1 (JRCSF ISOLATE)
+Aspergillus clavatus
+Mycoplasma genitalium
+Salmonella enterica subsp. enterica serovar Hadar
+Acinetobacter baumannii ATCC 17978
+Bacillus anthracis str. Ames
+Zaire ebolavirus
+Sudan ebolavirus
+Influenza A virus (A/chicken/Korea/01310/2001(H9N2))
+Influenza A virus (A/California/08/2009(H1N1))
+Bradyrhizobium japonicum
+Prevotella melaninogenica ATCC 25845
+Prevotella oris
+Porphyromonas asaccharolytica DSM 20707
+Bilophila wadsworthia
+Campylobacter fetus subsp. fetus
+Salmonella enterica subsp. enterica serovar Poona
+Campylobacter coli
+Clostridium cocleatum
+Murine cytomegalovirus (strain Smith)
+Epstein-barr virus strain p3hr-1
+Lactobacillus iners
+Lactobacillus vaginalis
+Aspergillus lentulus
+Aspergillus fumisynnematus
+Neosartorya hiratsukae
+Neosartorya pseudofischeri
+Aspergillus viridinutans
+Streptomyces albus
+Aeromonas enteropelogenes
+Bifidobacterium
+Lactobacillus
+Clostridium
+Bacteroides fragilis NCTC 9343
+Tropheryma whipplei
+Treponema pallidum
+Streptococcus pneumoniae GA17457
+Listeria monocytogenes EGD-e
+Bacteroides
+Fusarium oxysporum f. sp. cucumerinum
+Red clover mottle virus
+Desulfovibrio fairfieldensis
+Desulfovibrio sp.
+Xanthomonas oryzae pv. oryzae
+Influenza B virus (B/Lee/1940)
+Staphylococcus aureus RN4220
+Mycobacterium tuberculosis UT205
+Trypanosoma brucei brucei strain 927/4 GUTat10.1
+Tachypleus tridentatus
+Influenza A virus (A/Puerto Rico/8/34(H1N1))
+Fusarium oxysporum f. sp. dianthi
+Influenza A virus (A/Hong Kong/7/1987(H3N2))
+Influenza B virus (B/Hong Kong/05/1972)
+Bartonella henselae str. Houston-1
+Bartonella quintana
+Bartonella elizabethae
+Bartonella vinsonii
+Bartonella henselae
+Cryptococcus gastricus
+Sulfurihydrogenibium yellowstonense
+Aspergillus brasiliensis
+Streptococcus entericus
+Staphylococcus equorum
+Burkholderia gladioli
+Bacillus licheniformis ATCC 14580
+poliovirus 1
+plasmodium facipaurum
+pseudomonas auriginosa
+peptococcus asacchar
+peptococcus prevotti
+peptococcus variabilis
+streptomyces species
+physarum amoeba
+pseudomonas aerginosa
+rauscher-murine leukemia virus
+polio-1 virus
+human immunodeficiency virus type i
+human cyto megalo virus
+plasmodium falciparum f32
+plasmodium falciparum fcb1
+plasmodium falciparum k1
+providentia stuartii
+poliovirus-2
+poliovirus-3
+phuman rhinovirus
+pseudomonas rettgeri
+pseudomonas stuartiii
+polio type1 virus
+reo virus type 1
+staphylococcus aureus smith
+human rhinovirus14
+rhino-1a virus
+rhino-9 virus
+simina varicella virus
+herpes dimplex virus
+sorrel
+southern corn rootworm
+shigella dysentariae
+human rhinovirus serotype 1a
+human rhinovirus serotype 1b
+human rhinovirus serotype 22
+human rhinovirus serotype 30
+rhizotonia solani
+Gallionella
+suid herpesvirus type-1
+serratia marcesc
+staphylococcus pneumoniae iii
+staphylococcus pureus
+staphylococcus pyogenes
+staphylococcus pyrogenes
+rhizopus arhizus
+streptococcus fae-cium
+ustilago zeae
+ptrichophyton mentagrophytes
+trichophyton mentagrophytes 4
+trichophyton mentagrophytes fungus
+toad
+varicella-zoster virus tkys-r
+dengue-4- virus
+tlav virus
+torulopsis hansenii
+streptococcus haemolyticus
+staphylococcus homonis
+trichophyton mentagraphytes
+ibreo.cholerae
+trypanosoma vaginalis.
+streptococcus chartreusis
+streptocossus epidermidis
+staphylococcus aureus s
+streptococcus pyogenes a
+streptococcus pyogenes c 203
+vinsa virus
+trypanasoma cruzi
+protozoatrypanosoma brucei
+yersinia spp
+Rhizopus solani
+Herpes simplex virus
+guinea pig
+MTNR1
+Saccharomycescerevisiae
+Hdac
+human immunodefiecency virus type1
+epsteinBarr virus
+Esr1
+Human T-cell lymphotrophic virus type 1 (strain ATK)
+human T-cell leukemia virus type 1
+Methanobacteriumthermoautotrophicum
+sindbus virus
+pinchinde virus
+Methanothermobacter thermautotrophicus str. Delta H
+PPARG
+Esr
+rat
+Beta vulgaris subsp. vulgaris
+GSK3
+punta toro A virus
+Rhopilema esculentum
+Escherichia cloacae
+ooperia oncopphora
+Cercopithecine herpesvirus 8
+pseudomona pyocyanea
+streptomyces cellulose
+dephne genkwa
+human rhinovirus-14
+Pseudomonas auriginosa
+Enterobacter faecalis
+Escherichia coli ATCC 8739
+Human herpesvirus 5 strain Towne
+Ostreidae
+Trypanosoma cruzi strain CL Brener
+Chinchilla lanigera
+Clavispora lusitaniae ATCC 42720
+Aspergillus carbonarius
+Trichomonas vaginalis G3
+Bovicola ovis
+Fonsecaea
+Macrococcus caseolyticus
+Influenza A virus (A/chicken/Egypt/1/2006(H5N1))
+Porcine rotavirus
+Mycoplasma bovis
+Aeromonas bestiarum
+Citrobacter youngae
+Human immunodeficiency virus type 1 BH10
+Filobasidiella neoformans
+Mycobacterium tuberculosis CDC1551
+Porcine reproductive and respiratory syndrome virus
+Burkholderia pyrrocinia
+Salmonella enterica subsp. enterica serovar Choleraesuis str. SC-B67
+Cladophialophora carrionii
+Colletotrichum
+Pseudomonas aeruginosa PA7
+Helicobacter pylori 26695
+Streptococcus pneumoniae D39
+Anas platyrhynchos
+Clostridium difficile ATCC 43255
+Marburgvirus
+Galliformes
+Verticillium
+Gaeumannomyces graminis
+Tetrahymena
+Stenotrophomonas sp. TSG4
+Murine norovirus 1
+Fusarium moniliforme
+Escherichia coli O6
+Streptomyces chromofuscus
+Cottontail rabbit papillomavirus
+Influenza B virus (B/Florida/4/2006)
+Saccharomyces cerevisiae RM11-1a
+Saccharomyces bayanus
+Proteus penneri
+Burkholderia sp.
+Acinetobacter junii
+Yersinia pestis CO92
+Anaerococcus lactolyticus
+Anaerococcus murdochii
+Anaerococcus
+Gemella morbillorum
+Gemella sanguinis
+Peptoniphilus harei
+Actinomyces turicensis
+Atopobium parvulum
+Eubacterium contortum
+Eubacterium cylindroides
+Eubacterium saburreum
+Mogibacterium timidum
+Slackia exigua
+Lactobacillus rhamnosus
+Influenza A virus (A/Vietnam/1194/2004(H5N1))
+Influenza A virus (A/duck/Potsdam/1402-6/1986(H5N2))
+Listeria ivanovii subsp. londoniensis
+Francisella tularensis subsp. tularensis
+Francisella tularensis subsp. holarctica LVS
+Porphyromonas macacae
+Clostridium disporicum
+Clostridium fallax
+Clostridium glycolicum
+Streptococcus pyogenes M1 GAS
+Human coxsackievirus A10
+Human coxsackievirus A16
+Streptomyces platensis
+Mycobacterium avium subsp. hominissuis
+Borrelia spielmanii A14S
+Borrelia burgdorferi B31
+Capnocytophaga sputigena
+Chlamydophila pneumoniae TW-183
+Prevotella
+Prevotella tannerae
+Veillonella
+Streptomyces lydicus
+Acinetobacter nosocomialis
+Clostridium subterminale
+Bacillus anthracis str. A2012
+Thermus thermophilus HB8
+Helicobacter pylori HPAG1
+Salmonella sp. 'group B'
+Chlamydia suis
+Chlamydia muridarum
+Chlamydophila caviae
+Mycoplasma capricolum
+Mycoplasma mycoides
+Staphylococcus aureus VRS2
+Chrysosporium tropicum
+Bacteroides heparinolyticus
+Prevotella oulorum
+Bacteroides zoogleoformans
+Porphyromonas
+Salmoninae
+Haemophilus sp.
+Human immunodeficiency virus type 1 (BRU ISOLATE)
+Chrysosporium keratinophilum
+Psychrobacter sp. DY9-2
+Psychrobacter frigidicola
+Trichosporon jirovecii
+Ustilago
+Trichosporon domesticum
+Trichosporon mycotoxinivorans
+Aspergillus sydowii
+Aspergillus ustus
+Fennellia nivea
+Influenza A virus (A/Brisbane/59/2007(H1N1))
+Cebus capucinus
+Hepatitis C virus genotype 2
+Hepatitis C virus genotype 3
+Bacillus thuringiensis serovar kurstaki
+Penicillium decumbens
+Ralstonia pickettii
+Cupriavidus necator
+unidentified retrovirus
+Streptococcus pseudopneumoniae
+Oesophagostomum dentatum
+Penicillium fellutanum
+Oncorhynchus masou
+Influenza B virus (B/Shanghai/361/2002)
+Influenza A virus (A/Panama/2007/1999(H3N2))
+Plasmodium
+Asterias amurensis
+Cellulosimicrobium cellulans
+Mycobacterium sp. Mc2
+Borrelia burgdorferi
+Leishmania
+Plasmodium vinckei
+Arcanobacterium haemolyticum
+Lake Victoria marburgvirus - Ravn
+Lake Victoria marburgvirus - Ci67
+Ebolavirus
+Leptospira interrogans
+Leptospira interrogans serovar Bataviae
+Leptospira interrogans serovar Pyrogenes
+Leptospira weilii
+Leptospira interrogans serovar Icterohaemorrhagiae
+Leptospira interrogans serovar Pomona
+Leptospira kirschneri serovar Grippotyphosa
+Leptospira interrogans serovar Canicola
+Mycoplasma fermentans
+Streptococcus agalactiae ATCC 13813
+Bacillus cereus ATCC 14579
+Salmonella enterica subsp. enterica serovar Haifa
+Salmonella enterica subsp. enterica serovar Kedougou
+Salmonella enterica subsp. enterica serovar Mbandaka
+Clostridium bolteae
+Campylobacter sp.
+Influenza B virus (B/Malaysia/2506/2004)
+Streptococcus gordonii str. Challis
+Staphylococcus xylosus
+Influenza A virus (A/Hong Kong/1073/99(H9N2))
+Gibberella thapsina
+Influenza A virus (A/Texas/12/2007(H3N2))
+Influenza A virus (A/Washington/01/2007(H3N2))
+Aeromonas veronii
+Kluyvera georgiana
+Lichtheimia ramosa
+Lichtheimia
+Burkholderia cepacia complex
+Gemella
+Citrobacter braakii
+Enterobacter amnigenus
+Parabacteroides distasonis ATCC 8503
+Bacteroides ovatus ATCC 8483
+Bacteroides uniformis ATCC 8492
+Campylobacter gracilis
+Sutterella wadsworthensis
+Mycobacterium peregrinum
+Mycobacterium mucogenicum
+Mycobacterium alvei
+Mycobacterium porcinum
+Mycobacterium wolinskyi
+Salmonella enterica subsp. enterica serovar Binza
+Desulfovibrio piger
+Desulfovibrio vulgaris
+Bacteroides nordii
+Flavonifractor plautii
+Streptococcus agalactiae COH1
+Brucella melitensis
+Brucella suis ATCC 23445
+Burkholderia mallei
+Nonomuraea
+Streptomyces venezuelae
+Actinoplanes teichomyceticus
+Mycoplasma pneumoniae M129
+Mycoplasma pneumoniae FH
+Porphyromonas uenonis
+Tissierella praeacuta
+Clostridium lactatifermentans
+Clostridium leptum
+Clostridium nexile
+Escherichia coli str. K-12 substr. MG1655
+Aspergillus glaucus
+Phialemonium curvatum
+Fusarium reticulatum
+Coprinellus domesticus
+Neurospora sitophila
+Ruminococcus flavefaciens
+Ruminococcus gnavus
+Ruminococcus lactaris
+Blautia luti
+Ruminococcus obeum
+Blautia producta
+Influenza A virus (A/New Caledonia/20/1999(H1N1))
+Enterococcus sulfureus
+Legionella sp.
+Shewanella oneidensis
+Saccharomyces sp.
+Borrelia afzelii
+Borrelia garinii
+Pseudomonas syringae pv. aptata str. DSM 50252
+Salmonella enterica subsp. enterica serovar Braenderup
+Salmonella enterica subsp. enterica serovar Corvallis
+Mycobacterium tuberculosis str. Erdman
+Bos Taurus
+Staphylococcus vitulinus
+Trypanosoma brucei TREU927
+Thermoplasma acidophilum
+Metaphire posthuma
+Rat sialodacryoadenitis coronavirus
+Murine coronavirus
+Bovine coronavirus
+Burkholderia thailandensis
+Pseudococcomyxa simplex
+Botryococcus braunii
+Nocardia
+Leishmania braziliensis MHOM/BR/75/M2904
+Prunus
+Cellulomonas fimi
+Coniella diplodiella
+Rattus Norvegicus
+rhinovirus type 2
+salmonella typhimuriurn
+candida paratropicalis
+Mustela
+Maclura tricuspidata
+Chlorocebus sabaeus
+leishmanial tubulin
+trypanosoma infantum
+Bos javanicus
+Grik
+Cryptococcus neoformans var. grubii H99
+KCNH
+retro virus
+Pieris rapae
+Blepharisma japonicum
+California encephalitis virus
+Hepatitis C virus (isolate H77)
+Nostoc
+Staphylococcus aureus subsp. aureus
+Human immunodeficiency virus type 2 (isolate KR)
+Vaccinia virus Lister
+Dothiorella gregaria
+Coxsackievirus B3 (strain Nancy)
+Human enterovirus 71 (strain BRCR)
+Echovirus 11 (strain Gregory)
+Streptomyces prasinus
+Influenza A virus (A/Teal/Hong Kong/W312/97(H6N1))
+Influenza A virus (A/duck/Alberta/35/1976(H1N1))
+Influenza A virus (A/duck/Singapore/3/1997(H5N3))
+Influenza A virus (A/duck/Germany/1215/1973(H2N3))
+Penicillium ulaiense
+Human coxsackievirus A7
+Aspergillus fumigatus Af293
+Chromobacterium viscosum
+Fusarium oxysporum f. sp. lupini
+Macrotermes subhyalinus
+Influenza A virus (A/Bar-headed Goose/Qinghai/59/05(H5N1))
+Atopobium minutum
+Lactobacillus catenaformis
+Influenza A virus (A/Wisconsin/67/2005(H3N2))
+Influenza A virus (A/Chicken/Laos/Xaythiani 26/2006(H5N1))
+Coxiella burnetii
+Mycobacterium bovis BCG str. Tokyo 172
+Simian immunodeficiency virus - mac
+Vibrio cholerae O1
+Cunninghamella echinulata
+Human immunodeficiency virus type 1 (SF162 ISOLATE)
+Guinea pig cytomegalovirus (strain 22122 / ATCC VR682) (GPCMV)
+Influenza A virus (A/parrot/Ulster/73(H7N1))
+Plasmodium falciparum FC27/Papua New Guinea
+Musa acuminata
+Paramyxoviridae
+Atropa belladonna
+Scytalidium hyalinum
+Influenza A virus (A/Washington/10/2008(H1N1))
+Human herpesvirus 5 strain Toledo
+lai tropic virus
+Colinus
+(SIV) Simian immunodeficiency virus mac251
+Pneumocystis carinii pneumonia
+human immuno defeciency virus type i
+sulfobolus solfataricus
+influenza virus a
+sarcina subflava
+staphylococcus epidermidis at
+spilarctia obliqua
+sporothrixschenckii
+sporotrichum scenckii
+streptococcus pneum
+streptococcus beta-haemolyticus
+streptococcus pneumoniae i
+streptococcus feacal
+trypanosoma gambiense.
+streptomyces pyogenes
+streptpcoccus marcescens
+Human coxsackievirus A16 (strain G-10)
+Echovirus 9 (strain Hill)
+Human coxsackievirus A21 (strain Coe)
+Methanocaldococcus jannaschii
+Streptococcus sobrinus 6715
+Simian immunodeficiency virus - agm
+Staphylococcus aureus subsp. aureus Mu3
+Erythrina variegata
+Influenza A virus (A/Wuhan/359/1995(H3N2))
+Penicillium pittii
+Talaromyces flavus
+Bacillus sp. PS3
+Aspergillus restrictus
+Acremonium chrysogenum
+Odontaster validus
+Gordonia rubripertincta
+Influenza A virus (A/chicken/FPV/Weybridge(H7N7))
+Helicobacter pylori NCTC 11637
+Mycobacterium tuberculosis 210
+Acinetobacter baumannii AYE
+Aspergillus candidus
+Fusarium poae
+Fusarium lateritium
+Porcine teschovirus 1
+Saccharomyces mikatae
+Vibrio harveyi ATCC BAA-1116
+Human herpesvirus 6B
+Escherichia coli O55:H7
+Influenza A virus (A/Korea/KBNP-0028/2000(H9N2))
+Influenza A virus (A/Solomon Islands/3/2006(H1N1))
+Prevotella bivia DSM 20514
+human rhinovirus serotype 25
+human rhinovirus serotype 50
+Botrytis
+Ircinia
+Clostridium aldenense
+Vibrio cholerae non-O1
+Trichosporon ovoides
+coxsakie b4
+versilla zosta virus
+verticillium serrae
+FOLR
+Synechocystis sp.
+Rhapis subtilis
+human immunodeficiency virus type 1
+pisces
+Protobothrops elegans
+TOP2
+Candida parapsilosis (ATCC 22019)
+IL2R
+Escherichiacoli
+Enterobacter En1
+Enterobacter En3
+Rice
+Aspergillus fumigatus L
+Staphylococcus pyogenes
+Staphylococcus agalatiae
+Slc6a
+rat 
+PDGFR
+human immuno deficiency virus protease
+Csnk2
+murine moloney sarcoma
+Cowpox
+Poliovirus type2
+Echinococcus granulosus
+Japanese encephalitis virus strain Nakayama
+Prevotella veroralis
+Prevotella salivae
+Human coronavirus OC43
+Enterobacter helveticus
+Proteus myxofaciens
+Ancylostoma caninum
+Influenza A virus (A/Washington/29/2009(H1N1))
+Influenza A virus (A/turkey/Minnesota/833/1980(H4N2))
+Influenza A virus (A/New York/107/2003(H7N2))
+Influenza A virus (A/California/04/2009(H1N1))
+Madurella mycetomatis
+Acinetobacter sp. ADP1
+Novosphingobium capsulatum
+Influenza A virus (A/California/05/2009(H1N1))
+Hepatitis C virus subtype 5a
+Human adenovirus 11p
+Salmonella enterica subsp. enterica serovar London
+Salmonella enterica subsp. enterica serovar 4,[5],12:i:-
+Influenza A virus (A/New York/18/2009(H1N1))
+Paenibacillus polymyxa
+Clostridium hathewayi
+Clostridium sporosphaeroides
+Coriobacterium
+Holdemania filiformis
+Ruminococcus albus
+Pseudoalteromonas sp. D41
+Yersinia pseudotuberculosis IP 32953
+Leishmania major strain Friedlin
+Rhizobium sp.
+Plasmodium falciparum Mad20/Papua New Guinea
+human rhinovirus serotype 21
+H5N1 subtype
+Fusarium sporotrichioides
+Mucor javanicus
+escherichia coli kc-14
+poliovirus type-2
+Agromyces mediolanus
+Alloiococcus otitis
+Bacillus endophyticus
+Escherichia coli O111:NM
+Inquilinus limosus
+Chlamydomonas
+Scenedesmus bajacalifornicus
+Haloferax volcanii
+Archaeoglobus fulgidus
+Pseudomonas mevalonii
+Diaporthe citri
+Influenza A virus (A/New Jersey/8/1976(H1N1))
+Influenza A virus (A/Brisbane/10/2007(H3N2))
+Influenza A virus (A/udorn/1972(H3N2))
+Plasmodium Falciparum
+Lymphocytic choriomeningitis virus
+Andes virus
+Toxoplasma gondii PRU
+Plasmodium ovale
+H1N1 swine influenza virus
+Influenza A virus (A/Uruguay/716/2007(H3N2))
+Influenza A virus (A/Oklahoma/3052/2009(H1N1))
+Colletotrichum capsici
+influenza virus b
+pseudomom aeruginosa
+penicillium digitatum 0
+parainfluenza 3
+suarus chinesis
+Kocuria rhizophila DC2201
+Dysidea avara
+Oncorhynchus mykiss
+Oncorhynchus tshawytscha
+Rice stripe virus
+Homo sapiens / Rattus norvegicus
+Methanococcus maripaludis S2
+Musa x paradisiaca
+KLK
+Naja mocambique
+PRKAC
+Caenorhabditis
+varicella-zoster virus t
+herpes simplex virus type 1
+cow
+Chrna
+Influenza virus
+Hydrophis
+CSNK2
+Escherichia.coli
+Haemophiliusinfluenzae
+Trichophyton mentagraphytes
+Oryza sativum
+human immunodeficiency virus type IIIB
+Monkeypox
+Varicellaria
+Enterobacterium faecium
+Escherichia coli O26:H11
+Tamarindus indica
+Pectobacterium carotovorum subsp. carotovorum
+Vibrio fischeri ES114
+Influenza A virus (A/Hong Kong/1/1968(H3N2))
+Micrococcus luteus NCTC 2665
+Influenza A virus (A/swine/Belzig/2/2001(H1N1))
+Influenza A virus (A/environment/Viet Nam/1203/2004(H5N1))
+Lewia infectoria
+Cladophialophora bantiana
+Lecythophora hoffmannii
+JC polyomavirus
+Listeria grayi
+Listeria ivanovii
+Western equine encephalomyelitis virus
+Neisseria mucosa
+Monascus purpureus
+Actinomyces neuii subsp. anitratus
+Yersinia ruckeri
+Salmonella enterica subsp. enterica serovar Virginia
+Fusobacterium necrogenes
+Influenza A virus (A/Georgia/17/2006(H1N1))
+Influenza A virus (A/Georgia/20/2006(H1N1))
+Influenza A virus (A/New Jersey/15/2007(H1N1))
+Chlamydia trachomatis E/Bour
+Chlamydia trachomatis J/UW-36
+Shewanella putrefaciens
+Shewanella algae
+Influenza A virus (A/Idaho/01/2008(H1N1))
+Influenza A virus (A/Bethesda/956/2006(H3N2))
+Influenza A virus (A/Florida/01/2009(H3N2))
+Influenza A virus (A/New Hampshire/01/2009(H3N2))
+Influenza B virus (B/Memphis/20/96)
+Influenza B virus (B/New York/22/2008)
+Influenza B virus (B/Illinois/47/2005)
+Influenza B virus (B/Michigan/20/2005)
+Influenza A virus (A/Michigan/09/2007(H1N2))
+HIV-1 group O
+HIV-1 group M
+Ruminococcus torques
+Odoribacter splanchnicus
+Clostridium bartlettii
+Clostridium beijerinckii
+Clostridium celerecrescens
+Fusarium oxysporum f. sp. lycopersici 4287
+Rhodococcus opacus
+Brevundimonas
+Gordonia sp.
+Kocuria
+Klebsiella aerogenes
+Sarcina ventriculi
+Hyphopichia burtonii
+Paracoccus sp.
+aeinetobacter anitrotap
+Giardia lamblia
+Human immunodeficiency virus type 1 (isolate YU2)
+Influenza A
+Mus Musculus
+Influenza A virus (A/Indonesia/5/2005(H5N1))
+Epidermophyton
+Staphylococcus saprophyticus subsp. saprophyticus ATCC 15305
+Mus muculus
+Plasmodium lophurae
+Bovine rotavirus strain RF
+Pediococcus
+Prorhinotermes
+Glomerella truncata
+Phomopsis longicolla
+Flavobacterium sp.
+Eimeria praecox
+Beauveria bassiana
+Alcaligenaceae bacterium FB188
+Echinus esculentus
+Crassostrea gigas
+Cryptococcus albidosimilis
+Xanthomonas albilineans
+Staphylococcus hominis subsp. novobiosepticus
+Staphylococcus auricularis
+Prevotella buccae ATCC 33574
+Parabacteroides goldsteinii
+Clostridium aminobutyricum
+Pseudoramibacter alactolyticus
+Eubacterium biforme
+Eubacterium callanderi
+Eubacterium rectale
+Clostridium citroniae
+Clostridium baratii
+Listeria seeligeri
+Listeria welshimeri
+Neisseria sp.
+Methylovorus
+Ehrlichia chaffeensis
+Lactobacillus reuteri
+Penicillium aurantiogriseum
+Mortierella alpina
+Candida membranifaciens
+Acinetobacter sp. N2
+Murine adenovirus 1
+Edwardsiella ictaluri
+Pseudomonas lini
+Acinetobacter radioresistens
+Listeria monocytogenes 10403S
+Exophiala jeanselmei
+Willaertia magna
+Chikungunya virus
+Campylobacter
+Bifidobacterium sp.
+Eubacterium sp.
+Influenza A virus (A/Florida/21/2008(H1N1))
+Influenza A virus (A/Wisconsin/16/2008(H1N1))
+Influenza A virus (A/North Carolina/02/2009(H1N1))
+Human adenovirus 31
+Human adenovirus 4
+Human adenovirus 41
+Tripneustes gratilla
+Aspergillus foetidus
+Human echovirus 4
+Human echovirus 30
+Human enterovirus 70
+Streptomyces hygroscopicus
+Salmonella enterica subsp. enterica serovar Concord
+Actinomyces
+Human rhinovirus 42
+Corynebacterium glutamicum ATCC 13032
+Bacillus sp. BS-01
+Escherichia hermannii
+Francisella novicida
+Lactobacillus sakei
+Salmonella enterica subsp. enterica serovar Infantis
+Waddlia chondrophila 2032/99
+Waddlia chondrophila WSU 86-1044
+Parachlamydia acanthamoebae
+Chlamydophila psittaci
+Staphylococcus aureus VRS3
+Salmonella enterica subsp. enterica serovar Minnesota
+Struthio camelus
+Leptonychotes weddellii
+Influenza A virus (A/NWS/1933(H1N1))
+Puccinia triticina
+Haliotis corrugata
+Patella vulgata
+Pseudomonas syringae pv. syringae
+Pseudomonas syringae pv. tabaci
+Pseudomonas syringae pv. tomato
+Pseudomonas syringae pv. maculicola
+Dictyostelium discoideum AX2
+Burkholderia cenocepacia J2315
+Finegoldia magna ATCC 29328
+Peptoniphilus indolicus
+Clostridium perfringens ATCC 13124
+Bifidobacterium adolescentis ATCC 15703
+Propionibacterium granulosum
+Lactobacillus brevis
+Lactobacillus salivarius
+Macaca
+Salmonella enterica subsp. enterica serovar Kentucky
+Salmonella enterica subsp. enterica serovar Bovismorbificans
+Bovine rotavirus
+Moraxella catarrhalis ATCC 43617
+Yersinia pseudotuberculosis YPIII
+Solobacterium moorei
+Listeria ivanovii subsp. ivanovii
+providentia
+Microsporidium prosopium
+Porcula salvania
+Anaerococcus octavius
+Bacteroides eggerthii DSM 20697
+Desulfovibrio piger ATCC 29098
+Canavalia
+Influenza A virus (A/Wyoming/03/2003(H3N2))
+Alternaria brassicicola
+Besnoitia jellisoni
+Daphnia magna
+Neisseria meningitidis MC58
+Rangifer tarandus
+Lactococcus lactis subsp. lactis
+Bacillus cereus ATCC 4342
+Human hepatitis A virus Hu/Northern Africa/MBB/1978
+Oncorhynchus
+Saksenaea vasiformis
+Exophiala oligosperma
+Exophiala xenobiotica
+Protea
+Staphylococcus fleurettii
+Globodera pallida
+Globodera rostochiensis
+Helicobacter
+Gardnerella
+Mason-Pfizer monkey virus
+Variola major virus
+Influenza A virus (A/Memphis/14/1996(H1N1))
+Paracoccidioides brasiliensis Pb18
+Indoplanorbis exustus
+Salmonella enterica subsp. enterica serovar Paratyphi B
+Influenza A virus (A/reassortant/NIBRG-14(Viet Nam/1194/2004 x Puerto Rico/8/1934)(H5N1))
+Bartonella sp.
+Candida aaseri
+Verticillium dahliae
+Streptomyces globisporus
+Peptoniphilus lacrimalis
+Influenza B virus (B/Illinois/03/2008)
+Clostridium botulinum A str. Hall
+Influenza A virus (A/Kitakyushu/159/93(H3N2))
+Streptomyces spp.
+Human adenovirus 1
+Prototheca zopfii
+Human respiratory syncytial virus A2
+Malassezia dermatis
+e. faecium strain 19434
+rhinovirus type 4
+staphylococcus agalactiae
+Coffea
+Mycoplasma
+Gloeosporium
+Metschnikowia pulcherrima
+Staphylococcus sciuri subsp. carnaticus
+Staphylococcus sciuri subsp. sciuri
+Staphylococcus sciuri subsp. rodentium
+Human papillomavirus type 18
+Human papillomavirus type 33
+Mycobacterium vanbaalenii
+Xanthomonas
+Hypocrea jecorina
+Influenza A virus (A/Krasnodar/101/1959(H2N2))
+Leptospira interrogans serovar Grippotyphosa
+Pseudomonas aeruginosa LESB58
+Candida apicola
+Cupriavidus metallidurans
+Bordetella
+Fusarium oxysporum f. sp. niveum
+Influenza A virus (A/Sydney/5/1997(H3N2))
+Xanthomonas sp.
+Dysdercus koenigii
+Chlamydophila pneumoniae AR39
+Francisella tularensis subsp. holarctica
+Aspergillus sclerotiorum
+human rhinovirus serotype 41
+Gorilla
+Influenza A virus (A/Ann Arbor/6/1960(H2N2))
+Hepatitis C virus genotype 4
+staphylococcus pneumoniae i
+proteus mirobilis
+Orientia tsutsugamushi
+Bulinus truncatus
+E. Coli
+Viscum album
+Sylvilagus floridanus
+Acidithiobacillus ferrooxidans
+Mycobacterium kansasii ATCC 12478
+Lactobacillus reuteri JCM 1112
+Porphyromonas circumdentaria
+punto toro virus
+taenia caecum
+PRSS
+xenopus oocyte
+Lipaphis erysimi
+Bacillus subtilis subsp. subtilis str. JH642
+Penicillium commune
+Escherichia coli DSM 30083
+Influenza A virus (A/Fort Monmouth/1/1947(H1N1))
+Rana catesbeiana
+Burkholderia glumae
+Pseudomonas fuscovaginae
+Colletotrichum orbiculare
+Pichia membranifaciens
+Borrelia
+Hortaea werneckii
+Influenza A virus (A/Thailand/Kan353/2004(H5N1))
+Influenza A virus (A/Anhui/1/2005(H5N1))
+Salmonella enterica subsp. enterica serovar Emek
+Parainfluenza virus 5
+Actinopterygii
+Arthrobacter
+Pimelobacter simplex
+Mycobacterium lacticola
+Malassezia globosa CBS 7966
+Influenza A virus (A/Guangdong-Luohu/219/2006(H1N1))
+Hepatitis C virus (isolate NZL1)
+Influenza B virus (B/Harbin/07/94)
+Mycobacterium septicum
+Bifidobacterium longum subsp. longum
+Human rhinovirus 3
+cryptococosis
+candida psuedotropicalis
+eneterococcus spp
+s.homonis
+vesicular stomatis
+Nocardia beijingensis
+Podospora anserina
+Lactococcus garvieae
+Influenza A virus (A/Tianjin-Jinnan/15/2009(H1N1))
+Human Immuno Deficiency Virus
+streptococcus epidermis
+Bracteacoccus
+Clostridium hylemonae
+Bacillaceae
+Homo Sapiens
+Hepatitis C virus genotype 6
+Hepatitis C virus genotype 5
+Proteus hauseri
+Bacillus subtilis subsp. spizizenii ATCC 6633
+Sulfurihydrogenibium azorense
+Pichia jadinii
+Clostridium botulinum A str. ATCC 3502
+Clostridium botulinum Bf
+Bothrops atrox
+Anser sp.
+Prevotella oralis ATCC 33269
+Trichosporon dermatis

@@ -1,36 +1,33 @@
-<div class="row span12 huge-font" id="searching-message">
-  {{#if App.searchResultsController.isSearching}}
-    ...Searching. Please wait...
-  {{/if}}
-</div>
-    {{#each result in App.searchController}}
-<div class="row">
-{{#if result.exactMatch}}
-  {{view App.SearchMatch}}
-{{else}}
-  {{view App.SearchResult resultBinding=result}}
-{{/if}}
-</div>
-{{/each}}
-
-<script type="text/javascript">
-
-$(window).off("scroll", scrollHandler);
-//TODO add scrolling back in when cw can handle pagination etc
-scrollOnThisPage = false;
-pageScrolling = false;
-
-scrollHandler = function() {
-    var s = $(window).scrollTop(),
-        d = $(document).height(),
-        c = $(window).height();
-        scrollPercent = (s / (d-c)) * 100;
-    if (scrollPercent >= 99 && pageScrolling != true && scrollOnThisPage == true) {
-        alert('Search scroll');
-//        disable_scroll();
-//        pageScrolling = true;
-//TODO fetch from search controller
-    }
-};
-$(window).scroll(scrollHandler);
-</script>
+<ul class="breadcrumb">
+  		<li><a href="/">Home</a> <span class="divider">/</span></li>
+  		<li>General Search<span class="divider">/</span></li>
+		<li class="active">{{totalResults}} Search Results Found</li>
+	
+		<div class="row pull-right"> 
+  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  				<button {{action switchView}} {{bind-attr class=":btn listViewActive:active"}} title="View only the label for search results">List</button>
+  				<button {{action switchView}} {{bind-attr class=":btn objectViewActive:active"}} title="View label, image and description for search results">Object</button>
+  			</div>
+		</div>
+</ul>
+	<ul style="list-style-type: none">
+    {{#each result in controller}}
+    {{#if listView}}
+		<li>
+			{{#if result.exactMatch}}
+  				{{view App.SearchMatch}}
+			{{else}}
+  				{{view App.SearchResult resultBinding='result'}}
+			{{/if}}
+		</li>
+    {{else}}
+		<li class="inline">
+			{{#if result.exactMatch}}
+  				{{view App.SearchMatch}}
+			{{else}}
+  				{{view App.SearchResult resultBinding='result'}}
+			{{/if}}
+		</li>
+    {{/if}}
+	{{/each}}
+</ul>

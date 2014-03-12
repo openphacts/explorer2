@@ -1,64 +1,103 @@
-<div class="search-exact-match big-margin-top">
+<div class="offset2">  
 {{#if result.isCompound}}
-    <div class="big-margin-right thumbnail left">{{cs_image_src result.csUri}}</div>
-    <h1>{{#linkTo compound result}}{{result.prefLabel}}{{/linkTo}}</h1>
-    <div class="clear"></div>
-    <h3 class="result-smiles big-margin-right big-margin-top">{{result.smiles}}</h3>
-    <dl class="big-margin-top">
-    <dt class="medium-padding-bottom"><h3>Description</h3></dt>
-    <dd>{{result.description}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Toxicity</h3></dt>
-    <dd>{{result.toxicity}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Protein Binding</h3></dt>
-    <dd>{{result.proteinBinding}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Bio-transformation</h3></dt>
-    <dd>{{result.biotransformationItem}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
-    <dd>{{result.fullMWT}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3># H-Bond Acceptors</h3></dt>
-    <dd>{{result.hba}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3># H-Bond Donors</h3></dt>
-    <dd>{{result.hbd}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Inchi</h3></dt>
-    <dd>{{result.inchi}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>MW Freebase</h3></dt>
-    <dd>{{result.mwFreebase}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>ro5 violations</h3></dt>
-    <dd>{{result.ro5Violations}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Rotatable Bonds</h3></dt>
-    <dd>{{result.rtb}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>AlogP</h3></dt>
-    <dd>{{result.logp}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular form</h3></dt>
-    <dd>{{result.molform}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Polar Surface Area</h3></dt>
-    <dd>{{result.psa}}</dd>
-    </dl>
+    {{#if listView}}
+	<div class="row medium-margin-bottom">
+		<div>
+			<h2 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
+			<p class="inline"><small><em>Compound</em></small></p>
+
+		</div>
+    </div>
+    {{else}}
+	<div class="single-search-result row" style="max-width:800px">
+		<div class="span9">
+			<h2>{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
+			<p><small><em>Compound</em></small></p>
+
+		</div>
+		
+		<div class="span2" style="padding:0px 30px 10px 20px">
+			<div class="thumbnail" style="background:white;">{{cs_image_src result.csURI}}</div>
+		</div>
+		<div class="row span7">
+			<div id="formula1" class="lead" style="padding:5px 0px 0px 0px;max-height:15px">{{formatMolecularFormula result.molform}}</div>
+			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
+			<div class="pull-right" style="padding:5px 0px 0px 0px">
+				<p>
+                   {{#if result.pharmacologyInfoAvailable}}
+                     {{#if result.hasPharmacology}}
+                       {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
+                     {{else}}
+                       Pharmacology ({{result.pharmacologyRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pharmacology Count</em></small>
+                   {{/if}}
+                </p>
+				<p>
+                   {{#if result.pathwayInfoAvailable}}
+                     {{#if result.hasPathways}}
+                       {{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
+                     {{else}}
+                       Pathways ({{result.pathwayRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pathway Count</em></small>
+                   {{/if}}
+                </p>
+				<p>{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}Structure{{/link-to}}</p>
+			</div>
+		</div>
+	
+	</div>
+    {{/if}}
 {{else}}
-    <div class="big-margin-right thumbnail left">{{target_image_src result.seeAlso}}</div>
-    <h1>{{#linkTo target result}}{{result.description}}{{/linkTo}}</h1>
-    <div class="clear"></div>
-    <dl class="big-margin-top">
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Cellular Location</h3></dt>
-    <dd>{{result.cellularLocation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Molecular Weight</h3></dt>
-    <dd>{{result.molecularWeight}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Number of Residues</h3></dt>
-    <dd>{{result.numberOfResidues}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Theoretical Pi</h3></dt>
-    <dd>{{result.theoreticalPi}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sub-class of</h3></dt>
-    <dd>{{result.subClassOf}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Function Annotation</h3></dt>
-    <dd>{{result.functionAnnotation}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Alternative Name</h3></dt>
-    <dd>{{result.alternativeName}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Existence</h3></dt>
-    <dd>{{result.existence}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Organism</h3></dt>
-    <dd>{{result.organism}}</dd>
-    <dt class="medium-padding-bottom medium-padding-top"><h3>Sequence</h3></dt>
-    <dd>{{result.sequence}}</dd>
-    </dl>
+    {{#if listView}}
+<div class="row medium-margin-bottom">
+		<div>
+			<h2 class="inline">{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
+			<p class="inline"><small><em>Target</em></small></p>
+		</div>
+</div>
+    {{else}}
+	<div class="single-search-result row" style="max-width:800px">
+		<div class="span9">
+			<h2>{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
+			<p><small><em>Target</em></small></p>
+		</div>
+		
+		<div class="span2" style="padding:0px 30px 10px 20px">
+			<div class="thumbnail">{{target_image_src result.seeAlso}}</div>
+		</div>
+		<div class="row span7">
+			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
+			<div class="pull-right" style="padding:5px 0px 0px 0px">
+				<p>
+                   {{#if result.pharmacologyInfoAvailable}}
+                     {{#if result.hasPharmacology}}
+                       {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
+                     {{else}}
+                       Pharmacology ({{result.pharmacologyRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pharmacology Count</em></small>
+                   {{/if}}
+                </p>
+				<p>
+                   {{#if result.pathwayInfoAvailable}}
+                     {{#if result.hasPathways}}
+                       {{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
+                     {{else}}
+                       Pathways ({{result.pathwayRecords}})
+                     {{/if}}
+                   {{else}}
+                     <small><em>Fetching Pathway Count</em></small>
+                   {{/if}}
+                </p>
+			</div>
+		</div>
+	
+	</div>
+    {{/if}}
 {{/if}}
 </div>
