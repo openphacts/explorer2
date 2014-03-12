@@ -27,7 +27,8 @@ Autocompleter
 There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
 
 * Gunzip filestore/compounds.tar.gz
-* Start a rails console (rails c)
+* Either run the rake task rake explorer:load_all_assets. To load in to production db prepend with RAILS_ENV=production
+* Or start a rails console (rails c)
 * Enter the following commands to add compound models to the database  
 
     file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")  
