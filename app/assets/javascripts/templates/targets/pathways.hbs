@@ -1,0 +1,82 @@
+<div class="goto-button" id="top">
+    <button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
+</div>
+<div>
+	<ul class="breadcrumb">
+		<li><a href="/">Home</a> <span class="divider">/</span></li>
+		<li>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
+		<li class="active">Pathways</li>	
+    	<div class="row pull-right"> 
+			<div class="span1 small-padding-top small-padding-right">Provenance</div>
+  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+  				<button  {{action 'enableProvenance'}} class="btn">On</button>
+  				<button  {{action 'disableProvenance'}} class="btn active">Off</button>
+  			</div>
+		</div>
+	</ul>
+</div>
+<!-- actual results -->
+<div id="summary-anchor">
+<div id="summary" class="compound_summary collapse in">
+	
+	<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src seeAlso}}</div>
+	<div class="row">
+		<div class="span12">
+			<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+			<div class="row">
+				<div class="span6 justify normal-font">{{expandableDescription description}}</div>
+			</div>
+		</div>
+	</div>
+
+	</div>
+
+</div>
+</div>
+<!-- RESULT LISTING -->
+{{#if notEmpty}}
+<div style="padding:30px">	
+    <table class="mytable">
+	    <thead id="tablehead" class="headingstyle">
+		    <tr>
+			    <th align="left">Title</th>
+				<th width="10%">Identifier</th>
+				<th align="left" width="300px">Description</th>
+				<th>Ontology</th>
+			 	<th>Organism</th>
+				<th>Gene Product</th>
+				<th>Revision</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#if showProvenance}}
+		    {{#each  pathway in pathways}}
+			 <tr class="record-deco">
+			     <td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
+				 <td class="cell-basictext">{{textLink pathway.identifier}}</td>
+				 <td class="cell-longtext">{{pathway.description}} {{provenanceLinkout pathway.wikipathwaysProvenance.description pathway.wikipathwaysProvenance.source}}</td>
+				 <td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
+                 <td class="cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}} {{provenanceLinkout pathway.wikipathwaysProvenance.organismLabel pathway.wikipathwaysProvenance.source}}</td>
+				 <td class="cell-basictext">{{pathway.geneProduct}}</td>
+                 <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
+			 </tr>
+			 {{/each}}
+         {{else}}
+		     {{#each pathway in pathways}}
+			 <tr class="record-deco">
+			     <td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
+				 <td class="cell-basictext">{{textLink pathway.identifier}}</td>
+				 <td class="lead cell-basictext">{{pathway.description}}</td>
+				 <td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
+                 <td class="lead cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}}</td>
+				 <td class="cell-basictext">{{pathway.geneProduct}}</td>
+                 <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
+			 </tr>
+			 {{/each}}
+         {{/if}}
+		</tbody>
+    </table>
+</div>
+{{else}}
+<h2 class="centre">There are no pathways for {{prefLabel}}</h2>
+{{/if}}

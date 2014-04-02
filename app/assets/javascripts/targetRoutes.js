@@ -213,6 +213,19 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
         }
       }
     };
+    var countOnlyCallback=function(success, status, response){
+      if (success && response) {
+        var count = searcher.parseCountPathwaysByTargetResponse(response);
+        controller.set('totalCount', count);
+        //set page just in case it is for a different compound previously loaded
+        if (me.get('currentCount')%50 > 0) {
+            me.set('page', Math.floor(me.get('currentCount')/50) + 1);
+        } else {
+            me.set('page', me.get('currentCount')/50);
+        }
+      }
+    };
+
     //load the pathways for this compound
     var pathwaysByTargetCallback=function(success, status, response){
       if (success && response) {
@@ -226,7 +239,18 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
           });
       }
     }
-    searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
+    //searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
+    //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
+    if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
+	    searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
+    } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
+        //could still be count for a different compound
+	    searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
+    } else {
+        //reset the totalCount just to be sure
+	    searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countOnlyCallback);
+    }
+
   },
   model: function(params) {
     var uri = params.uri;

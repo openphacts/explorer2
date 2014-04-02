@@ -9,8 +9,8 @@ App.TargetsPathwaysController = Ember.ObjectController.extend({
   page: null,
 
   currentCount: function() {
-    return this.get('model.content.length');
-  }.property('model.content.length'),
+    return this.get('model.pathways.length');
+  }.property('model.pathways.length'),
 
   totalCount: null,
 
