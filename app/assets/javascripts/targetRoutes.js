@@ -148,6 +148,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
       }
     };
     var countCallback=function(success, status, response){
+	  me.set('fetchingCount', false);
       if (success && response) {
           var count = searcher.parseTargetPharmacologyCountResponse(response);
           controller.set('totalCount', count);
@@ -158,6 +159,8 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
       }
     };
     if (controller.get('totalCount') == null) {
+	    me.set('fetchingCount', true);
+	    me.get('controllers.application').set('fetching', true);
         searcher.targetPharmacologyCount(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
     }
     var activityTypesCallback=function(success, status, response){
