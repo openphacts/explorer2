@@ -2,12 +2,13 @@
 
 	<ul class="breadcrumb">
   		<li><a href="/">Home</a> <span class="divider">/</span></li>
-  		<li>Target Classes<span class="divider">/</span></li>
-  		<li class="active">Please Browse the tree and choose a Target Class</li>
+  		<li>Ontologies<span class="divider">/</span></li>
+  		<li class="active">{{selectedTree}}</li>
 		
 	</ul>	
 	
 </div>
+<h3>Select an ontology</h3>
 {{view Ember.Select
        content=treeTypes
        prompt="Please select a target class"
