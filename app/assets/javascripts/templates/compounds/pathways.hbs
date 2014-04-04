@@ -54,9 +54,9 @@
     <table class="mytable">
 	    <thead id="tablehead" class="headingstyle">
 		    <tr>
-			    <th align="left">Title</th>
+			    <th class="centre">Title</th>
 				<th width="10%">Identifier</th>
-				<th align="left" width="300px">Description</th>
+				<th class="centre" width="300px">Description</th>
 				<th>Ontology</th>
 			 	<th>Organism</th>
 				<th>Gene Product</th>
@@ -70,7 +70,7 @@
 			     <td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
 				 <td class="cell-basictext">{{textLink pathway.identifier}}</td>
 				 <td class="cell-longtext">{{pathway.description}} {{provenanceLinkout pathway.wikipathwaysProvenance.description pathway.wikipathwaysProvenance.source}}</td>
-				 <td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
+				 <td class="cell-basictext">{{pathway.pathwayOntology}}</td>
                  <td class="cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}} {{provenanceLinkout pathway.wikipathwaysProvenance.organismLabel pathway.wikipathwaysProvenance.source}}</td>
 				 <td class="cell-basictext">{{pathway.geneProduct}}</td>
                  <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
@@ -81,9 +81,9 @@
 			 <tr class="record-deco">
 			     <td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
 				 <td class="cell-basictext">{{textLink pathway.identifier}}</td>
-				 <td class="lead cell-basictext">{{pathway.description}}</td>
-				 <td class="lead cell-basictext">{{pathway.pathwayOntology}}</td>
-                 <td class="lead cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}}</td>
+				 <td class="cell-basictext">{{pathway.description}}</td>
+				 <td class="cell-basictext">{{pathway.pathwayOntology}}</td>
+                 <td class="cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}}</td>
 				 <td class="cell-basictext">{{pathway.geneProduct}}</td>
                  <td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
 			 </tr>
