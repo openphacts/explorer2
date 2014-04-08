@@ -238,11 +238,11 @@ sub {
 }
 /* Sorting and filtering*/
 .sortASC {
-	background-color: gray;
+/*	background-color: gray; */
 }
 
 .sortDESC {
-	background-color: gray;
+/*	background-color: gray; */
 }
 .relation-checkbox {
     vertical-align: top;
@@ -396,3 +396,9 @@ sub {
 .no-list-style  {
     list-style: none;
 }
+th.th-hover:hover {
+	    background-color: gray;
+}
+/*.hover {
+    background-color: #eee;
+} */
