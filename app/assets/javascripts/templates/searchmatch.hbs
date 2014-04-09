@@ -34,7 +34,7 @@
                      <small><em>Fetching Pharmacology Count</em></small>
                    {{/if}}
                 </p>
-		{{!--		<p>
+				<p>
                    {{#if result.pathwayInfoAvailable}}
                      {{#if result.hasPathways}}
                        {{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
@@ -44,7 +44,7 @@
                    {{else}}
                      <small><em>Fetching Pathway Count</em></small>
                    {{/if}}
-                </p> --}}
+                </p>
 				<p>{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}Structure{{/link-to}}</p>
 			</div>
 		</div>
