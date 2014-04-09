@@ -13,6 +13,12 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
       }
   }.property('model.pathwayRecords'),
 
+  hasPharmacology: function() {
+      if(this.get('model.pharmacologyRecords') != null && this.get('model.pharmacologyRecords') > 0) {
+        return true;
+      }
+  }.property('model.pharmacologyRecords'),
+
   actions: {
   	  enableProvenance: function() {
     	this.set('showProvenance', true);

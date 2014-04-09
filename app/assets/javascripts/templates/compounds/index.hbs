@@ -121,12 +121,16 @@
 					<div class="lead pull-right">
 						<p class="pull-left">{{formatMolecularFormula molform}}</p>
 					</div>
+					{{#if hasPharmacology}}
 					<div style="padding:30px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology{{/link-to}}
+						{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
 					</div>
-					{{#if hasPathways}}<div style="padding:5px 0 0 0;text-align:left;">
+					{{/if}}
+					{{#if hasPathways}}
+					<div style="padding:5px 0 0 0;text-align:left;">
 						{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}
-				    </div>{{/if}}
+				        </div>
+					{{/if}}
 					<div style="padding:5px 0 0 0;text-align:left;">
 					    {{#link-to "compounds.structure" (query-params uri=this.URI type="exact")}}Structure{{/link-to}}
 					</div>
