@@ -397,8 +397,11 @@ sub {
     list-style: none;
 }
 th.th-hover:hover {
-	    background-color: gray;
+    background-color: gray;
 }
-/*.hover {
-    background-color: #eee;
-} */
+.compound-result-image:hover {
+    background: gray;
+}
+.compound-result-image {
+    background: white;
+}
