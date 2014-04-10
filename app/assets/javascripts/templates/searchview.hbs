@@ -13,22 +13,8 @@
 </ul>
 	<ul style="list-style-type: none">
     {{#each result in controller}}
-    {{#if listView}}
-		<li>
-			{{#if result.exactMatch}}
-  				{{view App.SearchMatch}}
-			{{else}}
-  				{{view App.SearchResult resultBinding='result'}}
-			{{/if}}
-		</li>
-    {{else}}
 		<li class="inline">
-			{{#if result.exactMatch}}
-  				{{view App.SearchMatch}}
-			{{else}}
   				{{view App.SearchResult resultBinding='result'}}
-			{{/if}}
 		</li>
-    {{/if}}
 	{{/each}}
 </ul>
