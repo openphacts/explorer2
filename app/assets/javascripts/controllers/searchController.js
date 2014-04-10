@@ -4,9 +4,17 @@ App.SearchController = Ember.ArrayController.extend({
 
     needs: ['application'],
 
+    compoundsChecked: true,
+
+    targetsChecked: true,
+
     listView: true,
 
     numberOfResults: 50,
+
+    totalCompounds: 0,
+
+    totalTargets: 0,
 
     currentPage: 0,
 
@@ -82,6 +90,7 @@ App.SearchController = Ember.ArrayController.extend({
                       } else {
                           me.addSearchResult(compound);
                       }
+		      me.set('totalCompounds', me.get('totalCompounds') + 1);
                       //how many pathways & pharmacology for this compound
                       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
                       var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
@@ -121,6 +130,7 @@ App.SearchController = Ember.ArrayController.extend({
                       } else {
                           me.addSearchResult(target);
                       }
+		      me.set('totalTargets', me.get('totalTargets') + 1);
                       //how many pathways & pharmacology for this target
                       var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
                       var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
@@ -196,6 +206,7 @@ App.SearchController = Ember.ArrayController.extend({
               // got the uri from the smiles so now fetch the compound
               me.store.find('compound', uri).then(function(compound) {
                   me.addSearchResult(compound);
+		  me.set('totalCompounds', me.get('totalCompounds') + 1);
                   //how many pathways & pharmacology for this compound
                   var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
                   var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
@@ -223,6 +234,8 @@ App.SearchController = Ember.ArrayController.extend({
             }
         }
         //targets
+	  me.set('totalCompounds', 0);
+	  me.set('totalTargets', 0);
           me.get('controllers.application').set('fetching', true);
           //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
           searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);

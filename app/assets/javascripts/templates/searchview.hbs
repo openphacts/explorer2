@@ -2,7 +2,8 @@
   		<li><a href="/">Home</a> <span class="divider">/</span></li>
   		<li>General Search<span class="divider">/</span></li>
 		<li class="active">{{totalResults}} Search Results Found</li>
-	
+		<li class="big-padding-left" title="Check or uncheck to view or hide compounds"><span class="small-margin-right">{{totalCompounds}} Compounds</span>{{view Ember.Checkbox checkedBinding="compoundsChecked" classBinding=":no-margin :small-margin-left"}}</li>
+		<li title="Check or uncheck to view and hide targets"><span class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked"}}</span></li>
 		<div class="row pull-right"> 
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
   				<button {{action switchView}} {{bind-attr class=":btn listViewActive:active"}} title="View only the label for search results">List</button>
