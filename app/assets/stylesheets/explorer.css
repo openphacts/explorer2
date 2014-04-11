@@ -408,3 +408,9 @@ th.th-hover:hover {
 .search-checkbox {
     margin: 0px 0 0;
 }
+#compounds-checkbox {
+    margin: 0;
+}
+#targets-checkbox {
+    margin: 0;
+}
