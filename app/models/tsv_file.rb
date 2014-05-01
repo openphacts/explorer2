@@ -10,11 +10,9 @@ class TsvFile < ActiveRecord::Base
   def process params
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
-    app_version = AppSettings.config["tsv"]["api_version"]
-    url_path = ''
-    domain = AppSettings.config["tsv"]["url"]
+    domain = AppSettings.config["api"]["url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
-    url_params = "uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
+    url_params = domain + path + "?uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
     params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) : ''
     params[:activity_unit] != "" ? url_params += "&activity_unit=" + CGI::escape(params[:activity_unit]) : ''
     # activity_value can only be used if we have an activity_value_type
@@ -37,15 +35,15 @@ class TsvFile < ActiveRecord::Base
     begin
       CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
         while i <= number_of_pages
-          if app_version == ""
-            url_path = "#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
-          else
-            url_path = "/#{app_version}#{path}?".concat(url_params).concat("&_page=#{i}&_pageSize=250")
-          end
-          logger.info "Retrieving: " + url_path
-          response = Net::HTTP.get(domain, url_path)
+          url_path = url_params + "&_page=#{i}&_pageSize=250"
+          logger.info "Retrieving: " + url_path.to_s
+          uri = URI.parse(url_path)
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          response = http.get(uri.request_uri)
           # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
-          tab_data = CSV.parse(response, {:col_sep => "\t", :headers => true, :quote_char => "\a"})
+          tab_data = CSV.parse(response.body, {:col_sep => "\t", :headers => true, :quote_char => "\a"})
           # only need the header line from the first response
           if i == 1 
             all_headers = tab_data.headers
@@ -74,10 +72,9 @@ class TsvFile < ActiveRecord::Base
   def process_chemspider params
     app_key = AppSettings.config["keys"]["app_key"]
     app_id = AppSettings.config["keys"]["app_id"]
-    app_version = AppSettings.config["tsv"]["api_version"]
     url_path = ''
     all_headers = []
-    domain = AppSettings.config["tsv"]["url"]
+    domain = AppSettings.config["api"]["url"]
     path = "/compound"
     file = File.new(File.join(Rails.root, "filestore", "tsv", self.uuid), "w")
     first = true
@@ -87,17 +84,17 @@ class TsvFile < ActiveRecord::Base
       #tab << all_headers
       params[:uris].each do |uri|
         
-        url_params = "uri=" + CGI::escape(uri) + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
+        url_params = domain + path + "?uri=" + CGI::escape(uri) + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
-          if app_version == ""
-            url_path = "#{path}?".concat(url_params)
-          else
-            url_path = "/#{app_version}#{path}?".concat(url_params)
-          end
-          logger.info "********* CS URL is " + url_path.to_s
-          response = Net::HTTP.get(domain, url_path)
+
+          logger.info "Retrieving: " + url_params.to_s
+          uri = URI.parse(url_params)
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          response = http.get(uri.request_uri)
           # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
-          tab_data = CSV.parse(response, {:col_sep => "\t", :headers=>true, :quote_char => "\a"})
+          tab_data = CSV.parse(response.body, {:col_sep => "\t", :headers=>true, :quote_char => "\a"})
           if i == 1 
             all_headers = tab_data.headers
             all_headers.delete(nil)
