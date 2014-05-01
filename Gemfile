@@ -17,8 +17,9 @@ group :assets do
   gem 'handlebars_assets'
 end
 
-group :development do
+group :development, :test do
   gem 'quiet_assets'
+  gem 'qunit-rails'
 end
 
 gem 'delayed_job_active_record'
