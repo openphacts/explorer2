@@ -12,6 +12,7 @@ class TsvFile < ActiveRecord::Base
     app_id = AppSettings.config["keys"]["app_id"]
     domain = AppSettings.config["api"]["url"]
     path = AppSettings.config["tsv"][params[:request_type] + "_path"]
+    url_path = ''
     url_params = domain + path + "?uri=" + CGI::escape(params[:uri]) + "&_format=tsv" + "&app_id=" + app_id + "&app_key=" + app_key
     params[:activity_type] != "" ? url_params += "&activity_type=" + CGI::escape(params[:activity_type]) : ''
     params[:activity_unit] != "" ? url_params += "&activity_unit=" + CGI::escape(params[:activity_unit]) : ''
@@ -40,6 +41,8 @@ class TsvFile < ActiveRecord::Base
           uri = URI.parse(url_path)
           http = Net::HTTP.new(uri.host, uri.port)
           http.use_ssl = true
+          #by default Ruby 1.9 uses VERIFY_PEER
+          #as long as it can find the ca certs all will be good but.....
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
           response = http.get(uri.request_uri)
           # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
