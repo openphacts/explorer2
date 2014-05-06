@@ -414,3 +414,7 @@ th.th-hover:hover {
 #targets-checkbox {
     margin: 0;
 }
+
+.smaller-font {
+    font-size: smaller;
+}
