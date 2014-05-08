@@ -1,5 +1,6 @@
 App.CompoundsPharmacologyView = Ember.View.extend({
   didInsertElement: function() {
+      var controller = this.get('controller');
       $('#assay_organism_box').typeahead({
         source: function (query, process) {
             $.getJSON(organismsUrl, { query: query }, function (data) {
@@ -20,13 +21,13 @@ App.CompoundsPharmacologyView = Ember.View.extend({
     });
 
 // Hide the extra content initially, using JS so that if JS is disabled, no problemo:
-$('.read-more-content').addClass('hide')
+//$('.read-more-content').addClass('hide')
 
 // Set up a link to expand the hidden content:
-.before('<a class="read-more-show" href="#"> more</a>')
+//.before('<a class="read-more-show" href="#"> more</a>')
   
 // Set up a link to hide the expanded content.
-.append(' <a class="read-more-hide" href="#"> less</a>');
+//.append(' <a class="read-more-hide" href="#"> less</a>');
 
 // Set up the toggle effect:
 $('.read-more-show').on('click', function(e) {
@@ -44,7 +45,7 @@ $('.read-more-hide').on('click', function(e) {
   e.preventDefault();
   var s = $("#summary");
         s.css({
-            height: "135px"
+            height: "100%"
         });
 });
  var toggleSummary = true;
@@ -71,7 +72,7 @@ $('.read-more-hide').on('click', function(e) {
  	} else {
 		var s = $("#summary");
         s.css({
-            height: "135px",
+           height: "100%",
             width: "100%"
         });
         $('#structure').show();
@@ -99,44 +100,43 @@ function moveScroller() {
         var ot = $("#summary-anchor").offset().top;
         var s = $("#summary");
         if(st > ot) {
-            
-    		s.css({
-            	position: "fixed",
-            	top: "0px",
-            	height: "55px"
-        	});
-    		$('#structure').hide();
-			
-    		var i = $('#compound-image');
-				i.css({
-					visibility:"hidden"
-				});
-			toggleSummary = false;
-			$('#toggle-summary').text(function(i, text){
-    			return "more";
-    		});
-    		
-    		
+		controller.set('fixSummaryBox', true);          
+//    		s.css({
+//            	position: "fixed",
+//            	top: "0px",
+//            	height: "55px"
+//        	});
+//    		$('#structure').hide();
+//			
+//    		var i = $('#compound-image');
+//				i.css({
+//					visibility:"hidden"
+//				});
+//			toggleSummary = false;
+//			$('#toggle-summary').text(function(i, text){
+//    			return "more";
+//    		});
+//		$('#toggle-summary').addClass('hide');
     		
         } else {
-            
-			s.css({
-            	position: "relative",
-            	top: "",
-            	height: "135px",
-            	width: "100%"
-        	});
-        	$('#structure').show();
-
-			var i = $('#compound-image');
-				i.css({
-				visibility:"visible"
-			});
-		
-			toggleSummary = true;
-			$('#toggle-summary').text(function(i, text){
-    			return "less";
-    		});        
+		controller.set('fixSummaryBox', false);
+//			s.css({
+//            	position: "relative",
+//            	top: "",
+//            	height: "100%",
+//            	width: "100%"
+//        	});
+//        	$('#structure').show();
+//
+//			var i = $('#compound-image');
+//				i.css({
+//				visibility:"visible"
+//			});
+//		        $('#toggle-summary').removeClass('hide');
+//			toggleSummary = true;
+//			$('#toggle-summary').text(function(i, text){
+//    			return "less";
+//    		});        
     	}
     };
     $(window).scroll(move);

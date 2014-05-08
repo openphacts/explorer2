@@ -51,7 +51,7 @@ App.TargetsPharmacologyView = Ember.View.extend({
 				s.css({
 	            	position: "relative",
 	            	top: "",
-	            	height: "135px",
+	            	//height: "135px",
 	            	width: "100%"
 	        	});
 
