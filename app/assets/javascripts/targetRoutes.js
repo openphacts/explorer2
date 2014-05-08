@@ -155,7 +155,9 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
           if (count > 0 && controller.get('page') == null) {
               me.get('controllers.application').set('fetching', true);
               searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
-          }
+          } else {
+		  me.get('controllers.application').set('fetching', true);
+	  }
       }
     };
     if (controller.get('totalCount') == null) {

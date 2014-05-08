@@ -2,7 +2,7 @@
 defaults: &defaults
 
   api:
-    url : "where.the.api.is.located" #eg https://beta.openphacts.org
+    url : "where.the.api.is.located" #eg https://beta.openphacts.org remember to include the api version if available
 
   keys:
     app_id: "blahblahblah" #app id from https://dev.openphacts.org
