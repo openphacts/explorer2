@@ -30,64 +30,64 @@ App.CompoundsPharmacologyView = Ember.View.extend({
 //.append(' <a class="read-more-hide" href="#"> less</a>');
 
 // Set up the toggle effect:
-$('.read-more-show').on('click', function(e) {
-  $(this).next('.read-more-content').removeClass('hide');
-  $(this).addClass('hide');
-  e.preventDefault();
-  	var s = $("#summary");
-        s.css({
-            height: "250px"
-        });
-});
+//$('.read-more-show').on('click', function(e) {
+//  $(this).next('.read-more-content').removeClass('hide');
+//  $(this).addClass('hide');
+//  e.preventDefault();
+//  	var s = $("#summary");
+//        s.css({
+//            height: "250px"
+//        });
+//});
 
-$('.read-more-hide').on('click', function(e) {
-  $(this).parent('.read-more-content').addClass('hide').parent().children('.read-more-show').removeClass('hide');
-  e.preventDefault();
-  var s = $("#summary");
-        s.css({
-            height: "100%"
-        });
-});
- var toggleSummary = true;
+//$('.read-more-hide').on('click', function(e) {
+// $(this).parent('.read-more-content').addClass('hide').parent().children('.read-more-show').removeClass('hide');
+//  e.preventDefault();
+//  var s = $("#summary");
+//        s.css({
+//            height: "100%"
+//        });
+//});
+// var toggleSummary = true;
  
- $('#toggle-summary').on('click', function() {
- 	console.log("var " + toggleSummary);
- 	if (toggleSummary) {
-		var s = $("#summary");
-    
-        s.css({
-            height: "55px"
-        });
-    	$('#structure').hide();
-			
-    	var i = $('#compound-image');
-		i.css({
-			visibility:"hidden"
-		});	
-		toggleSummary = false;
-		$(this).text(function(i, text){
-          return "more";
-      	});
-      	
- 	} else {
-		var s = $("#summary");
-        s.css({
-           height: "100%",
-            width: "100%"
-        });
-        $('#structure').show();
-
-		var i = $('#compound-image');
-			i.css({
-			visibility:"visible"
-		});
-		toggleSummary = true;
-		$(this).text(function(i, text){
-          return "less";
-      	});
- 	}
- 
- });
+// $('#toggle-summary').on('click', function() {
+// 	console.log("var " + toggleSummary);
+// 	if (toggleSummary) {
+//		var s = $("#summary");
+//   
+//        s.css({
+//            height: "55px"
+//        });
+//    	$('#structure').hide();
+//			
+//    	var i = $('#compound-image');
+//		i.css({
+//			visibility:"hidden"
+//		});	
+//		toggleSummary = false;
+//		$(this).text(function(i, text){
+//          return "more";
+//      	});
+//      	
+// 	} else {
+//		var s = $("#summary");
+//        s.css({
+//           height: "100%",
+//            width: "100%"
+//        });
+//        $('#structure').show();
+//
+//		var i = $('#compound-image');
+//			i.css({
+//			visibility:"visible"
+//		});
+//		toggleSummary = true;
+//		$(this).text(function(i, text){
+//          return "less";
+//      	});
+// 	}
+// 
+// });
  
 $(function() {
 	moveScroller();
@@ -101,7 +101,8 @@ function moveScroller() {
         var s = $("#summary");
         if(st > ot) {
 		controller.set('fixSummaryBox', true);          
-//    		s.css({
+                controller.set('infoHide', true);
+		//    		s.css({
 //            	position: "fixed",
 //            	top: "0px",
 //            	height: "55px"
@@ -120,6 +121,7 @@ function moveScroller() {
     		
         } else {
 		controller.set('fixSummaryBox', false);
+		controller.set('infoHide', false);
 //			s.css({
 //            	position: "relative",
 //            	top: "",

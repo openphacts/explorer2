@@ -422,11 +422,13 @@ th.th-hover:hover {
 .fix-summary-box {
     position: fixed;
     top: 0px;
-    height: 55px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+/*    height: 55px; */
     width: 100%;
 }
 .free-summary-box {
     position: relative;
-    height: 100%;
+/*    height: 100%; */
     width: 100%;
 }
