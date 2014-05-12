@@ -153,11 +153,14 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
           var count = searcher.parseTargetPharmacologyCountResponse(response);
           controller.set('totalCount', count);
           if (count > 0 && controller.get('page') == null) {
-              me.get('controllers.application').set('fetching', true);
               searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
           } else {
-		  me.get('controllers.application').set('fetching', true);
+	      // if we already have results then don't fetch more and switch off the spinner, probably because the back/forward button was pressed
+              me.get('controllers.application').set('fetching', false);
 	  }
+      } else {
+	      // if it didn't work then switch off the spinner
+	      me.get('controllers.application').set('fetching', false);
       }
     };
     if (controller.get('totalCount') == null) {
