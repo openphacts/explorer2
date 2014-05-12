@@ -85,9 +85,9 @@
 		
 		<!-- actual results -->
 		<div id="summary-anchor">
-		<div id="summary" class="compound_summary collapse in">
+			<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
 			
-			<div id="target-image" class="span2 small-padding-top big-padding-bottom">{{target_image_src seeAlso}}</div>
+			<div id="target-image" {{bind-attr class=":span2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
     				<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
