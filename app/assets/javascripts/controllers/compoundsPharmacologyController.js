@@ -4,6 +4,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   queryParams: ['uri'],
 
+  hideInfo: false,
+
+  fixSummaryBox: false,
+
   uri: '',
 
   getJobs: function() {
