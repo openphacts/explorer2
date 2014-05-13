@@ -195,6 +195,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
 
   beforeModel: function() {
     this.controllerFor('application').set('fetching', false);
+    this.controllerFor('targets.pharmacology').set('page', null);
     enable_scroll();
   }
 
