@@ -86,16 +86,16 @@
 	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>		
 		<div id="compound-image" {{bind-attr class=":span2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{cs_image_src csURI}}</div>
 		<div class="row">
-			<div class="span8">
-    			<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)
-				{{!-- <a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-				<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a> --}}
-	    </h3>
-	    <div><a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-                    <a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></div>
+			<div {{bind-attr class=":left infoHide:big-padding-left:"}}>
+				<h3 class="inline">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+				<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+				<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
+	    
+				{{!--  <div><a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+					<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></div> --}}
 		<div {{bind-attr class=":row infoHide:hide:"}}>
 			<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
-      				<div class="span6 justify normal-font">{{expandableDescription description}}</div>
+      				<div class="span6 justify normal-font small-margin-top">{{expandableDescription description}}</div>
     			</div>
   			</div>
 			{{!-- <button id="toggle-summary" type="button" {{bind-attr class=":btn :btn-link :pull-right hideInfo:hide:"}} data-target="#summary">less</button> --}}
