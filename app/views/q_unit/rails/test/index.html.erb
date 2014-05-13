@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+  <script type="text/javascript">
+    // enable the query parameters
+    ENV = {FEATURES: {'query-params-new': true}};
+  </script>
+    <title>Open PHACTS Explorer QUnit Test Runner</title>
+  <script type="text/javascript">
+    //var compound_info_search_url = "http://api.openphacts.org/compound?_callback=?";
+    //var search_url = "http://ops.conceptwiki.org/web-ws/concept/search/byTag?callback=?";
+    var ldaBaseUrl = '<%= AppSettings.config["api"]["url"] -%>';
+    var appID = '<%= AppSettings.config["keys"]["app_id"] -%>';
+    var appKey = '<%= AppSettings.config["keys"]["app_key"] -%>';
+    var typeaheadUrl = '<%= AppSettings.config["testing"]["search"] -%>';
+    var tsvCreateUrl = '<%= AppSettings.config["testing"]["tsv_core"] -%>?';
+    var tsvStatusUrl = '<%= AppSettings.config["testing"]["tsv_status"] -%>?';
+    var tsvDownloadUrl = '<%= AppSettings.config["testing"]["tsv_download"] -%>?';
+    var organismsUrl = '<%= AppSettings.config["testing"]["organism"] -%>?';
+    var cs_download_url = '<%= AppSettings.config["testing"]["chemspider"] -%>';
+    var ketcherPath = '<%= AppSettings.config["testing"]["ketcher"] -%>';
+    var oldIE = false;
+    </script>
+
+      <%= stylesheet_link_tag "qunit" %>
+      <%= stylesheet_link_tag "test_helper" %>
+      <%= javascript_include_tag "qunit" %>
+      <%= javascript_include_tag "test_helper" %>
+      <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+  </body>
+</html>
