@@ -26,7 +26,7 @@
       				    <div class="inner-property-content">
   						    <p><small>AlogP</small></p>
                             {{#if showProvenance}}
-                                <p class="lead">{{logp}} {{provenanceLinkout chemspiderProvenance.logp chemspiderProvenance.source}}</p> 
+                                <p class="lead">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{logp}}</p> 
                             {{/if}}
@@ -40,7 +40,7 @@
       				    <div class="inner-property-content">
   						    <p><small># H-Bond Acceptors</small></p>			
                             {{#if showProvenance}}
-                                <p class="lead">{{hba}} {{provenanceLinkout chemspiderProvenance.hba chemspiderProvenance.source}}</p> 
+                                <p class="lead">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{hba}}</p> 
                             {{/if}} 
@@ -52,7 +52,7 @@
     	  				<div class="inner-property-content">
   							<p><small># H-Bond Donors</small></p>
                             {{#if showProvenance}}
-                                <p class="lead">{{hbd}} {{provenanceLinkout chemspiderProvenance.hbd chemspiderProvenance.source}}</p> 
+                                <p class="lead">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{hbd}}</p> 
                             {{/if}} 
@@ -64,7 +64,7 @@
       					<div class="inner-property-content">
   							<p><small>Mol Weight</small></p>		  
                             {{#if showProvenance}}
-                                <p class="lead">{{fullMWT}} {{provenanceLinkout chemspiderProvenance.fullMWT chemspiderProvenance.source}}</p> 
+                                <p class="lead">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{fullMWT}}</p> 
                             {{/if}} 
@@ -76,7 +76,7 @@
       				    <div class="inner-property-content">
   						    <p><small>Mol Weight Freebase</small></p>
   							{{#if showProvenance}}
-                                <p class="lead">{{mwFreebase}} {{provenanceLinkout chemblProvenance.fullMWT chemblProvenance.source}}</p> 
+                                <p class="lead">{{mwFreebase}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{mwFreebase}}</p> 
                             {{/if}} 
@@ -88,7 +88,7 @@
   	 	   				<div class="inner-property-content">
   							<p><small>Polar Surface Area</small></p>
   						    {{#if showProvenance}}
-                                                    <p class="lead">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout chemspiderProvenance.psa chemspiderProvenance.source}}</p> 
+                                                    <p class="lead">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                             <p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p> 
                             {{/if}} 
@@ -100,7 +100,7 @@
     	  				<div class="inner-property-content">
   							<p><small># Rotatable Bonds</small></p>
   							{{#if showProvenance}}
-                                <p class="lead">{{rtb}} {{provenanceLinkout chemblProvenance.rtb chemblProvenance.source}}</p> 
+                                <p class="lead">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{rtb}}</p> 
                             {{/if}} 
@@ -143,7 +143,7 @@
 				<div class="summary-descriptive-text large-top-spacing">
                     {{#if description}}
                         {{#if showProvenance}}
-                            <p>{{description}}</p>{{provenanceLinkout drugbankProvenance.description drugbankProvenance.source}}
+                            <p>{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
                         {{else}}
                             <p>{{description}}</p>
                         {{/if}}
@@ -154,7 +154,7 @@
 				<div class="summary-descriptive-text small-top-spacing">
                     {{#if biotransformation}}
                         {{#if showProvenance}}
-                            <p>{{biotransformation}}</p>{{provenanceLinkout drugbankProvenance.biotransformation drugbankProvenance.source}}
+                            <p>{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
                         {{else}}
                             <p>{{biotransformationItem}}</p>
                         {{/if}}
@@ -174,7 +174,7 @@
 						{{#if smiles}}
 							<dt class="medium-padding-top">SMILES</dt>
 							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout chemspiderProvenance.smiles chemspiderProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
                             {{/if}}
@@ -184,7 +184,7 @@
 						{{#if inchi}}
 							<dt class="medium-padding-top">Standard  InChI</dt>
 	                        {{#if showProvenance}}
-                                <dd class="medium-padding-top">{{inchi}} {{provenanceLinkout chemspiderProvenance.inchi chemspiderProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{inchi}}</dd>
                             {{/if}}
@@ -194,7 +194,7 @@
   						{{#if inchiKey}}
   							<dt class="medium-padding-top">Standard InChIKey</dt>
   							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{inchiKey}} {{provenanceLinkout chemspiderProvenance.inchiKey chemspiderProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{inchiKey}}</dd>
                             {{/if}}
@@ -204,7 +204,7 @@
 						{{#if proteinBinding}}
   						    <dt class="medium-padding-top">Protein Binding</dt>
   							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{proteinBinding}} {{provenanceLinkout drugbankProvenance.proteinBinding drugbankProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{proteinBinding}}</dd>
                             {{/if}}
@@ -214,7 +214,7 @@
 						{{#if toxicity}}
                             <dt class="medium-padding-top">Toxicity</dt>
                             {{#if showProvenance}}
-                                <dd class="medium-padding-top">{{toxicity}} {{provenanceLinkout drugbankProvenance.description drugbankProvenance.source}}</dd>
+                                <dd class="medium-padding-top">{{toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{toxicity}}</dd>
                             {{/if}}
