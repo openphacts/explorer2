@@ -26,7 +26,11 @@
       <%= stylesheet_link_tag "test_helper" %>
       <%= javascript_include_tag "qunit" %>
       <%= javascript_include_tag "test_helper" %>
+      <%= javascript_include_tag "ic-ajax" %>
       <%= csrf_meta_tags %>
+      <script type="text/javascript">
+	      var ajax = ic.ajax;
+      </script>
   </head>
   <body>
     <div id="qunit"></div>
