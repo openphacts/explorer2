@@ -152,7 +152,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
       if (success && response) {
           var count = searcher.parseTargetPharmacologyCountResponse(response);
           controller.set('totalCount', count);
-          if (count > 0 && controller.get('page') == null) {
+          if (count > 0 && controller.get('model.pharmacology.length') == 0) {
               searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
           } else {
 	      // if we already have results then don't fetch more and switch off the spinner, probably because the back/forward button was pressed
@@ -195,7 +195,6 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
 
   beforeModel: function() {
     this.controllerFor('application').set('fetching', false);
-    this.controllerFor('targets.pharmacology').set('page', null);
     enable_scroll();
   }
 
