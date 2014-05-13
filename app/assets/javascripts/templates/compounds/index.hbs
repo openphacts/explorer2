@@ -116,10 +116,18 @@
 				<!--title and formula-->
 				<div>	
 					<div style="padding:20px 0 0 0">
+						{{#if showProvenance}}
+						<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
+						{{else}}
 						<h1>{{prefLabel}}</h1>
+						{{/if}}
 					</div>
 					<div class="lead pull-right">
+						{{#if showProvenance}}
+	                                        <p class="pull-left">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
+						{{else}}
 						<p class="pull-left">{{formatMolecularFormula molform}}</p>
+						{{/if}}
 					</div>
 					{{#if hasPharmacology}}
 					<div style="padding:30px 0 0 0;text-align:left;">

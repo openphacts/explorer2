@@ -227,7 +227,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 	// this id is not strictly true since we could have searched using a chemspider id etc
 	id = uri.split("/").pop();
 	prefLabel = response.primaryTopic.prefLabel ? response.primaryTopic.prefLabel : null;
-
+        cwURI = constants.SRC_CLS_MAPPINGS[response.primaryTopic[constants.IN_DATASET]] == 'conceptWikiValue' ? response.primaryTopic[constants.ABOUT] : cwURI; 
 	//if an ops.rsc.org uri is used then the compound chemistry details are found in the top level
 	hba = response.primaryTopic.hba != null ? response.primaryTopic.hba : null;
 	hbd = response.primaryTopic.hbd != null ? response.primaryTopic.hbd : null;
@@ -313,9 +313,11 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 	}
 	if (conceptWikiData) {
 		prefLabel = conceptWikiData.prefLabel != null ? conceptWikiData.prefLabel : prefLabel;
+		cwURI = conceptWikiData["_about"] != null ? conceptWikiData["_about"] : cwURI;
 	}
 	return {
 		"id": id,
+		"cwURI": cwURI,
 		"prefLabel": prefLabel,
 		"URI": uri,
 		"description": description,
