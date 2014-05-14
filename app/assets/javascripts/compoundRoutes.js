@@ -14,20 +14,20 @@ App.CompoundsIndexRoute = Ember.Route.extend({
    var pathwaysCountCallback=function(success, status, response){
        if (success && response) {
          var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
-         compound.set('pathwayRecords', count);
+         Ember.run(function(){compound.set('pathwayRecords', count)});
        }
    };
 
    var pharmaCountCallback=function(success, status, response){
        if (success && response) {
          var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
-         compound.set('pharmacologyRecords', count);
+         Ember.run(function(){compound.set('pharmacologyRecords', count)});
        }
    };
    var compoundURI = compound.get('URI');
    pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
    compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
-   compound.set('molfile', molfile);
+   Ember.run(function(){compound.set('molfile', molfile)});
   },
 
   model: function(params) {

@@ -29,9 +29,9 @@ App.TargetAdapter = DS.Adapter.extend({
         if (success) {
 	        var targetResult = searcher.parseTargetResponse(response); 
             targetResult['pathways'] = [];
-            resolve(targetResult);
+            Ember.run(function(){resolve(targetResult)});
         } else {
-            reject(status);
+            Ember.run(function(){reject(status)});
         }
       }
 	  searcher.fetchTarget(id, null, callback);
@@ -50,9 +50,9 @@ App.PathwayAdapter = DS.Adapter.extend({
           var pathwayResult = searcher.parseInformationResponse(response);
           pathwayResult['id'] = identifier;
           pathwayResult['compounds'] = [];
-          resolve(pathwayResult);
+          Ember.run(function(){resolve(pathwayResult)});
         } else {
-          reject(status);
+          Ember.run(function(){reject(status)});
         }
       };
       searcher.information(id, null, pathwayInfoCallback);
@@ -73,9 +73,9 @@ App.TreeAdapter = DS.Adapter.extend({
 		  enzymeResponse['id'] = id;
 		  enzymeResponse['uri'] = id;
 		  enzymeResponse['name'] = enzymeResult.label;
-          resolve(enzymeResponse);
+          Ember.run(function(){resolve(enzymeResponse)});
         } else {
-          reject(status);
+          Ember.run(function(){reject(status)});
         }
       };
       var childCallback=function(success, status, response){
@@ -85,9 +85,9 @@ App.TreeAdapter = DS.Adapter.extend({
 		  enzymeResponse['id'] = id;
 		  enzymeResponse['uri'] = id;
 		  enzymeResponse['name'] = enzymeResult.label;
-          resolve(enzymeResponse);
+          Ember.run(function(){resolve(enzymeResponse)});
         } else {
-          reject(status);
+          Ember.run(function(){reject(status)});
         }
       };
 

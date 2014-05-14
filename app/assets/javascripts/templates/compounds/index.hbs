@@ -6,8 +6,8 @@
 	<div class="row pull-right" > 
 		<div class="span1 small-padding-top small-padding-right">Provenance </div>
 		<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-			<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-			<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+			<button id="provenance-on-button" {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+			<button id="provenance-off-button" {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
 		</div>
 		</div>
 </ul>  		
@@ -26,7 +26,7 @@
       				    <div class="inner-property-content">
   						    <p><small>AlogP</small></p>
                             {{#if showProvenance}}
-                                <p class="lead">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{logp}}</p> 
                             {{/if}}
@@ -40,7 +40,7 @@
       				    <div class="inner-property-content">
   						    <p><small># H-Bond Acceptors</small></p>			
                             {{#if showProvenance}}
-                                <p class="lead">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{hba}}</p> 
                             {{/if}} 
@@ -52,7 +52,7 @@
     	  				<div class="inner-property-content">
   							<p><small># H-Bond Donors</small></p>
                             {{#if showProvenance}}
-                                <p class="lead">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{hbd}}</p> 
                             {{/if}} 
@@ -64,7 +64,7 @@
       					<div class="inner-property-content">
   							<p><small>Mol Weight</small></p>		  
                             {{#if showProvenance}}
-                                <p class="lead">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{fullMWT}}</p> 
                             {{/if}} 
@@ -76,7 +76,7 @@
       				    <div class="inner-property-content">
   						    <p><small>Mol Weight Freebase</small></p>
   							{{#if showProvenance}}
-                                <p class="lead">{{mwFreebase}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{mwFreebase}}</p> 
                             {{/if}} 
@@ -88,7 +88,7 @@
   	 	   				<div class="inner-property-content">
   							<p><small>Polar Surface Area</small></p>
   						    {{#if showProvenance}}
-                                                    <p class="lead">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p> 
+                                                    <p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                             <p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p> 
                             {{/if}} 
@@ -100,7 +100,7 @@
     	  				<div class="inner-property-content">
   							<p><small># Rotatable Bonds</small></p>
   							{{#if showProvenance}}
-                                <p class="lead">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p> 
                             {{else}}
                                 <p class="lead">{{rtb}}</p> 
                             {{/if}} 
@@ -124,7 +124,7 @@
 					</div>
 					<div class="lead pull-right">
 						{{#if showProvenance}}
-	                                        <p class="pull-left">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
+	                                        <p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
 						{{else}}
 						<p class="pull-left">{{formatMolecularFormula molform}}</p>
 						{{/if}}
@@ -151,7 +151,7 @@
 				<div class="summary-descriptive-text large-top-spacing">
                     {{#if description}}
                         {{#if showProvenance}}
-                            <p>{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+                            <p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
                         {{else}}
                             <p>{{description}}</p>
                         {{/if}}
@@ -162,7 +162,7 @@
 				<div class="summary-descriptive-text small-top-spacing">
                     {{#if biotransformation}}
                         {{#if showProvenance}}
-                            <p>{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+                            <p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
                         {{else}}
                             <p>{{biotransformationItem}}</p>
                         {{/if}}
@@ -182,7 +182,7 @@
 						{{#if smiles}}
 							<dt class="medium-padding-top">SMILES</dt>
 							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
                             {{/if}}
@@ -192,7 +192,7 @@
 						{{#if inchi}}
 							<dt class="medium-padding-top">Standard  InChI</dt>
 	                        {{#if showProvenance}}
-                                <dd class="medium-padding-top">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+                                <dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{inchi}}</dd>
                             {{/if}}
@@ -202,7 +202,7 @@
   						{{#if inchiKey}}
   							<dt class="medium-padding-top">Standard InChIKey</dt>
   							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+                                <dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{inchiKey}}</dd>
                             {{/if}}
@@ -212,7 +212,7 @@
 						{{#if proteinBinding}}
   						    <dt class="medium-padding-top">Protein Binding</dt>
   							{{#if showProvenance}}
-                                <dd class="medium-padding-top">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+                                <dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{proteinBinding}}</dd>
                             {{/if}}
@@ -222,7 +222,7 @@
 						{{#if toxicity}}
                             <dt class="medium-padding-top">Toxicity</dt>
                             {{#if showProvenance}}
-                                <dd class="medium-padding-top">{{toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+                                <dd class="medium-padding-top" id="toxicity-provenance">{{toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
                             {{else}}
                                 <dd class="medium-padding-top">{{toxicity}}</dd>
                             {{/if}}

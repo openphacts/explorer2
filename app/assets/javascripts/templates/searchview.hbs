@@ -10,7 +10,8 @@
   				<button {{action switchView}} {{bind-attr class=":btn objectViewActive:active"}} title="View label, image and description for search results">Object</button>
   			</div>
 		</div>
-</ul>
+	</ul>
+	<div id="search-results">
 	<ul style="list-style-type: none">
     {{#each result in controller}}
 		<li class="inline">
@@ -18,3 +19,4 @@
 		</li>
 	{{/each}}
 </ul>
+</div>
