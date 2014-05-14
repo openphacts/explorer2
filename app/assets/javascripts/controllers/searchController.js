@@ -83,7 +83,7 @@ App.SearchController = Ember.ArrayController.extend({
                 $.each(results, function(index, result) {
                   //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
                   //the promise is generated inside the store adapter for compound, see store.js
-                  me.store.find('compound', result.uri).then(function(compound) {
+                  Ember.run(function(){me.store.find('compound', result.uri).then(function(compound) {
                       if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                           compound.set('exactMatch', true);
       			          me.addExactMatch(compound);
@@ -111,7 +111,7 @@ App.SearchController = Ember.ArrayController.extend({
                       var compoundURI = compound.get('URI');
                       compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
                       pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
-                  });
+                  })});
                 });
             } else {
                 // an error in the response, ignore for now

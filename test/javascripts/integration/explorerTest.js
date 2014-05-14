@@ -29,6 +29,8 @@ test("Check free text search works", function() {
     }).then(function() {
         Ember.run(function() {
             return click("#search-button");
-        });
+        }).then(function() {
+	  console.log('After search');	
+	});
     })
 });

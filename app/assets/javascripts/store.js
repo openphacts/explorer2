@@ -11,9 +11,9 @@ App.CompoundAdapter = DS.Adapter.extend({
             compoundResult['pathways'] = [];
             var kPath = ketcherPath;
             compoundResult['ketcherPath'] = kPath;
-            resolve(compoundResult);
+            Ember.run(function(){resolve(compoundResult)});
         } else {
-            reject(status);
+            Ember.run(function(){reject(status)});
         }
       }
 	  searcher.fetchCompound(id, null, callback);
