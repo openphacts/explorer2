@@ -49,5 +49,6 @@ test("Check that compound info is rendered", function() {
         ok(exists("#description-provenance ~ a img"), "Provenance icon shown for description");
         ok(exists("h1 a img"), "Provenance icon shown for pref label");
         ok(exists("#molform-provenance a img"), "Provenance icon shown for molform");
+    }).then(function() {
     });
 });
