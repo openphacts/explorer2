@@ -23,6 +23,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
 			    $.each(root, function(index,enzymeResult) {
+				    if (enzymeResult.name != null && enzymeResult.uri != null) {
 				    var enzyme = me.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('level', 1);
@@ -37,6 +38,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
 				      }
 			        }
                     searcher.getChildNodes(enzymeResult.uri, innerCallback);		    
+				    }
 			    });
 			}
 		}
