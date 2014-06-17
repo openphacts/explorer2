@@ -109,7 +109,7 @@
 
 		<thead class="headingstyle">
 			<tr>
-				<th colspan="1" class="centre" style="border-right: 2px solid white; padding: 7px;">Compound</th>
+				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Compound</th>
 				<th colspan="1" class="centre" style="border-right: 2px solid white; padding: 7px;">Target</th>
 				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Assay</th>
 				<th colspan="4" class="centre" style="border-right: 2px solid white; padding: 7px;">Activity</th>
@@ -123,7 +123,8 @@
 				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
-				<th {{action "sortHeader" "compound_name"}} {{bind-attr class="compoundNameSortASC:sortASC compoundNameSortDESC:sortDESC :th-hover"}} style="width: 20%; border-right: 2px solid white; padding: 7px;" title="Click to sort">Name{{#if compoundNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if compoundNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width:10%;">Image</th>
+				<th {{action "sortHeader" "compound_name"}} {{bind-attr class="compoundNameSortASC:sortASC compoundNameSortDESC:sortDESC :th-hover"}} style="width: 10%; border-right: 2px solid white; padding: 7px;" title="Click to sort">Name{{#if compoundNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if compoundNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC :th-hover"}} title="Click to sort" style="width: 10%; border-right: 2px solid white; padding: 7px;">Organism{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th style="width: 10%" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC :th-hover"}} title="Click to sort">Organism{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC :th-hover"}} title="Click to sort" style="width: 30%; border-right: 2px solid white; padding: 7px;">Description{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
@@ -143,6 +144,7 @@
 		{{#if showPharmaProvenance}}
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
+				<td>{{cs_image_src pharmaRecord.csCompoundUri}}</td>
 				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}</td>
@@ -161,6 +163,7 @@
 		{{else}}
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
+	                        <td>{{cs_image_src pharmaRecord.csCompoundUri}}</td>
 				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
 				<td class="cell-basictext">{{pharmaRecord.assayOrganism}}</td>
