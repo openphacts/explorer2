@@ -163,20 +163,20 @@
 		{{else}}
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
-	                        <td>{{cs_image_src pharmaRecord.csCompoundUri}}</td>
-				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
-				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-				<td class="cell-basictext">{{pharmaRecord.assayOrganism}}</td>
-				<td class="cell-longtext">{{pharmaRecord.assayDescription}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityRelation}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityStandardValue}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}}</td>
-				<td class="cell-basictext" >{{pharmaRecord.compoundFullMwt}}</td>
+	                        <td style="width:10%;">{{cs_image_src pharmaRecord.csCompoundUri}}</td>
+				<td class="cell-basictext" style="width:10%;">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
+				<td class="cell-basictext" style="width:10%;">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
+				<td class="cell-basictext" style="width:10%;">{{pharmaRecord.assayOrganism}}</td>
+				<td class="cell-longtext" style="width:30%;">{{pharmaRecord.assayDescription}}</td>
+				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityActivityType}}</td>
+				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityRelation}}</td>
+				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityStandardValue}}</td>
+				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityStandardUnits}}</td>
+				<td class="cell-basictext" style="width:5%;">{{pharmaRecord.compoundFullMwt}}</td>
 				{{!-- <td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundSmiles}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchi}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchikey}}</td> --}}
-				<td class="cell-basictext" >{{pharmaRecord.pChembl}}</td>
+				<td class="cell-basictext" style="width:5%;">{{pharmaRecord.pChembl}}</td>
 			</tr>
 			{{/each}}
         {{/if}}

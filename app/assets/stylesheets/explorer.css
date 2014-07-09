@@ -432,3 +432,12 @@ th.th-hover:hover {
 /*    height: 100%; */
     width: 100%;
 }
+
+i.fa-star-o {
+    font-size: smaller;
+    color: gray;
+}
+i.fa-star {
+    font-size: smaller;
+    color: #e5c100;
+}

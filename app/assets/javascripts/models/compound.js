@@ -38,6 +38,7 @@ App.Compound = App.SearchResult.extend({
     molfile: DS.attr('string'),
     // path to the ketcher drawing server
     ketcherPath: DS.attr('string'),
+    favourite: DS.attr('boolean'),
 
     pathwayInfoAvailable: function() {
         return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);
