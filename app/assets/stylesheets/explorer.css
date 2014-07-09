@@ -238,11 +238,11 @@ sub {
 }
 /* Sorting and filtering*/
 .sortASC {
-	background-color: gray;
+/*	background-color: gray; */
 }
 
 .sortDESC {
-	background-color: gray;
+/*	background-color: gray; */
 }
 .relation-checkbox {
     vertical-align: top;
@@ -391,4 +391,44 @@ sub {
 #ketcher-iframe {
     min-width: 100%;
     min-height: 650px
+}
+
+.no-list-style  {
+    list-style: none;
+}
+th.th-hover:hover {
+    background-color: gray;
+}
+.compound-result-image:hover {
+    background: gray;
+}
+.compound-result-image {
+    background: white;
+}
+.search-checkbox {
+    margin: 0px 0 0;
+}
+#compounds-checkbox {
+    margin: 0;
+}
+#targets-checkbox {
+    margin: 0;
+}
+
+.smaller-font {
+    font-size: smaller;
+}
+
+.fix-summary-box {
+    position: fixed;
+    top: 0px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+/*    height: 55px; */
+    width: 100%;
+}
+.free-summary-box {
+    position: relative;
+/*    height: 100%; */
+    width: 100%;
 }

@@ -51,6 +51,8 @@ App.SearchRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
     console.log('search route setup');
     controller.clear();
+    controller.set('totalCompounds', 0);
+    controller.set('totalTargets', 0);
     controller.doSearch();
   },
 

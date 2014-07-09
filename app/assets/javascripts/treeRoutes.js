@@ -7,6 +7,7 @@ App.TreesIndexRoute = Ember.Route.extend({
         var me = controller;
 	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 	    var callback = function(success, status, response) {
+		    me.get('controllers.application').set('fetching', false);
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
                 var allRoot = [];
@@ -40,6 +41,7 @@ App.TreesIndexRoute = Ember.Route.extend({
                 });
 			}
 		}
+	    me.get('controllers.application').set('fetching', true);
 	    searcher.getRootNodes('enzyme', callback);
    },
 

@@ -75,32 +75,34 @@
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
 			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-			    <button {{action 'enableProvenance'}} class="btn" >On</button>
-                <button {{action 'disableProvenance'}} class="btn active" >Off</button>
+	                    <button  {{action 'enableProvenance'}} {{bind-attr class="showPharmaProvenance:active: :btn"}}>On</button>
+	                    <button  {{action 'disableProvenance'}} {{bind-attr class="showPharmaProvenance::active :btn"}}>Off</button>	
   			</div>
 		</div>
 	</ul>
 </div>  
 <!-- actual results -->
 <div id="summary-anchor">
-	<div id="summary" class="compound_summary collapse in">		
-    	<div id="compound-image" class="span2 small-padding-top big-padding-bottom">{{cs_image_src csURI}}</div>
+	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>		
+		<div id="compound-image" {{bind-attr class=":span2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{cs_image_src csURI}}</div>
 		<div class="row">
-			<div class="span8">
-    			<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)
-                    <a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-                    <a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
-                </h3>
-   				<div class="row">
-      				<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
-      				<div class="span6 justify normal-font">{{expandableDescription description}}</div>
+			<div {{bind-attr class=":left infoHide:big-padding-left:"}}>
+				<h3 class="inline">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)</h3>
+				<a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+				<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
+	    
+				{{!--  <div><a href="#compoundPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+					<a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></div> --}}
+		<div {{bind-attr class=":row infoHide:hide:"}}>
+			<div id="formula" class="span2 lead centre">{{formatMolecularFormula molform}}</div>
+      				<div class="span6 justify normal-font small-margin-top">{{expandableDescription description}}</div>
     			</div>
   			</div>
-  			<button id="toggle-summary" type="button" class="btn btn-link pull-right" data-target="#summary">less</button>
+			{{!-- <button id="toggle-summary" type="button" {{bind-attr class=":btn :btn-link :pull-right hideInfo:hide:"}} data-target="#summary">less</button> --}}
 
-			<div id="structure" class="span5 small-padding-top">
-  				<button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button>
-				<div id="demo" class="collapse out dl-horizontal" style="font-size:13px;">
+			<div id="structure" {{bind-attr class=":span5 :small-padding-top infoHide:hide:"}}>
+				{{!-- <button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#demo">SMILES and InChIs</button> --}}
+				<div id="demo" class="out dl-horizontal" style="font-size:13px;">
 					<dl>
   						<dt>SMILES</dt>
   						<dd>{{smiles}}</dd>
@@ -114,40 +116,35 @@
 		</div>
 	</div>
 </div>
-
-<button class="btn btn-primary btn-mini text-top pull-right" title="Create TSV file for download" {{action "tsvDownload"}}>
-    <i class="icon-white icon-download"></i>
-</button>
 {{#if notEmpty}}
 <!-- RESULT LISTING -->
-<div style="padding:30px">	
-	<table class="mytable">
-		<thead id="tablehead" class="headingstyle">
+<div class="row "style="padding:30px">
+	<table class="">
+		<thead class="headingstyle" style="border-spacing: 0;">
 			<tr>
-				<th class="lead lead-target">Target</th>
-				<th></th>
-				<th class="lead lead-assay">Assay</th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th></th>
-			<tr>
+				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Target</th>
+				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Assay</th>
+				<th colspan="4" class="centre" style="border-right: 2px solid white; padding: 7px;">Activity</th>
+				{{!-- <th style="border-right: 2px solid white; padding: 7px;"></th>
+				<th style="border-right: 2px solid white; padding: 7px;"></th>
+				<th style="border-right: 2px solid white; padding: 7px;"></th> --}}
+				<th style="border-right: 2px solid white; padding: 7px;"></th>
+				<th style="border-right: 2px solid white; padding: 7px;"></th>
+			</tr>	
 			<tr>
 				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
-				<th align="left" {{action "sortHeader" "target_name"}} {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC"}}>Name{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th width="10%" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC"}}>Organism{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th width="10%" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC"}}>Organism{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th align="left" width="300px" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC"}}>Description{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down"></i>{{/if}}</th>
-				<th {{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC"}}>Type{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-			 	<th {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC"}}>Relation{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC"}}>Value{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC"}}>Units{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC"}}>PubMed Article{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-                <th {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC"}}>pChembl{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 20%" {{action "sortHeader" "target_name"}} title="Click to sort" {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Name</span><span>{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 10%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Organism</span><span>{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th style="width: 10%" title="Click to sort" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Organism</span><span>{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to start" style="width: 30%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Description</span><span>{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%" {{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Type</span><span>{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%" {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Relation</span><span>{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Value</span><span>{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Units</span><span>{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>PubMed Article</span><span>{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 			</tr>
 		</thead>
 		<tbody>

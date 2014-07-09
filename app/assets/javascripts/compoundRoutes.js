@@ -5,8 +5,29 @@ App.CompoundsIndexRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
    console.log('compound index controller');
    controller.set('model', model);
+   var compound = model;
    var molfile = this.controllerFor('application').get('molfile');
-   model.set('molfile', molfile);
+
+   var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+   var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+
+   var pathwaysCountCallback=function(success, status, response){
+       if (success && response) {
+         var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
+         Ember.run(function(){compound.set('pathwayRecords', count)});
+       }
+   };
+
+   var pharmaCountCallback=function(success, status, response){
+       if (success && response) {
+         var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
+         Ember.run(function(){compound.set('pharmacologyRecords', count)});
+       }
+   };
+   var compoundURI = compound.get('URI');
+   pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
+   compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
+   Ember.run(function(){compound.set('molfile', molfile)});
   },
 
   model: function(params) {

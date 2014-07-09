@@ -29,6 +29,9 @@ $huge: 40px;
 .small-margin-left {
     margin-left: $small;
 }
+.small-margin-right {
+    margin-right: $small;
+}
 .small-margin-bottom {
     margin-bottom: $small;
 }
@@ -42,6 +45,9 @@ $huge: 40px;
 }
 .medium-padding-right {
 	padding-right: $medium;
+}
+.medium-padding-left {
+    padding-left: $medium;
 }
 .medium-padding-top {
 	padding-top: $medium;
@@ -93,9 +99,17 @@ $huge: 40px;
 
 /* huge 40px */
 .huge-padding-top {
-    padding-top: 40px;
+    padding-top: $huge;
 }
-
+.huge-padding-left {
+    padding-left: $huge;
+}
+.huge-padding-bottom {
+    padding-bottom: $huge;
+}
+.huge-padding-right {
+    padding-right: $huge;
+}
 /* alignments */
 .text-top {
   vertical-align: text-top;

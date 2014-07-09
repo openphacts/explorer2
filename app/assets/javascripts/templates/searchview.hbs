@@ -2,32 +2,21 @@
   		<li><a href="/">Home</a> <span class="divider">/</span></li>
   		<li>General Search<span class="divider">/</span></li>
 		<li class="active">{{totalResults}} Search Results Found</li>
-	
+		<li class="big-padding-left" title="Check or uncheck to view or hide compounds"><span class="small-margin-right">{{totalCompounds}} Compounds</span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</li>
+		<li title="Check or uncheck to view or hide targets"><span class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span></li>
 		<div class="row pull-right"> 
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
   				<button {{action switchView}} {{bind-attr class=":btn listViewActive:active"}} title="View only the label for search results">List</button>
   				<button {{action switchView}} {{bind-attr class=":btn objectViewActive:active"}} title="View label, image and description for search results">Object</button>
   			</div>
 		</div>
-</ul>
+	</ul>
+	<div id="search-results">
 	<ul style="list-style-type: none">
     {{#each result in controller}}
-    {{#if listView}}
-		<li>
-			{{#if result.exactMatch}}
-  				{{view App.SearchMatch}}
-			{{else}}
-  				{{view App.SearchResult resultBinding='result'}}
-			{{/if}}
-		</li>
-    {{else}}
 		<li class="inline">
-			{{#if result.exactMatch}}
-  				{{view App.SearchMatch}}
-			{{else}}
   				{{view App.SearchResult resultBinding='result'}}
-			{{/if}}
 		</li>
-    {{/if}}
 	{{/each}}
 </ul>
+</div>

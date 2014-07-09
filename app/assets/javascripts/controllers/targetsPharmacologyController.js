@@ -54,6 +54,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
     
   showPharmaProvenance: false,
 
+  fetchingCount: false,
+
   currentCount: function() {
     return this.get('model.pharmacology.length');
   }.property('model.pharmacology.length'),
@@ -63,6 +65,14 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   notEmpty: function() {
     return this.get('totalCount') > 0;
   }.property('totalCount'),
+
+  haveRecords: function() {
+	return this.get('model.pharmacology.length') > 0;	
+  }.property('model.pharmacology.length'),
+
+  noRecords: function() {
+	return this.get('fetchingCount') == false && this.get('model.pharmacology.length') == 0;	
+  }.property('model.pharmacology.length'),
 
   inchikeySortASC: function() {
 	return this.get('currentHeader') === "inchi_key" && this.get('sortedHeader') === "inchi_key";

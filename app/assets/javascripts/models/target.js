@@ -19,6 +19,7 @@ App.Target = App.SearchResult.extend({
     pharmacology: DS.hasMany('TargetPharmacology'),
     pharmacologyRecords: DS.attr('number'),
     isCompound: false,
+    isTarget: true,
     URI: DS.attr('string'),
     // provenance
     chemblProvenance: DS.attr(),

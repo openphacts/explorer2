@@ -17,8 +17,8 @@
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-                 <button {{action 'enableProvenance'}} class="btn">On</button>
-                 <button {{action 'disableProvenance'}} class="btn active">Off</button>
+				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
   			</div>
 		</div>
 	</ul>
@@ -90,7 +90,7 @@
                                                 {{#link-to 'targets.pharmacology' (query-params uri=URI)}}Pharmacology Data{{/link-to}}
                                         </div>
                                         <div style="padding:5px 0 0 0;text-align:left;">
-                        {{#link-to 'targets.pathways' (query-params uri=URI)}}Pathways{{/link-to}}
+                         {{#link-to 'targets.pathways' (query-params uri=URI)}}Pathways{{/link-to}}
                                         </div>
                                 </div>
 				

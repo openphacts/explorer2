@@ -1,28 +1,30 @@
 <div class="offset2">
 {{#if result.isCompound}}
-    {{#if listView}}
+    {{#if compoundsChecked}}    
+{{#if listView}}
 	<div class="row medium-margin-bottom">
 		<div>
-			<h2 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>        
-			<p class="inline"><small><em>Compound</em></small></p>
+			<h4 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}</h4>        
+			<p class="inline"><small><em>Compound</em>{{#if result.hasPathways}}<em>, {{#link-to "compounds.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}{{#if result.hasPharmacology}}<em>, {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}</small></p>
 		</div>
     </div>
     {{else}}
 	<div class="single-search-result row" style="max-width:800px">
-		<div class="span9">
-			<h2>{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
-			<p><small><em>Compound</em></small></p>
+		<div class="small-padding-bottom huge-padding-left">
+			<h4 class="inline small-padding-right">{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h4>
+			<p class="inline"><small><em>Compound</em></small></p>
 		</div>
 		
 		<div class="span2" style="padding:0px 30px 10px 20px">
-			<div class="thumbnail" style="background:white;">{{cs_image_src result.csURI}}</div>
+			<div class="thumbnail compound-result-image" title="Click to search for compounds with this structure">{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI}}{{/link-to}}</div>
 		</div>
 		<div class="row span7">
 			<div id="formula1" class="lead" style="padding:5px 0px 0px 0px;max-height:15px">{{formatMolecularFormula result.molform}}</div>
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.description}}</small></div>
-			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>
+			<ul class="small-padding-top no-list-style no-margin">
+				<li class="inline">
                    {{#if result.pharmacologyInfoAvailable}}
+		   
                      {{#if result.hasPharmacology}}
                        {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
                      {{else}}
@@ -31,8 +33,8 @@
                    {{else}}
                      <small><em>Fetching Pharmacology Count</em></small>
                    {{/if}}
-                </p>
-				<p>
+                </li>
+				<li class="inline">
                    {{#if result.pathwayInfoAvailable}}
                      {{#if result.hasPathways}}
                        {{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
@@ -42,9 +44,8 @@
                    {{else}}
                      <small><em>Fetching Pathway Count</em></small>
                    {{/if}}
-                </p>
-				<p>{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}Structure{{/link-to}}</p>
-			</div>
+                </li>
+			</ul>
 		</div>
 	
 	</div>
@@ -52,19 +53,21 @@
 <!-- The views are rendered in the index template and it looks like you cannot add actions to
      the IndexController (ember complains if you try to create your own IndexController -->
     {{/if}}
+{{/if}}
 {{else}}
+{{#if targetsChecked}}
     {{#if listView}}
 <div class="row medium-margin-bottom">
 		<div>
-			<h2 class="inline">{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
-			<p class="inline"><small><em>Target</em></small></p>
+			<h4 class="inline">{{#link-to "targets.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}</h4>
+			<p class="inline"><small><em>Target</em>{{#if result.hasPathways}}<em>, {{#link-to "targets.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}{{#if result.hasPharmacology}}<em>, {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}</small></p>
 		</div>
 </div>
     {{else}}
 <div class="single-search-result row" style="max-width:800px">
-		<div class="span9">
-			<h2>{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h2>
-			<p><small><em>Target</em></small></p>
+		<div class="small-padding-bottom huge-padding-left">
+			<h4 class="inline small-padding-right">{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h4>
+			<p class="inline"><small><em>Target</em></small></p>
 		</div>
 		
 		<div class="span2" style="padding:0px 30px 10px 20px">
@@ -72,8 +75,9 @@
 		</div>
 		<div class="row span7">
 			<div style="text-align:justify;padding:5px 0px 0px 0px;" ><small>{{result.alternativeName}}</small></div>
-			<div class="pull-right" style="padding:5px 0px 0px 0px">
-				<p>
+			<div style="padding:5px 0px 0px 0px">
+				<ul class="small-padding-top no-list-style no-margin">
+					<li class="inline">
                    {{#if result.pharmacologyInfoAvailable}}
                      {{#if result.hasPharmacology}}
                        {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
@@ -83,8 +87,8 @@
                    {{else}}
                      <small><em>Fetching Pharmacology Count</em></small>
                    {{/if}}
-                </p>
-				<p>
+                </li>
+				<li class="inline">
                    {{#if result.pathwayInfoAvailable}}
                      {{#if result.hasPathways}}
                        {{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
@@ -94,12 +98,14 @@
                    {{else}}
                      <small><em>Fetching Pathway Count</em></small>
                    {{/if}}
-                </p>
+                </li>
+	</ul>
 			</div>
 		</div>
 	
 	</div>
     {{/if}}
+{{/if}}
 {{/if}}
     
 </div>

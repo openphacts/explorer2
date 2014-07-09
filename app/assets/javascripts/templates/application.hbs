@@ -33,13 +33,14 @@
 <div class="navbar-inner">
     <a class="brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer<sup class="release-status">Alpha</sup></a>
 <form class="form-search no-margin">
-    <div class="navbar-search pull-left input-append">
-			  {{input type="text" placeholder="Enter search terms eg Aspirin" value=searchQuery action="query" id="search_box" class="search-query span4" autocomplete="off"}}
-              <button type="submit" class="btn" title="Click to search using the text you entered in the box. You can also just hit enter when finished typing in text." {{action 'query'}}>Search</button>	
+    <div class="navbar-search pull-left input-append" title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
+			  {{input type="text" placeholder="Enter search terms or SMILES" value=searchQuery action="query" id="search_box" class="search-query span4" autocomplete="off"}}
+              <button id="search-button" type="submit" class="btn" {{action 'query'}}>Search</button>	
     </div>	
 </form>
-    <ul class="nav pull-right">
-    	<li id="target-class" title="Click to view target class hierarchy.">{{#link-to 'trees.index'}}Target Class{{/link-to}}</li>
+<ul class="nav pull-right">
+	<li title="Draw a structure and search for the compound.">{{#link-to "compounds.draw"}}Draw Molecule{{/link-to}}</li>
+    	<li id="target-class" title="Click to view ontology browser.">{{#link-to 'trees.index'}}Browse by Ontology{{/link-to}}</li>
         <li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
     </ul>
   </div>

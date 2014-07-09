@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '3.2.18'
 
 gem 'rake', '10.1.1'
 
@@ -17,8 +17,9 @@ group :assets do
   gem 'handlebars_assets'
 end
 
-group :development do
+group :development, :test do
   gem 'quiet_assets'
+  gem 'qunit-rails'
 end
 
 gem 'delayed_job_active_record'

@@ -24,7 +24,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   queryParams: ['uri', 'type'],
 
-  thresholdPercent: 90,
+  thresholdPercent: 0.90,
 
   maxRecords: 100,
 
