@@ -110,12 +110,11 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
                                         };
                                     };
                                     if (foundIt === true) return false; //ie break out of the iterator
-                                }
-                            });
+                                });
+			}
                     }
-                }
                 mapSearch.mapURL(this.get('model').get('URI'), null, null, null, callback);
-            };
+                };
 	    //create db if it doesn't exist
             request.onupgradeneeded = function(event) {
                 var db = event.target.result;
