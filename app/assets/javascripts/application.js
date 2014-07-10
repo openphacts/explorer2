@@ -15,8 +15,8 @@
 //= require jquery
 //= require jqXDomain
 //= require handlebars-v1.3.0
-//= require ember-latest
-//= require ember-data-1.0.0-beta5
+//= require ember-1.8.0-beta1
+//= require ember-data-1.0.0-beta8
 //= require bootstrap
 //= require combined
 //= require_self

@@ -52,19 +52,20 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
                 var db;
                 var request = window.indexedDB.open("ExplorerFavouritesDB", 1);
                 request.onerror = function(event) {
+			console.log("A DB error");
                     // Do something with request.errorCode!
                     //alert("Database error: " + event.target.errorCode);
                 };
                 request.onsuccess = function(event) {
-                    //   // Do something with request.result!
-                    db = request.result;
+                    db = this.result;
                     var transaction = db.transaction(["customers"], "readwrite");
                     transaction.oncomplete = function(event) {
-                        //alert("All done!");
+                        alert("All done!");
                     };
 
                     transaction.onerror = function(event) {
                         // Don't forget to handle errors!
+			console.log("db find error");
                     };
                     var objectStore = transaction.objectStore("compounds");
                     var request = objectStore.add(customerData[i]);
