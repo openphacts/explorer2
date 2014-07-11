@@ -7,7 +7,8 @@ App.CompoundsIndexRoute = Ember.Route.extend({
    controller.set('model', model);
    var compound = model;
    var molfile = this.controllerFor('application').get('molfile');
-
+   //set the favourite status for this compound
+   this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
    var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
 var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);

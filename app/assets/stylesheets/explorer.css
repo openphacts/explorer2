@@ -434,10 +434,12 @@ th.th-hover:hover {
 }
 
 i.fa-star-o {
-    font-size: smaller;
+    font-size: 20px;
     color: gray;
+    vertical-align: super;
 }
 i.fa-star {
-    font-size: smaller;
+    font-size: 20px;
     color: #e5c100;
+    vertical-align: super;
 }
