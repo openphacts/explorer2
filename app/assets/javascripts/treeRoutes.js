@@ -80,7 +80,10 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
             controller.set('totalCount', count);
             if (count > 0) {
 		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
-            }
+            } else {
+App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
+
+	    }
         }
     };
     var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);

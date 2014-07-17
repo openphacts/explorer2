@@ -82,12 +82,13 @@
 	</ul>	
 	
 </div>
+{{#if notEmpty}}
 <a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 <a href="#enzymePharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted target class pharmacology results">Create TSV</a>
 Loaded {{currentCount}} of {{totalCount}}
-{{#link-to 'trees.index'}}Tree view{{/link-to}}
-
+{{/if}}
 <!-- RESULT LISTING -->
+{{#if notEmpty}}
 	<div class="row" style="padding:30px">	
 	<table>
 		<thead class="headingstyle" style="border-spacing: 0;">
@@ -150,4 +151,5 @@ Loaded {{currentCount}} of {{totalCount}}
 			{{/each}}
 		</tbody>
 	</table>
-	</div>
+</div>
+{{/if}}
