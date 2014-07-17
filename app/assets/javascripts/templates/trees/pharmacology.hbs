@@ -76,8 +76,8 @@
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-				<button {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-				<button {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
   			</div>
 		</div>
 	</ul>	
@@ -128,6 +128,27 @@ Loaded {{currentCount}} of {{totalCount}}
 		</thead>
 		<tbody>
 			{{#each enzymePharma in pharmacology}}
+			{{#if showPharmaProvenance}}
+<tr class="record-deco">
+				
+				{{!--<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>--}}
+				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{target.title}}{{/each}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}{{targetComponentLink component}}{{/each}}{{/each}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{targetOrganismLink target}}{{/each}}</td>
+				<td class="cell-basictext">{{assayOrganismLink enzymePharma}}</td>
+				<td class="cell-longtext">{{enzymePharma.assayDescription}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityType}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityRelation}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityValue}}</td>
+			    <td class="cell-basictext">{{enzymePharma.activityUnits}}</td>
+			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
+			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
+			    <td class="cell-longtext">{{enzymePharma.pChembl}}</td>
+
+		    </tr>
+
+			{{else}}
 			<tr class="record-deco">
 				
 				{{!--<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>--}}
@@ -143,12 +164,10 @@ Loaded {{currentCount}} of {{totalCount}}
 			    <td class="cell-basictext">{{enzymePharma.activityUnits}}</td>
 			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
 			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
-			    {{!--<td class="cell-longtext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw the compound with this structure"}}{{enzymePharma.smiles}}{{/link-to}}</td>
-			    <td class="cell-longtext">{{enzymePharma.inchi}}</td>
-			    <td class="cell-longtext">{{enzymePharma.inchiKey}}</td>--}}
 			    <td class="cell-longtext">{{enzymePharma.pChembl}}</td>
 
-			</tr>
+		    </tr>
+		    {{/if}}
 			{{/each}}
 		</tbody>
 	</table>
