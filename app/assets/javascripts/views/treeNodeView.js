@@ -105,20 +105,21 @@ actions: {
 						      enzyme.set('uri', member.uri);
 							  enzyme.set('name', member.names[0]);
 							  enzyme.set('id', member.uri.split('/').pop());
-                              enzyme.set('hasChildren', false);
+                              // assume that all the children have children until clicked
+							  enzyme.set('hasChildren', true);
                               enzyme.set('level', parent.get('level') + 1);
                               allMembers.push(enzyme);
                               // now figure out if this node has children
-		                      var innerCallback = function(success, status, response) {
-			                    if (success && response) {
-			                      var members = searcher.parseChildNodes(response);
-                                  //does the node have children
-                                  enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-				                } else {
-                                  enzyme.set('hasChildren', false);
-                                }
-			                  }
-                            searcher.getChildNodes(member.uri, innerCallback);
+		          //            var innerCallback = function(success, status, response) {
+			  //                  if (success && response) {
+			  //                    var members = searcher.parseChildNodes(response);
+                          //        //does the node have children
+                          //        enzyme.set('hasChildren', members.children.length > 0 ? true : false);
+			  //	                } else {
+                          //        enzyme.set('hasChildren', false);
+                          //      }
+			  //                }
+                          //  searcher.getChildNodes(member.uri, innerCallback);
                             }
 				        });
                         //then sort them
@@ -134,6 +135,10 @@ actions: {
                             controller.get('content').insertAt(contentIndex + 1, member);
                             controller.get('content')[contentIndex].get('children').pushObject(member);
                         });
+				    } else {
+				      // api sent false (or it broke!)    
+				      console.log(uri + ' has no children');
+                                      me.get('content').set('hasChildren', false);
 				    }
 			    }
 			    searcher.getChildNodes(uri, callback);

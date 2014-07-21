@@ -14,18 +14,19 @@ App.TreesIndexRoute = Ember.Route.extend({
 			    $.each(root.rootClasses, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
-                    enzyme.set('hasChildren', false);
+		    // by default we set this to true. only check when it is clicked to save the browser from making too many network calls
+                    enzyme.set('hasChildren', true);
                     enzyme.set('level', 1);
                     enzyme.set('opened', false);
                     allRoot.push(enzyme);
-                    var innerCallback = function(success, status, response) {
-			          if (success && response) {
-			              var members = searcher.parseChildNodes(response);
-                          //does the node have children
-                          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-				      }
-			        }
-                    searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
+                    //var innerCallback = function(success, status, response) {
+		//	          if (success && response) {
+		//	              var members = searcher.parseChildNodes(response);
+                //          //does the node have children
+                //          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
+		//		      }
+		//	        }
+                //    searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
 			    });
                 allRoot.sort(function(a,b) {
                     var x = a.get('uri').split('/').pop();
