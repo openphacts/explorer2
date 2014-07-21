@@ -11,7 +11,7 @@ App.TreesIndexRoute = Ember.Route.extend({
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
                 var allRoot = [];
-			    $.each(root, function(index,enzymeResult) {
+			    $.each(root.rootClasses, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('hasChildren', false);

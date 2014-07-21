@@ -132,4 +132,7 @@ div.highlight-on {
 div.hidden {
 	display:none;
 }
+#ontology-container {
+    width: 80%;
+}
 /* End of Tree View CSS */

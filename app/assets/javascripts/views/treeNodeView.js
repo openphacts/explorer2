@@ -17,29 +17,29 @@ App.TreeNodeView = Ember.View.extend({
   }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
+  classNameBindings: [':medium-padding-bottom', 'hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
   classNames: ['treerow'],
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
   //template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
 
-  mouseEnter: function(evt) {
-		var name, uri;
-		var me = this;
-		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
-		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-	    console.log("Mouse Enter " + name + " " + uri);
-	    this.set('highlighted', true);
-  },
-  mouseLeave: function(evt) {
-		var name, uri;
-		var me = this;
-		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
-		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-	    console.log("Mouse leave " + name + " " + uri);
-	    this.set('highlighted', false);
-  },
+//  mouseEnter: function(evt) {
+//		var name, uri;
+//		var me = this;
+//		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
+//		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+//	    console.log("Mouse Enter " + name + " " + uri);
+//	    this.set('highlighted', true);
+//  },
+//  mouseLeave: function(evt) {
+//		var name, uri;
+//		var me = this;
+//		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
+//		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+//	    console.log("Mouse leave " + name + " " + uri);
+//	    this.set('highlighted', false);
+//  },
 actions: {
   expand: function() {
         console.log('expand');
