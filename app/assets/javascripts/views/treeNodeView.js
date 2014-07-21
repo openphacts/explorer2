@@ -139,6 +139,7 @@ actions: {
 				      // api sent false (or it broke!)    
 				      console.log(uri + ' has no children');
                                       me.get('content').set('hasChildren', false);
+				      App.FlashQueue.pushFlash('error', 'There are no children for this node. Please select a different one.'); 
 				    }
 			    }
 			    searcher.getChildNodes(uri, callback);
