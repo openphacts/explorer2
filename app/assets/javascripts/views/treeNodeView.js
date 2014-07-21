@@ -1,5 +1,7 @@
 App.TreeNodeView = Ember.View.extend({
   opened: false,
+  //keep track of which uri has children
+  hasChildrenList: {},
   highlighted: false,
   hidden: function() {
 	return this.get('content').get('hidden');
@@ -105,8 +107,14 @@ actions: {
 						      enzyme.set('uri', member.uri);
 							  enzyme.set('name', member.names[0]);
 							  enzyme.set('id', member.uri.split('/').pop());
-                              // assume that all the children have children until clicked
+                              // assume that all the children have children until clicked unless we have already loaded this one
+			      if (me.get('hasChildrenList')[member.uri] != null && me.get('hasChildrenList')[member.uri] === true) {
 							  enzyme.set('hasChildren', true);
+			      } else if (me.get('hasChildrenList')[member.uri] != null && me.get('hasChildrenList')[member.uri] === false) {
+                              enzyme.set('hasChildren', false);
+			      } else {
+                                  enzyme.set('hasChildren', true);
+			      }
                               enzyme.set('level', parent.get('level') + 1);
                               allMembers.push(enzyme);
                               // now figure out if this node has children
@@ -139,6 +147,7 @@ actions: {
 				      // api sent false (or it broke!)    
 				      console.log(uri + ' has no children');
                                       me.get('content').set('hasChildren', false);
+				      me.get('hasChildrenList')[uri] = false;
 				      App.FlashQueue.pushFlash('error', 'There are no children for this node. Please select a different one.'); 
 				    }
 			    }
