@@ -2,6 +2,7 @@ App.TreeNodeView = Ember.View.extend({
   opened: false,
   //keep track of which uri has children
   hasChildrenList: {},
+  fetchingData: false,
   highlighted: false,
   hidden: function() {
 	return this.get('content').get('hidden');
@@ -19,7 +20,7 @@ App.TreeNodeView = Ember.View.extend({
   }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: [':medium-padding-bottom', 'hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
+  classNameBindings: ['fetchingData:fetching-ontology:fetched-ontology', ':medium-padding-bottom', 'hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
   classNames: ['treerow'],
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
@@ -49,6 +50,7 @@ actions: {
 		var contentIndex = controller.get('content').indexOf(this.get('content'));
 		var parent = controller.get('content')[contentIndex];
         var me = this;
+	this.set('fetchingData', true);
 		// the initial treebranch is loaded with data from the controller, sub branches are given data directly
 		// hence the need to get the data slightly differently. Sure it's a fudge but.....
 		if (parent.get('opened')) {
@@ -62,6 +64,7 @@ actions: {
 			//this.get('parentView').removeAt(index);
 			this.set('opened', false);
 			this.get('content').set('opened', false);
+			this.set('fetchingData', false);
 		} else if (parent.get('fetchedData')){
 			// user wants to open the branch and we have already created the view before
 			var index = this.get('parentView').indexOf(this) + 1;
@@ -71,12 +74,11 @@ actions: {
 	        //  me.iterateOverChildren(child, false);
             //});
 			//this.get('parentView').insertAt(index, this.get('subBranch'));
+			this.set('fetchingData', false);
 			this.set('opened', true);
 			this.get('content').set('opened', true);
 		} else {
 			// user wants to open the branch for the first time
-			this.set('opened', true);
-			this.get('content').set('opened', true);
 			var name, uri;
 			var me = this;
             var parent = this.get('content');
@@ -93,10 +95,12 @@ actions: {
                 //me.get('parentView').insertAt(index, treeBranchView);
 			    //treeBranchView.set('content', []);
                 var contentIndex = controller.get('content').indexOf(this.get('content'));
-				controller.get('content')[contentIndex].set('opened', true);
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
 			        if (success && response) {
+			me.set('fetchingData', false);    
+me.set('opened', true);
+		me.get('content').set('opened', true);
 				        var members = searcher.parseChildNodes(response);
 				        var membersWithSingleName = [];
                         var allMembers = [];
@@ -146,11 +150,12 @@ actions: {
 				    } else {
 				      // api sent false (or it broke!)    
 				      console.log(uri + ' has no children');
+				      me.set('fetchingData', false);
                                       me.get('content').set('hasChildren', false);
 				      me.get('hasChildrenList')[uri] = false;
 				      App.FlashQueue.pushFlash('error', 'There are no children for this node. Please select a different one.'); 
 				    }
-			    }
+			}
 			    searcher.getChildNodes(uri, callback);
 		    }
 		}
