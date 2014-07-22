@@ -2285,7 +2285,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                 if ($.isArray(targetComponents)) {
                     $.each(targetComponents, function(j, targetComponent) {
                         var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
-                        var targetComponentURI = targetComponent[constants.EXACT_MATCH];
+                        var targetComponentURI = targetComponent[constants.ABOUT];
                         assayTargetComponents.push({
                             "label": targetComponentLabel,
                             "uri": targetComponentURI
