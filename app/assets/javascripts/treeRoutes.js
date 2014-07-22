@@ -67,12 +67,16 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
       var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
+me.get('controllers.application').set('fetching', false);
         var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
           pharma['ketcherPath'] = ketcherPath;
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
 	      thisEnzyme.get('pharmacology').addObject(pharmaRecord);
         });
+      } else {
+App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
+me.get('controllers.application').set('fetching', false);
       }
     };
     var countCallback = function(success, status, response) {
@@ -82,6 +86,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
             if (count > 0) {
 		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
             } else {
+me.get('controllers.application').set('fetching', false);
 App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
 
 	    }
@@ -105,6 +110,7 @@ App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnz
                 }
     };
     activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
+    this.controllerFor('application').set('fetching', true);
     searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
   },
 
