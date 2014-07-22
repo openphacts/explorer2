@@ -12,9 +12,6 @@ App.TreesIndexController = Ember.ArrayController.extend({
   selectedTreeChanged: function() {
     if(this.get('selectedTree') !== null) {
         console.log('selected tree changed ' + this.get('selectedTree'));
-        $.each(this.get('childTreeNodes'), function(index, childTreeNode) {
-          console.log('inside child tree node');
-        });
         this.get('model').clear();
         var me = this;
 	    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
@@ -22,24 +19,40 @@ App.TreesIndexController = Ember.ArrayController.extend({
 		    me.get('controllers.application').set('fetching', false);
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
-			    $.each(root, function(index,enzymeResult) {
+			    var allRoot = [];
+			    $.each(root.rootClasses, function(index,enzymeResult) {
 				    if (enzymeResult.name != null && enzymeResult.uri != null) {
 				    var enzyme = me.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
                     enzyme.set('level', 1);
 				    me.addObject(enzyme);
-                    enzyme.set('hasChildren', false);
+				    //has children by default until clicked
+                    enzyme.set('hasChildren', true);
                     enzyme.set('opened', false);
-		            var innerCallback = function(success, status, response) {
-			          if (success && response) {
-			              var members = searcher.parseChildNodes(response);
-                          //does the node have children
-                          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-				      }
-			        }
-                    searcher.getChildNodes(enzymeResult.uri, innerCallback);		    
+				    allRoot.push(enzyme);
+		     //       var innerCallback = function(success, status, response) {
+		     //	          if (success && response) {
+		//	              var members = searcher.parseChildNodes(response);
+                  //        //does the node have children
+                    //      enzyme.set('hasChildren', members.children.length > 0 ? true : false);
+		//		      }
+		//	        }
+                  //  searcher.getChildNodes(enzymeResult.uri, innerCallback);		    
 				    }
 			    });
+allRoot.sort(function(a,b) {
+                    var x = a.get('uri').split('/').pop();
+                    var y = b.get('uri').split('/').pop();
+                    if (x === y) {
+                      return 0;
+                    }
+                    return x > y ? 1 : -1;
+
+                });
+                $.each(allRoot, function(index, member) {
+				    me.addObject(member);
+                });
+
 			}
 		}
 	    this.get('controllers.application').set('fetching', true);
