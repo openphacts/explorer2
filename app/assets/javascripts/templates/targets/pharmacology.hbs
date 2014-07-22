@@ -90,7 +90,7 @@
 			<div id="target-image" {{bind-attr class=":span2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
 			<div class="row">
 				<div class="span12">
-    				<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h3>
+					<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}{{#if haveRecords}}<a href="#targetPharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
    					<div class="row">
       					<div class="span6 justify normal-font">{{expandableDescription description}}</div>
     				</div>
@@ -141,45 +141,24 @@
 			</tr>
 		</thead>
 		<tbody>
-		{{#if showPharmaProvenance}}
 			{{#each pharmaRecord in pharmacology}}
 			<tr class="record-deco">
 				<td>{{cs_image_src pharmaRecord.csCompoundUri}}</td>
 				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-				<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityStandardValue}} {{provenanceLinkout pharmaRecord.activityStandardValueItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}</td>
-				<td class="cell-basictext" >{{pharmaRecord.compoundFullMwt}} {{provenanceLinkout pharmaRecord.compoundFullMwtItem pharmaRecord.chemblProvenance.source}}</td>
+				<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="lead cell-basictext">{{pharmaRecord.activityStandardValue}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityStandardValueItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+				<td class="cell-basictext">{{pharmaRecord.compoundFullMwt}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.compoundFullMwtItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 				{{!-- <td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundSmiles}} {{provenanceLinkout pharmaRecord.compoundSmilesItem pharmaRecord.chemspiderProvenance.source}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchi}} {{provenanceLinkout pharmaRecord.compoundInchiItem pharmaRecord.chemspiderProvenance.source}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchikey}} {{provenanceLinkout pharmaRecord.compoundInchikeyItem pharmaRecord.chemspiderProvenance.source}}</td> --}}
 				<td class="cell-basictext" >{{pChembl}}</td>
 			</tr>
 			{{/each}}
-		{{else}}
-			{{#each pharmaRecord in pharmacology}}
-			<tr class="record-deco">
-	                        <td style="width:10%;">{{cs_image_src pharmaRecord.csCompoundUri}}</td>
-				<td class="cell-basictext" style="width:10%;">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
-				<td class="cell-basictext" style="width:10%;">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-				<td class="cell-basictext" style="width:10%;">{{pharmaRecord.assayOrganism}}</td>
-				<td class="cell-longtext" style="width:30%;">{{pharmaRecord.assayDescription}}</td>
-				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityActivityType}}</td>
-				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityRelation}}</td>
-				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityStandardValue}}</td>
-				<td class="lead cell-basictext" style="width:5%;">{{pharmaRecord.activityStandardUnits}}</td>
-				<td class="cell-basictext" style="width:5%;">{{pharmaRecord.compoundFullMwt}}</td>
-				{{!-- <td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundSmiles}}</td>
-				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchi}}</td>
-				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchikey}}</td> --}}
-				<td class="cell-basictext" style="width:5%;">{{pharmaRecord.pChembl}}</td>
-			</tr>
-			{{/each}}
-        {{/if}}
 		</tbody>
 	</table>
 	</div>
