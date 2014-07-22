@@ -111,8 +111,13 @@ App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnz
     };
     activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
     this.controllerFor('application').set('fetching', true);
+    // we might already have been on this route
+    if (controller.get('totalCount') == null) {
     searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
-  },
+    } else {
+        controller.get('controllers.application').set('fetching', false);
+    }
+    },
 
   model: function(params) {
     console.log('tree pharma controller model');
