@@ -1,5 +1,20 @@
-<i class="fa fa-spinner fetching-data"></i>
-<img src="/assets/table.png" class="single-enzyme-icon">
-<img src="/assets/folder_go.png" class="folder-open" title="Click to close" {{action expand target="view" }}></img>
-<img src="/assets/folder.png" class="folder-closed" title="Click to open and view any children" {{action expand target="view" }}></img>
+{{#if view.fetchingData}}
+    <i class="fa fa-spinner fetching-data"></i>
+{{else}}
+    {{#if view.node}}
+        <img src="/assets/table.png" class="single-enzyme-icon">
+    {{else}}
+        {{#if view.opened}}
+            <img src="/assets/folder_go.png" class="folder-open" title="Click to close" {{action expand target="view" }}></img>
+        {{else}}
+            {{#if view.closed}}
+                <img src="/assets/folder.png" class="folder-closed" title="Click to open and view any children" {{action expand target="view" }}></img>
+            {{else}}
+	        {{#if view.branch}}
+                    <img src="/assets/folder.png" class="folder-closed" title="Click to open and view any children" {{action expand target="view" }}></img>
+	        {{/if}}
+            {{/if}}
+        {{/if}}
+    {{/if}}
+{{/if}}
 <div class="enzymeURI">{{#if view.content.name}}{{view.content.name}}{{else}}<span class="muted">Label unknown</span>{{/if}}({{enzymeECNumber view.content.uri}})</div>{{#link-to 'trees.pharmacology' (query-params uri=view.content.uri) class="btn btn-small" title="Click to view pharmacology"}}<i class="icon-list"></i>{{/link-to}}</div>

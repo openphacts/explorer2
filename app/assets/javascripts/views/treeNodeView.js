@@ -4,15 +4,27 @@ App.TreeNodeView = Ember.View.extend({
   hasChildrenList: {},
   fetchingData: false,
   highlighted: false,
+
   hidden: function() {
 	return this.get('content').get('hidden');
   }.property('content.hidden'),
+
   branch: function(){
     return this.get('content').get('hasChildren');
   }.property('content.hasChildren'),
+
+   node: function(){
+    return (this.get('content').get('hasChildren') === false);
+  }.property('content.hasChildren'),
+ 
   opened: function() {
-    return this.get('content').get('opened');	
+    return (this.get('content').get('opened') === true);	
   }.property('content.opened'),
+
+  closed: function() {
+    return (this.get('content').get('opened') === false);
+  }.property('content.closed'),
+
   subBranch: undefined,
   fetchedData: false,
   indentLevel: function(){
@@ -20,7 +32,7 @@ App.TreeNodeView = Ember.View.extend({
   }.property('content.level'),
   tagName: 'div',
   // class names that determine what icons are used beside the node
-  classNameBindings: ['fetchingData:fetching-ontology:fetched-ontology', ':medium-padding-bottom', 'hidden', 'opened:tree-branch-open:tree-branch-closed', 'branch:tree-branch-icon:tree-node-icon', 'indentLevel', 'highlighted:highlight-on'],
+  classNameBindings: [':medium-padding-bottom', 'hidden', 'indentLevel', 'highlighted:highlight-on'],
   classNames: ['treerow'],
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to

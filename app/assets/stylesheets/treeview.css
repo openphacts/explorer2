@@ -22,7 +22,7 @@ img.folder-open {
 }
 i.fetching-data {
   vertical-align: top;
-  padding-right: 2px;
+  padding-right: 4px;
 }
 img.folder-closed {
   vertical-align: top;
@@ -107,28 +107,6 @@ div.indentLevel10 a.enzymeName {
 }
 div.indentLevel11 a.enzymeName {
 	margin-left: -20px;
-}
-
-div.tree-branch-open img.folder-closed {
-	display: none;
-}
-div.tree-branch-closed img.folder-open {
-	display: none;
-}
-div.fetched-ontology i.fetching-data {
-        display: none;
-}
-div.tree-branch-open img.single-enzyme-icon {
-	display: none;
-}
-div.tree-branch-closed img.single-enzyme-icon {
-	display: none;
-}
-div.tree-node-icon img.folder-closed {
-	display: none;
-}
-div.tree-node-icon img.folder-open {
-	display: none;
 }
 div.tree-node-icon img.single-enzyme-icon {
 	display: inline-block;
