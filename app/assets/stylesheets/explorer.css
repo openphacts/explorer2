@@ -447,3 +447,7 @@ th.th-hover:hover {
 /*    height: 100%; */
     width: 100%;
 }
+.pchembl-prov {
+    vertical-align: middle;
+    font-size: smaller;
+}

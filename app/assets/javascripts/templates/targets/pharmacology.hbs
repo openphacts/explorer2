@@ -156,7 +156,7 @@
 				{{!-- <td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundSmiles}} {{provenanceLinkout pharmaRecord.compoundSmilesItem pharmaRecord.chemspiderProvenance.source}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchi}} {{provenanceLinkout pharmaRecord.compoundInchiItem pharmaRecord.chemspiderProvenance.source}}</td>
 				<td class="cell-longtext" style="max-width:250px;word-wrap:break-word;">{{pharmaRecord.compoundInchikey}} {{provenanceLinkout pharmaRecord.compoundInchikeyItem pharmaRecord.chemspiderProvenance.source}}</td> --}}
-				<td class="cell-basictext" >{{pChembl}}</td>
+				<td class="cell-basictext" >{{pharmaRecord.pChembl}}{{#if showPharmaProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
 			</tr>
 			{{/each}}
 		</tbody>

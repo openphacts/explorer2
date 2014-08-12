@@ -144,7 +144,7 @@
 				<th title="Click to sort" style="width: 5%" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Value</span><span>{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Units</span><span>{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>PubMed Article</span><span>{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
-				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort." style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -163,7 +163,7 @@
 		<td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
                 <td class="cell-basictext">{{linkablePubmedId pharmaRecord.activityPubmedId}}</td>
-                <td class="cell-basictext">{{pharmaRecord.pChembl}}</td>
+		<td class="cell-basictext">{{pharmaRecord.pChembl}}{{#if showPharmaProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
             </tr>
 			{{/each}}
 		</tbody>

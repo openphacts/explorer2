@@ -146,7 +146,7 @@ Loaded {{currentCount}} of {{totalCount}}
 			    <!-- All chemspider prov links have the same source so doesn't really matter which one is used -->
 			    <td class="cell-basictext">{{enzymePharma.fullMWT}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.chemspiderProvenance.hba 'chemspider'}}{{/if}}</td>
 			    <!-- pchembl is from chembl just not exactly sure of the exact source -->
-			    <td class="cell-basictext">{{enzymePharma.pChembl}}</td>
+			    <td class="cell-basictext">{{enzymePharma.pChembl}}{{#if showPharmaProvenance}}{{#if enzymePharma.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
 
 		    </tr>
 			{{/each}}
