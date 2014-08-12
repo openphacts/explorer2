@@ -65,8 +65,8 @@
 	</div>
 	<!-- End of Modal -->
 <div class="goto-button" id="top"><button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
-<div>
-
+<div id="summary-anchor">
+<div id="summary" {{bind-attr class=":tree_summary fixSummaryBox:tree-fix-summary-box:free-summary-box"}}>
 	<ul class="breadcrumb">
 		{{!-- <li><a href="/">Home</a> <span class="divider">/</span></li>
 		<li>{{ontology}}<span class="divider">/</span></li>
@@ -81,7 +81,7 @@
   			</div>
 		</div>
 	</ul>	
-	
+</div>
 </div>
 {{#if notEmpty}}
 <a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>

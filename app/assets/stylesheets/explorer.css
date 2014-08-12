@@ -145,7 +145,14 @@ sub {
 	border-radius: 2;
 	border-color: #eee9e9;
 }
-		
+.tree_summary {
+	background: #f8f8ff;
+	border: 1px solid #556;
+	border-radius: 2;
+	border-color: #eee9e9;
+	padding-top: 10px;
+	margin-bottom: 10px;
+}	
 .gridCellAlign {
 	vertical-align: middle;
 }
@@ -423,6 +430,14 @@ th.th-hover:hover {
     position: fixed;
     top: 0px;
     padding-left: 10px;
+    padding-bottom: 10px;
+/*    height: 55px; */
+    width: 100%;
+}
+.tree-fix-summary-box {
+    position: fixed;
+    top: 0px;
+/*    padding-left: 10px; */
     padding-bottom: 10px;
 /*    height: 55px; */
     width: 100%;
