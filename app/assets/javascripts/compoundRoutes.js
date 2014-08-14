@@ -62,8 +62,7 @@ App.CompoundsDrawRoute = Ember.Route.extend({
   model: function(params) {
 	console.log('compound ketcher model')
     var smiles = params.smiles;
-    var path = params.path;
-    var structureInfo = {'smiles': smiles, 'path': path};
+    var structureInfo = {'smiles': smiles};
     var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
     return structure;
  },
@@ -270,8 +269,6 @@ App.CompoundsStructureRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
     controller.set('content', model);
     controller.set('totalCount', null);
-    var kPath = ketcherPath;
-    controller.set('ketcherPath', kPath);
     var me = controller;
     var thisCompound = model;
     thisCompound.get('structure').clear();

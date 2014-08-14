@@ -143,7 +143,7 @@
 					    {{#link-to "compounds.structure" (query-params uri=this.URI type="exact")}}Search by structure{{/link-to}}
 					</div>
 					<div style="padding:5px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.draw" (query-params smiles=this.smiles path=this.ketcherPath)}}Draw Molecule{{/link-to}}
+					    {{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
 					</div>
 				</div>	
 							
@@ -182,9 +182,9 @@
 						{{#if smiles}}
 							<dt class="medium-padding-top">SMILES</dt>
 							{{#if showProvenance}}
-                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
-                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
                             {{/if}}
 						{{/if}}
   						

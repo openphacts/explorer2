@@ -8,8 +8,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   similarityMatch: false,
 
-  ketcherPath: null,
-
   smilesValue: null,
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
@@ -599,8 +597,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     },
 
     drawThisSMILES: function() {
-      var kPath = ketcherPath;
-      this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue'), path: kPath}});
+      this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue')}});
     }
 
   }

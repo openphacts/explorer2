@@ -9,8 +9,6 @@ App.CompoundAdapter = DS.Adapter.extend({
                 if (success) {
                     compoundResult = searcher.parseCompoundResponse(response);
                     compoundResult['pathways'] = [];
-                    var kPath = ketcherPath;
-                    compoundResult['ketcherPath'] = kPath;
                     Ember.run(function() {
                         resolve(compoundResult)
                     });
