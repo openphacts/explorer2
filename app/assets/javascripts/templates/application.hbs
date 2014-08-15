@@ -1,6 +1,8 @@
 <!-- Modal for alerts -->
-<div id="alertsModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-<div class="modal-header">
+<div id="alertsModalView" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+	<div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" {{action "dismissAlerts"}}>×</button>
 <h3 id="myModalLabel">Alerts!</h3>
 </div>
@@ -22,30 +24,31 @@
 </div>
 </div>
 </div>
+</div>
+</div>
 <!-- End of Modal for alerts -->
 {{#view App.FlashView id="flash-view"}}
   <div id="message">
     {{view.content.message}}
   </div>
-{{/view}}
-<div style="padding:0 0 20px 0;">
-<div class="navbar navbar-static-top navbar-inverse" style="border-bottom:medium solid #888888 ;">
-<div class="navbar-inner">
-    <a class="brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer<sup class="release-status">Alpha</sup></a>
-<form class="form-search no-margin">
-    <div class="navbar-search pull-left input-append" title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
-			  {{input type="text" placeholder="Enter search terms or SMILES" value=searchQuery action="query" id="search_box" class="search-query span4" autocomplete="off"}}
-              <button id="search-button" type="submit" class="btn" {{action 'query'}}>Search</button>	
+  {{/view}}
+  <div class="container-fluid">
+<nav class="navbar navbar-static-top navbar-inverse" role="navigation">
+<div class="container-fluid">
+    <a class="navbar-brand" href="/"><img  src="/assets/ops_logo.png" width="25" height="25"> Open PHACTS Explorer<sup class="release-status">Alpha</sup></a>
+<form class="navbar-form navbar-left" role="search">
+    <div title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
+			  {{input type="text" placeholder="Enter search terms or SMILES" value=searchQuery action="query" id="search_box" class="search-query col-md-4" autocomplete="off"}}
+              <button id="search-button" type="submit" class="btn btn-default" {{action 'query'}}>Search</button>	
     </div>	
 </form>
-<ul class="nav pull-right">
+<ul class="navbar-nav pull-right">
 	<li title="Draw a structure and search for the compound.">{{#link-to "compounds.draw"}}Draw Molecule{{/link-to}}</li>
     	<li id="target-class" title="Click to view ontology browser.">{{#link-to 'trees.index'}}Browse by Ontology{{/link-to}}</li>
         <li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="icon-white icon-bell"></i></span></a></li>
     </ul>
   </div>
-</div>
-</div>
+</nav>
 {{#if notOldIE}}
 <div {{bind-attr class="fetching::invisible :spinner :bar"}}>
      <div></div>
@@ -63,47 +66,4 @@
 <div class='content'>
 	{{outlet}}
 </div>
-<script type="text/javascript"> 
-
-	$('#compound-only').click(function(){
-		
-		console.log('click');
-		selectionFilter = 'good test';
-		typeaheadUrl = '/search/typeaheadCompounds';
-		
-		$('#search_box').attr('placeholder', 'Search for Compounds');
-		
-		$('#compound-only').addClass('active');
-		$('#search-only').removeClass('active');
-		$('#target-only').removeClass('active');
-
-	});
-	
-	$('#target-only').click(function(){
-		
-		console.log('click');
-		selectionFilter = 'good test';
-		typeaheadUrl = '/search/typeaheadTargets';
-		
-		$('#search_box').attr('placeholder', 'Search for Targets');
-		
-		$('#target-only').addClass('active');
-		$('#search-only').removeClass('active');
-		$('#compound-only').removeClass('active');
-
-	});
-	
-	$('#search-only').click(function(){
-		
-		console.log('click');
-		selectionFilter = 'good test';
-		typeaheadUrl = '/search/typeahead';
-		$('#search_box').attr('placeholder', 'Search');
-		
-		$('#search-only').addClass('active');
-		$('#compound-only').removeClass('active');
-		$('#target-only').removeClass('active');
-
-	});
-	
-</script>
+</div>

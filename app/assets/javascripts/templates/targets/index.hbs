@@ -15,10 +15,10 @@
   		<li class="active">Target Information</li>
 
 		<div class="row pull-right"> 
-			<div class="span1 small-padding-top small-padding-right">Provenance</div>
-  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+			<div class="col-md-1 small-padding-top small-padding-right">Provenance</div>
+  			<div class="col-md-2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn :btn-default"}}>On</button>
+				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn :btn-default"}}>Off</button>
   			</div>
 		</div>
 	</ul>
@@ -26,10 +26,10 @@
 	<!-- main -->
 	<div class="container">
 	<div class="container-fluid large-top-spacing">
-  		<div class="row-fluid">
+  		<div class="row">
   			
   			<!--Sidebar content-->
-    		<div class="span3">
+    		<div class="col-md-3">
       			<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}</div>
       			
       			<!--box properties-->
@@ -66,7 +66,7 @@
     		</div>
     		
     		<!--Body content-->
-    		<div class="span9" style="padding:30px 0 0 0;">
+    		<div class="col-md-9" style="padding:30px 0 0 0;">
      			
 				<!--title and formula-->
                                 <div>
@@ -171,8 +171,4 @@
   		</div>
 	</div>
 	</div>
-	
-
-	
-	
 </div>

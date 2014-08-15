@@ -4,10 +4,10 @@
 	<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
 	<li class="active">Compound Information</li>
 	<div class="row pull-right" > 
-		<div class="span1 small-padding-top small-padding-right">Provenance </div>
-		<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-			<button id="provenance-on-button" {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-			<button id="provenance-off-button" {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+		<div class="col-md-1 small-padding-top small-padding-right">Provenance </div>
+		<div class="col-md-2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+			<button id="provenance-on-button" {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn :btn-default"}}>On</button>
+			<button id="provenance-off-button" {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn :btn-default"}}>Off</button>
 		</div>
 		</div>
 </ul>  		
@@ -15,9 +15,9 @@
 <!-- main -->
 <div class="container">
 	<div class="container-fluid large-top-spacing">
-  		<div class="row-fluid">	
+  		<div class="row">	
   			<!--Sidebar content-->
-    		<div class="span3">
+    		<div class="col-md-3">
       			<div style="padding:0 0 0 20px;background:white;">{{cs_image_src csURI}}</div>
       			<!--box properties-->
       			<div id="boxes" class="small-top-spacing">	
@@ -112,10 +112,10 @@
     		</div>
     		
     		<!--Body content-->
-    		<div class="span9">
+    		<div class="col-md-9">
 				<!--title and formula-->
 				<div>	
-					<div style="padding:20px 0 0 0">
+					<div class="medium-padding-top">
 						{{#if showProvenance}}
 						<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
 						{{else}}
