@@ -6,14 +6,11 @@ class SearchController < ApplicationController
   # and targets for matches. Only matches the start of
   # the prefLabel
   def typeahead
-    puts "inside typeahead"
     results = []
     Rails.cache.fetch('comp_' + params[:query], :expires_in => 6.months) { Compound.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |compound|
-      puts 'compound ' + compound.label
       results.push(compound.label)
     end
     Rails.cache.fetch('tar_' + params[:query], :expires_in => 6.months) { Target.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |target|
-      puts 'target ' + target.label
       results.push(target.label)
     end
     # shuffle the results so that compounds and targets get mixed up since we
