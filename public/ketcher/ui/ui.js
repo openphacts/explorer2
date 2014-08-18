@@ -9,7 +9,7 @@
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  ***************************************************************************/
-
+var ebi_smiles_to_ctab_url = "https://wwwdev.ebi.ac.uk/chembl/api/utils/smiles2ctab";
 if (typeof(ui) == 'undefined')
     ui = function () {};
 
@@ -250,30 +250,32 @@ ui.init = function ()
     //ui.path = document.location.pathname.substring(0, document.location.pathname.lastIndexOf('/') + 1);
     //ui.path = 'http://localhost:8080/ketcher/';
     ui.base_url = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
-    
-    var request = new Ajax.Request(ui.ketcherPath + '/knocknock',
-                    {
-                        method: 'get',
-                        asynchronous : false,
-                        onComplete: function (res)
-                        {
-                            if (res.responseText == 'You are welcome!')
-                                ui.standalone = false;
-                        },
-            // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045
-            onCreate: function(response) { // here comes the fix
-                var t = response.transport; 
-                t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
-                    if (/^(accept|accept-language|content-language)$/i.test(k)) 
-                        return original(k, v); 
-                    if (/^content-type$/i.test(k) && 
-                        /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v)) 
-                        return original(k, v); 
-                    return; 
-                }); 
-            }
-                    });
-                    
+    //
+    // No need to request status from server since we are now using the ebi web service to convert smiles to mol
+    //
+    //var request = new Ajax.Request(ui.ketcherPath + '/knocknock',
+    //                {
+    //                    method: 'get',
+    //                    asynchronous : false,
+    //                    onComplete: function (res)
+    //                    {
+    //                        if (res.responseText == 'You are welcome!')
+    //                            ui.standalone = false;
+    //                    },
+    //        // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045
+    //         onCreate: function(response) { // here comes the fix
+    //            var t = response.transport; 
+    //            t.setRequestHeader = t.setRequestHeader.wrap(function(original, k, v) { 
+    //                if (/^(accept|accept-language|content-language)$/i.test(k)) 
+    //                    return original(k, v); 
+    //                if (/^content-type$/i.test(k) && 
+    //                    /^(application\/x-www-form-urlencoded|multipart\/form-data|text\/plain)(;.+)?$/i.test(v)) 
+    //                    return original(k, v); 
+    //                return; 
+    //            }); 
+    //        }
+    //                });
+    ui.standalone = false;                
     if (this.standalone)
     {
         $$('.serverRequired').each(function (el)
@@ -927,14 +929,15 @@ ui.loadMolecule = function (mol_string, force_layout)
             return;
         }
         var decodedSmiles = decodeURIComponent(smiles);
-        var request = new Ajax.Request(ui.ketcherPath + '/layout',
+        var request = new Ajax.Request(ebi_smiles_to_ctab_url,
                 {
-                    method: 'get',
+                    method: 'post',
                     asynchronous : true,
-                    parameters: {smiles: decodedSmiles},
+	            postBody: decodedSmiles,
+                    //parameters: {smiles: decodedSmiles},
                     onSuccess: function (res)
                     {
-                        if (res.responseText.startsWith('Ok.'))
+                        //if (res.responseText.startsWith('Ok.'))
                             ui.updateMolecule(ui.parseMolfile(res.responseText));
                     },
             // avoid CORS preflight OPTIONS request, see http://stackoverflow.com/questions/13814739/prototype-ajax-request-being-sent-as-options-rather-than-get-results-in-501-err/15300045#15300045

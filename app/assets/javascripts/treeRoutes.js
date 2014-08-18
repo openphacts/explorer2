@@ -11,21 +11,22 @@ App.TreesIndexRoute = Ember.Route.extend({
 		    if (success && response) {
 			    var root = searcher.parseRootNodes(response);
                 var allRoot = [];
-			    $.each(root, function(index,enzymeResult) {
+			    $.each(root.rootClasses, function(index,enzymeResult) {
 				    var enzyme = controller.store.createRecord('tree', enzymeResult);
                     enzyme.set('id', enzymeResult.uri.split('/').pop());
-                    enzyme.set('hasChildren', false);
+		    // by default we set this to true. only check when it is clicked to save the browser from making too many network calls
+                    enzyme.set('hasChildren', true);
                     enzyme.set('level', 1);
                     enzyme.set('opened', false);
                     allRoot.push(enzyme);
-                    var innerCallback = function(success, status, response) {
-			          if (success && response) {
-			              var members = searcher.parseChildNodes(response);
-                          //does the node have children
-                          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-				      }
-			        }
-                    searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
+                    //var innerCallback = function(success, status, response) {
+		//	          if (success && response) {
+		//	              var members = searcher.parseChildNodes(response);
+                //          //does the node have children
+                //          enzyme.set('hasChildren', members.children.length > 0 ? true : false);
+		//		      }
+		//	        }
+                //    searcher.getChildNodes(enzymeResult.uri, innerCallback);	    
 			    });
                 allRoot.sort(function(a,b) {
                     var x = a.get('uri').split('/').pop();
@@ -66,12 +67,15 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
       var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
       var pharmaCallback=function(success, status, response){
       if (success && response) {
+me.get('controllers.application').set('fetching', false);
         var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
-          pharma['ketcherPath'] = ketcherPath;
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
 	      thisEnzyme.get('pharmacology').addObject(pharmaRecord);
         });
+      } else {
+App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
+me.get('controllers.application').set('fetching', false);
       }
     };
     var countCallback = function(success, status, response) {
@@ -80,7 +84,11 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
             controller.set('totalCount', count);
             if (count > 0) {
 		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
-            }
+            } else {
+me.get('controllers.application').set('fetching', false);
+App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
+
+	    }
         }
     };
     var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
@@ -101,8 +109,14 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                 }
     };
     activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
+    this.controllerFor('application').set('fetching', true);
+    // we might already have been on this route
+    if (controller.get('totalCount') == null) {
     searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
-  },
+    } else {
+        controller.get('controllers.application').set('fetching', false);
+    }
+    },
 
   model: function(params) {
     console.log('tree pharma controller model');

@@ -438,8 +438,6 @@ App.TreesPharmacologyController = Ember.ObjectController.extend({
         var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
         $.each(pharmaResults, function(index, pharma) {
           var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
-          var kPath = ketcherPath;
-          pharmaRecord['ketcherPath'] = kPath;
 	      thisTarget.get('pharmacology').pushObject(pharmaRecord);
         });
         me.get('controllers.application').set('fetching', false);

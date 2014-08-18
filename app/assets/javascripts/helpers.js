@@ -43,7 +43,7 @@ Ember.Handlebars.registerBoundHelper('pdbLink', function(link) {
 });
 Ember.Handlebars.registerBoundHelper('insertKetcherIframe', function(structure) {
     if (structure != null) {
-      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?smiles=' + structure.smiles + '&path=' + structure.path + '" id="ketcher-iframe"></iframe>');
+      return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html?smiles=' + structure.smiles  + '" id="ketcher-iframe"></iframe>');
     } else {
       return new Handlebars.SafeString('<iframe src="/ketcher/ketcher.html" id="ketcher-iframe"></iframe>');
     }
@@ -244,7 +244,7 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
 
 	// create provenance linkout
 	var linkout = new String();
-	console.log(" prov func params " + item + " " + source);
+	//console.log(" prov func params " + item + " " + source);
 	
 	if (item) {
 
@@ -276,12 +276,12 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
 				break;
 			
 			case 'wikipathways':
-			  	console.log(" wikipathways datasource");
+			  	//console.log(" wikipathways datasource");
 				linkout = createWikipathwaysLink(item);
 				break;
 			
 			default:
-				console.log("source unrecognised: " + source);
+				//console.log("source unrecognised: " + source);
 		}
 		
 		// assign icon to datasource

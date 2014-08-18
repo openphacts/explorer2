@@ -27,3 +27,4 @@ gem 'daemons'
 #needed for some linux deploys
 gem 'therubyracer', '~>0.12.0', :platforms => :ruby
 gem 'uuidtools'
+gem 'font-awesome-sass'

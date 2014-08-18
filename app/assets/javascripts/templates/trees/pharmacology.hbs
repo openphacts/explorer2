@@ -65,35 +65,37 @@
 	</div>
 	<!-- End of Modal -->
 <div class="goto-button" id="top"><button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
-<div>
-
+<div id="summary-anchor">
+<div id="summary" {{bind-attr class=":tree_summary fixSummaryBox:tree-fix-summary-box:free-summary-box"}}>
 	<ul class="breadcrumb">
-  		<li><a href="/">Home</a> <span class="divider">/</span></li>
-  		<li>{{name}}<span class="divider">/</span></li>
-  		<li class="active">Pharmacology</li>
+		{{!-- <li><a href="/">Home</a> <span class="divider">/</span></li>
+		<li>{{ontology}}<span class="divider">/</span></li>
+		<li class="active">Pharmacology</li> --}}
+		<span class="text-info">Pharmacology for {{uri}}</span>
 				
 		<div class="row pull-right"> 
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
   			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-				<button {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-				<button {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
   			</div>
 		</div>
 	</ul>	
-	
 </div>
+</div>
+{{#if notEmpty}}
 <a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 <a href="#enzymePharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted target class pharmacology results">Create TSV</a>
 Loaded {{currentCount}} of {{totalCount}}
-{{#link-to 'trees.index'}}Tree view{{/link-to}}
-
+{{/if}}
 <!-- RESULT LISTING -->
+{{#if notEmpty}}
 	<div class="row" style="padding:30px">	
 	<table>
 		<thead class="headingstyle" style="border-spacing: 0;">
 	
 			<tr>
-				<th class="centre" style="border-right: 2px solid white; padding: 7px;">Compound</th>
+				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Compound</th>
 				<th colspan="3" class="centre" style="border-right: 2px solid white; padding: 7px;">Target</th>
 				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Assay</th>
 				<th colspan="4" class="centre" style="border-right: 2px solid white; padding: 7px;">Activity</th>
@@ -105,13 +107,13 @@ Loaded {{currentCount}} of {{totalCount}}
 				<!-- Each header can have an action which triggers when clicked and asks the controller to sort the column -->
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
-				{{!--<th>Structure</th>--}}
+				<th style="width: 10%;">Image</th>
 				<th style="border-right: 2px solid white; padding: 7px; width: 10%;" {{action "sortHeader" "compound_name"}} {{bind-attr class="compoundNameSortASC:sortASC compoundNameSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Name</span><span>{{#if compoundNameSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if compoundNameSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 10%" {{action "sortHeader" "target_name"}} {{bind-attr class="targetNameSortASC:sortASC targetNameSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Name</span><span>{{#if targetNameSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if targetNameSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 10%;" {{action "sortHeader" "target_component"}} {{bind-attr class="targetComponentSortASC:sortASC targetComponentSortDESC:sortDESC: :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Components</span><span>{{#if targetComponentSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if targetComponentSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "target_organism"}} {{bind-attr class="targetOrganismSortASC:sortASC targetOrganismSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Organism</span><span>{{#if targetOrganismSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if targetOrganismSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 5%" {{action "sortHeader" "assay_organism"}} {{bind-attr class="assayOrganismSortASC:sortASC assayOrganismSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Organisms</span><span>{{#if assayOrganismSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if assayOrganismSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
-				<th style="border-right: 2px solid white; padding: 7px; width: 25%;" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Description</span><span>{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th style="border-right: 2px solid white; padding: 7px; width: 15%;" {{action "sortHeader" "assay_description"}} {{bind-attr class="assayDescriptionSortASC:sortASC assayDescriptionSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Description</span><span>{{#if assayDescriptionSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if assayDescriptionSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 5%;"{{action "sortHeader" "activity_type"}} {{bind-attr class="activityTypeSortASC:sortASC activityTypeSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}} title="Click to sort"><span>Type</span><span>{{#if activityTypeSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityTypeSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 5%;" {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Relation</span><span>{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 5%;" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Value</span><span>{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
@@ -128,26 +130,27 @@ Loaded {{currentCount}} of {{totalCount}}
 			{{#each enzymePharma in pharmacology}}
 			<tr class="record-deco">
 				
-				{{!--<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>--}}
-				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}</td>
-				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{target.title}}{{/each}}</td>
-				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}{{targetComponentLink component}}{{/each}}{{/each}}</td>
-				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{targetOrganismLink target}}{{/each}}</td>
-				<td class="cell-basictext">{{assayOrganismLink enzymePharma}}</td>
-				<td class="cell-longtext">{{enzymePharma.assayDescription}}</td>
-				<td class="cell-basictext">{{enzymePharma.activityType}}</td>
-				<td class="cell-basictext">{{enzymePharma.activityRelation}}</td>
-				<td class="cell-basictext">{{enzymePharma.activityValue}}</td>
-			    <td class="cell-basictext">{{enzymePharma.activityUnits}}</td>
+				<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>
+				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.conceptWikiProvenance.prefLabel 'conceptwiki'}}{{/if}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{target.title}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetTitle 'chembl'}}{{/if}}{{/each}}</td>
+				<td class="cell-longtext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}<li class="no-list-style">{{targetComponentLink component}}{{/each}}</li>{{/each}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetComponents 'chembl'}}{{/if}}</td>
+				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{targetOrganismLink target}}{{/each}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetOrganismName 'chembl'}}{{/if}}</td>
+				<td class="cell-basictext">{{assayOrganismLink enzymePharma}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayOrganismName 'chembl'}}{{/if}}</td>
+				<td class="cell-longtext">{{enzymePharma.assayDescription}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayDescription 'chembl'}}{{/if}}</td>
+				<!-- Activity info id from chembl just not sure of the exact source -->
+				<td class="cell-basictext">{{enzymePharma.activityType}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityRelation}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityValue}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
+				<td class="cell-basictext">{{enzymePharma.activityUnits}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
 			    <td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
-			    <td class="cell-basictext">{{enzymePharma.fullMWT}}</td>
-			    {{!--<td class="cell-longtext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles path=enzymePharma.ketcherPath) title="Draw the compound with this structure"}}{{enzymePharma.smiles}}{{/link-to}}</td>
-			    <td class="cell-longtext">{{enzymePharma.inchi}}</td>
-			    <td class="cell-longtext">{{enzymePharma.inchiKey}}</td>--}}
-			    <td class="cell-longtext">{{enzymePharma.pChembl}}</td>
+			    <!-- All chemspider prov links have the same source so doesn't really matter which one is used -->
+			    <td class="cell-basictext">{{enzymePharma.fullMWT}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.chemspiderProvenance.hba 'chemspider'}}{{/if}}</td>
+			    <!-- pchembl is from chembl just not exactly sure of the exact source -->
+			    <td class="cell-basictext">{{enzymePharma.pChembl}}{{#if showPharmaProvenance}}{{#if enzymePharma.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
 
-			</tr>
+		    </tr>
 			{{/each}}
 		</tbody>
 	</table>
-	</div>
+</div>
+{{/if}}

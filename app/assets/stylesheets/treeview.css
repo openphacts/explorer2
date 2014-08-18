@@ -20,6 +20,10 @@ img.folder-open {
   vertical-align: top;
   padding-right: 2px;
 }
+i.fetching-data {
+  vertical-align: top;
+  padding-right: 6px;
+}
 img.folder-closed {
   vertical-align: top;
   padding-right: 2px;
@@ -31,7 +35,7 @@ a.enzymeName {
 }
 div.enzymeURI {
   vertical-align: top;
-  width: 170px;
+  width: 250px;
   display: inline-block;
 }
 div.indentLevel1 {
@@ -104,25 +108,6 @@ div.indentLevel10 a.enzymeName {
 div.indentLevel11 a.enzymeName {
 	margin-left: -20px;
 }
-
-div.tree-branch-open img.folder-closed {
-	display: none;
-}
-div.tree-branch-closed img.folder-open {
-	display: none;
-}
-div.tree-branch-open img.single-enzyme-icon {
-	display: none;
-}
-div.tree-branch-closed img.single-enzyme-icon {
-	display: none;
-}
-div.tree-node-icon img.folder-closed {
-	display: none;
-}
-div.tree-node-icon img.folder-open {
-	display: none;
-}
 div.tree-node-icon img.single-enzyme-icon {
 	display: inline-block;
 }
@@ -131,5 +116,8 @@ div.highlight-on {
 }
 div.hidden {
 	display:none;
+}
+#ontology-container {
+    width: 80%;
 }
 /* End of Tree View CSS */
