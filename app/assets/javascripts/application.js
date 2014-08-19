@@ -18,6 +18,7 @@
 //= require ember-latest
 //= require ember-data-1.0.0-beta5
 //= require bootstrap
+//= require typeahead.bundle
 //= require combined
 //= require_self
 //= require store
