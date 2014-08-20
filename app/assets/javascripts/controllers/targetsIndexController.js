@@ -10,13 +10,11 @@ App.TargetsIndexController = Ember.ObjectController.extend({
 
   actions: {
   	  enableProvenance: function() {
-    	this.set('showProvenance', true);
-    	console.log("Target provenance enabled");
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
 	  },
 
   	  disableProvenance: function() {
-      	this.set('showProvenance', false);
-    	console.log("Target provenance disabled");
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
   	  }
   }
 
