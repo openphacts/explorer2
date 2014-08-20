@@ -578,13 +578,14 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   goToTop: function() {
       window.scrollTo(0,0);
   },
-  enableProvenance: function() {
-      this.set('showPharmaProvenance', true);
-  },
 
-  disableProvenance: function() {
-      this.set('showPharmaProvenance', false);
-  },
+  enableProvenance: function() {
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	  },
+
+  	  disableProvenance: function() {
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+  	  },
 
   tsvDownload: function(target) {
     var me = this;
