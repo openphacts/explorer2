@@ -1,16 +1,18 @@
 <!-- breadcrumb	-->
-<ul class="breadcrumb">
+<div class="breadcrumb">
+<ul class="breadcrumb inline">
     <li><a href="/">Home</a></li>
-	<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
+	<li>{{prefLabel}}</li>
 	<li class="active">Compound Information</li>
-	<div class="row pull-right" > 
-		<div class="col-md-1 small-padding-top small-padding-right">Provenance </div>
-		<div class="col-md-2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+</ul>
+	<span class="pull-right" > 
+		<span class="small-padding-top small-padding-right">Provenance </span>
+		<span class="btn-group" data-toggle="buttons-radio" style="margin-top:-6px;">
 			<button id="provenance-on-button" {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn :btn-default"}}>On</button>
 			<button id="provenance-off-button" {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn :btn-default"}}>Off</button>
-		</div>
-		</div>
-</ul>  		
+		</span>
+		</span>
+</div>	
 	
 <!-- main -->
 <div class="container">
@@ -112,7 +114,7 @@
     		</div>
     		
     		<!--Body content-->
-    		<div class="col-md-9">
+    		<div class="col-md-8">
 				<!--title and formula-->
 				<div>	
 					<div class="medium-padding-top">
@@ -218,13 +220,14 @@
                             {{/if}}
 						{{/if}}
 
-                        <!--Toxicity-->
+						<!--Toxicity-->
+						{{!-- Toxicity seems to have some html formatting so allow it to be displayed properly --}}
 						{{#if toxicity}}
                             <dt class="medium-padding-top">Toxicity</dt>
                             {{#if showProvenance}}
-                                <dd class="medium-padding-top" id="toxicity-provenance">{{toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+			    <dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
                             {{else}}
-                                <dd class="medium-padding-top">{{toxicity}}</dd>
+			    <dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
                             {{/if}}
 						{{/if}}
 					</dl>

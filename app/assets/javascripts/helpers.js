@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('renderHtml', function(rawHtml) {
+    	return new Ember.Handlebars.SafeString(rawHtml);
+});
+
+
 Ember.Handlebars.registerBoundHelper('targetComponentLink', function(component) {
   if (component.label != null && component.uri != null) {
 	var aLink = '<a href="' + component.uri +'" target="_blank">' + component.label +'</a>'

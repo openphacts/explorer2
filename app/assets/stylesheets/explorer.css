@@ -202,7 +202,8 @@ sub {
 }
 .summary-box {
     border: 1px solid #556;
-    height: 90px;
+    /* Let the height be whatever the info needs */
+    /* height: 90px; */
     width: 142px;
     background: #f8f8ff;
     border-color: #eee9e9;
