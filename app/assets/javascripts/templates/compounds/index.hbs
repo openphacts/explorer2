@@ -5,11 +5,16 @@
 	<li>{{prefLabel}}</li>
 	<li class="active">Compound Information</li>
 </ul>
-	<span class="pull-right" > 
+	<span class="pull-right" style="margin-top: -6px;"> 
 		<span class="small-padding-top small-padding-right">Provenance </span>
-		<span class="btn-group" data-toggle="buttons-radio" style="margin-top:-6px;">
-			<button id="provenance-on-button" {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn :btn-default"}}>On</button>
-			<button id="provenance-off-button" {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn :btn-default"}}>Off</button>
+		<span class="btn-group" style="margin-top:-6px;" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="btn btn-default">
+					      <input type="radio" name="options" id="option1" checked>On
+					        </label>
+						<label {{action 'disableProvenance'}} class="btn btn-default active">
+							<input type="radio" name="options" id="option2">Off
+							        </label>
+									</span>
 		</span>
 		</span>
 </div>	

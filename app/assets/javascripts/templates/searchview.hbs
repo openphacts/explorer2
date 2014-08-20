@@ -6,10 +6,14 @@
 		</ul>
 	<span title="Check or uncheck to view or hide compounds" class="small-margin-right">{{totalCompounds}} Compounds</span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}
 		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span></ul>
-		<span class="pull-right btn-group" style="margin-top: -6px;" data-toggle="buttons"> 
-  				<button {{action switchView}} {{bind-attr class=":btn :btn-default listViewActive:active"}} title="View only the label for search results">List</button>
-  				<button {{action switchView}} {{bind-attr class=":btn :btn-default objectViewActive:active"}} title="View label, image and description for search results">Object</button>
-		</span>
+				<span class="pull-right btn-group" style="margin-top: -6px;" data-toggle="buttons">
+					<label class="btn btn-default active" {{action switchToList}} title="View only the label for search results">
+						      <input type="radio" name="options" id="option1" checked>List
+						        </label>
+							<label class="btn btn-default" {{action switchToObject}} title="View label, image and description for search results">
+								      <input type="radio" name="options" id="option2">Object
+								        </label>
+										</span>
 		</div>
 	<div id="search-results">
 	<ul style="list-style-type: none">

@@ -10,6 +10,8 @@ App.SearchController = Ember.ArrayController.extend({
 
     listView: true,
 
+    objectView: false,
+
     numberOfResults: 50,
 
     totalCompounds: 0,
@@ -250,8 +252,19 @@ App.SearchController = Ember.ArrayController.extend({
 
        switchView: function() {
            this.set('listView', !this.get('listView'));
-       }
-
+       },
+       switchToList: function() {
+           if (this.get('listView') === false){
+		   this.set('listView', true);
+		   this.set('objectView', false);
+	   }
+		     },
+       switchToObject: function() {
+           if (this.get('objectView') === false) {
+		   this.set('objectView', true);
+		   this.set('listView', false);
+	   }
+		       }
    }
 
 });

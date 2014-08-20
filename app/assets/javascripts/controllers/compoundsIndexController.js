@@ -7,6 +7,11 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
   showProvenance: false,
 
+  provenanceEnabled: function() {
+    return this.get('showProvenance') === true;
+  }.property('showProvenance'),  
+
+
   hasPathways: function() {
       if(this.get('model.pathwayRecords') != null && this.get('model.pathwayRecords') > 0) {
         return true;
@@ -21,13 +26,11 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
   actions: {
   	  enableProvenance: function() {
-    	this.set('showProvenance', true);
-    	console.log("Compund provenance enabled");
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
 	  },
 
   	  disableProvenance: function() {
-      	this.set('showProvenance', false);
-    	console.log("Compound provenance disabled");
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
   	  }
   }
 	
