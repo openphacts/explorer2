@@ -338,6 +338,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     var type = params.type;
     if (type) {
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
+        this.controllerFor('compoundsStructure').set('initStructureSearchType', type);
     }
     var smiles = params.smiles;
     if (smiles) {

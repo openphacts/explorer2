@@ -5,7 +5,19 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   //structure search type radio button selection
   isSelected: 1,
 
-  exactMatch: true,
+  isExactSearch:  function() {
+    return this.get('structureSearchType') === 'exact';
+  }.property('structureSearchType'),
+
+  isSubstructureSearch: function() {
+    return this.get('structureSearchType') === 'substructure';
+  }.property('structureSearchType'),
+
+  isSimilaritySearch: function() {
+    return this.get('structureSearchType') === 'similarity';
+  }.property('structureSearchType'),
+
+  exactMatch: true, 
 
   substructureMatch: false,
 
@@ -25,6 +37,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   selectedThresholdType: 0,
 
   structureSearchType: "exact",
+
+  //placeholder for the initial search type the route was entered with
+  initStructureSearchType: null,
 
   queryParams: ['smiles', 'type'],
 
@@ -105,7 +120,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('totalCount'),
 
   exactSearch: function() {
-    if (this.get('structureSearchType') === "exact") {
+    if (this.get('initStructureSearchType') === "exact") {
 	  this.set('exactMatch', true);
 	  return true;
     } else {
@@ -115,7 +130,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('structureSearchType'),
 
   subSearch: function() {
-    if (this.get('structureSearchType') === "substructure") {
+    if (this.get('initStructureSearchType') === "substructure") {
 	  this.set('substructureMatch', true);
 	  return true;
     } else {
@@ -126,7 +141,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('structureSearchType'),
 
   simSearch: function() {
-    if (this.get('structureSearchType') === "similarity") {
+    if (this.get('initStructureSearchType') === "similarity") {
 	  this.set('similarityMatch', true);
 	  return true;
     } else {

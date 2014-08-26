@@ -169,7 +169,7 @@
 </div>
 <div class="row no-margin">
 <div class="offset6" style="padding-left: 15px;">
-	{{#if exactMatch}}
+	{{#if isExactSearch}}
 	<span class="medium-padding-right" style="vertical-align: super;">Match type:</span>{{view Ember.Select
 	       content=matchTypes
            value=selectedMatchType
@@ -178,7 +178,7 @@
 	}}
 	{{/if}}
 	<span class="medium-padding-right" style="vertical-align: super;">Max records:</span><input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
-		{{#if similarityMatch}}
+		{{#if isSimilaritySearch}}
 		Threshold: {{view Ember.Select
 		       content=thresholdTypes
                value=selectedThresholdType
