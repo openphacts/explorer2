@@ -1,6 +1,9 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
+  
+  //structure search type radio button selection
+  isSelected: 1,
 
   exactMatch: true,
 
@@ -9,6 +12,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   similarityMatch: false,
 
   smilesValue: null,
+
+  //placeholder for smiles
+  origSmilesValue: null,
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
@@ -20,7 +26,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   structureSearchType: "exact",
 
-  queryParams: ['uri', 'type'],
+  queryParams: ['smiles', 'type'],
+
+  smiles: null,
 
   thresholdPercent: 0.90,
 
@@ -577,23 +585,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     },
 
     searchForSMILES: function() {
-      var me = this;
-      if (this.get('smilesValue') != null ) {
-        var smiles = this.get('smilesValue');
-        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
-        var callback=function(success, status, response){
-          if (success && response) {
-            var url = searcher.parseSmilesToURLResponse(response);
-            me.transitionToRoute('compounds.index', {queryParams: {uri: url}});
-          } else {
-            me.get('controllers.application').set('fetching', false);
-            App.FlashQueue.pushFlash('error', 'No compound found for that SMILES value, please enter a different value and try again.');
-          }
-        };
-        searcher.smilesToURL(smiles, callback);
-      } else {
-        App.FlashQueue.pushFlash('error', 'SMILES cannot be empty, please enter a value and try again.');
-      }
+        this.transitionToRoute('compounds.structure', {queryParams: {'smiles': me.get('smilesValue'), 'type': 'exact'}});
     },
 
     drawThisSMILES: function() {

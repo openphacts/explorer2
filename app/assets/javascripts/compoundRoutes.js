@@ -270,9 +270,9 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     controller.set('content', model);
     controller.set('totalCount', null);
     var me = controller;
-    var thisCompound = model;
-    thisCompound.get('structure').clear();
-    controller.set('smilesValue', thisCompound.get('smiles'));
+    //var thisCompound = model;
+    //thisCompound.get('structure').clear();
+    //controller.set('smilesValue', thisCompound.get('smiles'));
     me.set('filteredCompounds', []);
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
@@ -284,7 +284,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                me.set('totalCount', results.length);
                $.each(results, function(index, result) {
                    me.get('store').find('compound', result).then(function(compound) {
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                });
@@ -298,7 +298,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 	                   compound.set('relevance', relevance[about]);
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
@@ -312,7 +312,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 	                   compound.set('relevance', relevance[about]);
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
@@ -322,15 +322,15 @@ App.CompoundsStructureRoute = Ember.Route.extend({
      };
      if (structureSearchType === "exact") {
          me.set('fetching', true);
-         searcher.exact(thisCompound.get('smiles'), null, callback);
+         searcher.exact(me.get('smilesValue'), null, callback);
      } else if (structureSearchType === "similarity") {
          me.set('fetching', true);
          // TODO fix start and count at 1 and 100 for the moment
-         searcher.similarity(thisCompound.get('smiles'), null, null, null, null, 1, 100, callback);
+         searcher.similarity(me.get('smilesValue'), null, null, null, null, 1, 100, callback);
      } else if (structureSearchType === "substructure") {
          // TODO fix start and count at 1 and 100 for the moment
          me.set('fetching', true);
-         searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
+         searcher.substructure(me.get('smilesValue'), null, 1, 100, callback);
      }
   },
   model: function(params) {
@@ -339,7 +339,14 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     if (type) {
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
     }
-    return this.get('store').find('compound', params.uri);
+    var smiles = params.smiles;
+    if (smiles) {
+        this.controllerFor('compoundsStructure').set('smilesValue', smiles);
+        this.controllerFor('compoundsStructure').set('origSmilesValue', smiles);
+    }
+    //model is an array of compounds
+    return [];
+    //return this.get('store').find('compound', params.smiles);
   },
 
   beforeModel: function() {

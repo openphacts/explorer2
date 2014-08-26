@@ -88,7 +88,8 @@ App.CompoundsStructureView = Ember.View.extend({
 	 });
 
 	$(function() {
-		moveScroller();
+	//TODO add back later
+	//	moveScroller();
 	});
 
 	//sticky
