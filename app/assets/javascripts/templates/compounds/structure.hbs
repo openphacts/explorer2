@@ -114,8 +114,8 @@
 
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} <span class="divider">/</span></li>
-    <li class="active">Compound Structure</li>
+    <li class="active">Compound Structure <span class="divider">/</span></li>
+    <li>{{smilesValue}}</li>
     <div class="row pull-right"> 
         <div class="span1 small-padding-top small-padding-right">Provenance</div>
         <div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
@@ -124,7 +124,7 @@
         </div>
     </div>
 </ul>
-<div>
+{{!-- <div>
 <div>
 	<div id="summary-anchor">
 	    <div id="summary" class="compound_summary collapse in">		
@@ -148,24 +148,31 @@
 		    </div>
 	    </div>
     </div>
-</div>
-<div class="btn-group medium-margin-top medium-margin-bottom" data-toggle="buttons-radio">
+</div> --}}
+<div class="input-append" style="padding-left: 30px;">
+                            <div>SMILES {{input type="text" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
+                                <button type="submit" class="btn" title="Search for compounds with the SMILES string entered" {{action "searchForSMILES"}}>Search with SMILES</button>
+                                <button type="submit" class="btn" title="Draw a compound starting with the SMILES entered in the box" {{action "drawThisSMILES"}}>Draw Structure</button>
+                            </div>
+                        </div>
+
+<span class="btn-group medium-margin-bottom" data-toggle="buttons-radio">
     <div class="big-padding-left">
         <button {{bind-attr class=":btn exactSearch:active"}} {{action 'structureSearchType' 'exact'}}>Exact</button>
         <button {{bind-attr class=":btn subSearch:active"}} {{action 'structureSearchType' 'substructure'}}>Sub-structure</button>
         <button {{bind-attr class=":btn simSearch:active"}} {{action 'structureSearchType' 'similarity'}}>Similarity</button>
     </div>
-</div>
-<div class="big-padding-left">
+</span>
+<span class="big-padding-left">
 	{{#if exactMatch}}
-	Match type: {{view Ember.Select
+	<span class="medium-padding-right" style="vertical-align: super;">Match type:</span>{{view Ember.Select
 	       content=matchTypes
            value=selectedMatchType
            optionValuePath="content.id"
            optionLabelPath="content.type"
 	}}
 	{{/if}}
-        Maximimum records to retrieve: <input id="max-records" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+	<span class="medium-padding-right" style="vertical-align: super;">Max records:</span><input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
 		{{#if similarityMatch}}
 		Similarity threshold type: {{view Ember.Select
 		       content=thresholdTypes
@@ -175,8 +182,8 @@
 		}}
         Similarity threshold <input id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="0.9" name="threshold-percent-spinner"/>
         {{/if}}
-        <button class="btn" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button>
-</div>
+        <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button>
+</span>
 	<div style="padding:30px">	
 	<table class="mytable">
 		<thead id="tablehead" class="headingstyle">
