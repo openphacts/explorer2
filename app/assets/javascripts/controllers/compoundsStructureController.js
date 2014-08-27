@@ -359,7 +359,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        if (this.get('similarityMatch') === true) {
 	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
 	   }
-       this.set('maxRecords', $('#max-records')[0].value);
+       //this.set('maxRecords', $('#max-records')[0].value);
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
          if (success && response) {

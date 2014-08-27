@@ -351,15 +351,15 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     }
     var percent = params.percent;
     if (percent) {
-        this.controllerFor('compoundsStructure').set('thresholdPercent', params);
+        this.controllerFor('compoundsStructure').set('thresholdPercent', percent);
     }
     var match = params.match;
     if (match) {
-        this.controllerFor('compoundsStructure').set('selectedMatchType', match);
+        this.controllerFor('compoundsStructure').set('selectedMatchType', parseInt(match));
     }
     var threshold = params.threshold;
     if (threshold) {
-        this.controllerFor('compoundsStructure').set('selectedThresholdType', threshold);
+        this.controllerFor('compoundsStructure').set('selectedThresholdType', parseInt(threshold));
     }
     var records = params.records;
     if (records) {
