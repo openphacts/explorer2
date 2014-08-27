@@ -1,0 +1,59 @@
+<div style="padding-left:30px;">
+<span>{{input type="text" classNames="input-xlarge" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
+	<span class="input-prepend">
+		<span class="add-on">Search type</span>
+		{{view Ember.Select
+		       content=searchTypes
+               value=structureSearchType
+               optionValuePath="content.value"
+               optionLabelPath="content.type"
+	       }}
+       </span>
+
+		{{!-- {{#link-to "compounds.draw" (query-params smiles=smilesValue) class="btn" title="Draw a compound using the SMILES entered in the box"}}Draw structure{{/link-to}} --}}
+</span>
+{{#if isExactSearch}}
+<span class="input-prepend">
+	<span class="add-on">Match type</span>
+	{{view Ember.Select
+	       content=matchTypes
+           value=selectedMatchType
+           optionValuePath="content.id"
+           optionLabelPath="content.type"
+	   }}
+   </span>
+	   <span class="input-append">
+		   <span class="add-on">Max records</span>
+	<input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+</span>
+	{{/if}}
+	{{#if isSimilaritySearch}}
+		<div class="input-prepend">
+			<span class="add-on">Max records</span>
+		    <input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+	    </div>
+	    <div class="input-prepend">
+	       <span class="add-on">Threshold</span>
+                {{view Ember.Select
+		       content=thresholdTypes
+               value=selectedThresholdType
+               optionValuePath="content.id"
+               optionLabelPath="content.type"
+	       }}
+       </div>
+       <div class="input-append">
+	       <input class="input-mini" id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="0.9" name="threshold-percent-spinner"/>
+	       <span class="add-on">%</span>
+       </div>
+	{{/if}}
+	{{#if isSubstructureSearch}}
+	<div class="input-prepend">
+		<span class="add-on">Max records</span>
+		    <input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+	    </div>
+		    {{/if}}
+	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
+	<div>
+{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+	</div>
+</div>

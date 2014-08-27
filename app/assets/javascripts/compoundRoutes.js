@@ -277,7 +277,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
-       me.set('fetching', false);
+       me.get('controllers.application').set('fetching', false);
        if (success && response) {
            if (structureSearchType === "exact") {
                results = searcher.parseExactResponse(response);
@@ -318,20 +318,24 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                  });
            }
 		//me.set('filteredCompounds', thisCompound.get('structure'));
+       } else {
+           //TODO error message
        }
      };
+    if (me.get('smilesValue') != null) {
      if (structureSearchType === "exact") {
-         me.set('fetching', true);
+         me.get('controllers.application').set('fetching', true);
          searcher.exact(me.get('smilesValue'), null, callback);
      } else if (structureSearchType === "similarity") {
-         me.set('fetching', true);
          // TODO fix start and count at 1 and 100 for the moment
+	 me.get('controllers.application').set('fetching', true);
          searcher.similarity(me.get('smilesValue'), null, null, null, null, 1, 100, callback);
      } else if (structureSearchType === "substructure") {
          // TODO fix start and count at 1 and 100 for the moment
-         me.set('fetching', true);
+         me.get('controllers.application').set('fetching', true);
          searcher.substructure(me.get('smilesValue'), null, 1, 100, callback);
      }
+    }
   },
   model: function(params) {
     //the route can come in with a ?type=structureSearchType param, default is exact
