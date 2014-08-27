@@ -325,15 +325,15 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     if (me.get('smilesValue') != null) {
      if (structureSearchType === "exact") {
          me.get('controllers.application').set('fetching', true);
-         searcher.exact(me.get('smilesValue'), null, callback);
+         searcher.exact(me.get('smilesValue'), me.get('selectedMatchType'), callback);
      } else if (structureSearchType === "similarity") {
          // TODO fix start and count at 1 and 100 for the moment
 	 me.get('controllers.application').set('fetching', true);
-         searcher.similarity(me.get('smilesValue'), null, null, null, null, 1, 100, callback);
+         searcher.similarity(me.get('smilesValue'), me.get('selectedThresholdType'), me.get('thresholdPercent'), null, null, 1, me.get('maxRecords'), callback);
      } else if (structureSearchType === "substructure") {
          // TODO fix start and count at 1 and 100 for the moment
          me.get('controllers.application').set('fetching', true);
-         searcher.substructure(me.get('smilesValue'), null, 1, 100, callback);
+         searcher.substructure(me.get('smilesValue'), null, 1, me.get('maxRecords'), callback);
      }
     }
   },
@@ -348,6 +348,22 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     if (smiles) {
         this.controllerFor('compoundsStructure').set('smilesValue', smiles);
         this.controllerFor('compoundsStructure').set('origSmilesValue', smiles);
+    }
+    var percent = params.percent;
+    if (percent) {
+        this.controllerFor('compoundsStructure').set('thresholdPercent', params);
+    }
+    var match = params.match;
+    if (match) {
+        this.controllerFor('compoundsStructure').set('selectedMatchType', match);
+    }
+    var threshold = params.threshold;
+    if (threshold) {
+        this.controllerFor('compoundsStructure').set('selectedThresholdType', threshold);
+    }
+    var records = params.records;
+    if (records) {
+        this.controllerFor('compoundsStructure').set('maxRecords', records);
     }
     //model is an array of compounds
     return [];
