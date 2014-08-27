@@ -153,22 +153,33 @@
 <div class="span6" style="padding-left: 30px;">
 <div class="input-append">
 	<div>{{input type="text" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
-		{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType) class="btn" title="Search for compounds with the SMILES string entered"}}SMILES search{{/link-to}}
+{{view Ember.Select
+		       content=searchTypes
+               value=structureSearchType
+               optionValuePath="content.value"
+               optionLabelPath="content.type"
+		}}
+		{{!-- <ul class="inline no-list-style">
+			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="exact"}}Exact</label></li>
+			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="substructure"}}Sub-structure</label></li>
+			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="similarity"}}Similarity</label></li>
+		</ul> --}}
+{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+
 		{{!-- <button type="submit" class="btn" title="Search for compounds with the SMILES string entered" {{action "searchForSMILES"}}>Search with SMILES</button>--}}
-		{{#link-to "compounds.draw" (query-params smiles=smilesValue) class="btn" title="Draw a compound using the SMILES entered in the box"}}Draw structure{{/link-to}}
+		{{!-- {{#link-to "compounds.draw" (query-params smiles=smilesValue) class="btn" title="Draw a compound using the SMILES entered in the box"}}Draw structure{{/link-to}} --}}
 	</div>
 	</div>
                         </div>
-<div class="span6">
+			{{!-- <div class="span6">
 		<ul class="inline no-list-style">
 			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="exact"}}Exact</label></li>
 			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="substructure"}}Sub-structure</label></li>
 			<li><label>{{view Ember.RadioButton name="searchTypeRadio" selectionBinding="structureSearchType" value="similarity"}}Similarity</label></li>
 		</ul>
+	</div> --}}
 </div>
-</div>
-<div class="row no-margin">
-<div class="offset6" style="padding-left: 15px;">
+<div {{bind-attr class="searchOptionsVisible::fade"}}>
 	{{#if isExactSearch}}
 	<span class="medium-padding-right" style="vertical-align: super;">Match type:</span>{{view Ember.Select
 	       content=matchTypes
@@ -176,19 +187,36 @@
            optionValuePath="content.id"
            optionLabelPath="content.type"
 	}}
-	{{/if}}
 	<span class="medium-padding-right" style="vertical-align: super;">Max records:</span><input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
-		{{#if isSimilaritySearch}}
-		Threshold: {{view Ember.Select
+	{{/if}}
+	{{#if isSimilaritySearch}}
+	<div class="row">
+		<div class="span3">Max records</div><div class="span3">Threshold</div>
+	</div>
+	<div class= "row">
+		<div class="span3">
+		    <input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+	    </div>
+	    <div class="span3">
+                {{view Ember.Select
 		       content=thresholdTypes
                value=selectedThresholdType
                optionValuePath="content.id"
                optionLabelPath="content.type"
-		}}
-                <input id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="0.9" name="threshold-percent-spinner"/>
-        {{/if}}
-        <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button>
-</div>
+	       }}
+       </div>
+       <div class="span3 no-margin">
+		<input id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="0.9" name="threshold-percent-spinner"/>
+	</div>
+	</div>
+	{{/if}}
+	{{#if isSubstructureSearch}}
+<div class= "row">
+		<div class="span3">
+		    <input id="max-records" title= "Maximum number of records to retrieve" type="number" min="10" step="10" value="100" name="max-records-spinner" />
+	    </div>
+	    {{/if}}
+	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
 </div>
 	<div style="padding:30px">	
 	<table class="mytable">

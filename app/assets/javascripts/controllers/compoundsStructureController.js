@@ -1,7 +1,10 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
-  
+ 
+  searchOptionsVisible: function() {
+    return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
+  }.property('structureSearchType'),
   //structure search type radio button selection
   isSelected: 1,
 
@@ -27,6 +30,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   //placeholder for smiles
   origSmilesValue: null,
+
+  searchTypes: [{type: 'Exact', value: 'exact'}, {type: 'Sub-structure', value: 'substructure'}, {type: 'Similarity', value: 'similarity'}],
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
