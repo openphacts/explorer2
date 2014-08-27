@@ -25,12 +25,8 @@
 </span>
 	{{/if}}
 	{{#if isSimilaritySearch}}
-		<div class="input-prepend">
-			<span class="add-on">Max records</span>
-{{input type="text" classNames="input-min" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
-	    </div>
 	    <div class="input-prepend">
-	       <span class="add-on">Threshold</span>
+	       <span class="add-on">Similarity type</span>
                 {{view Ember.Select
 		       content=thresholdTypes
                value=selectedThresholdType
@@ -38,10 +34,15 @@
                optionLabelPath="content.type"
 	       }}
        </div>
-       <div class="input-append">
-	       <input class="input-mini" id="threshold-percent" type="number" min="0.1" max="1.0" step="0.1" value="0.9" name="threshold-percent-spinner"/>
-	       <span class="add-on">%</span>
+       <div class="input-prepend">
+	       <span class="add-on">Threshold</span>
+	       {{input type="number" classNames="input-mini" value=thresholdPercent min="0.1" max="1.0" step="0.1" placeholder="Threshold percentage" title="Threshold percentage"}}
        </div>
+<div class="input-prepend">
+			<span class="add-on">Max records</span>
+{{input type="text" classNames="input-mini" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
+	    </div>
+
 	{{/if}}
 	{{#if isSubstructureSearch}}
 	<div class="input-prepend">

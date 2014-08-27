@@ -356,9 +356,9 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        this.set('relSelectedHigherValue', null);
        // TODO turn the thresholdPercent and maxRecords input into ember views
        // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
-       if (this.get('similarityMatch') === true) {
-	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
-	   }
+       //if (this.get('similarityMatch') === true) {
+       //	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
+       //	   }
        //this.set('maxRecords', $('#max-records')[0].value);
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){

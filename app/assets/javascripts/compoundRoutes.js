@@ -351,7 +351,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     }
     var percent = params.percent;
     if (percent) {
-        this.controllerFor('compoundsStructure').set('thresholdPercent', percent);
+        this.controllerFor('compoundsStructure').set('thresholdPercent', parseFloat(percent));
     }
     var match = params.match;
     if (match) {
