@@ -270,21 +270,21 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     controller.set('content', model);
     controller.set('totalCount', null);
     var me = controller;
-    var thisCompound = model;
-    thisCompound.get('structure').clear();
-    controller.set('smilesValue', thisCompound.get('smiles'));
+    //var thisCompound = model;
+    //thisCompound.get('structure').clear();
+    //controller.set('smilesValue', thisCompound.get('smiles'));
     me.set('filteredCompounds', []);
     var structureSearchType = controller.get('structureSearchType');
     var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
     var callback=function(success, status, response){
-       me.set('fetching', false);
+       me.get('controllers.application').set('fetching', false);
        if (success && response) {
            if (structureSearchType === "exact") {
                results = searcher.parseExactResponse(response);
                me.set('totalCount', results.length);
                $.each(results, function(index, result) {
                    me.get('store').find('compound', result).then(function(compound) {
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                });
@@ -298,7 +298,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 	                   compound.set('relevance', relevance[about]);
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
@@ -312,35 +312,74 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                    relevance[about] = relVal;
                    me.get('store').find('compound', about).then(function(compound) {
 	                   compound.set('relevance', relevance[about]);
-		               thisCompound.get('structure').pushObject(compound);
+		               me.get('model').pushObject(compound);
 		               me.get('filteredCompounds').pushObject(compound);
                    });
                  });
            }
 		//me.set('filteredCompounds', thisCompound.get('structure'));
+       } else {
+           //TODO error message
        }
      };
+    if (me.get('smilesValue') != null) {
      if (structureSearchType === "exact") {
-         me.set('fetching', true);
-         searcher.exact(thisCompound.get('smiles'), null, callback);
+         me.get('controllers.application').set('fetching', true);
+         searcher.exact(me.get('smilesValue'), me.get('selectedMatchType'), callback);
      } else if (structureSearchType === "similarity") {
-         me.set('fetching', true);
          // TODO fix start and count at 1 and 100 for the moment
-         searcher.similarity(thisCompound.get('smiles'), null, null, null, null, 1, 100, callback);
+	 me.get('controllers.application').set('fetching', true);
+         searcher.similarity(me.get('smilesValue'), me.get('selectedThresholdType'), me.get('thresholdPercent'), null, null, 1, me.get('maxRecords'), callback);
      } else if (structureSearchType === "substructure") {
          // TODO fix start and count at 1 and 100 for the moment
-         me.set('fetching', true);
-         searcher.substructure(thisCompound.get('smiles'), null, 1, 100, callback);
+         me.get('controllers.application').set('fetching', true);
+         searcher.substructure(me.get('smilesValue'), null, 1, me.get('maxRecords'), callback);
      }
+    }
   },
   model: function(params) {
     //the route can come in with a ?type=structureSearchType param, default is exact
     var type = params.type;
     if (type) {
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
+        this.controllerFor('compoundsStructure').set('initStructureSearchType', type);
     }
-    return this.get('store').find('compound', params.uri);
+    var smiles = params.smiles;
+    if (smiles) {
+        this.controllerFor('compoundsStructure').set('smilesValue', smiles);
+        this.controllerFor('compoundsStructure').set('origSmilesValue', smiles);
+    }
+    var percent = params.threshold;
+    if (percent) {
+        this.controllerFor('compoundsStructure').set('thresholdPercent', parseFloat(percent));
+    }
+    var match = params.match;
+    if (match) {
+        this.controllerFor('compoundsStructure').set('selectedMatchType', parseInt(match));
+    }
+    var threshold = params.thresholdtype;
+    if (threshold) {
+        this.controllerFor('compoundsStructure').set('selectedThresholdType', parseInt(threshold));
+    }
+    var records = params.records;
+    if (records) {
+        this.controllerFor('compoundsStructure').set('maxRecords', records);
+    }
+    //model is an array of compounds
+    return [];
+    //return this.get('store').find('compound', params.smiles);
   },
+  //if we leave the route then set the params to the defaults
+  resetController: function (controller, isExiting, transition) {
+			       if (isExiting) {
+				             // isExiting would be false if only the route's model was changing
+					            controller.set('threshold', '0.9');
+						    controller.set('thresholdtype', '0');
+						    controller.set('match', '0');
+						    controller.set('records', 100);
+						    controller.set('type', 'exact');
+					               }
+					     },
 
   beforeModel: function() {
     this.controllerFor('application').set('fetching', false);
