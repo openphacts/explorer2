@@ -319,7 +319,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
            }
 		//me.set('filteredCompounds', thisCompound.get('structure'));
        } else {
-           //TODO error message
+	   App.FlashQueue.pushFlash('error', 'No compounds found matching this search. Please try again using different parameters.');
        }
      };
     if (me.get('smilesValue') != null) {
