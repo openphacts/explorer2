@@ -46,11 +46,11 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   //placeholder for the initial search type the route was entered with
   initStructureSearchType: null,
 
-  queryParams: ['smiles', 'type', 'percent', 'match', 'threshold', 'records'],
+  queryParams: ['smiles', 'type', 'thresholdtype', 'match', 'threshold', 'records'],
 
   smiles: null,
 
-  percent: null,
+  thresholdtype: null,
 
   match: null,
 

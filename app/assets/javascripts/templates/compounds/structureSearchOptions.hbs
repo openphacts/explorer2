@@ -36,7 +36,7 @@
        </div>
        <div class="input-prepend">
 	       <span class="add-on">Threshold</span>
-	       {{input type="number" classNames="input-mini" value=thresholdPercent min="0.1" max="1.0" step="0.1" placeholder="Threshold percentage" title="Threshold percentage"}}
+	       {{input type="number" classNames="input-mini" value=thresholdPercent min="0.1" max="1.0" step="0.1" placeholder="Threshold limit" title="Threshold limit"}}
        </div>
 <div class="input-prepend">
 			<span class="add-on">Max records</span>
@@ -52,6 +52,6 @@
 		    {{/if}}
 	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
 	<div>
-{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType percent=thresholdPercent threshold=selectedThresholdType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
 	</div>
 </div>

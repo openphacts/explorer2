@@ -349,7 +349,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
         this.controllerFor('compoundsStructure').set('smilesValue', smiles);
         this.controllerFor('compoundsStructure').set('origSmilesValue', smiles);
     }
-    var percent = params.percent;
+    var percent = params.threshold;
     if (percent) {
         this.controllerFor('compoundsStructure').set('thresholdPercent', parseFloat(percent));
     }
@@ -357,7 +357,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     if (match) {
         this.controllerFor('compoundsStructure').set('selectedMatchType', parseInt(match));
     }
-    var threshold = params.threshold;
+    var threshold = params.thresholdtype;
     if (threshold) {
         this.controllerFor('compoundsStructure').set('selectedThresholdType', parseInt(threshold));
     }
@@ -369,6 +369,17 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     return [];
     //return this.get('store').find('compound', params.smiles);
   },
+  //if we leave the route then set the params to the defaults
+  resetController: function (controller, isExiting, transition) {
+			       if (isExiting) {
+				             // isExiting would be false if only the route's model was changing
+					            controller.set('threshold', '0.9');
+						    controller.set('thresholdtype', '0');
+						    controller.set('match', '0');
+						    controller.set('records', 100);
+						    controller.set('type', 'exact');
+					               }
+					     },
 
   beforeModel: function() {
     this.controllerFor('application').set('fetching', false);
