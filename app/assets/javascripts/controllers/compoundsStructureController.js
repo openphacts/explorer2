@@ -503,7 +503,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 	  console.log('compound structure filters');
 	  var me = this;
 	  me.get('filteredCompounds').clear();
-	  $.each(me.get('content.structure.content'), function(index, compound) {
+	  $.each(me.get('content'), function(index, compound) {
 		    var mwFilter = false;
 		    var mwFreebaseFilter = false;
 		    var hbaFilter = false;

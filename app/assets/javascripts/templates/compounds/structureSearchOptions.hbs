@@ -52,6 +52,7 @@
 		    {{/if}}
 	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
 	<div>
-{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+		{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+<a href="#compoundStructureFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 	</div>
 </div>
