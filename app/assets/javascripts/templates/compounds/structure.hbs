@@ -161,10 +161,10 @@
 				<th style="width: 5%;" {{action "sortHeader" "psa"}} {{bind-attr class=":th-hover psaSortASC:sortASC psaSortDESC:sortDESC"}}>PSA{{#if psaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if psaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th style="width: 5%;" {{action "sortHeader" "ro5Violations"}} {{bind-attr class=":th-hover ro5ViolationsSortASC:sortASC ro5ViolationsSortDESC:sortDESC"}}>RO5 Violations{{#if ro5ViolationsSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if ro5ViolationsSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th style="width: 5%;" {{action "sortHeader" "rtb"}} {{bind-attr class=":th-hover rtbSortASC:sortASC rtbSortDESC:sortDESC"}}>RTB{{#if rtbSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if rtbSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-    {{#if subSearch}}
+    {{#if isSubstructureSearch}}
 				<th style="width: 5%;" {{action "sortHeader" "relevance"}} {{bind-attr class=":th-hover relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
     {{/if}}
-    {{#if simSearch}}
+    {{#if isSimilaritySearch}}
 				<th style="width: 5%;" {{action "sortHeader" "relevance"}} {{bind-attr class=":th-hover relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
     {{/if}}
 </tr>
@@ -191,10 +191,10 @@
     <td class="cell-basictext">{{structureRecord.psa}}</td>
     <td class="cell-basictext">{{structureRecord.ro5Violations}}</td>
     <td class="cell-basictext">{{structureRecord.rtb}}</td>
-    {{#if subSearch}}
+    {{#if isSubstructureSearch}}
         <td class="cell-basictext">{{structureRecord.relevance}}</td>
     {{/if}}
-    {{#if simSearch}}
+    {{#if isSimilaritySearch}}
         <td class="cell-basictext">{{structureRecord.relevance}}</td>
     {{/if}}
 </tr>
