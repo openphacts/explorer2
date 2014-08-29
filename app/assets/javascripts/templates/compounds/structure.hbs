@@ -119,8 +119,8 @@
     <div class="row pull-right"> 
         <div class="span1 small-padding-top small-padding-right">Provenance</div>
         <div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-		<button {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-		<button {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+		<button {{bind-attr class="showProvenance:active: :btn"}} {{action 'enableProvenance'}}>On</button>
+		<button {{bind-attr class="showProvenance::active :btn"}} {{action 'disableProvenance'}}>Off</button>
         </div>
     </div>
 </ul>
@@ -174,23 +174,23 @@
 <tr class="record-deco">
 	<td>{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles) title="Draw this compound"}}{{cs_image_src structureRecord.URI}}{{/link-to}}</td>
     <td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}</td>
-    <td class="cell-basictext">{{structureRecord.description}}</td>
-    <td class="cell-basictext">{{structureRecord.biotransformationItem}}</td>
-    <td class="cell-basictext">{{structureRecord.toxicity}}</td>
-    <td class="cell-basictext">{{structureRecord.proteinBinding}}</td>
+    <td class="cell-basictext">{{structureRecord.description}}{{#if showProvenance}}{{#if structureRecord.description}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.biotransformationItem}}{{#if showProvenance}}{{#if structureRecord.biotransformationItem}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.toxicity}}{{#if showProvenance}}{{#if structureRecord.toxicity}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.proteinBinding}}{{#if showProvenance}}{{#if structureRecord.proteinBinding}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
     {{!-- <td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles) title="Draw the compound with this structure"}}{{structureRecord.smiles}}{{/link-to}}</td>
     <td class="cell-basictext">{{textLink structureRecord.chemblURI}}</td> --}}
-    <td class="cell-basictext">{{structureRecord.fullMWT}}</td>
-    <td class="cell-basictext">{{structureRecord.hba}}</td>
-    <td class="cell-basictext">{{structureRecord.hbd}}</td>
+    <td class="cell-basictext">{{structureRecord.fullMWT}}{{#if showProvenance}}{{#if structureRecord.fullMWT}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.hba}}{{#if showProvenance}}{{#if structureRecord.hba}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.hbd}}{{#if showProvenance}}{{#if structureRecord.hbd}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
     {{!-- <td class="cell-basictext">{{structureRecord.inchi}}</td>
     <td class="cell-basictext">{{structureRecord.inchiKey}}</td> --}}
-    <td class="cell-basictext">{{structureRecord.logp}}</td>
+    <td class="cell-basictext">{{structureRecord.logp}}{{#if showProvenance}}{{#if structureRecord.logp}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
     <td class="cell-basictext">{{formatMolecularFormula structureRecord.molform}}</td>
-    <td class="cell-basictext">{{structureRecord.mwFreebase}}</td>
-    <td class="cell-basictext">{{structureRecord.psa}}</td>
-    <td class="cell-basictext">{{structureRecord.ro5Violations}}</td>
-    <td class="cell-basictext">{{structureRecord.rtb}}</td>
+    <td class="cell-basictext">{{structureRecord.mwFreebase}}{{#if showProvenance}}{{#if structureRecord.mwFreebase}}{{provenanceLinkout structureRecord.chemblURI 'chembl'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.psa}}{{#if showProvenance}}{{#if structureRecord.psa}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.ro5Violations}}{{#if showProvenance}}{{#if structureRecord.ro5Violations}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+    <td class="cell-basictext">{{structureRecord.rtb}}{{#if showProvenance}}{{#if structureRecord.rtb}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
     {{#if isSubstructureSearch}}
         <td class="cell-basictext">{{structureRecord.relevance}}</td>
     {{/if}}

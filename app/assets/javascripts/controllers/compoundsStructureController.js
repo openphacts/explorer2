@@ -2,6 +2,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
  
+  showProvenance: false,
+
   searchOptionsVisible: function() {
     return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
   }.property('structureSearchType'),
@@ -618,7 +620,13 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
     drawThisSMILES: function() {
       this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue')}});
-    }
+    },
+enableProvenance: function() {
+      this.set('showProvenance', true);
+  },
+  disableProvenance: function() {
+      this.set('showProvenance', false);
+  }
 
   }
 });
