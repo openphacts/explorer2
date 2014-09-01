@@ -1,14 +1,39 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
+ 
+  showProvenance: false,
 
-  exactMatch: true,
+  searchOptionsVisible: function() {
+    return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
+  }.property('structureSearchType'),
+  //structure search type radio button selection
+  isSelected: 1,
+
+  isExactSearch:  function() {
+    return this.get('structureSearchType') === 'exact';
+  }.property('structureSearchType'),
+
+  isSubstructureSearch: function() {
+    return this.get('structureSearchType') === 'substructure';
+  }.property('structureSearchType'),
+
+  isSimilaritySearch: function() {
+    return this.get('structureSearchType') === 'similarity';
+  }.property('structureSearchType'),
+
+  exactMatch: true, 
 
   substructureMatch: false,
 
   similarityMatch: false,
 
   smilesValue: null,
+
+  //placeholder for smiles
+  origSmilesValue: null,
+
+  searchTypes: [{type: 'Exact', value: 'exact'}, {type: 'Sub-structure', value: 'substructure'}, {type: 'Similarity', value: 'similarity'}],
 
   thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
 
@@ -20,7 +45,20 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 
   structureSearchType: "exact",
 
-  queryParams: ['uri', 'type'],
+  //placeholder for the initial search type the route was entered with
+  initStructureSearchType: null,
+
+  queryParams: ['smiles', 'type', 'thresholdtype', 'match', 'threshold', 'records'],
+
+  smiles: null,
+
+  thresholdtype: null,
+
+  match: null,
+
+  threshold: null,
+
+  records: null,
 
   thresholdPercent: 0.90,
 
@@ -97,7 +135,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('totalCount'),
 
   exactSearch: function() {
-    if (this.get('structureSearchType') === "exact") {
+    if (this.get('initStructureSearchType') === "exact") {
 	  this.set('exactMatch', true);
 	  return true;
     } else {
@@ -107,7 +145,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('structureSearchType'),
 
   subSearch: function() {
-    if (this.get('structureSearchType') === "substructure") {
+    if (this.get('initStructureSearchType') === "substructure") {
 	  this.set('substructureMatch', true);
 	  return true;
     } else {
@@ -118,7 +156,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('structureSearchType'),
 
   simSearch: function() {
-    if (this.get('structureSearchType') === "similarity") {
+    if (this.get('initStructureSearchType') === "similarity") {
 	  this.set('similarityMatch', true);
 	  return true;
     } else {
@@ -320,10 +358,10 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
        this.set('relSelectedHigherValue', null);
        // TODO turn the thresholdPercent and maxRecords input into ember views
        // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
-       if (this.get('similarityMatch') === true) {
-	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
-	   }
-       this.set('maxRecords', $('#max-records')[0].value);
+       //if (this.get('similarityMatch') === true) {
+       //	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
+       //	   }
+       //this.set('maxRecords', $('#max-records')[0].value);
        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
        var callback=function(success, status, response){
          if (success && response) {
@@ -438,7 +476,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
         filtersString += "Exact structure search";
     }
 
-    var thisCompound = this.get('content');
 	var tsvCreateRequest = $.ajax({
 		url: cs_download_url,
         dataType: 'json',
@@ -452,7 +489,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
+            me.get('controllers.application').addJob(response.uuid, me.get('smilesValue'), filtersString);
 			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
             //me.monitorTSVCreation(response.uuid);
 		},
@@ -467,7 +504,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 	  console.log('compound structure filters');
 	  var me = this;
 	  me.get('filteredCompounds').clear();
-	  $.each(me.get('content.structure.content'), function(index, compound) {
+	  $.each(me.get('content'), function(index, compound) {
 		    var mwFilter = false;
 		    var mwFreebaseFilter = false;
 		    var hbaFilter = false;
@@ -577,28 +614,18 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     },
 
     searchForSMILES: function() {
-      var me = this;
-      if (this.get('smilesValue') != null ) {
-        var smiles = this.get('smilesValue');
-        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
-        var callback=function(success, status, response){
-          if (success && response) {
-            var url = searcher.parseSmilesToURLResponse(response);
-            me.transitionToRoute('compounds.index', {queryParams: {uri: url}});
-          } else {
-            me.get('controllers.application').set('fetching', false);
-            App.FlashQueue.pushFlash('error', 'No compound found for that SMILES value, please enter a different value and try again.');
-          }
-        };
-        searcher.smilesToURL(smiles, callback);
-      } else {
-        App.FlashQueue.pushFlash('error', 'SMILES cannot be empty, please enter a value and try again.');
-      }
+        this.transitionToRoute('compounds.structure', {queryParams: {'smiles': me.get('smilesValue'), 'type': 'exact'}});
     },
 
     drawThisSMILES: function() {
       this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue')}});
-    }
+    },
+enableProvenance: function() {
+      this.set('showProvenance', true);
+  },
+  disableProvenance: function() {
+      this.set('showProvenance', false);
+  }
 
   }
 });

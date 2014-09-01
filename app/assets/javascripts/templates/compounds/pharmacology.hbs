@@ -67,19 +67,23 @@
 <div class="goto-button" id="top">
     <button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
 </div>
-<div>
-    <ul class="breadcrumb">
-  	    <li><a href="/">Home</a> <span class="divider">/</span></li>
-  		<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}<span class="divider">/</span></li>
-  		<li class="active">Compound Pharmacology</li>	
-		<div class="row pull-right"> 
-			<div class="span1 small-padding-top small-padding-right">Provenance</div>
-			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-	                    <button  {{action 'enableProvenance'}} {{bind-attr class="showPharmaProvenance:active: :btn"}}>On</button>
-	                    <button  {{action 'disableProvenance'}} {{bind-attr class="showPharmaProvenance::active :btn"}}>Off</button>	
-  			</div>
-		</div>
-	</ul>
+<div class="breadcrumb">
+    <ul class="breadcrumb inline">
+  	    <li><a href="/">Home</a></li>
+  		<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
+		<li class="active">Compound Pharmacology</li>
+	</ul>	
+<span class="pull-right" style="margin-top: -6px;"> 
+		<span class="small-padding-top small-padding-right">Provenance </span>
+		<span class="btn-group" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="btn btn-default">
+					      <input type="radio" name="options" id="option1" checked>On
+					        </label>
+						<label {{action 'disableProvenance'}} class="btn btn-default active">
+							<input type="radio" name="options" id="option2">Off
+							        </label>
+									</span>
+		</span>
 </div>  
 <!-- actual results -->
 <div id="summary-anchor">

@@ -766,13 +766,14 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   goToTop: function() {
       window.scrollTo(0,0);
   },
-  enableProvenance: function() {
-      this.set('showPharmaProvenance', true);
-  },
+  	  enableProvenance: function() {
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	  },
 
-  disableProvenance: function() {
-      this.set('showPharmaProvenance', false);
-  }
+  	  disableProvenance: function() {
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+  	  }
+
   }
 
 
