@@ -476,7 +476,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
         filtersString += "Exact structure search";
     }
 
-    var thisCompound = this.get('content');
 	var tsvCreateRequest = $.ajax({
 		url: cs_download_url,
         dataType: 'json',
@@ -490,7 +489,7 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		},
 		success: function(response, status, request) {
 			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
+            me.get('controllers.application').addJob(response.uuid, me.get('smilesValue'), filtersString);
 			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
             //me.monitorTSVCreation(response.uuid);
 		},
