@@ -1,67 +1,87 @@
 <!-- Modal -->
-<div id="compoundPharmaFilterModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
+<div id="compoundPharmaFilterModalView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		<div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
     </div>
     <div class="modal-body" style="overflow-y: visible;">
         <div id="activity-filters">
-            <p><h4>Activity Filter</h4></p>
-		    {{view Ember.Select
+		<p><h4>Activity Filter</h4></p>
+		<div class="row">
+			<div class="col-sm-2">
+			{{view Ember.Select
 		       content=activityTypes
 		       optionLabelPath="content.label"
 		       prompt="Select an activity"
 		       value=selectedActivity
 		       selection=selectedActivity
-		    }}
+		       }}
+	       </div>
+	       <div class="col-sm-2">
 		    {{view Ember.Select
 		       content=conditions
 		       prompt="Select an operator"
                value=selectedCondition
 		       selection=selectedCondition
-		    }}
-		    {{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+		       }}
+	       </div>
+	       <div class="col-sm-4">
+		    {{input type="text" class="form-control" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+	    </div>
+	    <div class="col-sm-2">
 		    {{view Ember.Select
 		       content=activityUnits
 		       optionLabelPath="content.label"
 		       prompt="Select a unit"
                value=selectedUnit
 		       selection=selectedUnit
-		    }}
+		       }}
+	       </div>
+	       </div>
         </div>
         <div>
             <h5>Return activities with the following relation(s) only</h5>
-            <p class="small-padding-right activity-relation-operator">></p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
-            <p class="small-padding-right activity-relation-operator"><</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
-            <p class="small-padding-right activity-relation-operator">=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
-            <p class="small-padding-right activity-relation-operator">>=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
-            <p class="small-padding-right activity-relation-operator"><=</p><p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+            <label class="checkbox-inline">&gt;{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</label>
+            <label class="checkbox-inline">&lt;{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</label>
+            <label class="checkbox-inline">={{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</label>
+            <label class="checkbox-inline">&ge;{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</label>
+            <label class="checkbox-inline">&le;{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</label>
         </div>
         <div id="pchembl-filters">
-	        <p><h4>pChembl Filter</h4></p>
+		<p><h4>pChembl Filter</h4></p>
+		<div class="row form-group">
+			<div class="col-sm-2">
 		    {{view Ember.Select
 		       content=pchemblConditions
 		       prompt="Select an operator"
                value=selectedPchemblCondition
 		       selection=selectedPchemblCondition
-		    }}
-		    {{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
-        </div>
+		       }}
+	       </div>
+		       <div class="col-sm-4">
+		    {{input type="text" class="form-control" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+	            </div>
+	    </div>
+	    </div>
         <div>
 	        <p><h4>Organism filters</h4></p>
-            <div>
-                <h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box" autocomplete="off"}}
+            <div class="row">
+                <h5 class="inline col-md-1">Assay:</h5> {{input type="text" class="form-control"placeholder="Assay organism name" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box" autocomplete="off"}}
             </div>
-            <div>
-                <h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box" autocomplete="off"}}
+            <div class="row">
+                <h5 class="inline col-md-1">Target:</h5> {{input type="text" class="form-control" placeholder="Target organism name" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box" autocomplete="off"}}
             </div>
         </div>
 	</div>
 	<div class="modal-footer">
-	    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
         <button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
 	    <button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
-	</div>
+    </div>
+    </div>
+    </div>
 </div>
 <!-- End of Modal -->
 <div class="goto-button" id="top">
@@ -95,7 +115,7 @@
 			<div id="compound-image" {{bind-attr class=":col-md-2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{cs_image_src csURI}}</div>
 			<div>
 				<div>
-					<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}{{#if haveRecords}}<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
+					<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h4>
 					<div {{bind-attr class=":row infoHide:hide:"}}>
 						<div class="col-md-4 justify normal-font">{{description}}</div>
 						<div id="demo" class="col-md-4 out dl-horizontal" style="font-size:13px;">

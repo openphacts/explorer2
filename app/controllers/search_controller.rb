@@ -7,17 +7,17 @@ class SearchController < ApplicationController
   # the prefLabel
   def typeahead
     results = []
-    Rails.cache.fetch('comp_' + params[:query], :expires_in => 6.months) { Compound.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |compound|
-      results.push(compound.label)
+    compound_results = Rails.cache.fetch('comp_' + params[:query], :expires_in => 6.months) { Compound.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.map do |compound|
+	    {value: compound.label}
     end
-    Rails.cache.fetch('tar_' + params[:query], :expires_in => 6.months) { Target.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |target|
-      results.push(target.label)
+    target_results = Rails.cache.fetch('tar_' + params[:query], :expires_in => 6.months) { Target.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.map do |target|
+	    {value: target.label}
     end
     # shuffle the results so that compounds and targets get mixed up since we
     # are not doing any relevancy matches
-    results.shuffle
+    compound_results.concat(target_results)
     respond_to do |format|
-      format.json { render :json => results }
+      format.json { render :json => compound_results }
     end
 
   end

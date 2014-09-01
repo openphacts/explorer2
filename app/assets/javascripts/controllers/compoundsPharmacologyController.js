@@ -750,7 +750,9 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
         me.set('totalCount', count);
         if (count > 0) {
             searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, null, lens, pharmaCallback);
-        }
+        } else {
+          me.get('controllers.application').set('fetching', false);
+	}
       }
     };
     searcher.compoundPharmacologyCount(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);

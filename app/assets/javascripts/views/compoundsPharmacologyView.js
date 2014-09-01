@@ -1,24 +1,56 @@
 App.CompoundsPharmacologyView = Ember.View.extend({
     didInsertElement: function() {
-        var controller = this.get('controller');
-        $('#assay_organism_box').typeahead({
-            source: function(query, process) {
-                $.getJSON(organismsUrl, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                })
-            }
-        });
-        $('#target_organism_box').typeahead({
-            source: function(query, process) {
-                $.getJSON(organismsUrl, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                })
-            }
-        });
+	    var engine = new Bloodhound({
+		      name: 'assayorganisms',
+		  remote: organismsUrl + 'query=%QUERY',
+		  datumTokenizer: function(d) {
+			      return Bloodhound.tokenizers.whitespace(d.val);
+			        },
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		limit: 20
+	    });
+	    engine.initialize();
+      $('#assay_organism_box').typeahead({
+        minLength: 3
+      },
+	{
+		source: engine.ttAdapter(),
+	       templates: {
+		           empty: [
+	            '<div class="empty-message">',
+	            'unable to find any assay organisms matching the current query',
+	            '</div>'
+	          ].join('\n'),
+	          suggestion: Handlebars.compile('<p><strong>{{value}}</strong></p>')
+	        }
+      });
+
+var engine = new Bloodhound({
+		      name: 'targetorganisms',
+		  remote: organismsUrl + 'query=%QUERY',
+		  datumTokenizer: function(d) {
+			      return Bloodhound.tokenizers.whitespace(d.val);
+			        },
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		limit: 20
+	    });
+	    engine.initialize();
+      $('#target_organism_box').typeahead({
+        minLength: 3
+      },
+	{
+		source: engine.ttAdapter(),
+	       templates: {
+		           empty: [
+	            '<div class="empty-message">',
+	            'unable to find any assay organisms matching the current query',
+	            '</div>'
+	          ].join('\n'),
+	          suggestion: Handlebars.compile('<p><strong>{{value}}</strong></p>')
+	        }
+      });
+
+
         var view = this;
         $(window).bind("scroll", function() {
             view.didScroll();
