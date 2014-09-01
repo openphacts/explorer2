@@ -65,7 +65,7 @@
 </div>
 <!-- End of Modal -->
 <div class="goto-button" id="top">
-    <button class="btn btn-small" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
+    <button class="btn btn-default btn-sm" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
 </div>
 <div class="breadcrumb">
     <ul class="breadcrumb inline">
@@ -97,7 +97,17 @@
 				<div>
 					<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}{{#if haveRecords}}<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
 					<div {{bind-attr class=":row infoHide:hide:"}}>
-      					<div class="col-md-6 justify normal-font">{{expandableDescription description}}</div>
+						<div class="col-md-4 justify normal-font">{{description}}</div>
+						<div id="demo" class="col-md-4 out dl-horizontal" style="font-size:13px;">
+						    <dl>
+						        <dt>SMILES</dt>
+							<dd>{{smiles}}</dd>
+							<dt>Standard InChi</dt>
+							<dd>{{inchi}}</dd>
+							<dt>Standard InChiKey</dt>
+							<dd>{{inchiKey}}</dd>
+						    </dl>
+						</div>
     				</div>
   				</div>
 			</div>

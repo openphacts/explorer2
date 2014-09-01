@@ -26,6 +26,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   greaterThanOrEqual: false,
 
+  haveRecords: function() {
+      return this.get('model.pharmacology.length') > 0;	
+  }.property('model.pharmacology.length'),
+
   lessThanOrEqual: false,
 
   conditions: [">", "<", "=", "<=", ">="],
