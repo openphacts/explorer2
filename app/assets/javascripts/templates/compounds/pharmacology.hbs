@@ -96,7 +96,7 @@
 			<div>
 				<div>
 					<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}{{#if haveRecords}}<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
-   					<div class="row">
+					<div {{bind-attr class=":row infoHide:hide:"}}>
       					<div class="col-md-6 justify normal-font">{{expandableDescription description}}</div>
     				</div>
   				</div>
@@ -147,14 +147,14 @@
                 {{/each}}
                 </td>
                 <td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-		<td class="cell-basictext">{{assayOrganism}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
-		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
-		<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
-		<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
-		<td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
-		<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="cell-basictext">{{assayOrganism}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
                 <td class="cell-basictext">{{linkablePubmedId pharmaRecord.activityPubmedId}}</td>
-		<td class="cell-basictext">{{pharmaRecord.pChembl}}{{#if showPharmaProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{pharmaRecord.pChembl}}{{#if showProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
             </tr>
 			{{/each}}
 		</tbody>

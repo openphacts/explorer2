@@ -2,6 +2,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   needs: ["compounds", "application"],
 
+  showProvenance: false,
+
   queryParams: ['uri'],
 
   hideInfo: false,
