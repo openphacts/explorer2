@@ -22,7 +22,7 @@ img.folder-open {
 }
 i.fetching-data {
   vertical-align: top;
-  padding-right: 6px;
+  margin-right: 6px;
 }
 img.folder-closed {
   vertical-align: top;
