@@ -87,14 +87,15 @@
 <div class="goto-button" id="top">
     <button class="btn btn-default btn-sm" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
 </div>
-<div class="breadcrumb">
-    <ul class="breadcrumb inline">
-  	    <li><a href="/">Home</a></li>
-  		<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
-		<li class="active">Compound Pharmacology</li>
-	</ul>	
-<span class="pull-right" style="margin-top: -6px;"> 
-		<span class="small-padding-top small-padding-right">Provenance </span>
+<div class="row">
+    <ul class="breadcrumb">
+	    <li><a href="/">Home</a></li>
+	    <li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
+	    <li class="active">Compound Pharmacology</li>
+    </ul>	
+    </div>
+    <div class="row visible-sm-block visible-xs-block">
+    <a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a><span class="small-padding-top small-padding-left small-padding-right">Provenance </span>
 		<span class="btn-group" data-toggle="buttons">
 				<label {{action 'enableProvenance'}} class="btn btn-default">
 					      <input type="radio" name="options" id="option1" checked>On
@@ -104,19 +105,26 @@
 							        </label>
 									</span>
 		</span>
-	</div>  
 
-<div>  
+</div>  
 		
 		<!-- actual results -->
-		<div id="summary-anchor">
+		<div id="summary-anchor" class="visible-md-block visible-lg-block">
 			<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
 			
 			<div id="compound-image" {{bind-attr class=":col-md-2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{cs_image_src csURI}}</div>
-			<div>
-				<div>
-					<h3>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}} ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></h4>
-					<div {{bind-attr class=":row infoHide:hide:"}}>
+				<div class="small-padding-top">
+					<h3 class="inline">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</h3> ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a><span class="small-padding-top small-padding-left small-padding-right">Provenance </span>
+		<span class="btn-group" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="btn btn-default">
+					      <input type="radio" name="options" id="option1" checked>On
+					        </label>
+						<label {{action 'disableProvenance'}} class="btn btn-default active">
+							<input type="radio" name="options" id="option2">Off
+							        </label>
+									</span>
+		</span>
+					<div {{bind-attr class=":small-padding-top :row infoHide:hide:"}}>
 						<div class="col-md-4 justify normal-font">{{description}}</div>
 						<div id="demo" class="col-md-4 out dl-horizontal" style="font-size:13px;">
 						    <dl>
@@ -128,19 +136,17 @@
 							<dd>{{inchiKey}}</dd>
 						    </dl>
 						</div>
-    				</div>
+    				        </div>
   				</div>
-			</div>
 
 			</div>
 	
 		</div>
-		</div>
 
 {{#if notEmpty}}
 <!-- RESULT LISTING -->
-<div class="row "style="padding:30px">
-	<table class="">
+<div class="row table-responsive"style="padding:30px">
+	<table>
 		<thead class="headingstyle" style="border-spacing: 0;">
 			<tr>
 				<th colspan="2" class="centre" style="border-right: 2px solid white; padding: 7px;">Target</th>

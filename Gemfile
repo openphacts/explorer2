@@ -12,7 +12,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2'
   #gem 'compass-rails'
   gem 'uglifier'
-  gem 'bootstrap-sass'#, '~> 3.2.0.1'
+  gem 'bootstrap-sass', '~> 3.2.0.1'
   gem 'handlebars_assets'
 end
 
