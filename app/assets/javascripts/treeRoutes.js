@@ -86,7 +86,7 @@ me.get('controllers.application').set('fetching', false);
 		        searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
             } else {
 me.get('controllers.application').set('fetching', false);
-App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
+//App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
 
 	    }
         }
@@ -109,17 +109,18 @@ App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnz
                 }
     };
     activitySearcher.getAllUnits(null, 'all', null, null, allUnitsCallback);
-    this.controllerFor('application').set('fetching', true);
+    me.get('controllers.application').set('fetching', true);
     // we might already have been on this route
     if (controller.get('totalCount') == null) {
     searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
     } else {
-        controller.get('controllers.application').set('fetching', false);
+        me.get('controllers.application').set('fetching', false);
     }
     },
 
   model: function(params) {
     console.log('tree pharma controller model');
+    this.controllerFor('trees.pharmacology').set('totalCount', null);
     var uri = params.uri;
     var tree = this.controllerFor('trees').store.find('tree', uri);
     return tree;
@@ -132,47 +133,47 @@ App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnz
 
 });
 
-App.TreesPharmacologyIndexRoute = Ember.Route.extend({
+//App.TreesPharmacologyIndexRoute = Ember.Route.extend({
+//
+//  setupController: function(controller, model, params) {
+//    console.log('enzyme index route setup controller');
+//    var me = controller;
+//    controller.set('model', model);
+//      var thisEnzyme = enzyme;
+//      var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+//      var pharmaCallback=function(success, status, response){
+//      if (success && response) {
+//        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+//        $.each(pharmaResults, function(index, pharma) {
+//          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
+//	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
+//        });
+//      }
+//    };
+//    var countCallback = function(success, status, response) {
+//        if (success) {
+//            var count = searcher.parseTargetClassPharmacologyCount(response);
+//            controller.totalCount = count;
+//            // are there any results?
+//            controller.set('empty', count > 0 ? false : true);
+//            if (count > 0) {
+//		        searcher.getTargetClassPharmacologyPaginated(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
+//            }
+//        }
+//    };
+//
+//    searcher.getTargetClassPharmacologyCount(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+//  },
+//  model: function(params) {
+//    console.log('enzyme pharma index route');
+//    var uri = this.get('queryParameters').uri;
+//    var tree = this.controllerFor('trees').store.find('tree', uri);
+//    return tree.get('pharmacology');
+//  },
+//
+//  beforeModel: function() {
+//    this.controllerFor('application').set('fetching', false);
+//    enable_scroll();
+//  }
 
-  setupController: function(controller, model, params) {
-    console.log('enzyme index route setup controller');
-    var me = controller;
-    controller.set('model', model);
-      var thisEnzyme = enzyme;
-      var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
-      var pharmaCallback=function(success, status, response){
-      if (success && response) {
-        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
-        $.each(pharmaResults, function(index, pharma) {
-          var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
-	      thisEnzyme.get('pharmacology').pushObject(pharmaRecord);
-        });
-      }
-    };
-    var countCallback = function(success, status, response) {
-        if (success) {
-            var count = searcher.parseTargetClassPharmacologyCount(response);
-            controller.totalCount = count;
-            // are there any results?
-            controller.set('empty', count > 0 ? false : true);
-            if (count > 0) {
-		        searcher.getTargetClassPharmacologyPaginated(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCallback);
-            }
-        }
-    };
-
-    searcher.getTargetClassPharmacologyCount(enzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
-  },
-  model: function(params) {
-    console.log('enzyme pharma index route');
-    var uri = this.get('queryParameters').uri;
-    var tree = this.controllerFor('trees').store.find('tree', uri);
-    return tree.get('pharmacology');
-  },
-
-  beforeModel: function() {
-    this.controllerFor('application').set('fetching', false);
-    enable_scroll();
-  }
-
-});
+//});
