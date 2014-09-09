@@ -114,7 +114,7 @@
 				<div id="target-image" {{bind-attr class=":col-md-2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
 				<div>
 					<div>
-						<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}{{#if haveRecords}}<a href="#targetPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
+						<h3>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}<a href="#targetPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>{{#if haveRecords}}<a href="#targetPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>{{/if}}</h3>
 						<div class="row">
 							<div class="col-md-6 justify normal-font">{{expandableDescription description}}</div>
 						</div>

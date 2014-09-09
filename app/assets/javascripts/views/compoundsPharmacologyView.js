@@ -1,6 +1,6 @@
 App.CompoundsPharmacologyView = Ember.View.extend({
     didInsertElement: function() {
-	    var engine = new Bloodhound({
+	    var assay_engine = new Bloodhound({
 		      name: 'assayorganisms',
 		  remote: organismsUrl + 'query=%QUERY',
 		  datumTokenizer: function(d) {
@@ -9,12 +9,12 @@ App.CompoundsPharmacologyView = Ember.View.extend({
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		limit: 20
 	    });
-	    engine.initialize();
+	    assay_engine.initialize();
       $('#assay_organism_box').typeahead({
         minLength: 3
       },
 	{
-		source: engine.ttAdapter(),
+		source: assay_engine.ttAdapter(),
 	       templates: {
 		           empty: [
 	            '<div class="empty-message">',
@@ -25,7 +25,7 @@ App.CompoundsPharmacologyView = Ember.View.extend({
 	        }
       });
 
-var engine = new Bloodhound({
+var target_engine = new Bloodhound({
 		      name: 'targetorganisms',
 		  remote: organismsUrl + 'query=%QUERY',
 		  datumTokenizer: function(d) {
@@ -34,16 +34,16 @@ var engine = new Bloodhound({
 		  queryTokenizer: Bloodhound.tokenizers.whitespace,
 		limit: 20
 	    });
-	    engine.initialize();
+	    target_engine.initialize();
       $('#target_organism_box').typeahead({
         minLength: 3
       },
 	{
-		source: engine.ttAdapter(),
+		source: target_engine.ttAdapter(),
 	       templates: {
 		           empty: [
 	            '<div class="empty-message">',
-	            'unable to find any assay organisms matching the current query',
+	            'unable to find any target organisms matching the current query',
 	            '</div>'
 	          ].join('\n'),
 	          suggestion: Handlebars.compile('<p><strong>{{value}}</strong></p>')
