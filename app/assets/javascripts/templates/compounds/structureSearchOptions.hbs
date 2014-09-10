@@ -1,59 +1,74 @@
 <div style="padding-left:30px;">
-<span>{{input type="text" classNames="input-xlarge" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
-	<span class="input-prepend">
-		<span class="add-on">Search type</span>
-		{{view Ember.Select
-		       content=searchTypes
-               value=structureSearchType
-               optionValuePath="content.value"
-               optionLabelPath="content.type"
-	       }}
-       </span>
+	<div class="form-inline">
+		{{input type="text" classNames="form-control" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Search type</div>
+				{{view Ember.Select
+				classNames="form-control"
+				content=searchTypes
+				value=structureSearchType
+				optionValuePath="content.value"
+				optionLabelPath="content.type"
+				}}
+			</div>
+		</div>
 
 		{{!-- {{#link-to "compounds.draw" (query-params smiles=smilesValue) class="btn" title="Draw a compound using the SMILES entered in the box"}}Draw structure{{/link-to}} --}}
-</span>
-{{#if isExactSearch}}
-<span class="input-prepend">
-	<span class="add-on">Match type</span>
-	{{view Ember.Select
-	       content=matchTypes
-           value=selectedMatchType
-           optionValuePath="content.id"
-           optionLabelPath="content.type"
-	   }}
-   </span>
-</span>
-	{{/if}}
-	{{#if isSimilaritySearch}}
-	    <div class="input-prepend">
-	       <span class="add-on">Similarity type</span>
-                {{view Ember.Select
-		       content=thresholdTypes
-               value=selectedThresholdType
-               optionValuePath="content.id"
-               optionLabelPath="content.type"
-	       }}
-       </div>
-       <div class="input-prepend">
-	       <span class="add-on">Threshold</span>
-	       {{input type="number" classNames="input-mini" value=thresholdPercent min="0.1" max="1.0" step="0.1" placeholder="Threshold limit" title="Threshold limit"}}
-       </div>
-<div class="input-prepend">
-			<span class="add-on">Max records</span>
-{{input type="text" classNames="input-mini" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
-	    </div>
+		{{#if isExactSearch}}
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Match type</div>
+				{{view Ember.Select
+				classNames="form-control"
+				content=matchTypes
+				value=selectedMatchType
+				optionValuePath="content.id"
+				optionLabelPath="content.type"
+				}}
+			</div>
+		</div>
+		{{/if}}
+		{{#if isSimilaritySearch}}
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Similarity type</div>
+				{{view Ember.Select
+				classNames="form-control"
+				content=thresholdTypes
+				value=selectedThresholdType
+				optionValuePath="content.id"
+				optionLabelPath="content.type"
+				}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Threshold</div>
+				{{input type="number" classNames="form-control" value=thresholdPercent min="0.1" max="1.0" step="0.1" placeholder="Threshold limit" title="Threshold limit"}}
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">Max records</div>
+				{{input type="text" classNames="form-control" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
+			</div>
+		</div>
 
-	{{/if}}
-	{{#if isSubstructureSearch}}
-	<div class="input-prepend">
-		<span class="add-on">Max records</span>
-{{input type="text" classNames="input-min" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
-	    </div>
-		    {{/if}}
+		{{/if}}
+		{{#if isSubstructureSearch}}
+		<div class="input-group">
+			<div class="input-group">
+				<div class="input-group-addon">Max records</div>
+				{{input type="text" classNames="form-control" placeholder="Maximum number of records to retrieve" value=maxRecords id="max-records" title="Maximum number of records to retrieve"}}
+			</div>
+		</div>
+		{{/if}}
+	</div>
 	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
 	<div>
-		{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
-<a href="#compoundStructureFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-<a href="#compoundStructureDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted compound structure results">Create TSV</a>	
-</div>
+		{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn btn-default" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
+		<a href="#compoundStructureFilterModalView" role="button" class="btn btn-default small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+		<a href="#compoundStructureDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default small-margin-left" data-toggle="modal" title="Click to create TSV formatted compound structure results">Create TSV</a>
+	</div>
 </div>

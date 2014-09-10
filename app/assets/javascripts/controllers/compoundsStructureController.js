@@ -131,8 +131,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }).property('filteredCompounds'),
 
   notEmpty: function() {
-    return this.get('totalCount') > 0;
-  }.property('totalCount'),
+    return this.get('model.length') > 0;
+  }.property('model.length'),
 
   exactSearch: function() {
     if (this.get('initStructureSearchType') === "exact") {
