@@ -4,6 +4,8 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
  
   showProvenance: false,
 
+  currentStructure: null,
+
   searchOptionsVisible: function() {
     return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
   }.property('structureSearchType'),
@@ -21,6 +23,14 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   isSimilaritySearch: function() {
     return this.get('structureSearchType') === 'similarity';
   }.property('structureSearchType'),
+
+  isCurrentSubstructureSearch: function() {
+    return this.get('currentStructure') === 'substructure';
+  }.property('currentStructure'),
+
+  isCurrentSimilaritySearch: function() {
+    return this.get('currentStructure') === 'similarity';
+  }.property('currentStructure'),
 
   exactMatch: true, 
 
@@ -318,109 +328,6 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
   }.property('sortedHeader'),
 
   actions: {
-     structureSearchType: function(type) {
-       console.log("Set structure search type: " + type);
-	   this.get('filteredCompounds').clear();
-       var structureType = type;
-       if (structureType == null ) {
-         structureType = this.structureSearchType;
-       }
-       if (structureType == null) {
-         structureType = "exact";
-       }
-       //reset sorting
-       this.get('structure').set('sortProperties', null);
-       this.get('structure').set('sortAscending', null);
-	   this.set('sortedHeader', null);
-	   this.set('currentHeader', null);
-       this.set('structureSearchType', structureType);
-       var me = this;
-       var thisCompound = this.get('content');
-       thisCompound.get('structure').clear();
-       // reset all the filters
-       this.set('mwSelectedLowerValue', null);
-       this.set('mwSelectedHigherValue', null);
-       this.set('mwSelectedFreebaseLowerValue', null);
-       this.set('mwSelectedFreebaseHigherValue', null);
-       this.set('hBondAcceptorsSelectedLowerValue', null);
-       this.set('hBondAcceptorsSelectedHigherValue', null);
-       this.set('hBondDonorsSelectedLowerValue', null);
-       this.set('hBondDonorsSelectedHigherValue', null);
-       this.set('logPSelectedLowerValue', null);
-       this.set('logPSelectedHigherValue', null);
-       this.set('polarSurfaceAreaSelectedLowerValue', null);
-       this.set('polarSurfaceAreaSelectedHigherValue', null);
-       this.set('ro5SelectedLowerValue', null);
-       this.set('ro5SelectedHigherValue', null);
-       this.set('rbSelectedLowerValue', null);
-       this.set('rbSelectedHigherValue', null);
-       this.set('relSelectedLowerValue', null);
-       this.set('relSelectedHigherValue', null);
-       // TODO turn the thresholdPercent and maxRecords input into ember views
-       // grab the threshold percent and max records value from the dom since these are not ember views but standard html elements
-       //if (this.get('similarityMatch') === true) {
-       //	     this.set('thresholdPercent', $('#threshold-percent')[0].value);
-       //	   }
-       //this.set('maxRecords', $('#max-records')[0].value);
-       var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
-       var callback=function(success, status, response){
-         if (success && response) {
-            me.get('controllers.application').set('fetching', false);
-             var results = null;
-             if (structureType == "exact") {
-                 results = searcher.parseExactResponse(response);
-                 me.set('totalCount', results.length);
-                 $.each(results, function(index, result) {
-                   me.get('store').find('compound', result).then(function(compound) {
-		               thisCompound.get('structure').pushObject(compound);
-                       me.get('filteredCompounds').pushObject(compound);
-                   });
-                 });
-             } else if (structureType == "similarity") {
-                 results = searcher.parseSimilarityResponse(response);
-                 me.set('totalCount', results.length);
-                 var relevance = {};
-                 $.each(results, function(index, result) {
-                   var about = result.about;
-                   var relVal = result.relevance;
-                   result['relevance'] = relVal;
-                   me.get('store').find('compound', about).then(function(compound) {
-                       compound.set('relevance', relVal);
-		               thisCompound.get('structure').pushObject(compound);
-                       me.get('filteredCompounds').pushObject(compound);
-                   });
-                 }); 
-             } else if (structureType == "substructure") {
-                 results = searcher.parseSubstructureResponse(response);
-                 me.set('totalCount', results.length);
-                 var relevance = {};
-                 $.each(results, function(index, result) {
-                   var about = result.about;
-                   var relVal = result.relevance;
-                   result['relevance'] = relVal;
-                   me.get('store').find('compound', about).then(function(compound) {
-                       compound.set('relevance', relVal);
-		               thisCompound.get('structure').pushObject(compound);
-                       me.get('filteredCompounds').pushObject(compound);
-                   });
-                 });
-             }
-         } else {
-	        me.get('controllers.application').set('fetching', false);
-		    App.FlashQueue.pushFlash('error', 'No compound(s) found for this structure search type.');
-         }
-       };
-       if (structureType == "exact") {
-           this.get('controllers.application').set('fetching', true);
-           searcher.exact(thisCompound.get('smiles'), this.get('selectedMatchType'), callback);
-       } else if (structureType == "similarity") {
-           this.get('controllers.application').set('fetching', true);
-           searcher.similarity(thisCompound.get('smiles'), this.selectedThresholdType, this.thresholdPercent, null, null, 1, this.maxRecords, callback);
-       } else if (structureType == "substructure") {
-           this.get('controllers.application').set('fetching', true);
-           searcher.substructure(thisCompound.get('smiles'), null, 1, this.maxRecords, callback);
-       }
-     },
 
      fetchMore: function() {
        console.log('fetch more structures');

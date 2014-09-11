@@ -341,6 +341,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     //the route can come in with a ?type=structureSearchType param, default is exact
     var type = params.type;
     if (type) {
+	this.controllerFor('compoundsStructure').set('currentStructure', type);
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
         this.controllerFor('compoundsStructure').set('initStructureSearchType', type);
     }
