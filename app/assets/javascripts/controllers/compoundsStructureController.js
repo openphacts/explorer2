@@ -1,7 +1,9 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
   needs: ['application'],
- 
+
+  infoHide: false,
+
   showProvenance: false,
 
   currentStructure: null,

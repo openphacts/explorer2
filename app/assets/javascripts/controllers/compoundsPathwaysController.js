@@ -5,6 +5,8 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
     queryParams: ['uri'],
 
     uri: '',
+    
+    infoHide: false,    
 
     page: null,
 

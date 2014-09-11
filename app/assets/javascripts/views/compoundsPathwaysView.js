@@ -19,8 +19,7 @@ App.CompoundsPathwaysView = Ember.View.extend({
 
 	    		s.css({
 	            	position: "fixed",
-	            	top: "0px",
-	            	height: "55px"
+	            	top: "0px"
 	        	});
 
 	    		var i = $('#compound-image');
@@ -37,7 +36,6 @@ App.CompoundsPathwaysView = Ember.View.extend({
 				s.css({
 	            	position: "relative",
 	            	top: "",
-	            	height: "135px",
 	            	width: "100%"
 	        	});
 

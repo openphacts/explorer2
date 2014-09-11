@@ -1,242 +1,240 @@
 <!-- breadcrumb	-->
 <div class="breadcrumb">
-<ul class="breadcrumb inline">
-    <li><a href="/">Home</a></li>
-	<li>{{prefLabel}}</li>
-	<li class="active">Compound Information</li>
-</ul>
-	<span class="pull-right" style="margin-top: -6px;"> 
+	<ul class="breadcrumb inline">
+		<li><a href="/">Home</a></li>
+		<li>{{prefLabel}}</li>
+		<li class="active">Compound Information</li>
+	</ul>
+	<span class="pull-right" style="margin-top: -6px;">
 		<span class="small-padding-top small-padding-right">Provenance </span>
 		<span class="btn-group" data-toggle="buttons">
-				<label {{action 'enableProvenance'}} class="btn btn-default">
-					      <input type="radio" name="options" id="option1" checked>On
-					        </label>
-						<label {{action 'disableProvenance'}} class="btn btn-default active">
-							<input type="radio" name="options" id="option2">Off
-							        </label>
-									</span>
+			<label {{action 'enableProvenance'}} class="btn btn-default">
+				<input type="radio" name="options" id="option1" checked>On
+			</label>
+			<label {{action 'disableProvenance'}} class="btn btn-default active">
+				<input type="radio" name="options" id="option2">Off
+			</label>
 		</span>
-</div>	
-	
+	</span>
+</div>
+
 <!-- main -->
-<div class="container">
-	<div class="container-fluid large-top-spacing">
-  		<div class="row">	
-  			<!--Sidebar content-->
-    		<div class="col-md-3">
-      			<div style="padding:0 0 0 20px;background:white;">{{cs_image_src csURI}}</div>
-      			<!--box properties-->
-      			<div id="boxes" class="small-top-spacing">	
-      			{{#if logp}}
-      				<div class="summary-box">
-      				    <div class="inner-property-content">
-  						    <p><small>AlogP</small></p>
-                            {{#if showProvenance}}
-                                <p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                                <p class="lead">{{logp}}</p> 
-                            {{/if}}
-  								
-  						</div>
-      				</div>
-      			{{/if}}
-      				
-      			{{#if hba}}      				
-      			    <div class="summary-box">
-      				    <div class="inner-property-content">
-  						    <p><small># H-Bond Acceptors</small></p>			
-                            {{#if showProvenance}}
-                                <p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                                <p class="lead">{{hba}}</p> 
-                            {{/if}} 
-  						</div>
-    	  			</div>
+<div class="large-top-spacing">
+	<div class="row">
+		<!--Sidebar content-->
+		<div class="col-md-3">
+			<div style="padding:0 0 0 20px;background:white;">{{cs_image_src csURI}}</div>
+			<!--box properties-->
+			<div id="boxes" class="small-top-spacing">
+				{{#if logp}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small>AlogP</small></p>
+						{{#if showProvenance}}
+						<p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p>
+						{{else}}
+						<p class="lead">{{logp}}</p>
+						{{/if}}
+
+					</div>
+				</div>
 				{{/if}}
-      			{{#if hbd}}      				
-      				<div class="summary-box">
-    	  				<div class="inner-property-content">
-  							<p><small># H-Bond Donors</small></p>
-                            {{#if showProvenance}}
-                                <p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                                <p class="lead">{{hbd}}</p> 
-                            {{/if}} 
-  						</div>
-      				</div>
-      			{{/if}}	
-       			{{#if fullMWT}}      				
-      			    <div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Mol Weight</small></p>		  
-                            {{#if showProvenance}}
-                                <p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                                <p class="lead">{{fullMWT}}</p> 
-                            {{/if}} 
-  						</div>
-      				</div>
-      			{{/if}}
-       			{{#if mwFreebase}}      				
-      			    <div class="summary-box">
-      				    <div class="inner-property-content">
-  						    <p><small>Mol Weight Freebase</small></p>
-  							{{#if showProvenance}}
-                                <p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p> 
-                            {{else}}
-                                <p class="lead">{{mwFreebase}}</p> 
-                            {{/if}} 
-  						</div>
-      				</div>
-      			{{/if}}
-       			{{#if psa}}      				
- 	     			<div class="summary-box">
-  	 	   				<div class="inner-property-content">
-  							<p><small>Polar Surface Area</small></p>
-  						    {{#if showProvenance}}
-                                                    <p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                            <p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p> 
-                            {{/if}} 
-  						</div>
-   		   			</div>
-      		    {{/if}}
-      			{{#if rtb}}      				
-      				<div class="summary-box">
-    	  				<div class="inner-property-content">
-  							<p><small># Rotatable Bonds</small></p>
-  							{{#if showProvenance}}
-                                <p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p> 
-                            {{else}}
-                                <p class="lead">{{rtb}}</p> 
-                            {{/if}} 
-  						</div>
-      				</div>
-      			{{/if}}
-      				
-      			</div>
-    		</div>
-    		
-    		<!--Body content-->
-    		<div class="col-md-8">
-				<!--title and formula-->
-				<div>	
-					<div class="medium-padding-top">
+
+				{{#if hba}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small># H-Bond Acceptors</small></p>
 						{{#if showProvenance}}
-						<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
+						<p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p>
 						{{else}}
-						<h1>{{prefLabel}}</h1>
+						<p class="lead">{{hba}}</p>
 						{{/if}}
 					</div>
-					<div class="lead pull-right">
+				</div>
+				{{/if}}
+				{{#if hbd}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small># H-Bond Donors</small></p>
 						{{#if showProvenance}}
-	                                        <p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
+						<p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p>
 						{{else}}
-						<p class="pull-left">{{formatMolecularFormula molform}}</p>
+						<p class="lead">{{hbd}}</p>
 						{{/if}}
 					</div>
-					{{#if hasPharmacology}}
-					<div style="padding:30px 0 0 0;text-align:left;">
-						{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
-					</div>
-					{{/if}}
-					{{#if hasPathways}}
-					<div style="padding:5px 0 0 0;text-align:left;">
-						{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}
-				        </div>
-					{{/if}}
-					<div style="padding:5px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}
-					</div>
-					<div style="padding:5px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
-					</div>
-				</div>	
-							
-				<!--description-->
-				<div class="summary-descriptive-text large-top-spacing">
-                    {{#if description}}
-                        {{#if showProvenance}}
-                            <p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-                        {{else}}
-                            <p>{{description}}</p>
-                        {{/if}}
-                    {{/if}}
 				</div>
-
-				<!--biotransformation-->
-				<div class="summary-descriptive-text small-top-spacing">
-                    {{#if biotransformation}}
-                        {{#if showProvenance}}
-                            <p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-                        {{else}}
-                            <p>{{biotransformationItem}}</p>
-                        {{/if}}
-                    {{/if}}
+				{{/if}}
+				{{#if fullMWT}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small>Mol Weight</small></p>
+						{{#if showProvenance}}
+						<p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p>
+						{{else}}
+						<p class="lead">{{fullMWT}}</p>
+						{{/if}}
+					</div>
 				</div>
-				
-				<!--details-->
-				<div class="dl-horizontal" style="font-size:13px;">
-					<dl>
-                        <!--Chemspider ID-->
-						{{#if csURI}}
-  							<dt class="medium-padding-top">ChemSpider ID</dt>
-  							<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
+				{{/if}}
+				{{#if mwFreebase}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small>Mol Weight Freebase</small></p>
+						{{#if showProvenance}}
+						<p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p>
+						{{else}}
+						<p class="lead">{{mwFreebase}}</p>
 						{{/if}}
+					</div>
+				</div>
+				{{/if}}
+				{{#if psa}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small>Polar Surface Area</small></p>
+						{{#if showProvenance}}
+						<p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p>
+						{{else}}
+						<p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
+						{{/if}}
+					</div>
+				</div>
+				{{/if}}
+				{{#if rtb}}
+				<div class="summary-box">
+					<div class="inner-property-content">
+						<p><small># Rotatable Bonds</small></p>
+						{{#if showProvenance}}
+						<p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p>
+						{{else}}
+						<p class="lead">{{rtb}}</p>
+						{{/if}}
+					</div>
+				</div>
+				{{/if}}
 
-                        <!--SMILES-->
-						{{#if smiles}}
-							<dt class="medium-padding-top">SMILES</dt>
-							{{#if showProvenance}}
-                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
-                            {{else}}
-                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
-                            {{/if}}
-						{{/if}}
-  						
-                        <!--InCHL-->
-						{{#if inchi}}
-							<dt class="medium-padding-top">Standard  InChI</dt>
-	                        {{#if showProvenance}}
-                                <dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
-                            {{else}}
-                                <dd class="medium-padding-top">{{inchi}}</dd>
-                            {{/if}}
-  						{{/if}}
+			</div>
+		</div>
 
-                        <!--InCHLKey-->
-  						{{#if inchiKey}}
-  							<dt class="medium-padding-top">Standard InChIKey</dt>
-  							{{#if showProvenance}}
-                                <dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
-                            {{else}}
-                                <dd class="medium-padding-top">{{inchiKey}}</dd>
-                            {{/if}}
-  						{{/if}}
-              
-                        <!--Protein Binding-->
-						{{#if proteinBinding}}
-  						    <dt class="medium-padding-top">Protein Binding</dt>
-  							{{#if showProvenance}}
-                                <dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
-                            {{else}}
-                                <dd class="medium-padding-top">{{proteinBinding}}</dd>
-                            {{/if}}
-						{{/if}}
+		<!--Body content-->
+		<div class="col-md-8">
+			<!--title and formula-->
+			<div>
+				<div class="medium-padding-top">
+					{{#if showProvenance}}
+					<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
+					{{else}}
+					<h1>{{prefLabel}}</h1>
+					{{/if}}
+				</div>
+				<div class="lead pull-right">
+					{{#if showProvenance}}
+					<p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
+					{{else}}
+					<p class="pull-left">{{formatMolecularFormula molform}}</p>
+					{{/if}}
+				</div>
+				{{#if hasPharmacology}}
+				<div style="padding:30px 0 0 0;text-align:left;">
+					{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
+				</div>
+				{{/if}}
+				{{#if hasPathways}}
+				<div style="padding:5px 0 0 0;text-align:left;">
+					{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}
+				</div>
+				{{/if}}
+				<div style="padding:5px 0 0 0;text-align:left;">
+					{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}
+				</div>
+				<div style="padding:5px 0 0 0;text-align:left;">
+					{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
+				</div>
+			</div>
 
-						<!--Toxicity-->
-						{{!-- Toxicity seems to have some html formatting so allow it to be displayed properly --}}
-						{{#if toxicity}}
-                            <dt class="medium-padding-top">Toxicity</dt>
-                            {{#if showProvenance}}
-			    <dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
-                            {{else}}
-			    <dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
-                            {{/if}}
-						{{/if}}
-					</dl>
-     			</div>	
-    		</div>
-  		</div>
+			<!--description-->
+			<div class="summary-descriptive-text large-top-spacing">
+				{{#if description}}
+				{{#if showProvenance}}
+				<p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+				{{else}}
+				<p>{{description}}</p>
+				{{/if}}
+				{{/if}}
+			</div>
+
+			<!--biotransformation-->
+			<div class="summary-descriptive-text small-top-spacing">
+				{{#if biotransformation}}
+				{{#if showProvenance}}
+				<p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+				{{else}}
+				<p>{{biotransformationItem}}</p>
+				{{/if}}
+				{{/if}}
+			</div>
+
+			<!--details-->
+			<div class="dl-horizontal" style="font-size:13px;">
+				<dl>
+					<!--Chemspider ID-->
+					{{#if csURI}}
+					<dt class="medium-padding-top">ChemSpider ID</dt>
+					<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
+					{{/if}}
+
+					<!--SMILES-->
+					{{#if smiles}}
+					<dt class="medium-padding-top">SMILES</dt>
+					{{#if showProvenance}}
+					<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+					{{else}}
+					<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+					{{/if}}
+					{{/if}}
+
+					<!--InCHL-->
+					{{#if inchi}}
+					<dt class="medium-padding-top">Standard  InChI</dt>
+					{{#if showProvenance}}
+					<dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+					{{else}}
+					<dd class="medium-padding-top">{{inchi}}</dd>
+					{{/if}}
+					{{/if}}
+
+					<!--InCHLKey-->
+					{{#if inchiKey}}
+					<dt class="medium-padding-top">Standard InChIKey</dt>
+					{{#if showProvenance}}
+					<dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+					{{else}}
+					<dd class="medium-padding-top">{{inchiKey}}</dd>
+					{{/if}}
+					{{/if}}
+
+					<!--Protein Binding-->
+					{{#if proteinBinding}}
+					<dt class="medium-padding-top">Protein Binding</dt>
+					{{#if showProvenance}}
+					<dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+					{{else}}
+					<dd class="medium-padding-top">{{proteinBinding}}</dd>
+					{{/if}}
+					{{/if}}
+
+					<!--Toxicity-->
+					{{!-- Toxicity seems to have some html formatting so allow it to be displayed properly --}}
+					{{#if toxicity}}
+					<dt class="medium-padding-top">Toxicity</dt>
+					{{#if showProvenance}}
+					<dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+					{{else}}
+					<dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
+					{{/if}}
+					{{/if}}
+				</dl>
+			</div>
+		</div>
 	</div>
 </div>

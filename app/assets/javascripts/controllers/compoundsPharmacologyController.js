@@ -6,6 +6,8 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   queryParams: ['uri'],
 
+  infoHide: false,
+
   hideInfo: false,
 
   fixSummaryBox: false,
