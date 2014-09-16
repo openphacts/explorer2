@@ -40,30 +40,20 @@
 				<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
 				<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
 				<!-- CSS class is used to style the header when it is selected-->
-				<th {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "biotransformationItem"}} {{bind-attr class="biotransSortASC:sortASC biotransSortDESC:sortDESC"}}>Bio Transformation{{#if biotransSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if biotransSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "toxicity"}} {{bind-attr class="toxicitySortASC:sortASC toxicitySortDESC:sortDESC"}}>Toxicity{{#if toxicitySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if toxicitySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "proteinBinding"}} {{bind-attr class="proteinBindingSortASC:sortASC proteinBindingSortDESC:sortDESC"}}>Protein Binding{{#if proteinBindingSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if proteinBindingSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "smiles"}} {{bind-attr class="smilesSortASC:sortASC smilesSortDESC:sortDESC"}}>SMILES{{#if smilesSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if smilesSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "chemblURI"}} {{bind-attr class="chemblURISortASC:sortASC chemblURISortDESC:sortDESC"}}>Chembl URL{{#if chemblURISortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if chemblURISortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "fullMWT"}} {{bind-attr class="fullMWTSortASC:sortASC fullMWTSortDESC:sortDESC"}}>Molecular Weight{{#if fullMWTSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if fullMWTSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "hba"}} {{bind-attr class="hbaSortASC:sortASC hbaSortDESC:sortDESC"}}>HBA{{#if hbaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "hbd"}} {{bind-attr class="hbdSortASC:sortASC hbdSortDESC:sortDESC"}}>HBD{{#if hbdSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbdSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "inchi"}} {{bind-attr class="inchiSortASC:sortASC inchiSortDESC:sortDESC"}}>Inchi{{#if inchiSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "inchiKey"}} {{bind-attr class="inchiKeySortASC:sortASC inchiKeySortDESC:sortDESC"}}>Inchi Key{{#if inchiKeySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiKeySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "logp"}} {{bind-attr class="logpSortASC:sortASC logpSortDESC:sortDESC"}}>logP{{#if logpSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if logpSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "molform"}} {{bind-attr class="molformSortASC:sortASC molformSortDESC:sortDESC"}}>Molecular formula{{#if molformSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molformSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "mwFreebase"}} {{bind-attr class="mwFreebaseSortASC:sortASC mwFreebaseSortDESC:sortDESC"}}>MW Freebase{{#if mwFreebaseSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if mwFreebaseSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "psa"}} {{bind-attr class="psaSortASC:sortASC psaSortDESC:sortDESC"}}>PSA{{#if psaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if psaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "ro5Violations"}} {{bind-attr class="ro5ViolationsSortASC:sortASC ro5ViolationsSortDESC:sortDESC"}}>RO5 Violations{{#if ro5ViolationsSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if ro5ViolationsSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				<th {{action "sortHeader" "rtb"}} {{bind-attr class="rtbSortASC:sortASC rtbSortDESC:sortDESC"}}>RTB{{#if rtbSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if rtbSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				{{#if subSearch}}
-				<th {{action "sortHeader" "relevance"}} {{bind-attr class="relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				{{/if}}
-				{{#if simSearch}}
-				<th {{action "sortHeader" "relevance"}} {{bind-attr class="relevanceSortASC:sortASC relevanceSortDESC:sortDESC"}}>Relevance{{#if relevanceSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if relevanceSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
-				{{/if}}
+				<th style="width: 10%;" {{action "sortHeader" "prefLabel"}} {{bind-attr class="prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 20%;" {{action "sortHeader" "description"}} {{bind-attr class="descriptionSortASC:sortASC descriptionSortDESC:sortDESC"}}>Description{{#if descriptionSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if descriptionSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 10%;" {{action "sortHeader" "biotransformationItem"}} {{bind-attr class="biotransSortASC:sortASC biotransSortDESC:sortDESC"}}>Bio Transformation{{#if biotransSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if biotransSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 10%;" {{action "sortHeader" "toxicity"}} {{bind-attr class="toxicitySortASC:sortASC toxicitySortDESC:sortDESC"}}>Toxicity{{#if toxicitySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if toxicitySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "proteinBinding"}} {{bind-attr class="proteinBindingSortASC:sortASC proteinBindingSortDESC:sortDESC"}}>Protein Binding{{#if proteinBindingSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if proteinBindingSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;"{{action "sortHeader" "fullMWT"}} {{bind-attr class="fullMWTSortASC:sortASC fullMWTSortDESC:sortDESC"}}>Molecular Weight{{#if fullMWTSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if fullMWTSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;"{{action "sortHeader" "hba"}} {{bind-attr class="hbaSortASC:sortASC hbaSortDESC:sortDESC"}}>HBA{{#if hbaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "hbd"}} {{bind-attr class="hbdSortASC:sortASC hbdSortDESC:sortDESC"}}>HBD{{#if hbdSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbdSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "logp"}} {{bind-attr class="logpSortASC:sortASC logpSortDESC:sortDESC"}}>logP{{#if logpSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if logpSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "molform"}} {{bind-attr class="molformSortASC:sortASC molformSortDESC:sortDESC"}}>Molecular formula{{#if molformSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molformSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "mwFreebase"}} {{bind-attr class="mwFreebaseSortASC:sortASC mwFreebaseSortDESC:sortDESC"}}>MW Freebase{{#if mwFreebaseSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if mwFreebaseSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "psa"}} {{bind-attr class="psaSortASC:sortASC psaSortDESC:sortDESC"}}>PSA{{#if psaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if psaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "ro5Violations"}} {{bind-attr class="ro5ViolationsSortASC:sortASC ro5ViolationsSortDESC:sortDESC"}}>RO5 Violations{{#if ro5ViolationsSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if ro5ViolationsSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+				<th style="width: 5%;" {{action "sortHeader" "rtb"}} {{bind-attr class="rtbSortASC:sortASC rtbSortDESC:sortDESC"}}>RTB{{#if rtbSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if rtbSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -74,13 +64,9 @@
 				<td class="cell-basictext">{{compound.biotransformationItem}}</td>
 				<td class="cell-basictext">{{compound.toxicity}}</td>
 				<td class="cell-basictext">{{compound.proteinBinding}}</td>
-				<td class="cell-basictext">{{compound.smiles}}</td>
-				<td class="cell-basictext">{{textLink compound.chemblURI}}</td>
 				<td class="cell-basictext">{{compound.fullMWT}}</td>
 				<td class="cell-basictext">{{compound.hba}}</td>
 				<td class="cell-basictext">{{compound.hbd}}</td>
-				<td class="cell-basictext">{{compound.inchi}}</td>
-				<td class="cell-basictext">{{compound.inchiKey}}</td>
 				<td class="cell-basictext">{{compound.logp}}</td>
 				<td class="cell-basictext">{{formatMolecularFormula compound.molform}}</td>
 				<td class="cell-basictext">{{compound.mwFreebase}}</td>
