@@ -26,7 +26,7 @@
 
 		<div id="compound-image" {{bind-attr class=":col-md-2 :small-padding-top :big-padding-bottom infoHide:hide:"}}>{{cs_image_src csURI}}</div>
 		<div class="small-padding-top">
-			<h3 class="inline">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</h3> ({{currentCount}} of {{totalCount}} results loaded)<a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a>
+			<h3 class="inline">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</h3> ({{currentCount}} of {{totalCount}} results loaded){{!-- <a href="#compoundPharmaFilterModalView" role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a><a href="#compoundPharmaDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default btn-sm small-margin-left" data-toggle="modal" title="Click to create in TSV formatted compound pharmacology results">Create TSV</a> --}}
 			<div {{bind-attr class=":small-padding-top :row infoHide:hide:"}}>
 				<div class="col-md-4 justify normal-font">{{description}}</div>
 				<div id="demo" class="col-md-4 out dl-horizontal" style="font-size:13px;">
