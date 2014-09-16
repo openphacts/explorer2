@@ -20,7 +20,8 @@ group :development, :test do
   gem 'quiet_assets'
   gem 'qunit-rails'
 end
-
+# sass 3.4.2 causes No such file or directory error due to some clash with bootstrap-sass 2.x
+gem 'sass', '3.4.1'
 gem 'delayed_job_active_record'
 gem 'daemons'
 #needed for some linux deploys

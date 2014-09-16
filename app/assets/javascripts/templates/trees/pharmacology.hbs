@@ -72,6 +72,12 @@
 			<li>{{ontology}}<span class="divider">/</span></li>
 			<li class="active">Pharmacology</li> --}}
 			<span class="text-info">Pharmacology for {{uri}}</span>
+			<<<<<<< HEAD
+			=======
+			<a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+			<a href="#enzymePharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted target class pharmacology results">Create TSV</a>
+			Loaded {{currentCount}} of {{totalCount}}
+			>>>>>>> develop
 
 			<div class="row pull-right">
 				<div class="span1 small-padding-top small-padding-right">Provenance</div>
@@ -83,11 +89,6 @@
 		</ul>
 	</div>
 </div>
-{{#if notEmpty}}
-<a href="#enzymePharmaFilterModalView" role="button" class="btn small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-<a href="#enzymePharmaDownload" {{action "tsvDownload" this}} role="button" class="btn small-margin-left" data-toggle="modal" title="Click to create TSV formatted target class pharmacology results">Create TSV</a>
-Loaded {{currentCount}} of {{totalCount}}
-{{/if}}
 <!-- RESULT LISTING -->
 {{#if notEmpty}}
 <div class="row" style="padding:30px">
@@ -118,12 +119,17 @@ Loaded {{currentCount}} of {{totalCount}}
 				<th style="width: 5%;" {{action "sortHeader" "activity_relation"}} {{bind-attr class="activityRelationSortASC:sortASC activityRelationSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Relation</span><span>{{#if activityRelationSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityRelationSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="width: 5%;" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Value</span><span>{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Units</span><span>{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<<<<<<< HEAD
 				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>PubMed Article</span><span>{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "molweight"}} {{bind-attr class="molweightSortASC:sortASC molweightSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Mol Weight</span><span>{{#if molweightSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if molweightSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				=======
+				{{!--<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>PubMed Article</span><span>{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "molweight"}} {{bind-attr class="molweightSortASC:sortASC molweightSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>Mol Weight</span><span>{{#if molweightSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if molweightSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th> --}}
+				>>>>>>> develop
 				{{!-- <th {{action "sortHeader" "smiles"}} {{bind-attr class="smilesSortASC:sortASC smilesSortDESC:sortDESC"}}>SMILES{{#if smilesSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if smilesSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "inchi"}} {{bind-attr class="inchiSortASC:sortASC inchiSortDESC:sortDESC"}}>InChi{{#if inchiSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchiSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
 				<th {{action "sortHeader" "inchi_key"}} {{bind-attr class="inchikeySortASC:sortASC inchikeySortDESC:sortDESC"}}>InChiKey{{#if inchikeySortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if inchikeySortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th> --}}
-				<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				{{!--			<th style="border-right: 2px solid white; padding: 7px; width: 5%;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right" title="Click to sort"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th> --}}
 			</tr>
 		</thead>
 		<tbody>
@@ -133,7 +139,7 @@ Loaded {{currentCount}} of {{totalCount}}
 				<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI}}{{/link-to}}</td>
 				<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.conceptWikiProvenance.prefLabel 'conceptwiki'}}{{/if}}</td>
 				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{target.title}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetTitle 'chembl'}}{{/if}}{{/each}}</td>
-				<td class="cell-longtext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}<li class="no-list-style">{{targetComponentLink component}}{{/each}}</li>{{/each}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetComponents 'chembl'}}{{/if}}</td>
+				<td class="cell-longtext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}<li class="no-list-style">{{targetComponentLink component}}</li>{{/each}}{{/each}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetComponents 'chembl'}}{{/if}}</td>
 				<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{targetOrganismLink target}}{{/each}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetOrganismName 'chembl'}}{{/if}}</td>
 				<td class="cell-basictext">{{assayOrganismLink enzymePharma}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayOrganismName 'chembl'}}{{/if}}</td>
 				<td class="cell-longtext">{{enzymePharma.assayDescription}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayDescription 'chembl'}}{{/if}}</td>
@@ -142,12 +148,20 @@ Loaded {{currentCount}} of {{totalCount}}
 				<td class="cell-basictext">{{enzymePharma.activityRelation}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
 				<td class="cell-basictext">{{enzymePharma.activityValue}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
 				<td class="cell-basictext">{{enzymePharma.activityUnits}}{{#if showPharmaProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
+				<<<<<<< HEAD
 				<td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
+				=======
+				{{!--			<td class="cell-basictext">{{linkablePubmedId enzymePharma.pmid}}</td>
+				>>>>>>> develop
 				<!-- All chemspider prov links have the same source so doesn't really matter which one is used -->
 				<td class="cell-basictext">{{enzymePharma.fullMWT}}{{#if showPharmaProvenance}}{{provenanceLinkout enzymePharma.chemspiderProvenance.hba 'chemspider'}}{{/if}}</td>
 				<!-- pchembl is from chembl just not exactly sure of the exact source -->
 				<td class="cell-basictext">{{enzymePharma.pChembl}}{{#if showPharmaProvenance}}{{#if enzymePharma.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
+				<<<<<<< HEAD
 
+				=======
+				--}}
+				>>>>>>> develop
 			</tr>
 			{{/each}}
 		</tbody>
