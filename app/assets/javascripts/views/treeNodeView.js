@@ -37,24 +37,7 @@ App.TreeNodeView = Ember.View.extend({
   templateName: 'treenode',
   // Ember had some issues with finding the treenode template when the branch view is dynamically added to
   // the parent collection view in the click event. Had to compile the template here instead
-  //template: Ember.Handlebars.compile('<img src="/assets/table.png" class="single-enzyme-icon"><img src="/assets/folder_go.png" class="folder-open" {{action expand target="view"}}></img><img src="/assets/folder.png" class="folder-closed" {{action expand target="view"}}></img><div class="enzymeURI">{{enzymeECNumber view.content.uri}}</div>{{enzymePharmaLink view.content.uri view.content.name}}'),
 
-//  mouseEnter: function(evt) {
-//		var name, uri;
-//		var me = this;
-//		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
-//		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-//	    console.log("Mouse Enter " + name + " " + uri);
-//	    this.set('highlighted', true);
-//  },
-//  mouseLeave: function(evt) {
-//		var name, uri;
-//		var me = this;
-//		name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
-//		uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-//	    console.log("Mouse leave " + name + " " + uri);
-//	    this.set('highlighted', false);
-//  },
 actions: {
   expand: function() {
         console.log('expand');
@@ -69,11 +52,6 @@ actions: {
 			// user wants to close the branch
 			var index = this.get('parentView').indexOf(this) + 1;
 			me.iterateOverChildren(this.get('content'), true);
-            //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
-	        //  child.set('hidden', true);
-	        //  me.iterateOverChildren(child, true);
-            //});
-			//this.get('parentView').removeAt(index);
 			this.set('opened', false);
 			this.get('content').set('opened', false);
 			this.set('fetchingData', false);
@@ -81,11 +59,6 @@ actions: {
 			// user wants to open the branch and we have already created the view before
 			var index = this.get('parentView').indexOf(this) + 1;
 			me.iterateOverChildren(this.get('content'), false);
-            //$.each(controller.get('content')[contentIndex].get('children').get('content'), function(index, child) {
-	        //  child.set('hidden', false);
-	        //  me.iterateOverChildren(child, false);
-            //});
-			//this.get('parentView').insertAt(index, this.get('subBranch'));
 			this.set('fetchingData', false);
 			this.set('opened', true);
 			this.get('content').set('opened', true);
@@ -98,14 +71,6 @@ actions: {
 			uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
 		    console.log("Clicked on " + name + " " + uri);
 		    if (this.get('content').get('hasChildren')) {
-			    // only fetch for uris which have children
-                //var treeBranchView = App.TreeBranchView.create();
-			    //var treeBranchView = me.get('parentView').createChildView(App.TreeBranchView);
-                //controller.get('childTreeNodes').push(treeBranchView);
-				//var index = me.get('parentView').indexOf(me) + 1;
-                //me.get('parentView').pushObject(treeBranchView);
-                //me.get('parentView').insertAt(index, treeBranchView);
-			    //treeBranchView.set('content', []);
                 var contentIndex = controller.get('content').indexOf(this.get('content'));
 			    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
 		        var callback = function(success, status, response) {
@@ -133,17 +98,6 @@ me.set('opened', true);
 			      }
                               enzyme.set('level', parent.get('level') + 1);
                               allMembers.push(enzyme);
-                              // now figure out if this node has children
-		          //            var innerCallback = function(success, status, response) {
-			  //                  if (success && response) {
-			  //                    var members = searcher.parseChildNodes(response);
-                          //        //does the node have children
-                          //        enzyme.set('hasChildren', members.children.length > 0 ? true : false);
-			  //	                } else {
-                          //        enzyme.set('hasChildren', false);
-                          //      }
-			  //                }
-                          //  searcher.getChildNodes(member.uri, innerCallback);
                             }
 				        });
                         //then sort them
@@ -165,7 +119,6 @@ me.set('opened', true);
 				      me.set('fetchingData', false);
                                       me.get('content').set('hasChildren', false);
 				      me.get('hasChildrenList')[uri] = false;
-				      App.FlashQueue.pushFlash('error', 'There are no children for this node. Please select a different one.'); 
 				    }
 			}
 			    searcher.getChildNodes(uri, callback);
