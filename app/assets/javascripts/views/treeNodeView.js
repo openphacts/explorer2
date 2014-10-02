@@ -40,7 +40,6 @@ App.TreeNodeView = Ember.View.extend({
 
     actions: {
         expand: function() {
-            console.log('expand');
             var controller = this.get('controller');
             var contentIndex = controller.get('content').indexOf(this.get('content'));
             var parent = controller.get('content')[contentIndex];
@@ -69,7 +68,6 @@ App.TreeNodeView = Ember.View.extend({
                 var parent = this.get('content');
                 name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
                 uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
-                console.log("Clicked on " + name + " " + uri);
                 if (this.get('content').get('hasChildren')) {
                     var contentIndex = controller.get('content').indexOf(this.get('content'));
                     var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
@@ -115,7 +113,6 @@ App.TreeNodeView = Ember.View.extend({
                             });
                         } else {
                             // api sent false (or it broke!)    
-                            console.log(uri + ' has no children');
                             me.set('fetchingData', false);
                             me.get('content').set('hasChildren', false);
                             me.get('hasChildrenList')[uri] = false;
@@ -128,12 +125,9 @@ App.TreeNodeView = Ember.View.extend({
     },
     iterateOverChildren: function(child, hidden) {
         var me = this;
-        console.log('iterating over ' + child.id);
         $.each(child.get('children').get('content'), function(index, innerChild) {
-            console.log('parent is opened ' + innerChild.get('parent').get('opened'));
             if (innerChild.get('parent').get('opened') == hidden) {
                 innerChild.set('hidden', hidden);
-                console.log('inner child is ' + innerChild.id + ' ' + innerChild.get('hidden'));
                 me.iterateOverChildren(innerChild, hidden);
             }
         });
