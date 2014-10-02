@@ -27,6 +27,8 @@ gem 'sass', '3.4.1'
 gem 'delayed_job_active_record'
 gem 'daemons'
 #needed for some linux deploys
-gem 'therubyracer', '~>0.12.0', :platforms => :ruby
+#gem 'therubyracer', '~>0.12.0', :platforms => :ruby
+#bundler/therubyracer causes libv8 build issues on osx mavericks so try execjs instead 
+gem 'execjs'
 gem 'uuidtools'
 gem 'font-awesome-rails', '4.2.0.0'
