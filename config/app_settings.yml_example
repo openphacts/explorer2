@@ -3,6 +3,7 @@ defaults: &defaults
 
   api:
     url : "where.the.api.is.located" #eg https://beta.openphacts.org remember to include the api version if available
+    ebi_smiles_to_ctab: "https://wwwdev.ebi.ac.uk/chembl/api/utils/smiles2ctab" # used to convert smiles to mol for ketcher
 
   keys:
     app_id: "blahblahblah" #app id from https://dev.openphacts.org
