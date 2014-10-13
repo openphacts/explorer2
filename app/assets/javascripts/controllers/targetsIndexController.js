@@ -8,6 +8,8 @@ App.TargetsIndexController = Ember.ObjectController.extend({
 
     molViewer: null,
 
+    threeDeeTarget: null,
+
     showMolecule: false,
 
     pdbStructure: null,
@@ -157,7 +159,7 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                     };
                     me.get('molViewer').loadMolecule();
 		    me.set('showMolecule', true);
-                    //me.get('molViewer').show();
+                    me.get('threeDeeTarget').modal('show');
                 });
             } else {
                 $("#glmol01_src").val(me.get('pdbStructure'));

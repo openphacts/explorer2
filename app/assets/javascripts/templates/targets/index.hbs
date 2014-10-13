@@ -1,180 +1,187 @@
 <style>
-	dt { 
+	dt {
 		padding: 20px 0 0 0;
 	}
-	dd { 
-		padding: 20px 0 0 0; 
-		}
+	dd {
+		padding: 20px 0 0 0;
+	}
 </style>
+<!-- Modal -->
+<div id="threeDeeTargetModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel"></h3>
+	</div>
+	<div class="modal-body" style="overflow-y: visible;">
+		<div id="glmol01" {{bind-attr class=":gl-molecule showMolecule::hidden"}}></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	</div>
+</div>
+
 <div>
-	<div id="glmol01" {{bind-attr class=":gl-molecule showMolecule::hidden"}}></div>
 	<textarea id="glmol01_src" class="hidden"></textarea>
-	<button {{action 'drawProtein'}} {{bind-attr class="showProvenance::active :btn"}}>Draw 3D</button>
 	<!-- breadcrumb	-->
 	<ul class="breadcrumb">
-  		<li><a href="/">Home</a></li>
+		<li><a href="/">Home</a></li>
 		<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
-  		<li class="active">Target Information</li>
+		<li class="active">Target Information</li>
 
-		<div class="row pull-right"> 
+		<div class="row pull-right">
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
-  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
 				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
 				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
-  			</div>
+			</div>
 		</div>
 	</ul>
-	
+
 	<!-- main -->
 	<div class="container">
-	<div class="container-fluid large-top-spacing">
-  		<div class="row-fluid">
-  			
-  			<!--Sidebar content-->
-    		<div class="span3">
-      			<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}</div>
-      			
-      			<!--box properties-->
-      			<div id="boxes" class="small-top-spacing">
-      				
-					{{#if molecularWeight}}
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Molecular Weight</small></p>
-  							<p class="lead">{{molecularWeight}}</p>
-  						</div>
-      				</div>
-      				{{/if}}
-      				
-					{{#if numberOfResidues}}
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small># of Residues</small></p>
-  							<p class="lead">{{numberOfResidues}}</p>
-  						</div>
-      				</div>
-					{{/if}}
-					
-					{{#if theoreticalPi}}
-      				<div class="summary-box">
-      					<div class="inner-property-content">
-  							<p><small>Theoretical Pi</small></p>
-  							<p class="lead">{{theoreticalPi}}</p>
-  						</div>
-      				</div>
-					{{/if}}
+		<div class="container-fluid large-top-spacing">
+			<div class="row-fluid">
 
-      			</div>
-    		</div>
-    		
-    		<!--Body content-->
-    		<div class="span9" style="padding:30px 0 0 0;">
-     			
-				<!--title and formula-->
-                                <div>
-                                        <div style="padding:20px 0 0 0">
-                                                {{#if showProvenance}}
-                                                        <h1>{{prefLabel}} {{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}</h1>
-                                                {{else}}
-                                                        <h1>{{prefLabel}}</h1>
-                                                {{/if}}
-                                        </div>
-                                        {{#if alternativeName}}
-                                        <div class="summary-descriptive-text large-top-spacing">
-                                                {{#if showProvenance}}
-                                                          <em>{{alternativeName}} {{provenanceLinkout uniprotProvenance.alternativeName uniprotProvenance.source}}</em> 
-                                                  {{else}}
-                                                          <em>{{alternativeName}}</em>
-                                                  {{/if}}
-                                        </div>
-                                        {{/if}}
-                                        <div style="padding:30px 0 0 0;text-align:left;">
-                                                {{#link-to 'targets.pharmacology' (query-params uri=URI)}}Pharmacology Data{{/link-to}}
-                                        </div>
-                                        <div style="padding:5px 0 0 0;text-align:left;">
-                         {{#link-to 'targets.pathways' (query-params uri=URI)}}Pathways{{/link-to}}
-                                        </div>
-                                </div>
-				
-				<!--biotransformation-->
-				
-				
-                                <!--details-->
-                                <div class="dl-horizontal" style="font-size:13px;">
-                                        <dl>
-                                                {{#if organism}}
-                                                        <dt>Organism</dt>
-                                                        {{#if showProvenance}}
-                                                                <dd>{{linkableOrganism organism}} {{provenanceLinkout uniprotProvenance.organism uniprotProvenance.source}}</dd> 
-                                                        {{else}}
-                                                                  <dd>{{linkableOrganism organism}}</dd> 
-                                                        {{/if}}
-                                                {{/if}}
-                                                  
-                                                  {{#if existence}}
-                                                          <dt>Existence</dt>
-                                                          {{#if showProvenance}}
-                                                                <dd>{{linkableOrganism existence}} {{provenanceLinkout uniprotProvenance.existence uniprotProvenance.source}}</dd> 
-                                                        {{else}}
-                                                                  <dd>{{linkableOrganism existence}}</dd> 
-                                                        {{/if}}
-                                                  {{/if}}
+				<!--Sidebar content-->
+				<div class="span3">
+					<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}<button {{action 'drawProtein'}} {{bind-attr class="showProvenance::active :btn"}}>Draw 3D</button></div>
+					<!--box properties-->
+					<div id="boxes" class="small-top-spacing">
 
-                                                  {{#if functionAnnotation}}
-                                                          <dt>Specific Function</dt>
-                                                          {{#if showProvenance}}
-                                                                <dd>{{functionAnnotation}} {{provenanceLinkout uniprotProvenance.functionAnnotation uniprotProvenance.source}}</dd> 
-                                                        {{else}}
-                                                                  <dd>{{functionAnnotation}}</dd> 
-                                                        {{/if}}
-                                                {{/if}}
-                                                  
-                                                  {{#if cellularLocation}} 
-                                                          <dt>Cellular Location</dt>
-                                                        {{#if showProvenance}}
-                                                                  <dd>{{cellularLocation}}  {{provenanceLinkout drugbankProvenance.cellularLocation drugbankProvenance.source}}</dd>                                                                
-                                                        {{else}}
-                                                                  <dd>{{cellularLocation}}</dd>                                                        
-                                                        {{/if}}
-                                                  {{/if}}
-                                                   
-                                                  {{#if keywords}}
-                                                          <dt>Keywords</dt>
-                                                          {{#if showProvenance}}
-                                                                  <dd>{{keywords}}  {{provenanceLinkout chemblProvenance.keywords chemblProvenance.source}}</dd>                                                                
-                                                        {{else}}
-                                                                  <dd>{{keywords}}</dd>                                                        
-                                                        {{/if}}
-                                                  {{/if}}
-                                                  
-                                                  {{#if seeAlso}}
-                                                          <dt>PDB</dt>
-                                                          {{#if showProvenance}}
-                                                                <dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each seeAlso}} {{pdbLink this}} {{/each}}</dd> 
-                                                        {{else}}
-                                                                  <dd>{{#each seeAlso}} {{pdbLink this}} {{/each}}</dd> 
-                                                        {{/if}}
-                                                  {{/if}}        
-                                                  
-                                                  {{#if sequence}}
-                                                          <dt>Sequence</dt>
-                                                          {{#if showProvenance}}
-                                                                <dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}} {{provenanceLinkout uniprotProvenance.sequence uniprotProvenance.source}}</div></dd>
-                                                        {{else}}
-                                                                <dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}}</div></dd>
-                                                        {{/if}}
-                                                  {{/if}}        
-                                                  
-                                        </dl>
-                             </div>
-     			
-     			
-    		</div>
-  		</div>
+						{{#if molecularWeight}}
+						<div class="summary-box">
+							<div class="inner-property-content">
+								<p><small>Molecular Weight</small></p>
+								<p class="lead">{{molecularWeight}}</p>
+							</div>
+						</div>
+						{{/if}}
+
+						{{#if numberOfResidues}}
+						<div class="summary-box">
+							<div class="inner-property-content">
+								<p><small># of Residues</small></p>
+								<p class="lead">{{numberOfResidues}}</p>
+							</div>
+						</div>
+						{{/if}}
+
+						{{#if theoreticalPi}}
+						<div class="summary-box">
+							<div class="inner-property-content">
+								<p><small>Theoretical Pi</small></p>
+								<p class="lead">{{theoreticalPi}}</p>
+							</div>
+						</div>
+						{{/if}}
+
+					</div>
+				</div>
+
+				<!--Body content-->
+				<div class="span9" style="padding:30px 0 0 0;">
+
+					<!--title and formula-->
+					<div>
+						<div style="padding:20px 0 0 0">
+							{{#if showProvenance}}
+							<h1>{{prefLabel}} {{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}</h1>
+							{{else}}
+							<h1>{{prefLabel}}</h1>
+							{{/if}}
+						</div>
+						{{#if alternativeName}}
+						<div class="summary-descriptive-text large-top-spacing">
+							{{#if showProvenance}}
+							<em>{{alternativeName}} {{provenanceLinkout uniprotProvenance.alternativeName uniprotProvenance.source}}</em>
+							{{else}}
+							<em>{{alternativeName}}</em>
+							{{/if}}
+						</div>
+						{{/if}}
+						<div style="padding:30px 0 0 0;text-align:left;">
+							{{#link-to 'targets.pharmacology' (query-params uri=URI)}}Pharmacology Data{{/link-to}}
+						</div>
+						<div style="padding:5px 0 0 0;text-align:left;">
+							{{#link-to 'targets.pathways' (query-params uri=URI)}}Pathways{{/link-to}}
+						</div>
+					</div>
+
+					<!--biotransformation-->
+
+
+					<!--details-->
+					<div class="dl-horizontal" style="font-size:13px;">
+						<dl>
+							{{#if organism}}
+							<dt>Organism</dt>
+							{{#if showProvenance}}
+							<dd>{{linkableOrganism organism}} {{provenanceLinkout uniprotProvenance.organism uniprotProvenance.source}}</dd>
+							{{else}}
+							<dd>{{linkableOrganism organism}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if existence}}
+							<dt>Existence</dt>
+							{{#if showProvenance}}
+							<dd>{{linkableOrganism existence}} {{provenanceLinkout uniprotProvenance.existence uniprotProvenance.source}}</dd>
+							{{else}}
+							<dd>{{linkableOrganism existence}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if functionAnnotation}}
+							<dt>Specific Function</dt>
+							{{#if showProvenance}}
+							<dd>{{functionAnnotation}} {{provenanceLinkout uniprotProvenance.functionAnnotation uniprotProvenance.source}}</dd>
+							{{else}}
+							<dd>{{functionAnnotation}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if cellularLocation}}
+							<dt>Cellular Location</dt>
+							{{#if showProvenance}}
+							<dd>{{cellularLocation}}  {{provenanceLinkout drugbankProvenance.cellularLocation drugbankProvenance.source}}</dd>
+							{{else}}
+							<dd>{{cellularLocation}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if keywords}}
+							<dt>Keywords</dt>
+							{{#if showProvenance}}
+							<dd>{{keywords}}  {{provenanceLinkout chemblProvenance.keywords chemblProvenance.source}}</dd>
+							{{else}}
+							<dd>{{keywords}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if seeAlso}}
+							<dt>PDB</dt>
+							{{#if showProvenance}}
+							<dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+							{{else}}
+							<dd>{{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+							{{/if}}
+							{{/if}}
+
+							{{#if sequence}}
+							<dt>Sequence</dt>
+							{{#if showProvenance}}
+							<dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}} {{provenanceLinkout uniprotProvenance.sequence uniprotProvenance.source}}</div></dd>
+							{{else}}
+							<dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}}</div></dd>
+							{{/if}}
+							{{/if}}
+
+						</dl>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
 	</div>
-	</div>
-	
-
-	
-	
 </div>
