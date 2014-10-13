@@ -8,6 +8,8 @@ App.TargetsIndexController = Ember.ObjectController.extend({
 
     molViewer: null,
 
+    showMolecule: false,
+
     pdbStructure: null,
 
     showProvenance: false,
@@ -29,34 +31,9 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                 $.get(uri, function(ret) {
                     me.set('pdbStructure', ret);
                     $("#glmol01_src").val(ret);
-                    me.get('molViewer').defineRepresentation = function() {
-                        //var all = this.getAllAtoms();
-                        //var hetatm = this.removeSolvents(this.getHetatms(all));
-                        //this.colorByAtom(all, {});
-                        //this.colorByChain(all);
-                        //var asu = new THREE.Object3D();
-
-                        //this.drawBondsAsStick(asu, hetatm, this.cylinderRadius, this.cylinderRadius);
-                        //this.drawBondsAsStick(asu, this.getResiduesById(this.getSidechains(this.getChain(all, ['A'])), [58, 87]), this.cylinderRadius, this.cylinderRadius);
-                        //this.drawBondsAsStick(asu, this.getResiduesById(this.getSidechains(this.getChain(all, ['B'])), [63, 92]), this.cylinderRadius, this.cylinderRadius);
-                        //this.drawCartoon(asu, all, this.curveWidth, this.thickness);
-
-                        //this.drawSymmetryMates2(this.modelGroup, asu, this.protein.biomtMatrices);
-                        //this.modelGroup.add(asu);
-                        var asu = new THREE.Object3D();
-                        var all = this.getAllAtoms();
-                        //if ($(idHeader + 'biomt').attr('checked') && this.protein.biomtChains != "") all = this.getChain(all, this.protein.biomtChains);
-                        var allHet = this.getHetatms(all);
-                        var hetatm = this.removeSolvents(allHet);
-                        this.drawCartoon(asu, all, false); //false is doNotSmoothen
-                        this.drawCartoonNucleicAcid(asu, all);
-                        this.drawNucleicAcidStick(this.modelGroup, all);
-                        var target = this.modelGroup;
-                        this.drawAtomsAsSphere(target, hetatm, this.sphereRadius);
-                        this.camera = this.perspectiveCamera;
-                        this.modelGroup.add(asu);
-                    };
-                    me.get('molViewer').defineRepresentation = function() {
+                    // Draw the protein using the following params. Lots commented out but in the original
+		    // glmol examples. Maybe these can be user configured.
+		    me.get('molViewer').defineRepresentation = function() {
                         //var idHeader = "#" + this.id + '_';
 
                         var time = new Date();
@@ -179,6 +156,7 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         this.modelGroup.add(asu);
                     };
                     me.get('molViewer').loadMolecule();
+		    me.set('showMolecule', true);
                     //me.get('molViewer').show();
                 });
             } else {
