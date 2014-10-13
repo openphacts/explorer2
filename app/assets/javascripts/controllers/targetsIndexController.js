@@ -34,8 +34,8 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                     me.set('pdbStructure', ret);
                     $("#glmol01_src").val(ret);
                     // Draw the protein using the following params. Lots commented out but in the original
-		    // glmol examples. Maybe these can be user configured.
-		    me.get('molViewer').defineRepresentation = function() {
+                    // glmol examples. Maybe these can be user configured.
+                    me.get('molViewer').defineRepresentation = function() {
                         //var idHeader = "#" + this.id + '_';
 
                         var time = new Date();
@@ -48,7 +48,7 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         time = new Date();
 
                         this.colorByAtom(all, {});
-                        var colorMode = "chainbow";//$(idHeader + 'color').val();
+                        var colorMode = "chainbow"; //$(idHeader + 'color').val();
                         if (colorMode == 'ss') {
                             this.colorByStructure(all, 0xcc00cc, 0x00cccc);
                         } else if (colorMode == 'chain') {
@@ -64,30 +64,30 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         time = new Date();
 
                         var asu = new THREE.Object3D();
-                        var mainchainMode = "ribbon";//$(idHeader + 'mainchain').val();
-                        var doNotSmoothen = false;//($(idHeader + 'doNotSmoothen').attr('checked') == 'checked');
+                        var mainchainMode = "ribbon"; //$(idHeader + 'mainchain').val();
+                        var doNotSmoothen = false; //($(idHeader + 'doNotSmoothen').attr('checked') == 'checked');
                         //if ($(idHeader + 'showMainchain').attr('checked')) {
-                            if (mainchainMode == 'ribbon') {
-                                this.drawCartoon(asu, all, doNotSmoothen);
-                                this.drawCartoonNucleicAcid(asu, all);
-                            } else if (mainchainMode == 'thickRibbon') {
-                                this.drawCartoon(asu, all, doNotSmoothen, this.thickness);
-                                this.drawCartoonNucleicAcid(asu, all, null, this.thickness);
-                            } else if (mainchainMode == 'strand') {
-                                this.drawStrand(asu, all, null, null, null, null, null, doNotSmoothen);
-                                this.drawStrandNucleicAcid(asu, all);
-                            } else if (mainchainMode == 'chain') {
-                                this.drawMainchainCurve(asu, all, this.curveWidth, 'CA', 1);
-                                this.drawMainchainCurve(asu, all, this.curveWidth, 'O3\'', 1);
-                            } else if (mainchainMode == 'cylinderHelix') {
-                                this.drawHelixAsCylinder(asu, all, 1.6);
-                                this.drawCartoonNucleicAcid(asu, all);
-                            } else if (mainchainMode == 'tube') {
-                                this.drawMainchainTube(asu, all, 'CA');
-                                this.drawMainchainTube(asu, all, 'O3\''); // FIXME: 5' end problem!
-                            } else if (mainchainMode == 'bonds') {
-                                this.drawBondsAsLine(asu, all, this.lineWidth);
-                            }
+                        if (mainchainMode == 'ribbon') {
+                            this.drawCartoon(asu, all, doNotSmoothen);
+                            this.drawCartoonNucleicAcid(asu, all);
+                        } else if (mainchainMode == 'thickRibbon') {
+                            this.drawCartoon(asu, all, doNotSmoothen, this.thickness);
+                            this.drawCartoonNucleicAcid(asu, all, null, this.thickness);
+                        } else if (mainchainMode == 'strand') {
+                            this.drawStrand(asu, all, null, null, null, null, null, doNotSmoothen);
+                            this.drawStrandNucleicAcid(asu, all);
+                        } else if (mainchainMode == 'chain') {
+                            this.drawMainchainCurve(asu, all, this.curveWidth, 'CA', 1);
+                            this.drawMainchainCurve(asu, all, this.curveWidth, 'O3\'', 1);
+                        } else if (mainchainMode == 'cylinderHelix') {
+                            this.drawHelixAsCylinder(asu, all, 1.6);
+                            this.drawCartoonNucleicAcid(asu, all);
+                        } else if (mainchainMode == 'tube') {
+                            this.drawMainchainTube(asu, all, 'CA');
+                            this.drawMainchainTube(asu, all, 'O3\''); // FIXME: 5' end problem!
+                        } else if (mainchainMode == 'bonds') {
+                            this.drawBondsAsLine(asu, all, this.lineWidth);
+                        }
                         //}
 
                         //if ($(idHeader + 'line').attr('checked')) {
@@ -97,14 +97,14 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         time = new Date();
 
                         //if ($(idHeader + 'showBases').attr('checked')) {
-                            var hetatmMode = "nuclLine";//$(idHeader + 'base').val();
-                            if (hetatmMode == 'nuclStick') {
-                                this.drawNucleicAcidStick(this.modelGroup, all);
-                            } else if (hetatmMode == 'nuclLine') {
-                                this.drawNucleicAcidLine(this.modelGroup, all);
-                            } else if (hetatmMode == 'nuclPolygon') {
-                                this.drawNucleicAcidLadder(this.modelGroup, all);
-                            }
+                        var hetatmMode = "nuclLine"; //$(idHeader + 'base').val();
+                        if (hetatmMode == 'nuclStick') {
+                            this.drawNucleicAcidStick(this.modelGroup, all);
+                        } else if (hetatmMode == 'nuclLine') {
+                            this.drawNucleicAcidLine(this.modelGroup, all);
+                        } else if (hetatmMode == 'nuclPolygon') {
+                            this.drawNucleicAcidLadder(this.modelGroup, all);
+                        }
                         //}
 
                         var target = this.modelGroup;
@@ -120,26 +120,26 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         //}
 
                         //if ($(idHeader + 'showHetatms').attr('checked')) {
-                            var hetatmMode = "sphere";//$(idHeader + 'hetatm').val();
-                            if (hetatmMode == 'stick') {
-                                this.drawBondsAsStick(target, hetatm, this.cylinderRadius, this.cylinderRadius, true);
-                            } else if (hetatmMode == 'sphere') {
-                                this.drawAtomsAsSphere(target, hetatm, this.sphereRadius);
-                            } else if (hetatmMode == 'line') {
-                                this.drawBondsAsLine(target, hetatm, this.curveWidth);
-                            } else if (hetatmMode == 'icosahedron') {
-                                this.drawAtomsAsIcosahedron(target, hetatm, this.sphereRadius);
-                            } else if (hetatmMode == 'ballAndStick') {
-                                this.drawBondsAsStick(target, hetatm, this.cylinderRadius / 2.0, this.cylinderRadius, true, false, 0.3);
-                            } else if (hetatmMode == 'ballAndStick2') {
-                                this.drawBondsAsStick(target, hetatm, this.cylinderRadius / 2.0, this.cylinderRadius, true, true, 0.3);
-                            }
+                        var hetatmMode = "sphere"; //$(idHeader + 'hetatm').val();
+                        if (hetatmMode == 'stick') {
+                            this.drawBondsAsStick(target, hetatm, this.cylinderRadius, this.cylinderRadius, true);
+                        } else if (hetatmMode == 'sphere') {
+                            this.drawAtomsAsSphere(target, hetatm, this.sphereRadius);
+                        } else if (hetatmMode == 'line') {
+                            this.drawBondsAsLine(target, hetatm, this.curveWidth);
+                        } else if (hetatmMode == 'icosahedron') {
+                            this.drawAtomsAsIcosahedron(target, hetatm, this.sphereRadius);
+                        } else if (hetatmMode == 'ballAndStick') {
+                            this.drawBondsAsStick(target, hetatm, this.cylinderRadius / 2.0, this.cylinderRadius, true, false, 0.3);
+                        } else if (hetatmMode == 'ballAndStick2') {
+                            this.drawBondsAsStick(target, hetatm, this.cylinderRadius / 2.0, this.cylinderRadius, true, true, 0.3);
+                        }
 
                         //}
                         console.log("hetatms " + (+new Date() - time));
                         time = new Date();
 
-                        var projectionMode = "perspective";//$(idHeader + 'projection').val();
+                        var projectionMode = "perspective"; //$(idHeader + 'projection').val();
                         if (projectionMode == 'perspective') this.camera = this.perspectiveCamera;
                         else if (projectionMode == 'orthoscopic') this.camera = this.orthoscopicCamera;
 
@@ -158,13 +158,12 @@ App.TargetsIndexController = Ember.ObjectController.extend({
                         this.modelGroup.add(asu);
                     };
                     me.get('molViewer').loadMolecule();
-		    me.set('showMolecule', true);
+                    me.set('showMolecule', true);
                     me.get('threeDeeTarget').modal('show');
                 });
             } else {
-                $("#glmol01_src").val(me.get('pdbStructure'));
-                me.get('molViewer').loadMolecule();
-
+                //already loaded, just show it
+                me.get('threeDeeTarget').modal('show');
             }
         }
     }
