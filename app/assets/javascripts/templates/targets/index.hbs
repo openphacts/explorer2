@@ -12,7 +12,7 @@
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 id="myModalLabel">3D view of {{prefLabel}}</h3>
 	</div>
-	<div class="modal-body" style="overflow-y: visible;">
+	<div class="modal-body" class="medium-margin-bottom">
 		<div id="glmol01" {{bind-attr class=":gl-molecule showMolecule::hidden"}}></div>
 	</div>
 	<div class="modal-footer">
@@ -44,7 +44,7 @@
 
 				<!--Sidebar content-->
 				<div class="span3">
-					<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-small"}} title="Visualize this target in 3D">3D</button></div>
+					<div class="big-padding-left">{{target_image_src seeAlso}}{{#if hasPDB}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-small"}} title="Visualize this target in 3D">3D</button>{{/if}}</div>
 					<!--box properties-->
 					<div id="boxes" class="small-top-spacing">
 
