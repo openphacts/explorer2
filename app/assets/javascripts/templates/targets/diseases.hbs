@@ -1,24 +1,49 @@
-{{#if notEmpty}}
-<table>
-	<thead>
-		<tr><td>Name</td><td>Disease classes</td></tr>
-	</thead>
-	<tbody>
-		{{#each diseases}}
-		<tr>
-			<td>{{name}}</td>
-			<td>
-				{{#if hasDiseaseClasses}}
-				<ul class="unstyled">
-					{{#each diseaseClass}}
-					<li>{{diseaseClassLink this}}</li>
-					{{/each}}
-				</ul>
-				{{/if}}
-			</td>
-		</tr>
-		{{/each}}
+<!-- breadcrumb	-->
+<ul class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li><span class="divider">/</span>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}<span class="divider">/</span></li>
+	<li class="active">Diseases</li>
 
-	</tbody>
-</table>
-{{/if}}
+	{{!-- <div class="row pull-right" >
+		<div class="span1 small-padding-top small-padding-right">Provenance </div>
+		<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+			<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+			<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+		</div>
+	</div> --}}
+
+</ul>
+
+
+<!-- main -->
+<div class="container">
+	<div class="container-fluid large-top-spacing">
+		<div class="row-fluid">
+
+			{{#if notEmpty}}
+			<table class="mytable">
+				<thead class="headingstyle">
+					<tr><th>Name</th><th>Disease classes</th></tr>
+				</thead>
+				<tbody>
+					{{#each diseases}}
+					<tr class="record-deco">
+						<td class="cell-basictext small-padding-left small-padding-right">{{#link-to 'diseases.index' (query-params uri=URI)}}{{name}}{{/link-to}}</td>
+						<td class="cell-basictext small-padding-left small-padding-right">
+							{{#if hasDiseaseClasses}}
+							<ul class="unstyled">
+								{{#each diseaseClass}}
+								<li>{{diseaseClassLink this}}</li>
+								{{/each}}
+							</ul>
+							{{/if}}
+						</td>
+					</tr>
+					{{/each}}
+
+				</tbody>
+			</table>
+			{{/if}}
+		</div>
+	</div>
+</div>
