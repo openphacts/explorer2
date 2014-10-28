@@ -91,7 +91,8 @@
                                         </div>
                                         <div style="padding:5px 0 0 0;text-align:left;">
                          {{#link-to 'targets.pathways' (query-params uri=URI)}}Pathways{{/link-to}}
-                                        </div>
+		 </div>
+		 <div class="small-padding-left; left">{{#if hasDiseases}}Diseases: {{diseaseRecords}}{{/if}}</div>
                                 </div>
 				
 				<!--biotransformation-->

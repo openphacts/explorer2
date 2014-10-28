@@ -4,7 +4,17 @@ App.TargetsIndexRoute = Ember.Route.extend({
 	
   setupController: function(controller, model, params) {
     console.log('target index controller');
-    controller.set('model', model);	
+    controller.set('model', model);
+    var target = model;
+   var diseaseSearcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
+
+   var diseaseCountCallback=function(success, status, response){
+       if (success && response) {
+         var count = diseaseSearcher.parseDiseasesByTargetCountResponse(response);
+         Ember.run(function(){target.set('diseaseRecords', count)});
+       }
+   };
+   diseaseSearcher.diseasesByTargetCount(target.get('URI'), null, diseaseCountCallback);
   },
 
   model: function(params) {

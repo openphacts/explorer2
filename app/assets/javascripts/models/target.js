@@ -27,6 +27,18 @@ App.Target = App.SearchResult.extend({
     uniprotProvenance: DS.attr(),
     conceptwikiProvenance: DS.attr(),
 
+    diseases: DS.hasMany('disease', { async: true }),
+    diseaseRecords: DS.attr('number'),
+
+    diseaseInfoAvailable: function() {
+        return (this.get('diseaseRecords') !== null && this.get('diseaseRecords') >= 0);
+    }.property('diseaseRecords'),
+
+    hasDiseases: function() {
+        return this.get('diseaseRecords') > 0;
+    }.property('diseaseRecords'),
+
+
     pathways: DS.hasMany('pathway', { async: true }),
     pathwayRecords: DS.attr('number'),
 
