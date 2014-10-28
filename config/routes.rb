@@ -17,6 +17,7 @@ Explorer2::Application.routes.draw do
   match 'targets' => 'home#index'
   match 'targets/pharmacology' => 'home#index'
   match 'targets/pathways' => 'home#index'
+  match 'targets/diseases' => 'home#index'
 
   match 'trees' => 'home#index'
   match 'trees/pharmacology' => 'home#index'

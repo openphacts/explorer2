@@ -26,6 +26,7 @@ App.Router.map(function() {
     this.resource('targets', { path: '/targets' }, function() {
         this.route('pharmacology', { path: '/pharmacology' }, function(){});
         this.route('pathways', { path: '/pathways' }, function(){});
+        this.route('diseases', { path: '/diseases' }, function(){});
     }); 
     this.resource('trees', { path: '/trees' }, function() {
         this.route('pharmacology', { path: '/pharmacology' }, function(){});
