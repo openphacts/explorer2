@@ -1,7 +1,7 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb">
     <li><a href="/">Home</a></li>
-	<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
+    <li><span class="divider">/</span>{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}<span class="divider">/</span></li>
 	<li class="active">Compound Information</li>
 	<div class="row pull-right" > 
 		<div class="span1 small-padding-top small-padding-right">Provenance </div>
@@ -117,9 +117,9 @@
 				<div>	
 					<div style="padding:20px 0 0 0">
 						{{#if showProvenance}}
-						<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
+						<h1>{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</muted>{{/if}}</h1>
 						{{else}}
-						<h1>{{prefLabel}}</h1>
+						<h1>{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}</h1>
 						{{/if}}
 					</div>
 					<div class="lead pull-right">
