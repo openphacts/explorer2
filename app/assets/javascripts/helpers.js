@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('diseaseClassLink', function(link) {
+    var aLink = '<a href="' + link.URI +'" target="_blank">' + link.name +'</a>'
+    return new Handlebars.SafeString(aLink);
+});
+
 Ember.Handlebars.registerBoundHelper('targetComponentLink', function(component) {
   if (component.label != null && component.uri != null) {
 	var aLink = '<a href="' + component.uri +'" target="_blank">' + component.label +'</a>'

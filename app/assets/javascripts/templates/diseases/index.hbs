@@ -1,3 +1,41 @@
-Disease
-URI: {{URI}}
-Name: {{name}}
+<style>
+	dt {
+		padding: 20px 0 0 0;
+	}
+	dd {
+		padding: 20px 0 0 0; }
+</style>
+
+<!-- breadcrumb	-->
+<ul class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li><span class="divider">/</span>{{name}}<span class="divider">/</span></li>
+	<li class="active">Disease Information</li>
+
+	{{!-- <div class="row pull-right" >
+		<div class="span1 small-padding-top small-padding-right">Provenance </div>
+		<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+			<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
+			<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
+		</div>
+	</div> --}}
+
+</ul>
+
+
+<!-- main -->
+<div class="container">
+	<div class="container-fluid large-top-spacing">
+		<div class="row-fluid">
+			<h1>{{name}}</h1>
+			{{#if hasDiseaseClasses}}
+			<h3>Disease Classes</h3>
+			<ul class="unstyled">
+				{{#each diseaseClass}}
+				<li>{{diseaseClassLink this}}</li>
+				{{/each}}
+			</ul>
+			{{/if}}
+		</div>
+	</div>
+</div>
