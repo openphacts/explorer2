@@ -24,6 +24,9 @@ Explorer2::Application.routes.draw do
   match 'pathways' => 'home#index'
   match 'pathways/compounds' => 'home#index'
 
+  match 'diseases' => 'home#index'
+  match 'diseases/targets' => 'home#index'
+
   resources :search, :only => [ :index ] do
     collection do
       get 'typeahead'

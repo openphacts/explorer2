@@ -80,3 +80,30 @@ App.TreeAdapter = DS.Adapter.extend({
         return enzymeResponse;
     }
 });
+App.DiseaseAdapter = DS.Adapter.extend({
+    find: function(store, type, id) {
+        console.log('disease adapter find');
+        var identifier = id;
+        var promise = new Ember.RSVP.Promise(function(resolve, reject) {
+            var searcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
+            var diseaseInfoCallback = function(success, status, response) {
+                if (success && response) {
+                    // we have the disease so now  find all the targets and add ids for lazy loading
+                    var diseaseResult = searcher.parseDiseaseResponse(response);
+                    diseaseResult['id'] = identifier;
+                    diseaseResult['targets'] = [];
+                    Ember.run(function() {
+                        resolve(diseaseResult)
+                    });
+                } else {
+                    Ember.run(function() {
+                        reject(status)
+                    });
+                }
+            };
+            searcher.fetchDisease(id, null, diseaseInfoCallback);
+        });
+        return promise;
+    }
+});
+

@@ -33,6 +33,10 @@ App.Router.map(function() {
     this.resource('pathways', { path: '/pathways' }, function() {
         this.route('compounds', { path: '/compounds' }, function(){});
     });
+    this.resource('diseases', { path: '/diseases' }, function() {
+        this.route('targets', { path: '/targets' }, function(){});
+    });
+
 });
 
 App.ApplicationRoute = Ember.Route.extend({
