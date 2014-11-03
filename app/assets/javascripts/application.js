@@ -19,6 +19,8 @@
 //= require ember-data-1.0.0-beta5
 //= require bootstrap
 //= require combined
+//= require Three49custom
+//= require GLmol
 //= require_self
 //= require store
 //= require routes
