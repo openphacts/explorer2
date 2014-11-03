@@ -451,3 +451,9 @@ th.th-hover:hover {
     vertical-align: middle;
     font-size: smaller;
 }
+.gl-molecule {
+    margin: auto;
+    width: 450px;
+    height: 450px;
+    background-color: black;
+}

@@ -1,28 +1,43 @@
 <style>
-	dt { 
+	dt {
 		padding: 20px 0 0 0;
 	}
-	dd { 
-		padding: 20px 0 0 0; 
-		}
+	dd {
+		padding: 20px 0 0 0;
+	}
 </style>
+<!-- Modal -->
+{{#if threeDeeEnabled}}
+<div id="threeDeeTargetModalView" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3 id="myModalLabel">3D view of {{prefLabel}}</h3>
+	</div>
+	<div class="modal-body" class="medium-margin-bottom">
+		<div id="glmol01" {{bind-attr class=":gl-molecule showMolecule::hidden"}}></div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+	</div>
+</div>
+{{/if}}
 <div>
-
+	<textarea id="glmol01_src" class="hidden"></textarea>
 	<!-- breadcrumb	-->
 	<ul class="breadcrumb">
-  		<li><a href="/">Home</a></li>
+		<li><a href="/">Home</a></li>
 		<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
-  		<li class="active">Target Information</li>
+		<li class="active">Target Information</li>
 
-		<div class="row pull-right"> 
+		<div class="row pull-right">
 			<div class="span1 small-padding-top small-padding-right">Provenance</div>
-  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
+			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
 				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
 				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
-  			</div>
+			</div>
 		</div>
 	</ul>
-	
+
 	<!-- main -->
 	<div class="container">
 	<div class="container-fluid large-top-spacing">
@@ -30,8 +45,8 @@
   			
   			<!--Sidebar content-->
     		<div class="span3">
-      			<div style="padding:0 0 0 20px;" >{{target_image_src seeAlso}}</div>
-      			
+      			<div class="big-padding-left">{{target_image_src seeAlso}}{{#if hasPDB}}{{#if threeDeeEnabled}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-small"}} title="Visualize this target in 3D">3D</button>{{/if}}{{/if}}</div>
+
       			<!--box properties-->
       			<div id="boxes" class="small-top-spacing">
       				
@@ -76,7 +91,7 @@
                                                 {{else}}
                                                         <h1>{{prefLabel}}</h1>
                                                 {{/if}}
-                                        </div>
+					</div>
                                         {{#if alternativeName}}
                                         <div class="summary-descriptive-text large-top-spacing">
                                                 {{#if showProvenance}}
@@ -163,17 +178,9 @@
                                                                 <dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}}</div></dd>
                                                         {{/if}}
                                                   {{/if}}        
-                                                  
-                                        </dl>
+					  </dl>
                              </div>
-     			
-     			
-    		</div>
-  		</div>
+		     </div>
+	     </div>
 	</div>
-	</div>
-	
-
-	
-	
 </div>
