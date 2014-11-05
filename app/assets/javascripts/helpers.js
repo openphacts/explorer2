@@ -135,7 +135,15 @@ Ember.Handlebars.registerBoundHelper('ontologyLink', function(ontology) {
 
 Ember.Handlebars.registerBoundHelper('vocabPart', function(part) {
 	if (part) {
-		return new Handlebars.SafeString(part.split('#').pop());		        
+		if (Array.isArray(part)) {
+			var parts = "";
+                    part.forEach(function(item, index, array) {
+                        index == 0 ? parts += item.split('#').pop() : parts += ', ' + item.split('#').pop();
+		    });
+		    return new  Handlebars.SafeString(parts);
+		} else {
+		    return new Handlebars.SafeString(part.split('#').pop());
+		}
 	}
 });
 
