@@ -6,20 +6,46 @@
 </ul>
 
 <div class="container-fluid">
-<table class="mytable">
+<ul class="nav nav-tabs">
+	  <li class="active"><a href="#favourite-compounds" data-toggle="tab">Compounds</a></li>
+	    <li><a href="#favourite-targets" data-toggle="tab">Targets</a></li>
+    </ul>
+
+    <div class="tab-content">
+	    <div class="tab-pane active" id="favourite-compounds">
+	    <table class="mytable">
 	<thead  class="headingstyle">
-		<tr><th>Type</th><th>Image</th><th>Label</th></tr>
+		<tr><th>Image</th><th>Label</th></tr>
 	</thead>
 	<tbody>
 {{#each}}
 <tr class="record-deco">
 	{{#if isCompound}}
-	<td>Compound</td><td>{{cs_image_src csURI}}</td><td>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
-	{{else}}
-	<td>Target</td><td>{{target_image_src seeAlso}}</td><td>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
+	<td>{{cs_image_src csURI}}</td><td>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
 	{{/if}}
 </tr>
 {{/each}}
 </tbody>
 </table>
+
+	    
+	    </div>
+	    <div class="tab-pane" id="favourite-targets">
+	    <table class="mytable">
+	<thead  class="headingstyle">
+		<tr><th>Image</th><th>Label</th></tr>
+	</thead>
+	<tbody>
+{{#each}}
+<tr class="record-deco">
+	{{#if isTarget}}
+	<td>{{target_image_src seeAlso}}</td><td>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
+	{{/if}}
+</tr>
+{{/each}}
+</tbody>
+</table>
+
+	    </div>
+	    </div>
 </div>
