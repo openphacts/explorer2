@@ -81,44 +81,6 @@ App.ApplicationController = Ember.Controller.extend({
         }
     },
 
-    getDatabase: function() {
-        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        // DON'T use "var indexedDB = ..." if you're not in a function.
-        // Moreover, you may need references to some window.IDB* objects:
-        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-        // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-        if (!window.indexedDB) {
-            window.alert("Your browser doesn't support a stable version of IndexedDB. Favouriting compounds, targets etc will not be available.");
-        }
-        var db;
-        var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
-        request.onerror = function(event) {
-            console.log("A DB error");
-            return null;
-        };
-        request.onsuccess = function(event) {
-            var db = event.target.result;
-            return db;
-        }
-        request.onupgradeneeded = function(event) {
-            var db = event.target.result;
-
-            var objectStore = db.createObjectStore("compounds", {
-                keyPath: "uri"
-            });
-            objectStore.createIndex("favourite", "favourite", {
-                unique: false
-            });
-            objectStore.createIndex("label", "label", {
-                unique: false
-            });
-            return db;
-        };
-
-
-    },
-
     addFavourite: function(type, URI, label, model) {
         console.log('changing favourite status');
         var me = this;
@@ -252,6 +214,10 @@ App.ApplicationController = Ember.Controller.extend({
                     var objectStore = db.createObjectStore("compounds", {
                         keyPath: "uri"
                     });
+                    var objectStore = db.createObjectStore("targets", {
+                        keyPath: "uri"
+                    });
+
                 };
                 request.onsuccess = function(event) {
                     var db = event.target.result;

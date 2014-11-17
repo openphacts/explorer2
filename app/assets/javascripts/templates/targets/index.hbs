@@ -86,9 +86,10 @@
 					<div>
 						<div style="padding:20px 0 0 0">
 							{{#if showProvenance}}
-							<h1>{{prefLabel}} {{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}</h1>
+							<h1>{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}{{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}</h1>
 							{{else}}
-							<h1>{{prefLabel}}</h1>
+<h1>{{#if prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
+</h1>
 							{{/if}}
 						</div>
 						{{#if alternativeName}}

@@ -5,6 +5,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
   setupController: function(controller, model, params) {
     console.log('target index controller');
     controller.set('model', model);	
+    this.controllerFor('application').findFavourite(model.get('URI'), 'targets', model);
   },
 
   model: function(params) {
