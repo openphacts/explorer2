@@ -2,6 +2,8 @@ Explorer2::Application.routes.draw do
 
   root :to => 'home#index'
 
+  match 'favourites' => 'home#index'
+
   match 'search' => 'home#index'
 
   match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
