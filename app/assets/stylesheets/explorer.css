@@ -447,7 +447,6 @@ th.th-hover:hover {
 /*    height: 100%; */
     width: 100%;
 }
-<<<<<<< HEAD
 
 i.fa-star-o {
     font-size: 20px;
@@ -458,7 +457,8 @@ i.fa-star {
     font-size: 20px;
     color: #e5c100;
     vertical-align: super;
-=======
+}
+
 .pchembl-prov {
     vertical-align: middle;
     font-size: smaller;
@@ -468,5 +468,4 @@ i.fa-star {
     width: 450px;
     height: 450px;
     background-color: black;
->>>>>>> develop
 }

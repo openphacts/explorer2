@@ -163,9 +163,7 @@ App.ApplicationController = Ember.Controller.extend({
                     };
                     var objectStore = transaction.objectStore(type);
                     $.each(uris, function(index, uri) {
-                        var foundIt = false;
-                        if (uri.indexOf("http://ops.rsc.org") !== -1) {
-                            foundIt = true;
+			    var foundIt = false;
                             var findURIRequest = objectStore.get(uri);
                             // Handle errors!
                             findURIRequest.onerror = function(event) {
@@ -208,8 +206,8 @@ App.ApplicationController = Ember.Controller.extend({
                                         model.set('favourite', fav);
                                     };
                                 }
+				foundIt = true;
                             };
-                        };
                         if (foundIt === true) return false; //ie break out of the iterator
                     });
                 }
@@ -261,10 +259,8 @@ App.ApplicationController = Ember.Controller.extend({
                         console.log("db find error");
                     };
                     var objectStore = transaction.objectStore(type);
-                    $.each(uris, function(index, uri) {
                         var foundIt = false;
-                        if (uri.indexOf("http://ops.rsc.org") !== -1) {
-                            foundIt = true;
+                    $.each(uris, function(index, uri) {
                             var findURIRequest = objectStore.get(uri);
                             // Handle errors!
                             findURIRequest.onerror = function(event) {
@@ -274,19 +270,12 @@ App.ApplicationController = Ember.Controller.extend({
                             findURIRequest.onsuccess = function(event) {
                                 //update the entry
                                 var data = findURIRequest.result;
-                                if (data == null) {
-                                    // no entry in db for this uri
-                                    model.set('favourite', false);
-                                } else {
-                                    if (data.favourite === true) {
+                                    if (data != null && data.favourite === true) {
                                         model.set('favourite', true);
-                                    } else {
+                                    } else if (data != null) {
                                         model.set('favourite', false);
                                     }
-                                }
                             };
-                        };
-                        if (foundIt === true) return false; //ie break out of the iterator
                     });
                 }
             }

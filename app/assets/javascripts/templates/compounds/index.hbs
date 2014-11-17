@@ -119,7 +119,7 @@
 						{{#if showProvenance}}
 						<h1>{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</span>{{/if}}</h1>
 						{{else}}
-<h1>{{#prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
+<h1>{{#if prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
 </h1>
 						{{/if}}
 					</div>
