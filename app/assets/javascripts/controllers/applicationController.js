@@ -162,54 +162,60 @@ App.ApplicationController = Ember.Controller.extend({
                         console.log("db find error");
                     };
                     var objectStore = transaction.objectStore(type);
-                    $.each(uris, function(index, uri) {
-			    var foundIt = false;
-                            var findURIRequest = objectStore.get(uri);
-                            // Handle errors!
-                            findURIRequest.onerror = function(event) {
-                                //no entry in db for this uri
-                                console.log("DB retrieval error for " + uri);
-                            };
-                            findURIRequest.onsuccess = function(event) {
-                                //update the entry
-                                var data = findURIRequest.result;
-                                if (data == null) {
-                                    // no entry in db for this uri
-                                    var addRequest = objectStore.add({
-                                        'uri': uri,
-                                        'label': label,
-                                        'favourite': true
-                                    });
-                                    addRequest.onsuccess = function(event) {
-                                        model.set('favourite', true);
-                                    }
-                                    addRequest.onerror = function(event) {
-                                        console.log("Couldn't add data");
-                                    };
+                    var foundIt = false;
+                    var totalURIS = uris.length;
+                    var keysChecked = 0;
+                    // check each URI one at a time to avoid any async problems
+                    (function nextURI() {
+                        if (!uris.length)
+                            return;
+                        var uri = uris.shift();
+                        var findURIRequest = objectStore.get(uri);
+                        findURIRequest.onerror = function(event) {
+                            //no entry in db for this uri
+                            console.log("DB retrieval error for " + uri);
+                        };
+                        findURIRequest.onsuccess = function(event) {
+                            keysChecked += 1;
+                            var data = findURIRequest.result;
+                            if (data != null) {
+                                foundIt = true;
+                                var fav = false;
+                                if (data.favourite === true) {
+                                    data.favourite = false;
                                 } else {
-                                    var fav = false;
-                                    if (data.favourite === true) {
-                                        data.favourite = false;
-                                    } else {
-                                        data.favourite = true;
-                                        fav = true;
-                                    }
-                                    var requestUpdate = objectStore.put(data);
-                                    requestUpdate.onerror = function(event) {
-                                        // Do something with the error
-                                        //
-                                        alert("Could not save favourite. Sorry.");
-                                    };
-                                    requestUpdate.onsuccess = function(event) {
-                                        // Success - the data is updated!
-
-                                        model.set('favourite', fav);
-                                    };
+                                    data.favourite = true;
+                                    fav = true;
                                 }
-				foundIt = true;
-                            };
-                        if (foundIt === true) return false; //ie break out of the iterator
-                    });
+                                var requestUpdate = objectStore.put(data);
+                                requestUpdate.onerror = function(event) {
+                                    // Do something with the error
+                                    alert("Could not save favourite. Sorry.");
+                                };
+                                requestUpdate.onsuccess = function(event) {
+                                    // Success - the data is updated!
+
+                                    model.set('favourite', fav);
+                                };
+                            } else if (foundIt === false && keysChecked === totalURIS) {
+                                // checked all the URIs and no entry in db for this uri
+                                var addRequest = objectStore.add({
+                                    'uri': URI,
+                                    'label': label,
+                                    'favourite': true
+                                });
+                                addRequest.onsuccess = function(event) {
+                                    model.set('favourite', true);
+                                }
+                                addRequest.onerror = function(event) {
+                                    console.log("Couldn't add data");
+                                };
+                            } else {
+                                // Check the next URI    
+                                nextURI();
+                            }
+                        };
+                    }());
                 }
             }
         }
@@ -251,7 +257,7 @@ App.ApplicationController = Ember.Controller.extend({
                     var db = event.target.result;
                     var transaction = db.transaction([type], "readwrite");
                     transaction.oncomplete = function(event) {
-                        console.log("Found favourite " + type + " : " + URI);
+                        console.log("Started transaction for " + type + " : " + URI);
                     };
 
                     transaction.onerror = function(event) {
@@ -259,24 +265,32 @@ App.ApplicationController = Ember.Controller.extend({
                         console.log("db find error");
                     };
                     var objectStore = transaction.objectStore(type);
-                        var foundIt = false;
-                    $.each(uris, function(index, uri) {
-                            var findURIRequest = objectStore.get(uri);
-                            // Handle errors!
-                            findURIRequest.onerror = function(event) {
-                                //no entry in db for this uri
-                                console.log("DB retrieval error for " + uri);
-                            };
-                            findURIRequest.onsuccess = function(event) {
-                                //update the entry
-                                var data = findURIRequest.result;
-                                    if (data != null && data.favourite === true) {
-                                        model.set('favourite', true);
-                                    } else if (data != null) {
-                                        model.set('favourite', false);
-                                    }
-                            };
-                    });
+                    var foundIt = false;
+                    // check each URI one at a time to avoid any async problems
+                    (function nextURI() {
+                        if (!uris.length)
+                            return;
+                        var uri = uris.shift();
+                        var findURIRequest = objectStore.get(uri);
+                        findURIRequest.onerror = function(event) {
+                            //no entry in db for this uri
+                            console.log("DB retrieval error for " + uri);
+                        };
+                        findURIRequest.onsuccess = function(event) {
+                            //update the entry
+                            var data = findURIRequest.result;
+                            if (data != null) {
+                                if (data.favourite === true) {
+                                    model.set('favourite', true);
+                                } else {
+                                    // it is in the db but is not a favourite
+                                    model.set('favourite', false);
+                                }
+                            } else {
+                                nextURI();
+                            }
+                        };
+                    }());
                 }
             }
         }
