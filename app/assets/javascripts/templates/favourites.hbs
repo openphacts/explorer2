@@ -1,4 +1,25 @@
-<h1>Favourites</h1>
+<!-- breadcrumb	-->
+<ul class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li><span class="divider">/</span></li>
+	<li class="active">Favourites</li>
+</ul>
+
+<div class="container-fluid">
+<table class="mytable">
+	<thead  class="headingstyle">
+		<tr><th>Type</th><th>Image</th><th>Label</th></tr>
+	</thead>
+	<tbody>
 {{#each}}
-<li>{{type}} - {{label}} - {{URI}}</li>
+<tr class="record-deco">
+	{{#if isCompound}}
+	<td>Compound</td><td>{{cs_image_src csURI}}</td><td>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
+	{{else}}
+	<td>Target</td><td>{{target_image_src seeAlso}}</td><td>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</td>
+	{{/if}}
+</tr>
 {{/each}}
+</tbody>
+</table>
+</div>

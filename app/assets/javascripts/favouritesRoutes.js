@@ -32,7 +32,7 @@ App.FavouritesRoute = Ember.Route.extend({
             });
 
         };
-
+        var types = {"compounds": "compound", "targets": "target"};
         request.onsuccess = function(event) {
             ["compounds", "targets"].forEach(function(type, index, array) {
                     var db = event.target.result;
@@ -42,11 +42,15 @@ App.FavouritesRoute = Ember.Route.extend({
                         var cursor = event.target.result;
                         if (cursor) {
                             if (cursor.value.favourite === true) {
-                                me.get('model').pushObject({
-                                    "type": type,
-                                    "URI": cursor.value.uri,
-                                    "label": cursor.value.label
-                                });
+                                me.store.find(types[type], cursor.value.uri).then(function(compound) {
+				    me.get('model').pushObject(compound);	
+				});;
+
+                                //me.get('model').pushObject({
+                                //    "type": type,
+                                //    "URI": cursor.value.uri,
+                                //    "label": cursor.value.label
+                                //});
                             }
                             cursor.continue ();
                         } else {}
