@@ -2,11 +2,9 @@ App.CompoundsDrawController = Ember.ObjectController.extend({
 
   needs: ['application'],
 
-  queryParams: ['smiles', 'path'],
+  queryParams: ['smiles'],
 
   smiles: '',
-
-  path: '',
 
   fetching: false,
 

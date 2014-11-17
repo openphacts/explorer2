@@ -15,10 +15,12 @@
 //= require jquery
 //= require jqXDomain
 //= require handlebars-v1.3.0
-//= require ember-1.8.0-beta1
-//= require ember-data-1.0.0-beta8
+//= require ember-1.7.0
+//= require ember-data-1.0.0-beta5
 //= require bootstrap
 //= require combined
+//= require Three49custom
+//= require GLmol
 //= require_self
 //= require store
 //= require routes

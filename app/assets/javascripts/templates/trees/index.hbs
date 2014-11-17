@@ -8,16 +8,16 @@
 	</ul>	
 	
 </div>
+<div class="left big-padding-left">
 <h3>Select an ontology</h3>
 {{view Ember.Select
        content=treeTypes
        prompt="Please select a target class"
        value=defaultTree
+       multiple=false
        selection=selectedTree}}
-
-<div  style="width: 50%; margin: 0px auto; padding-top: 40px;">
-<div class="enzymeNameHeader">Class</div><div class="enzymeURIHeader">Name</div>
-<div class="small-padding-left">
-{{view App.TreeBranchView contentBinding="controller.arrangedContent"}}
 </div>
+
+<div id="ontology-container" class="right small-padding-left">
+{{view App.TreeBranchView contentBinding="controller.content"}}
 </div>

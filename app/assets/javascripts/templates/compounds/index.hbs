@@ -1,7 +1,7 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb">
     <li><a href="/">Home</a></li>
-	<li><span class="divider">/</span>{{prefLabel}}<span class="divider">/</span></li>
+    <li><span class="divider">/</span>{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}<span class="divider">/</span></li>
 	<li class="active">Compound Information</li>
 	<div class="row pull-right" > 
 		<div class="span1 small-padding-top small-padding-right">Provenance </div>
@@ -76,7 +76,7 @@
       				    <div class="inner-property-content">
   						    <p><small>Mol Weight Freebase</small></p>
   							{{#if showProvenance}}
-                                <p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout csURI 'chemspider'}}</p> 
+                                <p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p> 
                             {{else}}
                                 <p class="lead">{{mwFreebase}}</p> 
                             {{/if}} 
@@ -117,9 +117,9 @@
 				<div>	
 					<div style="padding:20px 0 0 0">
 						{{#if showProvenance}}
-						<h1>{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}</h1>
+						<h1>{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</span>{{/if}}</h1>
 						{{else}}
-						<h1>{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>
+<h1>{{#prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
 </h1>
 						{{/if}}
 					</div>
@@ -141,10 +141,10 @@
 				        </div>
 					{{/if}}
 					<div style="padding:5px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.structure" (query-params uri=this.URI type="exact")}}Search by structure{{/link-to}}
+					    {{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}
 					</div>
 					<div style="padding:5px 0 0 0;text-align:left;">
-					    {{#link-to "compounds.draw" (query-params smiles=this.smiles path=this.ketcherPath)}}Draw Molecule{{/link-to}}
+					    {{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
 					</div>
 				</div>	
 							
@@ -183,9 +183,9 @@
 						{{#if smiles}}
 							<dt class="medium-padding-top">SMILES</dt>
 							{{#if showProvenance}}
-                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+                                <dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
                             {{else}}
-                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles path=ketcherPath) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+                                <dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
                             {{/if}}
 						{{/if}}
   						

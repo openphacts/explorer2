@@ -144,11 +144,10 @@
 				<th title="Click to sort" style="width: 5%" {{action "sortHeader" "activity_value"}} {{bind-attr class="activityValueSortASC:sortASC activityValueSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Value</span><span>{{#if activityValueSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityValueSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "activity_unit"}} {{bind-attr class="activityUnitSortASC:sortASC activityUnitSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>Units</span><span>{{#if activityUnitSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if activityUnitSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pmid"}} {{bind-attr class="pmidSortASC:sortASC pmidSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>PubMed Article</span><span>{{#if pmidSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pmidSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
-				<th title="Click to sort" style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
+				<th title="Click to sort." style="width: 5%; border-right: 2px solid white; padding: 7px;" {{action "sortHeader" "pChembl"}} {{bind-attr class="pchemblSortASC:sortASC pchemblSortDESC:sortDESC :th-hover :medium-padding-left :medium-padding-right"}}><span>pChembl</span><span>{{#if pchemblSortASC}}<i class="icon-chevron-up small-margin-left right"></i>{{/if}}{{#if pchemblSortDESC}}<i class="icon-chevron-down small-margin-left right"></i>{{/if}}</span></th>
 			</tr>
 		</thead>
 		<tbody>
-        {{#if showPharmaProvenance}}
 			{{#each pharmaRecord in pharmacology}}
             <tr class="record-deco">
                 <td style="vertical-align:middle;" height="70">
@@ -157,38 +156,16 @@
                 {{/each}}
                 </td>
                 <td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-                <td class="cell-basictext">{{assayOrganism}} {{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}</td>
-                <td class="cell-longtext">{{pharmaRecord.assayDescription}} {{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}</td>
-                <td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}</td>
-                <td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}</td>
-                <td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}</td>
-                <td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}</td>
+		<td class="cell-basictext">{{assayOrganism}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showPharmaProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
                 <td class="cell-basictext">{{linkablePubmedId pharmaRecord.activityPubmedId}}</td>
-                <td class="cell-basictext">{{pharmaRecord.pChembl}}</td>
+		<td class="cell-basictext">{{pharmaRecord.pChembl}}{{#if showPharmaProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
             </tr>
-            {{/each}}
-        {{else}}
-		    {{#each pharmaRecord in pharmacology}}
-			<tr class="record-deco">
-				<td style="vertical-align:middle;" height="70">
-                {{#each target in pharmaRecord.targets}}
-                    <p>{{#link-to "targets.index" (query-params uri=target.about)}}{{target.title}}{{/link-to}}</p>
-                {{/each}}
-                </td>
-				<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
-				<td class="cell-basictext">{{pharmaRecord.assayOrganism}}</td>
-				<td class="cell-longtext">{{pharmaRecord.assayDescription}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityRelation}}</td>
-				<!-- <td class="lead cell-basictext">{{activityStandardValue}}</td> -->
-                <!-- TODO seems to be some confusion in the 1.3 api what the value is called -->
-                <td class="lead cell-basictext">{{pharmaRecord.activityValue}}</td>
-				<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}}</td>
-				<td class="cell-basictext">{{linkablePubmedId pharmaRecord.activityPubmedId}}</td>
-                <td class="cell-basictext">{{pharmaRecord.pChembl}}</td>
-			</tr>
 			{{/each}}
-        {{/if}}
 		</tbody>
 	</table>
 </div>
