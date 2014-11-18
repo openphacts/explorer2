@@ -95,12 +95,8 @@
 		<span class="pull-right">
 			<span class="small-padding-top small-padding-right">Provenance</span>
 			<span class="btn-group" style="margin-top:-6px;" data-toggle="buttons">
-				<label {{action 'enableProvenance'}} class="btn btn-default">
-					<input type="radio" name="options" id="option1" checked>On
-				</label>
-				<label {{action 'disableProvenance'}} class="btn btn-default active">
-					<input type="radio" name="options" id="option2">Off
-				</label>
+				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn :btn-default"}}>On</button>
+				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn :btn-default"}}>Off</button>
 			</span>
 		</span>
 
