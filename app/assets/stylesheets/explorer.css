@@ -473,4 +473,9 @@ th.th-hover:hover {
 #search-form .tt-dropdown-menu {
     max-height: 450px;
     overflow-y: auto;
+.gl-molecule {
+    margin: auto;
+    width: 450px;
+    height: 450px;
+    background-color: black;
 }

@@ -20,6 +20,8 @@
 //= require bootstrap
 //= require typeahead.bundle
 //= require combined
+//= require Three49custom
+//= require GLmol
 //= require_self
 //= require store
 //= require routes
