@@ -52,7 +52,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
   page: null,
     
-  showPharmaProvenance: false,
+  showProvenance: false,
 
   fetchingCount: false,
 

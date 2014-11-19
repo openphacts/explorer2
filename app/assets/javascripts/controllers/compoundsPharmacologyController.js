@@ -74,7 +74,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   page: null,
 
-  showPharmaProvenance: false,
+  showProvenance: false,
 
   currentCount: function() {
     return this.get('model.pharmacology.length');

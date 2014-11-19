@@ -1,6 +1,9 @@
 .inline {
     display: inline;
 }
+.inline-block {
+    display: inline-block;
+}
 .search-exact-match {
     /*    background-color: #CDE6FF;*/
 }
@@ -40,11 +43,17 @@
 .centre {
     text-align: center;
 }
+.middle {
+    vertical-align: middle;
+}
 .justify {
     text-align: justify;
 }
 .text-left {
     text-align: left;
+}
+.text-bottom {
+    vertical-align: text-bottom;
 }
 .normal-font {
     font-size: 13px;
@@ -206,9 +215,9 @@ sub {
 }
 .summary-box {
     border: 1px solid #556;
-    /* Let the height be whatever the info needs */
+    /* Let the height and width be whatever the info needs */
     /* height: 90px; */
-    width: 142px;
+    /* width: 142px; */
     background: #f8f8ff;
     border-color: #eee9e9;
     text-align: center;
@@ -430,7 +439,8 @@ th.th-hover:hover {
 }
 .free-summary-box {
     position: relative;
-    /*    height: 100%; */
+    /* Images are 128x128 */
+    min-height: 150px;
     width: 100%;
 }
 .pchembl-prov {
