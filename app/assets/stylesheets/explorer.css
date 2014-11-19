@@ -43,6 +43,9 @@
 .justify {
     text-align: justify;
 }
+.text-left {
+    text-align: left;
+}
 .normal-font {
     font-size: 13px;
 }
@@ -480,4 +483,7 @@ th.th-hover:hover {
     width: 450px;
     height: 450px;
     background-color: black;
+}
+dl.dl-text-left dt {
+    text-align: left;
 }

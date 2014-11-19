@@ -19,163 +19,22 @@
 </div>
 
 <!-- main -->
-<div class="large-top-spacing">
-	<div class="row">
-		<!--Sidebar content-->
-		<div class="col-md-3">
-			<div style="padding:0 0 0 20px;background:white;">{{cs_image_src csURI}}</div>
-			<!--box properties-->
-			<div id="boxes" class="small-top-spacing">
-				{{#if logp}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small>AlogP</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{logp}}</p>
-						{{/if}}
-
-					</div>
-				</div>
-				{{/if}}
-
-				{{#if hba}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small># H-Bond Acceptors</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{hba}}</p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-				{{#if hbd}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small># H-Bond Donors</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{hbd}}</p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-				{{#if fullMWT}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small>Mol Weight</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{fullMWT}}</p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-				{{#if mwFreebase}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small>Mol Weight Freebase</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p>
-						{{else}}
-						<p class="lead">{{mwFreebase}}</p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-				{{#if psa}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small>Polar Surface Area</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-				{{#if rtb}}
-				<div class="summary-box">
-					<div class="inner-property-content">
-						<p><small># Rotatable Bonds</small></p>
-						{{#if showProvenance}}
-						<p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="lead">{{rtb}}</p>
-						{{/if}}
-					</div>
-				</div>
-				{{/if}}
-
+<div class="container">
+	<div class="large-top-spacing">
+		<div class="row">
+			<!--Sidebar content-->
+			<div class="col-md-3">
+				{{partial "compounds/compoundInfoSidebar"}}
 			</div>
-		</div>
 
-		<!--Body content-->
-		<div class="col-md-8">
-			<!--title and formula-->
-			<div>
-				<div class="medium-padding-top">
-
-					{{#if showProvenance}}
-					<h1>{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</muted>{{/if}}</h1>
-						{{else}}
-						<h1>{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}</h1>
-					</div>
-					<div class="lead pull-right">
-						{{#if showProvenance}}
-						<p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
-						{{else}}
-						<p class="pull-left">{{formatMolecularFormula molform}}</p>
-						{{/if}}
-					</div>
-					{{#if hasPharmacology}}
-					<div style="padding:30px 0 0 0;text-align:left;">
-						{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
-					</div>
-					{{/if}}
-					{{#if hasPathways}}
-					<div style="padding:5px 0 0 0;text-align:left;">
-						{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}
-					</div>
-					{{/if}}
-					<div style="padding:5px 0 0 0;text-align:left;">
-						{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}
-					</div>
-					<div style="padding:5px 0 0 0;text-align:left;">
-						{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
-					</div>
+			<!--Body content-->
+			<div class="col-md-8">
+				<div>
+					<!--title and formula-->
+					{{partial "compounds/compoundInfoTitle" }}
 				</div>
-
-				<!--description-->
-				<div class="summary-descriptive-text large-top-spacing">
-					{{#if description}}
-					{{#if showProvenance}}
-					<p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-					{{else}}
-					<p>{{description}}</p>
-					{{/if}}
-					{{/if}}
-				</div>
-
-				<!--biotransformation-->
-				<div class="summary-descriptive-text small-top-spacing">
-					{{#if biotransformation}}
-					{{#if showProvenance}}
-					<p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-					{{else}}
-					<p>{{biotransformationItem}}</p>
-					{{/if}}
-					{{/if}}
-				</div>
-
-				<!--details-->
-				<div class="dl-horizontal" style="font-size:13px;">
+				<div>
+					<!--details-->
 					{{partial "compounds/compoundInfoList"}}
 				</div>
 			</div>
