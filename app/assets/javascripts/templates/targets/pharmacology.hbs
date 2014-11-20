@@ -1,7 +1,7 @@
 {{partial "targets/targetPharmacologyFiltersModal"}}
 <div class="goto-button" id="top"><button class="btn btn-default btn-sm" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
-<div class="breadcrumb">
-	<ul class="breadcrumb inline">
+<div class="breadcrumb hidden-xs">
+	<ul class="breadcrumb">
 		<li><a href="/">Home</a></li>
 		<li>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
 		<li class="active">Target Phamacology</li>
