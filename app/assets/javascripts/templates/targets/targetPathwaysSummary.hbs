@@ -1,10 +1,10 @@
 <div id="summary-anchor">
 	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
-		<div id="compound-image" {{bind-attr class=":hidden-xs :left :small-padding infoHide:hide:"}}>{{cs_image_src csURI}}</div>
-		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
+		<div id="target-image" {{bind-attr class=":hidden-xs :left :medium-padding infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
+		<h3 class="medium-padding-left">{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
 		<span class="medium-padding-left text-bottom">
-			<a href="#compoundPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+			<a href="#targetPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
 			<span class="col-xs-1 col-md-1 inline-block middle input-group">
 				<span class="input-group-addon">Provenance</span>
@@ -18,5 +18,6 @@
 				</span>
 			</span>
 		</span>
+
 	</div>
 </div>
