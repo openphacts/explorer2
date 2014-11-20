@@ -120,9 +120,9 @@ Ember.Handlebars.registerBoundHelper('pathwayShortLink', function(pathwayURI) {
 	}
 });
 
-Ember.Handlebars.registerBoundHelper('organismLink', function(organism) {
+Ember.Handlebars.registerBoundHelper('organismLink', function(organism, organismLabel) {
 	if (organism) {
-		return new Handlebars.SafeString('<a href="' + organism + '">' + organism.split('/').pop() + '</a>');		        
+		return new Handlebars.SafeString('<a href="' + organism + '">' + organismLabel + '</a>');		        
 	}
 });
 

@@ -497,3 +497,9 @@ th.th-hover:hover {
 dl.dl-text-left dt {
     text-align: left;
 }
+div.dl-horizontal dl dt {
+    padding-top: 20px;
+}
+div.dl-horizontal dl dd {
+    padding-top: 20px;
+}

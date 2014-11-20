@@ -1,34 +1,16 @@
 <!-- breadcrumb	-->
-<div class="breadcrumb hidden-xs">
-	<ul class="breadcrumb inline">
-		<li><a href="/">Home</a></li>
-		<li>{{prefLabel}}</li>
-		<li class="active">Compound Information</li>
-	</ul>
-	<span class="pull-right" style="margin-top: -6px;">
-		<span class="small-padding-top small-padding-right">Provenance </span>
-		<span class="btn-group" data-toggle="buttons">
-			<label {{action 'enableProvenance'}} class="btn btn-default">
-				<input type="radio" name="options" id="option1" checked>On
-			</label>
-			<label {{action 'disableProvenance'}} class="btn btn-default active">
-				<input type="radio" name="options" id="option2">Off
-			</label>
-		</span>
-	</span>
-</div>
+<ul class="breadcrumb hidden-xs">
+	<li><a href="/">Home</a></li>
+	<li>{{prefLabel}}</li>
+	<li class="active">Compound Information</li>
+</ul>
 
 <!-- main -->
 <div class="container">
 	<div class="large-top-spacing">
 		<div class="row">
-			<!--Sidebar content-->
-			<div class="col-md-3">
-				{{partial "compounds/compoundInfoSidebar"}}
-			</div>
-
 			<!--Body content-->
-			<div class="col-md-8">
+			<div class="col-md-push-3 col-md-8">
 				<div>
 					<!--title and formula-->
 					{{partial "compounds/compoundInfoTitle" }}
@@ -38,6 +20,11 @@
 					{{partial "compounds/compoundInfoList"}}
 				</div>
 			</div>
+			<!--Sidebar content-->
+			<div class="col-md-pull-8 col-md-3">
+				{{partial "compounds/compoundInfoSidebar"}}
+			</div>
+
 		</div>
 	</div>
 </div>
