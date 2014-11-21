@@ -1,11 +1,4 @@
 <div class="col-xs-12 col-md-9 col-md-push-3">
-	<div class="lead pull-right">
-		{{#if showProvenance}}
-		<p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
-		{{else}}
-		<p class="pull-left">{{formatMolecularFormula molform}}</p>
-		{{/if}}
-	</div>
 	<div>
 		<!--description-->
 		{{#if description}}
@@ -31,6 +24,11 @@
 		{{/if}}
 		<div class="dl-horizontal">
 			<dl class="dl-text-left">
+				<!-- Molecular formula -->
+				{{#if molform}}
+				<dt class="medium-padding-top">Molecular Formula</dt>
+				<dd class="medium-padding-top">{{formatMolecularFormula molform}}{{#if showProvenance}}{{provenanceLinkout csURI 'chemspider'}}{{/if}}</dd>
+				{{/if}}
 				<!--Chemspider ID-->
 				{{#if csURI}}
 				<dt>ChemSpider ID</dt>
