@@ -1,60 +1,92 @@
-<div class="dl-horizontal" style="font-size:13px;">
-	<dl class="dl-text-left">
-		<!--Chemspider ID-->
-		{{#if csURI}}
-		<dt class="medium-padding-top">ChemSpider ID</dt>
-		<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
-		{{/if}}
-
-		<!--SMILES-->
-		{{#if smiles}}
-		<dt class="medium-padding-top">SMILES</dt>
+<div class="col-xs-12 col-md-9 col-md-push-3">
+	<div class="lead pull-right">
 		{{#if showProvenance}}
-		<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+		<p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
 		{{else}}
-		<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+		<p class="pull-left">{{formatMolecularFormula molform}}</p>
 		{{/if}}
-		{{/if}}
+	</div>
+	<div>
+		<!--description-->
+		{{#if description}}
+		<div class="summary-descriptive-text large-top-spacing">
+			{{#if showProvenance}}
+			<p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+			{{else}}
+			<p>{{description}}</p>
+			{{/if}}
+		</div>
 
-		<!--InCHL-->
-		{{#if inchi}}
-		<dt class="medium-padding-top">Standard  InChI</dt>
-		{{#if showProvenance}}
-		<dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
-		{{else}}
-		<dd class="medium-padding-top">{{inchi}}</dd>
 		{{/if}}
-		{{/if}}
+		<!--biotransformation-->
+		{{#if biotransformation}}
+		<div class="summary-descriptive-text small-top-spacing medium-padding-bottom">
+			{{#if showProvenance}}
+			<p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+			{{else}}
+			<p>{{biotransformationItem}}</p>
+			{{/if}}
+		</div>
 
-		<!--InCHLKey-->
-		{{#if inchiKey}}
-		<dt class="medium-padding-top">Standard InChIKey</dt>
-		{{#if showProvenance}}
-		<dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
-		{{else}}
-		<dd class="medium-padding-top">{{inchiKey}}</dd>
 		{{/if}}
-		{{/if}}
+		<div style="font-size:13px;">
+			<dl class="dl-text-left">
+				<!--Chemspider ID-->
+				{{#if csURI}}
+				<dt>ChemSpider ID</dt>
+				<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
+				{{/if}}
 
-		<!--Protein Binding-->
-		{{#if proteinBinding}}
-		<dt class="medium-padding-top">Protein Binding</dt>
-		{{#if showProvenance}}
-		<dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
-		{{else}}
-		<dd class="medium-padding-top">{{proteinBinding}}</dd>
-		{{/if}}
-		{{/if}}
+				<!--SMILES-->
+				{{#if smiles}}
+				<dt class="medium-padding-top">SMILES</dt>
+				{{#if showProvenance}}
+				<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+				{{else}}
+				<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+				{{/if}}
+				{{/if}}
 
-		<!--Toxicity-->
-		{{!-- Toxicity seems to have some html formatting so allow it to be displayed properly --}}
-		{{#if toxicity}}
-		<dt class="medium-padding-top">Toxicity</dt>
-		{{#if showProvenance}}
-		<dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
-		{{else}}
-		<dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
-		{{/if}}
-		{{/if}}
-	</dl>
+				<!--InCHL-->
+				{{#if inchi}}
+				<dt class="medium-padding-top">Standard  InChI</dt>
+				{{#if showProvenance}}
+				<dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+				{{else}}
+				<dd class="medium-padding-top">{{inchi}}</dd>
+				{{/if}}
+				{{/if}}
+
+				<!--InCHLKey-->
+				{{#if inchiKey}}
+				<dt class="medium-padding-top">Standard InChIKey</dt>
+				{{#if showProvenance}}
+				<dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+				{{else}}
+				<dd class="medium-padding-top">{{inchiKey}}</dd>
+				{{/if}}
+				{{/if}}
+
+				<!--Protein Binding-->
+				{{#if proteinBinding}}
+				<dt class="medium-padding-top">Protein Binding</dt>
+				{{#if showProvenance}}
+				<dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+				{{else}}
+				<dd class="medium-padding-top">{{proteinBinding}}</dd>
+				{{/if}}
+				{{/if}}
+
+				<!--Toxicity-->
+				{{#if toxicity}}
+				<dt class="medium-padding-top">Toxicity</dt>
+				{{#if showProvenance}}
+				<dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+				{{else}}
+				<dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
+				{{/if}}
+				{{/if}}
+			</dl>
+		</div>
+	</div>
 </div>

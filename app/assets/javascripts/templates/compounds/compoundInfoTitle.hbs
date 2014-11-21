@@ -1,71 +1,17 @@
-<!--title and formula-->
-<div class="medium-padding-top">
-	<span class="col-xs-1 col-md-1 input-group">
-		<span class="input-group-addon">Provenance</span>
-		<span class="input-group-btn" data-toggle="buttons">
-			<label {{action 'enableProvenance'}} class="btn btn-default">
-				<input type="radio" name="options" id="option1" checked>Show
-			</label>
-			<label {{action 'disableProvenance'}} class="btn btn-default active">
-				<input type="radio" name="options" id="option2">Hide
-			</label>
-		</span>
-	</span>
-
-	<h1>
-		{{#if prefLabel}}
-		{{prefLabel}}
-		{{else}}
-		<span class="muted">No label</muted>
+<div class="col-xs-12 col-md-12 big-margin-bottom">
+	<div class="centre col-xs-4 col-md-3">{{cs_image_src csURI}}</div>
+	<!--title and formula-->
+	<div class="col-xs-8 col-md-9">
+		<h1>
+			{{#if prefLabel}}
+			{{prefLabel}}
+			{{else}}
+			<span class="muted">No label</span>
 			{{/if}}
 			{{#if showProvenance}}
 			{{provenanceLinkout cwURI 'conceptwiki'}}
 			{{/if}}
 		</h1>
 
-		<div class="lead pull-right">
-			{{#if showProvenance}}
-			<p class="pull-left" id="molform-provenance">{{formatMolecularFormula molform}}{{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="pull-left">{{formatMolecularFormula molform}}</p>
-			{{/if}}
-		</div>
-		{{#if hasPharmacology}}
-		<div style="padding:30px 0 0 0;text-align:left;">
-			{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
-		</div>
-		{{/if}}
-		{{#if hasPathways}}
-		<div style="padding:5px 0 0 0;text-align:left;">
-			{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}
-		</div>
-		{{/if}}
-		<div style="padding:5px 0 0 0;text-align:left;">
-			{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}
-		</div>
-		<div style="padding:5px 0 0 0;text-align:left;">
-			{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}
-		</div>
 	</div>
-
-	<!--description-->
-	<div class="summary-descriptive-text large-top-spacing">
-		{{#if description}}
-		{{#if showProvenance}}
-		<p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-		{{else}}
-		<p>{{description}}</p>
-		{{/if}}
-		{{/if}}
-	</div>
-
-	<!--biotransformation-->
-	<div class="summary-descriptive-text small-top-spacing">
-		{{#if biotransformation}}
-		{{#if showProvenance}}
-		<p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
-		{{else}}
-		<p>{{biotransformationItem}}</p>
-		{{/if}}
-		{{/if}}
-	</div>
+</div>

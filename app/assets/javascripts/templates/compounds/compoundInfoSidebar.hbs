@@ -1,91 +1,92 @@
-<div style="padding:0 0 0 20px;background:white;">{{cs_image_src csURI}}</div>
-<!--box properties-->
-<div id="boxes" class="small-top-spacing">
-	{{#if logp}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small>AlogP</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{logp}}</p>
-			{{/if}}
+<div class="col-xs-12 col-md-3 col-md-pull-9">
+	<!--box properties-->
+	<div id="boxes">
+		{{#if logp}}
+		<div class="summary-box no-top-margin">
+			<div class="inner-property-content">
+				<p><small>AlogP</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{logp}}</p>
+				{{/if}}
 
+			</div>
 		</div>
-	</div>
-	{{/if}}
+		{{/if}}
 
-	{{#if hba}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small># H-Bond Acceptors</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{hba}}</p>
-			{{/if}}
+		{{#if hba}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small># H-Bond Acceptors</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{hba}}</p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
-	{{#if hbd}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small># H-Bond Donors</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{hbd}}</p>
-			{{/if}}
+		{{/if}}
+		{{#if hbd}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small># H-Bond Donors</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{hbd}}</p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
-	{{#if fullMWT}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small>Mol Weight</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{fullMWT}}</p>
-			{{/if}}
+		{{/if}}
+		{{#if fullMWT}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small>Mol Weight</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{fullMWT}}</p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
-	{{#if mwFreebase}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small>Mol Weight Freebase</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p>
-			{{else}}
-			<p class="lead">{{mwFreebase}}</p>
-			{{/if}}
+		{{/if}}
+		{{#if mwFreebase}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small>Mol Weight Freebase</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p>
+				{{else}}
+				<p class="lead">{{mwFreebase}}</p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
-	{{#if psa}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small>Polar Surface Area</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
-			{{/if}}
+		{{/if}}
+		{{#if psa}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small>Polar Surface Area</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
-	{{#if rtb}}
-	<div class="summary-box">
-		<div class="inner-property-content">
-			<p><small># Rotatable Bonds</small></p>
-			{{#if showProvenance}}
-			<p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p>
-			{{else}}
-			<p class="lead">{{rtb}}</p>
-			{{/if}}
+		{{/if}}
+		{{#if rtb}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small># Rotatable Bonds</small></p>
+				{{#if showProvenance}}
+				<p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				{{else}}
+				<p class="lead">{{rtb}}</p>
+				{{/if}}
+			</div>
 		</div>
-	</div>
-	{{/if}}
+		{{/if}}
 
+	</div>
 </div>

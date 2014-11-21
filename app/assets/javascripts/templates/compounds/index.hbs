@@ -9,22 +9,13 @@
 <div class="container">
 	<div class="large-top-spacing">
 		<div class="row">
-			<!--Body content-->
-			<div class="col-md-push-3 col-md-8">
-				<div>
-					<!--title and formula-->
-					{{partial "compounds/compoundInfoTitle" }}
-				</div>
-				<div>
-					<!--details-->
-					{{partial "compounds/compoundInfoList"}}
-				</div>
-			</div>
-			<!--Sidebar content-->
-			<div class="col-md-pull-8 col-md-3">
-				{{partial "compounds/compoundInfoSidebar"}}
-			</div>
-
+			{{partial "compounds/compoundInfoButtons"}}
+			<!--title and formula-->
+			{{partial "compounds/compoundInfoTitle" }}
+			{{partial "compounds/compoundInfoDescription"}}
+			{{partial "compounds/compoundInfoList"}}
+			<!-- On medium and above size screens the sidebar is a sidebar using col-xs-pull-3. On small screens it flows below -->
+			{{partial "compounds/compoundInfoSidebar"}}
 		</div>
 	</div>
 </div>
