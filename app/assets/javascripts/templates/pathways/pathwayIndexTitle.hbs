@@ -1,23 +1,6 @@
+<!-- title -->
 <div>
-	<span class="col-xs-1 col-md-1 input-group">
-		<span class="input-group-addon">Provenance</span>
-		<span class="input-group-btn" data-toggle="buttons">
-			<label {{action 'enableProvenance'}} class="btn btn-default">
-				<input type="radio" name="options" id="option1" checked>Show
-			</label>
-			<label {{action 'disableProvenance'}} class="btn btn-default active">
-				<input type="radio" name="options" id="option2">Hide
-			</label>
-		</span>
-	</span>
-
-	<div>
-		<h1>{{title}} {{#if showProvenance}}{{provenanceLinkout wikipathwaysProvenance.title wikipathwaysProvenance.source}}{{/if}}</h1>
-	</div>
-
-	<div class="large-padding-left text-left">
-		{{#link-to "pathways.compounds" (query-params uri=URI)}}Compounds{{/link-to}}
-	</div>
+	<h1>{{title}} {{#if showProvenance}}{{provenanceLinkout wikipathwaysProvenance.title wikipathwaysProvenance.source}}{{/if}}</h1>
 </div>
 
 <!--description-->
