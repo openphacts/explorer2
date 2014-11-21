@@ -4,9 +4,11 @@
 	<li>{{#link-to "pathways.index" (query-params uri=URI)}}{{title}}{{/link-to}}</li>
 	<li class="active">Compounds</li>
 </ul>
-{{partial "pathways/pathwayCompoundsSummary"}}
+<div class="huge-margin-bottom">
+	{{partial "pathways/pathwayCompoundsSummary"}}
+</div>
 <!-- RESULT LISTING -->
-<div class="huge-padding-top table-responsive">
+<div class="table-responsive">
 	<table>
 		{{partial "pathways/pathwayCompoundsTableHeader"}}
 		{{partial "pathways/pathwayCompoundsTableBody"}}

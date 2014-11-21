@@ -6,11 +6,12 @@
 	<li class="active">Target Phamacology</li>
 </ul>
 
-{{partial "targets/targetPharmacologySummary"}}
-
+<div class="huge-margin-bottom">
+	{{partial "targets/targetPharmacologySummary"}}
+</div>
 <!-- RESULT LISTING -->
 {{#if haveRecords}}
-<div class="huge-padding-top table-responsive">
+<div class="table-responsive">
 	<table class="mytable" style="border-spacing: 0;">
 		{{partial "targets/targetPharmacologyTableHeader"}}
 		{{partial "targets/targetPharmacologyTableBody"}}

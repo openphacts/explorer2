@@ -8,10 +8,12 @@
 	<li class="active">Compound Pharmacology</li>
 </ul>
 
-{{partial "compounds/compoundPharmacologySummary"}}
+<div class="huge-margin-bottom">
+	{{partial "compounds/compoundPharmacologySummary"}}
+</div>
 {{#if notEmpty}}
 <!-- RESULT LISTING -->
-<div class="huge-padding-top table-responsive">
+<div class="table-responsive">
 	<table>
 		{{partial "compounds/compoundPharmacologyTableHeader"}}
 		{{partial "compounds/compoundPharmacologyTableBody"}}

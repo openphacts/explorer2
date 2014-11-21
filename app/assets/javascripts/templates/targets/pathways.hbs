@@ -6,10 +6,12 @@
 	<li>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
 	<li class="active">Pathways</li>
 </ul>
-{{partial "compounds/targetPathwaysSummary"}}
+<div class="huge-margin-bottom">
+	{{partial "compounds/targetPathwaysSummary"}}
+</div>
 <!-- RESULT LISTING -->
 {{#if notEmpty}}
-<div class="huge-padding-top table-responsive">
+<div class="table-responsive">
 	<table class="mytable" style="border-spacing: 0;">
 		{{partial "targets/targetPathwaysTableHeader"}}
 		{{partial "targets/targetPathwaysTableBody"}}
