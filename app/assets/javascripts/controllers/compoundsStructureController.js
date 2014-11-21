@@ -534,6 +534,9 @@ enableProvenance: function() {
   },
   disableProvenance: function() {
       this.set('showProvenance', false);
+  },
+  goToTop: function() {
+      window.scrollTo(0,0);
   }
 
   }
