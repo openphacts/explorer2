@@ -4,7 +4,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
 
   queryParams: ['ontology'],
 
-  ontology: '',
+  ontology: null,
   
   initialTree: null,
   defaultTree: null,
