@@ -1,20 +1,19 @@
-<div>
-	<ul class="breadcrumb hidden-xs">
-  		<li><a href="/">Home</a></li>
-  		<li>Ontologies</li>
-  		<li class="active">{{selectedTree}}</li>
-	</ul>	
-</div>
-<div class="left big-padding-left">
-<h3>Select an ontology</h3>
-{{view Ember.Select
-       content=treeTypes
-       prompt="Please select a target class"
-       value=defaultTree
-       multiple=false
-       selection=selectedTree}}
-</div>
-
-<div id="ontology-container" class="right small-padding-left">
-{{view App.TreeBranchView contentBinding="controller.content"}}
+<ul class="breadcrumb hidden-xs">
+	<li><a href="/">Home</a></li>
+	<li>Ontologies</li>
+	<li class="active">{{selectedTree}}</li>
+</ul>
+<div class="row">
+	<div class="col-md-2">
+		<h3>Select an ontology</h3>
+		{{view Ember.Select
+		content=treeTypes
+		prompt="Please select a target class"
+		value=defaultTree
+		multiple=false
+		selection=selectedTree}}
+	</div>
+	<div id="ontology-container" class="col-md-9 big-padding-top">
+		{{view App.TreeBranchView contentBinding="controller.content"}}
+	</div>
 </div>
