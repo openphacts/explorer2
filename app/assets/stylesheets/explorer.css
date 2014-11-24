@@ -503,3 +503,6 @@ div.dl-horizontal dl dt {
 div.dl-horizontal dl dd {
     padding-top: 20px;
 }
+.break-word {
+    word-wrap: break-word;
+}
