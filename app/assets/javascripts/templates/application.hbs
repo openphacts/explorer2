@@ -1,12 +1,12 @@
 <!-- Modal for alerts -->
-<div id="alertsModalView" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
+<div id="alertsModalView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" {{action "dismissAlerts"}}>×</button>
 				<h3 id="myModalLabel">Alerts!</h3>
 			</div>
-			<div class="modal-body" style="overflow-y: visible;">
+			<div class="modal-body">
 				{{#if anyJobs}}
 				<table class="mytable centersummary">
 					<thead id="tablehead" class="headingstyle">
