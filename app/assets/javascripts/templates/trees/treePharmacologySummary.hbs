@@ -1,0 +1,21 @@
+<div id="summary-anchor">
+	<div id="summary" {{bind-attr class=":tree_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
+		<h3 class="medium-padding-left">Pharmacology for {{uri}} {{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
+		<!-- Options -->
+		<span class="medium-padding-left text-bottom">
+			<a href="#enzymePharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
+			<button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
+			<span class="col-xs-1 col-md-1 inline-block middle input-group">
+				<span class="input-group-addon">Provenance</span>
+				<span class="input-group-btn" data-toggle="buttons">
+					<label {{action 'enableProvenance'}} class="btn btn-default">
+						<input type="radio" name="options" id="option1" checked>Show
+					</label>
+					<label {{action 'disableProvenance'}} class="btn btn-default active">
+						<input type="radio" name="options" id="option2">Hide
+					</label>
+				</span>
+			</span>
+		</span>
+	</div>
+</div>
