@@ -3,7 +3,7 @@
 		<div id="target-image" {{bind-attr class=":hidden-xs :left :medium-padding infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
 		<h3 class="medium-padding-left">{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
-		<span class="medium-padding-left text-bottom">
+		<span class="hidden-xs medium-padding-left text-bottom">
 			<a href="#targetPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
 			<span class="col-xs-1 col-md-1 inline-block middle input-group">
@@ -18,6 +18,20 @@
 				</span>
 			</span>
 		</span>
-
+		<div class="hidden-md">
+			<!-- Show as dropdown on smaller screens -->
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					Options <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
+					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
+					<li class="divider"></li>
+					<li><a href="#targetPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li>
+					<li><a href="#" {{action "tsvDownload" this}} title="Click to create TSV formatted target pharmacology results">Create TSV</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>

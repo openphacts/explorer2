@@ -1,6 +1,6 @@
-<div style="padding-left:30px;">
-	<div class="form-inline row">
-		{{input type="text" classNames="form-control" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
+<div>
+	<div class="form-inline">
+		{{input type="text" classNames="form-control small-margin-bottom" placeholder="Enter SMILES here" value=smilesValue id="smilesValueInput" title="Enter a SMILES string and then click the button to search for it"}}
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-addon">Search type</div>
@@ -66,7 +66,7 @@
 		{{/if}}
 	</div>
 	{{!-- <button class="btn medium-margin-bottom" title="Reload compounds with selected threshold and max records values" {{action 'structureSearchType'}}>Go!</button> --}}
-	<div class="row medium-padding-top">
+	<div class="medium-padding-top">
 		{{#link-to "compounds.structure" (query-params smiles=smilesValue type=structureSearchType records=maxRecords match=selectedMatchType threshold=thresholdPercent thresholdtype=selectedThresholdType) class="btn btn-default" title="Search for compounds with the SMILES string entered"}}Search{{/link-to}}
 		<a href="#compoundStructureFilterModalView" role="button" class="btn btn-default small-margin-left" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 		<a href="#compoundStructureDownload" {{action "tsvDownload" this}} role="button" class="btn btn-default small-margin-left" data-toggle="modal" title="Click to create TSV formatted compound structure results">Create TSV</a>
