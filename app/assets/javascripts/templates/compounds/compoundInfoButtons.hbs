@@ -25,25 +25,23 @@
 	</div>
 	<div class="hidden-md">
 		<!-- Show as dropdown on smaller screens -->
-		<div class="hidden-md">
-			<div class="btn-group">
-				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-					Options <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu">
-					<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
-					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
-					<li class="divider"></li>
-					{{#if hasPharmacology}}
-					<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
-					{{/if}}
-					{{#if hasPathways}}
-					<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
-					{{/if}}
-					<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
-					<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
-				</ul>
-			</div>
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				Options <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
+				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
+				<li class="divider"></li>
+				{{#if hasPharmacology}}
+				<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
+				{{/if}}
+				{{#if hasPathways}}
+				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
+				{{/if}}
+				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
+				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
+			</ul>
 		</div>
 	</div>
 </div>
