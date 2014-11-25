@@ -77,7 +77,7 @@ Ember.Handlebars.registerBoundHelper('textLink', function(link) {
   }
 });
 Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
-  return new Handlebars.SafeString('<td title="' + job.filters + '">' + job.label + '</td>');
+  return new Handlebars.SafeString('<td class="break-all small-padding-right" title="' + job.filters + '">' + job.label + '</td>');
 });
 Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
   return new Handlebars.SafeString('<div class="progress progress-striped active no-margin" title="' + percentage + '%"><div class="bar" style="width: ' + percentage + '%;"></div></div>');

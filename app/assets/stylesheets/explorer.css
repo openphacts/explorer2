@@ -506,3 +506,6 @@ div.dl-horizontal dl dd {
 .break-word {
     word-wrap: break-word;
 }
+.break-all {
+    word-wrap: break-all;
+}
