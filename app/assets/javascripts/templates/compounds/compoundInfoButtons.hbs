@@ -1,23 +1,49 @@
 <div class="col-xs-12 col-md-12 col-md-offset-3 big-margin-bottom">
-	<div class="small-padding-bottom pull-left col-xs-1 col-md-1 input-group">
-		<span class="input-group-addon">Provenance</span>
-		<span class="input-group-btn" data-toggle="buttons">
-			<label {{action 'enableProvenance'}} class="btn btn-default">
-				<input type="radio" name="options" id="option1" checked>Show
-			</label>
-			<label {{action 'disableProvenance'}} class="btn btn-default active">
-				<input type="radio" name="options" id="option2">Hide
-			</label>
-		</span>
+	<!-- Show as buttons on larger screens -->
+	<div class="hidden-xs">
+		<div class="small-padding-bottom pull-left col-xs-1 col-md-1 input-group">
+			<span class="input-group-addon">Provenance</span>
+			<span class="input-group-btn" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="btn btn-default">
+					<input type="radio" name="options" id="option1" checked>Show
+				</label>
+				<label {{action 'disableProvenance'}} class="btn btn-default active">
+					<input type="radio" name="options" id="option2">Hide
+				</label>
+			</span>
+		</div>
+		<ul class="list-inline">
+			{{#if hasPharmacology}}
+			<li class="small-padding-bottom">{{#link-to "compounds.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
+			{{/if}}
+			{{#if hasPathways}}
+			<li class="small-padding-bottom">{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
+			{{/if}}
+			<li class="small-padding-bottom">{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default" }}Search by structure{{/link-to}}</li>
+			<li class="small-padding-bottom">{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default" }}Draw Molecule{{/link-to}}</li>
+		</ul>
 	</div>
-	<ul class="list-inline">
-		{{#if hasPharmacology}}
-		<li class="small-padding-bottom">{{#link-to "compounds.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
-		{{/if}}
-		{{#if hasPathways}}
-		<li class="small-padding-bottom">{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
-		{{/if}}
-		<li class="small-padding-bottom">{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default" }}Search by structure{{/link-to}}</li>
-		<li class="small-padding-bottom">{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default" }}Draw Molecule{{/link-to}}</li>
-	</ul>
+	<div class="hidden-md">
+		<!-- Show as dropdown on smaller screens -->
+		<div class="hidden-md">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					Options <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
+					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
+					<li class="divider"></li>
+					{{#if hasPharmacology}}
+					<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
+					{{/if}}
+					{{#if hasPathways}}
+					<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
+					{{/if}}
+					<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
+					<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
