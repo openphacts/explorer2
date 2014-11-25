@@ -3,7 +3,7 @@
 		<div id="compound-image" {{bind-attr class=":hidden-xs :left :small-padding infoHide:hide:"}}>{{cs_image_src csURI}}</div>
 		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
-		<div class="hidden-xs">
+		<div class="hidden-xs hidden-sm">
 			<a href="#compoundPharmaFilterModalView" class="small-margin-bottom btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default small-margin-bottom" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
 			<span class="button-group" data-toggle="buttons">
@@ -15,7 +15,7 @@
 				</label>
 			</span>
 		</div>
-		<div class="hidden-md">
+		<div class="hidden-md hidden-lg">
 			<!-- Show as dropdown on smaller screens -->
 			<div class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

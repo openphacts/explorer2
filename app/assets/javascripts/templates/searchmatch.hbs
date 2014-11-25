@@ -1,103 +1,43 @@
-<div class="col-md-offset-2">  
-    {{#if result.isCompound}}
-        {{#if compoundsChecked}} 
-        {{#if listView}}
-	<div class="row medium-margin-bottom">
-            <div>
-		    <h4 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}</h4>
-		<p class="inline"><small><em>Compound</em>{{#if result.hasPathways}}<em>, {{#link-to "compounds.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}{{#if result.hasPharmacology}}<em>, {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}</small></p>
-	    </div>
-        </div>
-        {{else}}
-	<div class="single-search-result row" style="max-width:800px">
-	    <div class="small-padding-bottom huge-padding-left">
-	    <h4 class="inline small-padding-right">{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h4>
-	    <p class="inline"><small><em>Compound</em></small></p>
-        </div>
-	<div class="col-md-3" style="padding:0px 30px 10px 20px">
-	    <div class="thumbnail compound-result-image" title="Click to search for compounds with this structure">{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI}}{{/link-to}}</div>
-	</div>
-	<div class="row col-md-8">
-	    <div id="formula1" class="lead" style="max-height:15px;">{{formatMolecularFormula result.molform}}</div>
-	    <div style="text-align:justify;" ><small>{{result.description}}</small></div>
-	    <ul class="small-padding-top no-list-style no-margin">
-	        <li class="inline">
-                    {{#if result.pharmacologyInfoAvailable}}
-                        {{#if result.hasPharmacology}}
-                            {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
-                        {{else}}
-                            Pharmacology ({{result.pharmacologyRecords}})
-                        {{/if}}
-                    {{else}}
-                    <small><em>Fetching Pharmacology Count</em></small>
-                    {{/if}}
-                </li>
-		<li class="inline">
-                    {{#if result.pathwayInfoAvailable}}
-                        {{#if result.hasPathways}}
-                            {{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
-                        {{else}}
-                            Pathways ({{result.pathwayRecords}})
-                        {{/if}}
-                    {{else}}
-                        <small><em>Fetching Pathway Count</em></small>
-                    {{/if}}
-                </li>
-	    </ul>
-	</div>
-        {{/if}}
-        {{/if}}
-    {{else}}
-{{#if targetsChecked}}
-    {{#if listView}}
-<div class="row medium-margin-bottom">
+<div>
+	{{#if result.isCompound}}
+	{{#if compoundsChecked}}
+	{{#if listView}}
+	<div class="medium-margin-bottom">
 		<div>
-			<h4 class="inline">{{#link-to "targets.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}</h4>
-			<p class="inline"><small><em>Target</em>{{#if result.hasPathways}}<em>, {{#link-to "targets.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}{{#if result.hasPharmacology}}<em>, {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}</small></p>
+			<h4 class="inline">{{#link-to "compounds.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}</h4>
+			<p class="inline">
+			<small>
+				<em>Compound</em>
+				{{#if result.hasPathways}}<em>, {{#link-to "compounds.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}
+				{{#if result.hasPharmacology}}<em>, {{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}
+			</small>
+			</p>
 		</div>
-</div>
-    {{else}}
-	<div class="single-search-result row" style="max-width:800px">
-		<div class="small-padding-bottom huge-padding-left">
-			<h4 class="inline small-padding-right">{{#link-to "targets.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}</h4>
-			<p class="inline"><small><em>Target</em></small></p>
-		</div>
-		
-		<div class="col-md-3" style="padding:0px 30px 10px 20px">
-			<div class="thumbnail">{{target_image_src result.seeAlso}}</div>
-		</div>
-		<div class="row col-md-8">
-			<div style="text-align:justify;" ><small>{{result.alternativeName}}</small></div>
-			<div>
-				<ul class="small-padding-top no-list-style no-margin">
-					<li class="inline">
-                   {{#if result.pharmacologyInfoAvailable}}
-                     {{#if result.hasPharmacology}}
-                       {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology ({{result.pharmacologyRecords}}){{/link-to}}
-                     {{else}}
-                       Pharmacology ({{result.pharmacologyRecords}})
-                     {{/if}}
-                   {{else}}
-                     <small><em>Fetching Pharmacology Count</em></small>
-                   {{/if}}
-                </li>
-				<li class="inline">
-                   {{#if result.pathwayInfoAvailable}}
-                     {{#if result.hasPathways}}
-                       {{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
-                     {{else}}
-                       Pathways ({{result.pathwayRecords}})
-                     {{/if}}
-                   {{else}}
-                     <small><em>Fetching Pathway Count</em></small>
-                   {{/if}}
-                </li>
-	</ul>
-			</div>
-		</div>
-	
 	</div>
-    {{/if}}
-{{/if}}
-{{/if}}
+	{{else}}
+	{{partial "searchMatchCompound"}}
+	{{/if}}
+	{{/if}}
+	{{else}}
+	{{#if targetsChecked}}
+	{{#if listView}}
+	<div class="medium-margin-bottom">
+		<div>
+			<h4 class="inline">
+				{{#link-to "targets.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}
+			</h4>
+			<p class="inline">
+			<small>
+				<em>Target</em>
+				{{#if result.hasPathways}}<em>, {{#link-to "targets.pathways" (query-params uri=result.URI)}}{{result.pathwayRecords}} Pathways{{/link-to}}</em>{{/if}}
+				{{#if result.hasPharmacology}}<em>, {{#link-to "targets.pharmacology" (query-params uri=result.URI)}}{{result.pharmacologyRecords}} Pharmacology{{/link-to}}</em>{{/if}}
+			</small>
+			</p>
+		</div>
+	</div>
+	{{else}}
+	{{partial "searchMatchTarget"}}
+	{{/if}}
+	{{/if}}
+	{{/if}}
 </div>

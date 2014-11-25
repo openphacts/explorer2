@@ -3,7 +3,7 @@
 		<div id="target-image" {{bind-attr class=":hidden-xs :left :medium-padding infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
 		<h3 class="medium-padding-left">{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
-		<div class="hidden-xs">
+		<div class="hidden-xs hidden-sm">
 			<a href="#targetPharmaFilterModalView" class="small-margin-bottom btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="small-margin-bottom btn btn-default" {{action "tsvDownload" this}} title="Click to create TSV formatted target pharmacology results">Create TSV</button>
 			<span class="button-group" data-toggle="buttons">
@@ -15,7 +15,7 @@
 				</label>
 			</span>
 		</div>
-		<div class="hidden-md">
+		<div class="hidden-md hidden-lg">
 			<!-- Show as dropdown on smaller screens -->
 			<div class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

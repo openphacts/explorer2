@@ -1,26 +1,30 @@
-<div class="breadcrumb">
-	<ul class="breadcrumb inline">
-  		<li><a href="/">Home</a></li>
-  		<li>General Search</li>
-		<li class="active">{{totalResults}} Search Results Found</li>
-		</ul>
-	<span title="Check or uncheck to view or hide compounds" class="small-margin-right">{{totalCompounds}} Compounds</span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}
-		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span></ul>
-				<span class="pull-right btn-group" style="margin-top: -6px;" data-toggle="buttons">
-					<label class="btn btn-default active" {{action switchToList}} title="View only the label for search results">
-						      <input type="radio" name="options" id="option1" checked>List
-						        </label>
-							<label class="btn btn-default" {{action switchToObject}} title="View label, image and description for search results">
-								      <input type="radio" name="options" id="option2">Object
-								        </label>
-										</span>
-		</div>
-	<div id="search-results">
-	<ul style="list-style-type: none">
-    {{#each result in controller}}
-		<li class="inline">
-  				{{view App.SearchResult resultBinding='result'}}
-		</li>
-	{{/each}}
+<ul class="hidden-xs breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li>General Search</li>
+	<li class="active">{{totalResults}} Search Results Found</li>
 </ul>
+<div class="row medium-margin-bottom">
+	<div class="col-sm-3">
+		<span title="Check or uncheck to view or hide compounds" class="small-margin-right">{{totalCompounds}} Compounds</span><span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</span>
+		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span>
+	</div>
+	<div class="col-sm-2">
+		<span class="btn-group" style="margin-top: -6px;" data-toggle="buttons">
+			<label class="btn btn-default active" {{action switchToList}} title="View only the label for search results">
+				<input type="radio" name="options" id="option1" checked>List
+			</label>
+			<label class="btn btn-default" {{action switchToObject}} title="View label, image and description for search results">
+				<input type="radio" name="options" id="option2">Object
+			</label>
+		</span>
+	</div>
+</div>
+<div id="search-results">
+	<ul class="list-unstyled">
+		{{#each result in controller}}
+		<li>
+		{{view App.SearchResult resultBinding='result'}}
+		</li>
+		{{/each}}
+	</ul>
 </div>

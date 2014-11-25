@@ -6,19 +6,16 @@
 		<span class="hidden-xs medium-padding-left text-bottom">
 			{{!-- <a href="#compoundPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button> --}}
-			<span class="col-xs-1 col-md-1 inline-block middle input-group">
-				<span class="input-group-addon">Provenance</span>
-				<span class="input-group-btn" data-toggle="buttons">
-					<label {{action 'enableProvenance'}} class="btn btn-default">
-						<input type="radio" name="options" id="option1" checked>Show
-					</label>
-					<label {{action 'disableProvenance'}} class="btn btn-default active">
-						<input type="radio" name="options" id="option2">Hide
-					</label>
-				</span>
+			<span class="button-group" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
+					<input type="radio" name="options" id="option1" checked>Show provenance
+				</label>
+				<label {{action 'disableProvenance'}} class="small-margin-bottom btn btn-default active">
+					<input type="radio" name="options" id="option2">Hide provenance
+				</label>
 			</span>
 		</span>
-		<div class="hidden-md">
+		<div class="hidden-sm hidden-md hidden-lg">
 			<!-- Show as dropdown on smaller screens -->
 			<div class="btn-group">
 				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
