@@ -17,4 +17,4 @@
         {{/if}}
     {{/if}}
 {{/if}}
-<div class="enzymeURI">{{#if view.content.name}}{{view.content.name}}{{else}}<span class="muted">Label unknown</span>{{/if}} ({{enzymeECNumber view.content.uri}})</div>{{#link-to 'trees.pharmacology' (query-params uri=view.content.uri) class="btn btn-default btn-xs" title="Click to view pharmacology"}}<i class="fa fa-list"></i>{{/link-to}}</div>
+<div class="enzymeURI">{{#if view.content.name}}{{view.content.name}}{{else}}<span class="muted">Label unknown</span>{{/if}} ({{enzymeECNumber view.content.uri}})</div>{{#link-to 'trees.pharmacology' (query-params uri=view.content.uri) class="push-right btn btn-default btn-xs" title="Click to view pharmacology"}}<i class="fa fa-list"></i>{{/link-to}}</div>
