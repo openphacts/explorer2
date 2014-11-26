@@ -3,10 +3,10 @@
 	<li>General Search</li>
 	<li class="active">{{totalResults}} Search Results Found</li>
 </ul>
-<div class="row medium-margin-bottom">
+<div class="hidden-xs row medium-margin-bottom">
 	<div class="col-sm-3">
-		<span title="Check or uncheck to view or hide compounds" class="small-margin-right">{{totalCompounds}} Compounds</span><span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</span>
-		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">{{totalTargets}} Targets</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span>
+		<span title="Check or uncheck to view or hide compounds" class="small-margin-right">Compounds</span><span class="badge">{{totalCompounds}}</span><span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</span>
+		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">Targets</span><span class="badge">{{totalTargets}}</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span>
 	</div>
 	<div class="col-sm-2">
 		<span class="btn-group" style="margin-top: -6px;" data-toggle="buttons">
@@ -19,6 +19,29 @@
 		</span>
 	</div>
 </div>
+<div class="hidden-md hidden-lg medium-margin-bottom">
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+			Options <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu">
+			{{#if compoundsChecked}}
+			<li><a href="#" {{action "setCompoundsChecked"}}>Hide compounds</a></li>
+			{{else}}
+			<li><a href="#" {{action "setCompoundsChecked"}}>Show compounds</a></li>
+			{{/if}}
+			{{#if targetsChecked}}
+			<li><a href="#" {{action "setTargetsChecked"}}>Hide targets</a></li>
+			{{else}}
+			<li><a href="#" {{action "setTargetsChecked"}}>Show targets</a></li>
+			{{/if}}
+			<li class="divider"></li>
+			<li {{bind-attr class="listView:disabled:"}}><a href="#" {{action 'switchToList'}}>Show as list</a></li>
+			<li {{bind-attr class="objectView:disabled:"}}><a href="#" {{action 'switchToObject'}}>Show as object</a></li>
+		</ul>
+	</div>
+</div>
+
 <div id="search-results">
 	<ul class="list-unstyled">
 		{{#each result in controller}}
