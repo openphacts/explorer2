@@ -1,5 +1,5 @@
-<div class="single-search-result row" style="max-width:800px">
-	<div class="small-padding-bottom huge-padding-left">
+<div class="single-search-result">
+	<div class="small-padding-bottom">
 		<h4 class="inline small-padding-right">{{#if result.prefLabel}}
 			{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}
 			{{else}}
@@ -12,21 +12,21 @@
 		</small>
 		</p>
 	</div>
-	<div class="col-md-3" style="padding:0px 30px 10px 20px">
+	<div>
 		<div class="thumbnail compound-result-image" title="Click to search for compounds with this structure">
 			{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI}}{{/link-to}}
 		</div>
 	</div>
-	<div class="row col-md-8">
+	<div>
 		<div id="formula1" class="lead" style="max-height:15px">{{formatMolecularFormula result.molform}}</div>
 		<div style="text-align:justify;" ><small>{{result.description}}</small></div>
 		<ul class="small-padding-top list-unstyled no-margin">
 			<li>
 			{{#if result.pharmacologyInfoAvailable}}
 			{{#if result.hasPharmacology}}
-			{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge">{{result.pharmacologyRecords}}</span>
+			{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge small-margin-left">{{result.pharmacologyRecords}}</span>
 			{{else}}
-			Pharmacology ({{result.pharmacologyRecords}})
+			<em class="muted">No pharmacology</em>
 			{{/if}}
 			{{else}}
 			<small><em>Fetching Pharmacology Count</em></small>
@@ -35,9 +35,9 @@
 			<li>
 			{{#if result.pathwayInfoAvailable}}
 			{{#if result.hasPathways}}
-			{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways ({{result.pathwayRecords}}){{/link-to}}
+			{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}<span class="badge small-margin-left">{{result.pathwayRecords}}</span>
 			{{else}}
-			Pathways ({{result.pathwayRecords}})
+			<em class="muted">No pathways</em>
 			{{/if}}
 			{{else}}
 			<small><em>Fetching Pathway Count</em></small>
