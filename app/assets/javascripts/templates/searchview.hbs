@@ -4,22 +4,22 @@
 	<li class="active">{{totalResults}} Search Results Found</li>
 </ul>
 <div class="hidden-xs row medium-margin-bottom">
-	<div class="col-sm-3">
-		<span title="Check or uncheck to view or hide compounds" class="small-margin-right">Compounds</span><span class="badge">{{totalCompounds}}</span><span>{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</span>
-		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">Targets</span><span class="badge">{{totalTargets}}</span><span>{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span>
+	<div class="col-sm-4">
+		<span title="Check or uncheck to view or hide compounds" class="small-margin-right">Compounds</span><span class="badge">{{totalCompounds}}</span><span class="small-margin-left">{{view Ember.Checkbox checkedBinding="compoundsChecked" id="compounds-checkbox"}}</span>
+		<span title="Check or uncheck to view or hide targets" class="small-margin-right small-margin-left">Targets</span><span class="badge">{{totalTargets}}</span><span class="small-margin-left">{{view Ember.Checkbox checkedBinding="targetsChecked" id="targets-checkbox"}}</span>
 	</div>
 	<div class="col-sm-2">
 		<span class="btn-group" style="margin-top: -6px;" data-toggle="buttons">
-			<label class="btn btn-default active" {{action switchToList}} title="View only the label for search results">
+			<label class="btn btn-default active" {{action 'switchToList'}} title="View only the label for search results">
 				<input type="radio" name="options" id="option1" checked>List
 			</label>
-			<label class="btn btn-default" {{action switchToObject}} title="View label, image and description for search results">
+			<label class="btn btn-default" {{action 'switchToObject'}} title="View label, image and description for search results">
 				<input type="radio" name="options" id="option2">Object
 			</label>
 		</span>
 	</div>
 </div>
-<div class="hidden-md hidden-lg medium-margin-bottom">
+<div class="hidden-sm hidden-md hidden-lg medium-margin-bottom">
 	<div class="btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 			Options <span class="caret"></span>
@@ -43,11 +43,19 @@
 </div>
 
 <div id="search-results">
-	<ul class="list-unstyled">
+	{{#if listView}}
+	<ul class="list-unstyled"}}>
 		{{#each result in controller}}
-		<li>
-		{{view App.SearchResult resultBinding='result'}}
-		</li>
+		{{partial "searchresult"}}
 		{{/each}}
 	</ul>
+	{{/if}}
+	{{#if objectView}}
+	<div class="row">
+		{{#each result in controller}}
+		{{partial "searchresult"}}
+		{{/each}}
+	</div>
+	{{/if}}
+
 </div>

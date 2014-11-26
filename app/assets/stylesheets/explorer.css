@@ -92,15 +92,18 @@
 /* end of id specific styling */
 
 .single-search-result {
+    width: 300px;
     padding: 1em;
     background: #f8f8ff;
     border: 1px solid #556;
     border-radius: 16px;
     border-color: #eee9e9;
-    min-height: 112px;
-    position: relative;
+    /* min-height: 112px; */
+    /* position: relative; */
     margin-top: 1em;
-    padding-right: 5%;
+    /* padding-right: 5%; */
+    display: inline-block; 
+    vertical-align: top;
 }
 /* molecula formula */
 

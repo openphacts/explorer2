@@ -1,60 +1,62 @@
-<div>
-	{{#if result.isCompound}}
-	{{#if compoundsChecked}}
-	{{#if listView}}
-	<div class="clearfix medium-margin-bottom">
-		<div class="pull-left" style="max-width: 450px;">
-			<h4 class="inline">
-				{{#if result.prefLabel}}{{#link-to "compounds.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}{{else}}{{#link-to "compounds.index" (query-params uri=result.URI)}}<span class="muted">No label</span>{{/link-to}}{{/if}}
-			</h4>
-		</div>
-		<div class="hidden-xs">
-			<ul class="list-inline">
-				<li><em class="muted">Compound</em></li>
-				{{#if result.hasPathways}}
-				<li>
-				{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}
-				<span class="badge">{{result.pathwayRecords}}</span>
-				</li>
-				{{/if}}
-				{{#if result.hasPharmacology}}
-				<li>
-				{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}
-				<span class="badge">{{result.pharmacologyRecords}}</span>
-				</li>
-				{{/if}}
-			</ul>
-		</div>
+{{#if result.isCompound}}
+{{#if compoundsChecked}}
+{{#if listView}}
+<li>
+<div class="clearfix medium-margin-bottom">
+	<div class="pull-left" style="max-width: 450px;">
+		<h4 class="inline">
+			{{#if result.prefLabel}}{{#link-to "compounds.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}{{else}}{{#link-to "compounds.index" (query-params uri=result.URI)}}<span class="muted">No label</span>{{/link-to}}{{/if}}
+		</h4>
 	</div>
-	{{else}}
-	{{partial "searchResultCompound"}}
-	{{/if}}
-	{{/if}}
-	{{else}}
-	{{#if targetsChecked}}
-	{{#if listView}}
-	<div class="clearfix medium-margin-bottom">
-		<div class="pull-left" style="max-width: 450px;">
-			<h4 class="inline">
-				{{#if result.prefLabel}}{{#link-to "targets.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}{{else}}<span class="muted">{{result.prefLabe}}</span>{{/if}}
-			</h4>
-		</div>
-		<div class="hidden-xs">
-			<ul class="list-inline">
-				<li><em class="muted">Target</em></li>
-				{{#if result.hasPathways}}<li>
-				{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}<span class="badge">{{result.pathwayRecords}}</span>
-				{{/if}}
-				{{#if result.hasPharmacology}}
-				<li>
-				{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge">{{result.pharmacologyRecords}}</span></li>
-				{{/if}}
-			</ul>
-		</div>
+	<div class="hidden-xs">
+		<ul class="list-inline">
+			<li><em class="muted">Compound</em></li>
+			{{#if result.hasPathways}}
+			<li>
+			{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}
+			<span class="badge">{{result.pathwayRecords}}</span>
+			</li>
+			{{/if}}
+			{{#if result.hasPharmacology}}
+			<li>
+			{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}
+			<span class="badge">{{result.pharmacologyRecords}}</span>
+			</li>
+			{{/if}}
+		</ul>
 	</div>
-	{{else}}
-	{{partial "searchResultTarget"}}
-	{{/if}}
-	{{/if}}
-	{{/if}}
 </div>
+</li>
+{{else}}
+{{partial "searchResultCompound"}}
+{{/if}}
+{{/if}}
+{{else}}
+{{#if targetsChecked}}
+{{#if listView}}
+<li>
+<div class="clearfix medium-margin-bottom">
+	<div class="pull-left" style="max-width: 450px;">
+		<h4 class="inline">
+			{{#if result.prefLabel}}{{#link-to "targets.index" (query-params uri=result.URI)}}<span>{{result.prefLabel}}</span>{{/link-to}}{{else}}<span class="muted">{{result.prefLabe}}</span>{{/if}}
+		</h4>
+	</div>
+	<div class="hidden-xs">
+		<ul class="list-inline">
+			<li><em class="muted">Target</em></li>
+			{{#if result.hasPathways}}<li>
+			{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}<span class="badge">{{result.pathwayRecords}}</span>
+			{{/if}}
+			{{#if result.hasPharmacology}}
+			<li>
+			{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge">{{result.pharmacologyRecords}}</span></li>
+			{{/if}}
+		</ul>
+	</div>
+</div>
+</li>
+{{else}}
+{{partial "searchResultTarget"}}
+{{/if}}
+{{/if}}
+{{/if}}
