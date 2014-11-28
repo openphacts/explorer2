@@ -95,15 +95,25 @@
     /* width: 300px; */
     padding: 1em;
     background: #f8f8ff;
-    border: 1px solid #556;
-    border-radius: 16px;
-    border-color: #eee9e9;
+    /* border: 1px solid #556; */
+    /* border-radius: 16px; */
+    border-top: 4px solid #eee9e9;
+    border-right: 1px solid #eee9e9;
+    border-left: 1px solid #eee9e9;
+    border-bottom: 1px solid #eee9e9;
+    /* border-color: #eee9e9; */
     /* min-height: 112px; */
     /* position: relative; */
     margin-top: 1em;
     /* padding-right: 5%; */
     display: inline-block; 
     vertical-align: top;
+}
+.compound-info-box {
+	border-top: 4px solid #fbcb43;
+}
+.target-info-box {
+	border-top: 4px solid #8cc474;
 }
 /* molecula formula */
 
