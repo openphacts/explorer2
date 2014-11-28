@@ -522,3 +522,9 @@ div.dl-horizontal dl dd {
 .break-all {
     word-wrap: break-all;
 }
+.compound-checkbox-label {
+    background-color: #fbcb43;
+}
+.target-checkbox-label {
+    background-color: #8cc474;
+}
