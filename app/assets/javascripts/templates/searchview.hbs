@@ -19,21 +19,21 @@
 		</span>
 	</div>
 </div>
-<div class="hidden-sm hidden-md hidden-lg medium-margin-bottom">
-	<div class="btn-group">
+<div class="row hidden-sm hidden-md hidden-lg medium-margin-bottom">
+	<div class="col-xs-12 btn-group">
 		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 			Options <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu" role="menu">
 			{{#if compoundsChecked}}
-			<li><a href="#" {{action "setCompoundsChecked"}}>Hide compounds</a></li>
+			<li><a href="#" {{action "setCompoundsChecked"}}>Hide compounds<span class="badge compound-checkbox-label small-margin-left">{{totalCompounds}}</span></a></li>
 			{{else}}
-			<li><a href="#" {{action "setCompoundsChecked"}}>Show compounds</a></li>
+			<li><a href="#" {{action "setCompoundsChecked"}}>Show compounds<span class="badge compound-checkbox-label small-margin-left">{{totalCompounds}}</span></a></li>
 			{{/if}}
 			{{#if targetsChecked}}
-			<li><a href="#" {{action "setTargetsChecked"}}>Hide targets</a></li>
+			<li><a href="#" {{action "setTargetsChecked"}}>Hide targets<span class="badge target-checkbox-label small-margin-left">{{totalTargets}}</span></a></li>
 			{{else}}
-			<li><a href="#" {{action "setTargetsChecked"}}>Show targets</a></li>
+			<li><a href="#" {{action "setTargetsChecked"}}>Show targets<span class="badge target-checkbox-label small-margin-left">{{totalTargets}}</span></a></li>
 			{{/if}}
 			<li class="divider"></li>
 			<li {{bind-attr class="listView:disabled:"}}><a href="#" {{action 'switchToList'}}>Show as list</a></li>
@@ -51,7 +51,7 @@
 	</ul>
 	{{/if}}
 	{{#if objectView}}
-	<div class="row">
+	<div>
 		{{#each result in controller}}
 		{{partial "searchresult"}}
 		{{/each}}
