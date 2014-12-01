@@ -2,20 +2,18 @@
 	<div id="summary" {{bind-attr class=":tree_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
 		<h3 class="medium-padding-left">Pharmacology for {{uri}} {{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
-		<span class="hidden-xs hidden-sm medium-padding-left text-bottom">
+		<span class="hidden-xs hidden-sm medium-padding-left">
 			<a href="#enzymePharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create TSV formatted tree/ontology pharmacology results">Create TSV</button>
-			<span class="col-md-1 inline-block middle input-group">
-				<span class="input-group-addon">Provenance</span>
-				<span class="input-group-btn" data-toggle="buttons">
-					<label {{action 'enableProvenance'}} class="btn btn-default">
-						<input type="radio" name="options" id="option1" checked>Show
-					</label>
-					<label {{action 'disableProvenance'}} class="btn btn-default active">
-						<input type="radio" name="options" id="option2">Hide
-					</label>
-				</span>
+			<span class="button-group" data-toggle="buttons">
+				<label {{action 'enableProvenance'}} class="btn btn-default">
+					<input type="radio" name="options" id="option1" checked>Show provenance
+				</label>
+				<label {{action 'disableProvenance'}} class="btn btn-default active">
+					<input type="radio" name="options" id="option2">Hide provenance
+				</label>
 			</span>
+
 		</span>
 		<div class="hidden-md hidden-lg">
 			<!-- Show as dropdown on smaller screens -->
