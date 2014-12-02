@@ -1,0 +1,39 @@
+<div class="dl-horizontal">
+	<dl class="dl-text-left">
+		<!--identifier ID-->
+		{{#if identifier}}
+		<dt>Identifier</dt>
+		<dd>{{pathwayShortLink identifier}}</dd>
+		{{/if}}
+
+		<!--organism-->
+		{{#if organism}}
+		<dt>Organism</dt>
+		<dd>{{organismLink organism organismLabel}}</dd>
+		{{/if}}
+
+		{{#if pathwayOntologies}}
+		<dt>Ontologies</dt>
+		<dd>
+		{{#each ontology in pathwayOntologies}}
+		<p>{{ontologyLink ontology}}</p>
+		{{/each}}
+		</dd>
+		{{/if}}
+
+		<!--genes-->
+		{{#if geneProductLabel}}
+		<dt>Gene product</dt>
+		<dd>{{geneProductLabel}}  ({{geneProductURI}}) <p>{{about}}</p></dd>
+		{{/if}}
+
+		{{#if parts}}
+		<dt>Parts</dt>
+		<dd>
+		{{#each part in parts}}
+		<p>{{vocabPart part.type}} {{#if showProvenance}}({{pathwayShortLink part.about}}) {{provenanceLinkout part.about wikipathwaysProvenance.source}}{{else}}({{pathwayShortLink part.about}}){{/if}}</p>
+		{{/each}}
+		</dd>
+		{{/if}}
+	</dl>
+</div>

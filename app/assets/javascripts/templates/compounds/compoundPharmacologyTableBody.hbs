@@ -1,0 +1,20 @@
+<tbody>
+	{{#each pharmaRecord in pharmacology}}
+	<tr class="record-deco">
+		<td style="vertical-align:middle;" height="70">
+			{{#each target in pharmaRecord.targets}}
+			<p>{{#link-to "targets.index" (query-params uri=target.about)}}{{target.title}}{{/link-to}}</p>
+			{{/each}}
+		</td>
+		<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
+		<td class="cell-basictext">{{assayOrganism}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityRelation}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityRelationItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityValue}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="lead cell-basictext">{{pharmaRecord.activityStandardUnits}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityStandardUnitsItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
+		<td class="cell-basictext">{{linkablePubmedId pharmaRecord.activityPubmedId}}</td>
+		<td class="cell-basictext">{{pharmaRecord.pChembl}}{{#if showProvenance}}{{#if pharmaRecord.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
+	</tr>
+	{{/each}}
+</tbody>

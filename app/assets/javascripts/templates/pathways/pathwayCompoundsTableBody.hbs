@@ -1,0 +1,20 @@
+<tbody>
+	{{#each compound in compounds}}
+	<tr class="record-deco">
+		<td>{{#link-to "compounds.draw" (query-params smiles=compound.smiles) title="Draw this compound"}}{{cs_image_src compound.csURI}}{{/link-to}}</td>
+		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}</td>
+		<td class="cell-basictext">{{compound.description}}</td>
+		<td class="cell-basictext">{{compound.biotransformationItem}}</td>
+		<td class="cell-basictext">{{compound.toxicity}}</td>
+		<td class="cell-basictext">{{compound.proteinBinding}}</td>
+		<td class="cell-basictext">{{compound.fullMWT}}</td>
+		<td class="cell-basictext">{{compound.hba}}</td>
+		<td class="cell-basictext">{{compound.hbd}}</td>
+		<td class="cell-basictext">{{compound.logp}}</td>
+		<td class="cell-basictext">{{compound.mwFreebase}}</td>
+		<td class="cell-basictext">{{compound.psa}}</td>
+		<td class="cell-basictext">{{compound.ro5Violations}}</td>
+		<td class="cell-basictext">{{compound.rtb}}</td>
+	</tr>
+	{{/each}}
+</tbody>

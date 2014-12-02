@@ -1,0 +1,31 @@
+<div class="col-xs-12 col-sm-3 col-sm-pull-9">
+	<!--box properties-->
+	<div id="boxes">
+		{{#if molecularWeight}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small>Molecular Weight</small></p>
+				<p class="lead">{{molecularWeight}}</p>
+			</div>
+		</div>
+		{{/if}}
+
+		{{#if numberOfResidues}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small># of Residues</small></p>
+				<p class="lead">{{numberOfResidues}}</p>
+			</div>
+		</div>
+		{{/if}}
+
+		{{#if theoreticalPi}}
+		<div class="summary-box">
+			<div class="inner-property-content">
+				<p><small>Theoretical Pi</small></p>
+				<p class="lead">{{theoreticalPi}}</p>
+			</div>
+		</div>
+		{{/if}}
+	</div>
+</div>

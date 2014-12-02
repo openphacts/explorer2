@@ -18,6 +18,7 @@
 //= require ember-1.7.0
 //= require ember-data-1.0.0-beta5
 //= require bootstrap
+//= require typeahead.bundle
 //= require combined
 //= require Three49custom
 //= require GLmol

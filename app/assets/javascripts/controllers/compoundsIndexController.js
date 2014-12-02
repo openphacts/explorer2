@@ -11,6 +11,10 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
         return this.get('model').get('favourite');
     }.property('model.favourite'),
 
+    provenanceEnabled: function() {
+        return this.get('showProvenance') === true;
+    }.property('showProvenance'),
+
     hasPathways: function() {
         if (this.get('model.pathwayRecords') != null && this.get('model.pathwayRecords') > 0) {
             return true;
@@ -24,19 +28,17 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
     }.property('model.pharmacologyRecords'),
 
     actions: {
-        enableProvenance: function() {
-            this.set('showProvenance', true);
-            console.log("Compund provenance enabled");
-        },
-
-        disableProvenance: function() {
-            this.set('showProvenance', false);
-            console.log("Compound provenance disabled");
-        },
-
         changeFavouriteStatus: function() {
             console.log('changing favourite status');
             this.get('controllers.application').addFavourite('compounds', this.get('model').get('URI'), this.get('model').get('prefLabel'), this.get('model'));
+        },
+
+        enableProvenance: function() {
+            this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	},
+
+        disableProvenance: function() {
+            this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
         }
     }
 

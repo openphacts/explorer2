@@ -19,8 +19,7 @@ App.CompoundsPathwaysView = Ember.View.extend({
 
 	    		s.css({
 	            	position: "fixed",
-	            	top: "0px",
-	            	height: "55px"
+	            	top: "0px"
 	        	});
 
 	    		var i = $('#compound-image');
@@ -37,7 +36,6 @@ App.CompoundsPathwaysView = Ember.View.extend({
 				s.css({
 	            	position: "relative",
 	            	top: "",
-	            	height: "135px",
 	            	width: "100%"
 	        	});
 
@@ -58,20 +56,34 @@ App.CompoundsPathwaysView = Ember.View.extend({
   willDestroyElement: function() {
     $(window).unbind("scroll");
   },
+    // If the summary box is scrolling off the page then shrink and fix to top of page.
+    // If scrolled to bottom of page then fetch more results
+    didScroll: function() {
+        var controller = this.get('controller');
+        var st = $(window).scrollTop();
+        var ot = $("#summary-anchor").offset().top;
+        var s = $("#summary");
+        if (st > ot) {
+            controller.set('fixSummaryBox', true);
+            controller.set('infoHide', true);
 
-  didScroll: function() {
-    if(this.isScrolledToBottom() && !this.get('controller').get('fetching')) {
-      disable_scroll();
-      this.get('controller').send('fetchMore');
+        } else {
+            controller.set('fixSummaryBox', false);
+            controller.set('infoHide', false);
+        }
+        if (this.isScrolledToBottom() && !this.get('controller').get('fetching')) {
+            disable_scroll();
+            this.get('controller').send('fetchMore');
+        }
+    },
+
+    isScrolledToBottom: function() {
+        var documentHeight = $(document).height();
+        var windowHeight = $(window).height();
+        var top = $(document).scrollTop();
+        var scrollPercent = (top / (documentHeight - windowHeight)) * 100;
+
+        return scrollPercent > 99;
     }
-  },
 
-  isScrolledToBottom: function() {
-    var documentHeight = $(document).height();
-    var windowHeight = $(window).height();
-    var top = $(document).scrollTop();
-    var scrollPercent = (top/(documentHeight-windowHeight)) * 100;
-
-    return scrollPercent > 99;
-  }
 });

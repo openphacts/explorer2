@@ -1,0 +1,79 @@
+<div class="col-xs-12 col-sm-9 col-sm-push-3">
+	{{#if alternativeName}}
+	<div class="large-top-spacing">
+		{{#if showProvenance}}
+		<em>{{alternativeName}} {{provenanceLinkout uniprotProvenance.alternativeName uniprotProvenance.source}}</em>
+		{{else}}
+		<em>{{alternativeName}}</em>
+		{{/if}}
+	</div>
+	{{/if}}
+	<!--details-->
+	<div class="dl-horizontal">
+		<dl class="dl-text-left">
+			{{#if organism}}
+			<dt>Organism</dt>
+			{{#if showProvenance}}
+			<dd>{{linkableOrganism organism}} {{provenanceLinkout uniprotProvenance.organism uniprotProvenance.source}}</dd>
+			{{else}}
+			<dd>{{linkableOrganism organism}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if existence}}
+			<dt>Existence</dt>
+			{{#if showProvenance}}
+			<dd>{{linkableOrganism existence}} {{provenanceLinkout uniprotProvenance.existence uniprotProvenance.source}}</dd>
+			{{else}}
+			<dd>{{linkableOrganism existence}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if functionAnnotation}}
+			<dt>Specific Function</dt>
+			{{#if showProvenance}}
+			<dd>{{functionAnnotation}} {{provenanceLinkout uniprotProvenance.functionAnnotation uniprotProvenance.source}}</dd>
+			{{else}}
+			<dd>{{functionAnnotation}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if cellularLocation}}
+			<dt>Cellular Location</dt>
+			{{#if showProvenance}}
+			<dd>{{cellularLocation}}  {{provenanceLinkout drugbankProvenance.cellularLocation drugbankProvenance.source}}</dd>
+			{{else}}
+			<dd>{{cellularLocation}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if keywords}}
+			<dt>Keywords</dt>
+			{{#if showProvenance}}
+			<dd>{{keywords}}  {{provenanceLinkout chemblProvenance.keywords chemblProvenance.source}}</dd>
+			{{else}}
+			<dd>{{keywords}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if seeAlso}}
+			<dt>PDB</dt>
+			{{#if showProvenance}}
+			<dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+			{{else}}
+			<dd>{{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+			{{/if}}
+			{{/if}}
+
+			{{#if sequence}}
+			<dt>Sequence</dt>
+			{{#if showProvenance}}
+			<dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}} {{provenanceLinkout uniprotProvenance.sequence uniprotProvenance.source}}</div></dd>
+			{{else}}
+			<dd><div style="max-width:500px;word-wrap:break-word;">{{sequence}}</div></dd>
+			{{/if}}
+			{{/if}}
+
+		</dl>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+<div class="col-xs-12 col-sm-9 col-sm-offset-3 big-margin-bottom">
+	<!-- Show as buttons on larger screens -->
+	<div class="hidden-sm hidden-xs">
+		<span class="button-group" data-toggle="buttons">
+			<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
+				<input type="radio" name="options" id="option1" checked>Show provenance
+			</label>
+			<label {{action 'disableProvenance'}} class="small-margin-bottom btn btn-default active">
+				<input type="radio" name="options" id="option2">Hide provenance
+			</label>
+		</span>
+		{{#if hasPharmacology}}
+		{{#link-to "compounds.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
+		{{/if}}
+		{{#if hasPathways}}
+		{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}
+		{{/if}}
+		{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default" }}Search by structure{{/link-to}}
+		{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default" }}Draw Molecule{{/link-to}}
+	</div>
+	<div class="hidden-md hidden-lg">
+		<!-- Show as dropdown on smaller screens -->
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				Options <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
+				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
+				<li class="divider"></li>
+				{{#if hasPharmacology}}
+				<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
+				{{/if}}
+				{{#if hasPathways}}
+				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
+				{{/if}}
+				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
+				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
+			</ul>
+		</div>
+	</div>
+</div>

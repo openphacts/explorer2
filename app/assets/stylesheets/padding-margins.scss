@@ -93,6 +93,9 @@ $huge: 40px;
 .big-margin-left {
     margin-left: $big;
 }
+.big-margin-bottom {
+    margin-bottom: $big;
+}
 .big-margin-right {
     margin-right: $big;
 }
@@ -110,6 +113,10 @@ $huge: 40px;
 .huge-padding-right {
     padding-right: $huge;
 }
+.huge-margin-bottom {
+    margin-bottom: $huge;
+}
+
 /* alignments */
 .text-top {
   vertical-align: text-top;
@@ -123,4 +130,8 @@ $huge: 40px;
 /* remove all padding */
 .no-padding {
   padding: 0;
+}
+
+.no-top-margin {
+    margin-top: 0;
 }

@@ -1,23 +1,20 @@
-<div>
-
-	<ul class="breadcrumb">
-  		<li><a href="/">Home</a> <span class="divider">/</span></li>
-  		<li>Ontologies<span class="divider">/</span></li>
-  		<li class="active">{{selectedTree}}</li>
-		
-	</ul>	
-	
-</div>
-<div class="left big-padding-left">
-<h3>Select an ontology</h3>
-{{view Ember.Select
-       content=treeTypes
-       prompt="Please select a target class"
-       value=defaultTree
-       multiple=false
-       selection=selectedTree}}
-</div>
-
-<div id="ontology-container" class="right small-padding-left">
-{{view App.TreeBranchView contentBinding="controller.content"}}
+<ul class="breadcrumb hidden-xs">
+	<li><a href="/">Home</a></li>
+	<li>Ontologies</li>
+	<li class="active">{{selectedTree}}</li>
+</ul>
+<div class="row">
+	<div class="col-xs-12 col-sm-3">
+		<h3>Select an ontology</h3>
+		{{view Ember.Select
+		content=treeTypes
+		prompt="Please select a target class"
+		value=defaultTree
+		multiple=false
+		selection=selectedTree}}
+	</div>
+	<!-- If the tree tries to pop off the right edge of the screen (fairly likely) then add scroll using table-responsive -->
+	<div id="ontology-container" class="table-responsive col-xs-12 col-sm-9 big-padding-top">
+		{{view App.TreeBranchView contentBinding="controller.content"}}
+	</div>
 </div>

@@ -8,6 +8,13 @@ App.TargetsPathwaysController = Ember.ObjectController.extend({
 
   page: null,
 
+  showProvenance: false,
+
+haveRecords: function() {
+	return this.get('model.pathways.length') > 0;	
+  }.property('model.pathways.length'),
+
+
   currentCount: function() {
     return this.get('model.pathways.length');
   }.property('model.pathways.length'),
@@ -39,11 +46,23 @@ App.TargetsPathwaysController = Ember.ObjectController.extend({
       enable_scroll();
       }
     };
-    searcher.byTarget('http://www.conceptwiki.org/concept/' + thisTarget.id, null, null, 1, 50, null, pathwaysByTargetCallback);
+    searcher.byTarget(thisTarget.get('URI'), null, null, 1, 50, null, pathwaysByTargetCallback);
     }
     pageScrolling = false;
     enable_scroll();
+  },
+  enableProvenance: function() {
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	  },
+
+  	  disableProvenance: function() {
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+  	  },
+
+	  goToTop: function() {
+      window.scrollTo(0,0);
   }
+  
   }
 
 });

@@ -1,3 +1,8 @@
+Ember.Handlebars.registerBoundHelper('renderHtml', function(rawHtml) {
+    	return new Ember.Handlebars.SafeString(rawHtml);
+});
+
+
 Ember.Handlebars.registerBoundHelper('targetComponentLink', function(component) {
   if (component.label != null && component.uri != null) {
 	var aLink = '<a href="' + component.uri +'" target="_blank">' + component.label +'</a>'
@@ -72,7 +77,7 @@ Ember.Handlebars.registerBoundHelper('textLink', function(link) {
   }
 });
 Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
-  return new Handlebars.SafeString('<td title="' + job.filters + '">' + job.label + '</td>');
+  return new Handlebars.SafeString('<td class="break-all small-padding-right" title="' + job.filters + '">' + job.label + '</td>');
 });
 Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
   return new Handlebars.SafeString('<div class="progress progress-striped active no-margin" title="' + percentage + '%"><div class="bar" style="width: ' + percentage + '%;"></div></div>');
@@ -80,9 +85,9 @@ Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a class='btn' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "' title='TSV file ready. Click button to download.'>Download</a>");
+    return new Handlebars.SafeString("<a class='btn btn-sm small-margin-left small-margin-right' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "' title='TSV file ready. Click button to download.'>Download</a>");
   } else {
-    return new Handlebars.SafeString("<button type='button' class='btn btn-disabled' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
+    return new Handlebars.SafeString("<button type='button' class='btn btn-sm btn-disabled small-margin-left small-margin-right' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
   }
 });
 Ember.Handlebars.registerHelper("log", function(context) {
@@ -115,9 +120,9 @@ Ember.Handlebars.registerBoundHelper('pathwayShortLink', function(pathwayURI) {
 	}
 });
 
-Ember.Handlebars.registerBoundHelper('organismLink', function(organism) {
+Ember.Handlebars.registerBoundHelper('organismLink', function(organism, organismLabel) {
 	if (organism) {
-		return new Handlebars.SafeString('<a href="' + organism + '">' + organism.split('/').pop() + '</a>');		        
+		return new Handlebars.SafeString('<a href="' + organism + '">' + organismLabel + '</a>');		        
 	}
 });
 
@@ -163,13 +168,11 @@ Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
   }	
 });
 Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, options) {
-  //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
   if (options && csURL) {
       return new Handlebars.SafeString('<img width="128" height="128" src="http://ops.rsc.org/' + csURL.split("/").pop() + '/image">');
   }
 });
 Ember.Handlebars.registerBoundHelper('target_image_src', function(target, options) {
-  //TODO I'm sure the context can be changed to the actual compound somehow in the view, I'm just not sure how at the moment
   if (options && target && target.length >= 1) {
       return new Handlebars.SafeString('<img width="128" height="128" src="http://www.rcsb.org/pdb/images/' + target[0].split('/').pop() + '_asr_r_250.jpg"&amp;w=128&amp;h=128/>');
   } else {
