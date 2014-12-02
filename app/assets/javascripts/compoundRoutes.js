@@ -6,33 +6,13 @@ App.CompoundsIndexRoute = Ember.Route.extend({
    console.log('compound index controller');
    controller.set('model', model);
    var compound = model;
+   this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
+
    var molfile = this.controllerFor('application').get('molfile');
    //set the favourite status for this compound
    this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
    var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
-var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-            var callback = function(success, status, response) {
-                if (success) {
-                    var compoundResult = {};
-                    var uris = mapSearch.parseMapURLResponse(response);
-                    $.each(uris, function(index, uri) {
-                        var foundIt = false;
-                        if (uri.indexOf("http://ops.rsc.org") !== -1) {
-                            foundIt = true;
-			    // localStorage is strings only so just check that
-                            if (window.localStorage[uri] === "true") {
-                                compound.set('favourite', true);
-                            } else {
-                                compound.set('favourite', false);
-                            }
-
-                        }
-                        if (foundIt === true) return false; //ie break out of the iterator
-                    });
-                }
-            }
-
    var pathwaysCountCallback=function(success, status, response){
        if (success && response) {
          var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
@@ -51,7 +31,6 @@ var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
    var compoundURI = compound.get('URI');
    pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
    compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
-   mapSearch.mapURL(compoundURI, null, null, null, callback);
    Ember.run(function(){compound.set('molfile', molfile)});
   },
 
