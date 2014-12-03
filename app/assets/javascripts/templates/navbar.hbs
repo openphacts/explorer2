@@ -20,7 +20,7 @@
 			<li title="Search for a compound with a specific structure using a SMILES. Choose from an exact, sub-structure or similarity search.">{{#link-to "compounds.structure"}}Search for structure{{/link-to}}</li>
 			<li title="Draw a structure and search for the compound.">{{#link-to "compounds.draw"}}Draw Molecule{{/link-to}}</li>
 			<li id="target-class" title="Click to view ontology browser.">{{#link-to 'trees.index'}}Browse by Ontology{{/link-to}}</li>
-			<li>{{#link-to "favourites" title="See all the things you have marked as favourites"}}<i class="fa fa-star"></i>{{/link-to}}</li>
+			<li>{{#link-to "favourites" title="See all the things you have marked as favourites"}}<i class="fa fa-star-o"></i>{{/link-to}}</li>
 			<li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="fa fa-bell-o"></i></span></a></li>
 		</ul>
 		<!-- On a small screen there is no room so show the dropdown -->
@@ -31,10 +31,10 @@
 			<ul class="dropdown-menu" role="menu">
 				<li title="Search for a compound with a specific structure using a SMILES. Choose from an exact, sub-structure or similarity search.">{{#link-to "compounds.structure"}}Search for structure{{/link-to}}</li>
 				<li title="Draw a structure and search for the compound.">{{#link-to "compounds.draw"}}Draw Molecule{{/link-to}}</li>
-				<li>{{#link-to "favourites" title="See all the things you have marked as favourites"}}<i class="fa fa-star-o"></i>{{/link-to}}</li>
 				<li id="target-class" title="Click to view ontology browser.">{{#link-to 'trees.index'}}Browse by Ontology{{/link-to}}</li>
 			</ul>
 			</li>
+			<li>{{#link-to "favourites" title="See all the things you have marked as favourites"}}<i class="fa fa-star-o"></i>{{/link-to}}</li>
 			<li><a href="#alertsModalView" data-toggle="modal" title="Turns red when there are any alerts you need to pay attention to. Click to view."><span {{bind-attr class="alertsAvailable:label alertsAvailable:label-important"}}><i class="fa fa-bell-o"></i></span></a></li>
 		</ul>
 	</div>
