@@ -8,47 +8,94 @@
 //});
 if (window.history && window.history.pushState) {
     App.Router.reopen({
-      location: 'history',
-      rootURL: '/'
+        location: 'history',
+        rootURL: '/'
     });
 }
 
-App.Router.map(function() { 
-    this.route("search", { path: "/search" }, function() {
+App.Router.map(function() {
+    this.route("search", {
+        path: "/search"
+    }, function() {
 
     });
-    this.route('favourites', { path: '/favourites' }, function() {
+    this.route('favourites', {
+        path: '/favourites'
+    }, function() {
 
     });
-    this.resource('compounds', { path: '/compounds' }, function() {
-        this.route('pharmacology', { path: '/pharmacology' }, function(){});
-        this.route('pathways', { path: '/pathways' }, function(){});
-        this.route('structure', { path: '/structure' }, function(){});
-        this.route('draw', { path: '/draw' }, function(){});
+    this.resource('compounds', {
+        path: '/compounds'
+    }, function() {
+        this.route('pharmacology', {
+            path: '/pharmacology'
+        }, function() {});
+        this.route('pathways', {
+            path: '/pathways'
+        }, function() {});
+        this.route('structure', {
+            path: '/structure'
+        }, function() {});
+        this.route('draw', {
+            path: '/draw'
+        }, function() {});
     });
-    this.resource('targets', { path: '/targets' }, function() {
-        this.route('pharmacology', { path: '/pharmacology' }, function(){});
-        this.route('pathways', { path: '/pathways' }, function(){});
-        this.route('diseases', { path: '/diseases' }, function(){});
-    }); 
-    this.resource('trees', { path: '/trees' }, function() {
-        this.route('pharmacology', { path: '/pharmacology' }, function(){});
+    this.resource('targets', {
+        path: '/targets'
+    }, function() {
+        this.route('pharmacology', {
+            path: '/pharmacology'
+        }, function() {});
+        this.route('pathways', {
+            path: '/pathways'
+        }, function() {});
+        this.route('diseases', {
+            path: '/diseases'
+        }, function() {});
     });
-    this.resource('pathways', { path: '/pathways' }, function() {
-        this.route('compounds', { path: '/compounds' }, function(){});
+    this.resource('trees', {
+        path: '/trees'
+    }, function() {
+        this.route('pharmacology', {
+            path: '/pharmacology'
+        }, function() {});
     });
-    this.resource('diseases', { path: '/diseases' }, function() {
-        this.route('targets', { path: '/targets' }, function(){});
+    this.resource('pathways', {
+        path: '/pathways'
+    }, function() {
+        this.route('compounds', {
+            path: '/compounds'
+        }, function() {});
+    });
+    this.resource('diseases', {
+        path: '/diseases'
+    }, function() {
+        this.route('targets', {
+            path: '/targets'
+        }, function() {});
     });
 
 });
 
 App.ApplicationRoute = Ember.Route.extend({
 
-  setupController: function(controller, model, params) {
-    console.log('application route setup controller');
-    controller.set('iex', !oldIE);
-  }
+    setupController: function(controller, model, params) {
+        console.log('application route setup controller');
+        controller.set('iex', !oldIE);
+        var me = controller;
+        var fetchLensesRequest = $.ajax({
+            url: lensesUrl,
+            dataType: 'json',
+            cache: true,
+            success: function(response, status, request) {
+                console.log('fetch lense request success');
+                me.set('lenses', response);
+            },
+            error: function(request, status, error) {
+                console.log('fetch lense request fail');
+            }
+        });
+    }
 
 });
 
@@ -56,29 +103,29 @@ App.ApplicationRoute = Ember.Route.extend({
 
 App.SearchRoute = Ember.Route.extend({
 
-  setupController: function(controller, model, params) {
-    console.log('search route setup');
-    controller.clear();
-    controller.set('totalCompounds', 0);
-    controller.set('totalTargets', 0);
-    controller.doSearch();
-  },
+    setupController: function(controller, model, params) {
+        console.log('search route setup');
+        controller.clear();
+        controller.set('totalCompounds', 0);
+        controller.set('totalTargets', 0);
+        controller.doSearch();
+    },
 
-  model: function(params) {
-    console.log('search route model');
-    this.controllerFor('search').setCurrentQuery(params.query);
-    return [];
-  },
+    model: function(params) {
+        console.log('search route model');
+        this.controllerFor('search').setCurrentQuery(params.query);
+        return [];
+    },
 
-  beforeModel: function() {
-    this.controllerFor('application').set('fetching', false);
-    enable_scroll();
-  },
+    beforeModel: function() {
+        this.controllerFor('application').set('fetching', false);
+        enable_scroll();
+    },
 
-  actions: {
-    queryParamsDidChange: function() {
-      this.refresh();
+    actions: {
+        queryParamsDidChange: function() {
+            this.refresh();
+        }
     }
-  }
-	
+
 });

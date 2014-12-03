@@ -3,6 +3,57 @@ require 'tempfile'
 
 class CoreApiCallsController < ApplicationController
 
+  # Get the list of lenses from the IMS
+  def lenses
+    #uri = URI.parse(AppSettings.config["ims"]["lenses"])
+    #request = Net::HTTP::Get.new(uri.path, 'Accept' => 'application/json')
+    #http =  Net::HTTP.new(uri.host, uri.port)
+    #response = http.start{|http| http.request(request)}
+    #json = JSON.parse(response.body)
+    lenses = []
+    #json["Lenses"]["lenses"].each {|lens|  lenses.push({ :name => lens["name"], :uri => lens["uri"], :description => lens["description"]})}
+    # TODO when all the lenses are tested and the list only contains ones that users will want to use then we can return to using the api call
+    lenses.push({
+            :name => "Stereochemistry",
+            :uri => "/QueryExpander/Lens/stereochemistry",
+            :description => "Default Lens plus the Stereochemistry linksets"
+    }) 
+    lenses.push({
+            :name => "Isotope",
+            :uri => "/QueryExpander/Lens/isotope",
+            :description => "Default Lens plus the Isotope linksets"
+    })
+    lenses.push({
+            :name => "Tautomer",
+            :uri => "/QueryExpander/Lens/tautomer",
+            :description => "Default Lens plus the Tautomer linksets"
+    })
+    lenses.push({
+            :name => "Default CW",
+            :uri => "/QueryExpander/Lens/DefaultCW",
+            :description => "Default Lens plus transitives via ConcepWiki"
+    })
+    lenses.push({
+            :name => "Default plus Charge",
+            :uri => "/QueryExpander/Lens/charge",
+            :description => "Default Lens plus the Charge linksets"
+    })
+
+
+# No need for default, jsut have a button to reset the lens back to the default
+#    lenses.push({
+#            :name => "Default",
+#            :uri => "/QueryExpander/Lens/Default",
+#            :description => "The lens used by default in the Open PHACTS Discovery Platform"
+#    })
+
+    respond_to do |format|
+      format.json {
+        render :json => lenses
+      }
+    end
+  end
+
   # Get the list of organisms for use in the filter
   # autocompleter
   def organisms

@@ -3,6 +3,7 @@ App.ApplicationController = Ember.Controller.extend({
     //jobsList used in the view to loop over the entries
     jobsList: [],
     alertsAvailable: false,
+    lenses: null,
     iex: false,
 
     // use for structure drawing
