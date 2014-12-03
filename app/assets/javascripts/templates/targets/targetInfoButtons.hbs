@@ -1,0 +1,35 @@
+<div class="col-xs-12 col-sm-9 col-sm-offset-3 big-margin-bottom">
+	<!-- Show as buttons on larger screens -->
+	<div class="hidden-xs hidden-sm">
+		<span class="button-group" data-toggle="buttons">
+			<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
+				<input type="radio" name="options" id="option1" checked>Show provenance
+			</label>
+			<label {{action 'disableProvenance'}} class="small-margin-bottom btn btn-default active">
+				<input type="radio" name="options" id="option2">Hide provenance
+			</label>
+		</span>
+		{{#if threeDeeEnabled}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :btn-small"}} title="Visualize this target in 3D">3D</button>{{/if}}
+		{{#link-to "targets.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology{{/link-to}}
+		{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways{{/link-to}}
+		{{#if hasDiseases}}{{#link-to "targets.diseases" (query-params uri=URI) class="btn btn-default"}}Diseases ({{diseaseRecords}}){{/link-to}}{{/if}}
+
+	</div>
+	<!-- Show as dropdown on smaller screens -->
+	<div class="hidden-md hidden-lg">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				Options <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" role="menu">
+				<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
+				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
+				<li class="divider"></li>
+				{{#if threeDeeEnabled}}<li><a href="#" {{action 'drawProtein'}} title="Visualize this target in 3D">View in 3D</a></li>{{/if}}
+				<li>{{#link-to "targets.pharmacology" (query-params uri=this.URI)}}Pharmacology{{/link-to}}</li>
+				<li>{{#link-to "targets.pathways" (query-params uri=this.URI)}}Pathways{{/link-to}}</li>
+				{{#if hasDiseases}}<li>{{#link-to 'targets.diseases' (query-params uri=URI)}}Diseases ({{diseaseRecords}}){{/link-to}}</li>{{/if}}
+			</ul>
+		</div>
+	</div>
+</div>

@@ -3,3 +3,4 @@
 //= require treeRoutes
 //= require pathwayRoutes
 //= require diseaseRoutes
+//= require favouritesRoutes

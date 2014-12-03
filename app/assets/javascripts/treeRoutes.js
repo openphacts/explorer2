@@ -42,9 +42,14 @@ App.TreesIndexRoute = Ember.Route.extend({
 
     model: function(params) {
         console.log('enzymes route model');
-        params.ontology != null ? this.controllerFor('trees.index').set('defaultTree', params.ontology) : this.controllerFor('trees.index').set('defaultTree', 'enzyme');
-        params.ontology != null ? this.controllerFor('trees.index').set('initialTree', params.ontology) : this.controllerFor('trees.index').set('initialTree', 'enzyme');
-        return [];
+	if (params.ontology == null) {
+            this.transitionTo('trees.index', {queryParams: {'ontology': 'enzyme'}});
+	} else {
+            this.controllerFor('trees.index').set('defaultTree', params.ontology);
+            this.controllerFor('trees.index').set('initialTree', params.ontology);
+            this.controllerFor('trees.index').set('selectedTree', params.ontology);
+	}
+	return [];
     },
 
     beforeModel: function() {

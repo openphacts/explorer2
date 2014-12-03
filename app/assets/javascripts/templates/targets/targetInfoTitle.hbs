@@ -1,0 +1,16 @@
+<div class="col-xs-12 col-sm-12">
+	<div class="centre col-xs-12 col-sm-3">{{target_image_src seeAlso}}</div>
+	<!--title and formula-->
+	<div class="col-xs-12 col-sm-9">
+		{{#if showProvenance}}
+		<h1 class="break-word">
+			{{#if prefLabel}}{{prefLabel}}{{else}}<span class="muted">No label</span>{{/if}}{{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}
+		</h1>
+		{{else}}
+		<h1 class="break-word">
+			{{#if prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
+		</h1>
+		{{/if}}
+	</div>
+</div>
+

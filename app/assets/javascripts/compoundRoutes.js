@@ -6,15 +6,19 @@ App.CompoundsIndexRoute = Ember.Route.extend({
    console.log('compound index controller');
    controller.set('model', model);
    var compound = model;
-   var molfile = this.controllerFor('application').get('molfile');
+   this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
 
+   var molfile = this.controllerFor('application').get('molfile');
+   //set the favourite status for this compound
+   this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
    var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
    var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
-
    var pathwaysCountCallback=function(success, status, response){
        if (success && response) {
          var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
-         Ember.run(function(){compound.set('pathwayRecords', count)});
+         Ember.run(function(){
+		 compound.set('pathwayRecords', count);
+	 });
        }
    };
 
@@ -341,6 +345,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
     //the route can come in with a ?type=structureSearchType param, default is exact
     var type = params.type;
     if (type) {
+	this.controllerFor('compoundsStructure').set('currentStructure', type);
         this.controllerFor('compoundsStructure').set('structureSearchType', type);
         this.controllerFor('compoundsStructure').set('initStructureSearchType', type);
     }

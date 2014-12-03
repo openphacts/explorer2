@@ -1,0 +1,35 @@
+<!-- breadcrumb	-->
+<ul class="breadcrumb">
+	<li><a href="/">Home</a></li>
+	<li class="active">Favourites</li>
+</ul>
+
+<div class="container-fluid">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="#favourite-compounds" data-toggle="tab">Compounds</a></li>
+		<li><a href="#favourite-targets" data-toggle="tab">Targets</a></li>
+	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="favourite-compounds">
+			{{#each}}
+			{{#if isCompound}}
+			<div class="row">
+				<div class="col-xs-12 col-md-2">{{cs_image_src csURI}}</div>
+				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
+			</div>
+			{{/if}}
+			{{/each}}
+			</div>
+			<div class="tab-pane" id="favourite-targets">
+			{{#each}}
+			{{#if isTarget}}
+			<div class="row">
+				<div class="col-xs-12 col-md-2">{{target_image_src seeAlso}}</div>
+				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
+			</div>
+			{{/if}}
+			{{/each}}
+	    </div>
+	</div>
+</div>

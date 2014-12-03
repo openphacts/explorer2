@@ -10,11 +10,9 @@ gem 'sqlite3'
 group :assets do
   gem 'sass-rails', '~> 3.2'
   gem 'coffee-rails', '~> 3.2'
-  gem 'compass-rails'
+  #gem 'compass-rails'
   gem 'uglifier'
-  # ensure bootstrap 2, not 3
-  gem 'bootstrap-sass', '2.3.2.2'
-  # vendor ember doesn't understand that handlebars 1.0.0 is greater than 1.0.0.rc3, freeze it here for the moment
+  gem 'bootstrap-sass', '~> 3.2.0.1'
   gem 'handlebars_assets'
 end
 
@@ -31,4 +29,4 @@ gem 'daemons'
 #bundler/therubyracer causes libv8 build issues on osx mavericks so try execjs instead 
 gem 'execjs'
 gem 'uuidtools'
-gem 'font-awesome-rails', '4.2.0.0'
+gem 'font-awesome-rails'

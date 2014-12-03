@@ -2,7 +2,11 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   needs: ["compounds", "application"],
 
+  showProvenance: false,
+
   queryParams: ['uri'],
+
+  infoHide: false,
 
   hideInfo: false,
 
@@ -23,6 +27,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   equalTo: false,
 
   greaterThanOrEqual: false,
+
+  haveRecords: function() {
+      return this.get('model.pharmacology.length') > 0;	
+  }.property('model.pharmacology.length'),
 
   lessThanOrEqual: false,
 
@@ -66,7 +74,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
   page: null,
 
-  showPharmaProvenance: false,
+  showProvenance: false,
 
   currentCount: function() {
     return this.get('model.pharmacology.length');
@@ -744,7 +752,9 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
         me.set('totalCount', count);
         if (count > 0) {
             searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, null, lens, pharmaCallback);
-        }
+        } else {
+          me.get('controllers.application').set('fetching', false);
+	}
       }
     };
     searcher.compoundPharmacologyCount(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
@@ -766,13 +776,14 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
   goToTop: function() {
       window.scrollTo(0,0);
   },
-  enableProvenance: function() {
-      this.set('showPharmaProvenance', true);
-  },
+  	  enableProvenance: function() {
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	  },
 
-  disableProvenance: function() {
-      this.set('showPharmaProvenance', false);
-  }
+  	  disableProvenance: function() {
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+  	  }
+
   }
 
 

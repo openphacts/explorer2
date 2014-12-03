@@ -1,108 +1,22 @@
-<style>
-	dt { 
-		padding: 20px 0 0 0;
-	}
-	dd { 
-		padding: 20px 0 0 0; }
-</style>
-
 <!-- breadcrumb	-->
-	<ul class="breadcrumb">
-  		<li><a href="/">Home</a></li>
-		<li><span class="divider">/</span>{{title}}<span class="divider">/</span></li>
-  		<li class="active">Pathway Information</li>
+<ul class="breadcrumb hidden-xs">
+	<li><a href="/">Home</a></li>
+	<li>{{title}}</li>
+	<li class="active">Pathway Information</li>
+</ul>
 
-		<div class="row pull-right" > 
-			<div class="span1 small-padding-top small-padding-right">Provenance </div>
-  			<div class="span2 btn-group" data-toggle="buttons-radio" style="margin-top:-5px;">
-				<button {{action 'enableProvenance'}} {{bind-attr class="showProvenance:active: :btn"}}>On</button>
-				<button {{action 'disableProvenance'}} {{bind-attr class="showProvenance::active :btn"}}>Off</button>
-  			</div>
+
+<!-- main -->
+<div>
+	<div class="row">
+		<!--Body content-->
+		<!-- Use the col ordering to pull and push on bigger devices so that smaller devices have the title on top -->
+		{{partial "pathways/pathwayIndexButtons"}}
+		<div class="col-sm-8 col-sm-push-4 col-md-9 col-md-push-3">
+			{{partial "pathways/pathwayIndexTitle"}}
 		</div>
-
-	</ul>
-
-
-  			<!-- main -->
-	<div class="container">
-	<div class="container-fluid large-top-spacing">
-  		<div class="row-fluid">
-    		
-    		<!--Body content-->
-    		<div class="span9">
-     			
-				<!--title-->
-				<div>
-					<div style="padding:20px 0 0 0">
-						{{#if showProvenance}}
-							<h1>{{title}} {{provenanceLinkout wikipathwaysProvenance.title wikipathwaysProvenance.source}}</h1>
-                  		{{else}}
-                  			<h1>{{title}}</h1>
-                  		{{/if}}
-					</div>
-					
-					<div style="padding:30px 0 0 0;text-align:left;">
-						{{#link-to "pathways.compounds" (query-params uri=URI)}}Compounds{{/link-to}}
-					</div>
-				</div>
-							
-				<!--description-->
-				<div class="summary-descriptive-text large-top-spacing">
-        			{{#if description}}
-        				{{#if showProvenance}}
-        					<p>{{description}} {{provenanceLinkout wikipathwaysProvenance.description wikipathwaysProvenance.source}}</p>	
-        				{{else}}
-        					<p>{{description}}</p>
-						{{/if}}
-            			
-        			{{/if}}
-				</div>
-				
-				
-				<!--details-->
-				<div class="dl-horizontal" style="font-size:13px;">
-					<dl>
-            			<!--identifier ID-->
-						{{#if identifier}}
-  							<dt>Identifier</dt>
-  							<dd>{{pathwayShortLink identifier}}</dd>
-						{{/if}}
-
-            			<!--organism-->
-						{{#if organism}}
-							<dt>Organism</dt>
-                  			<dd>{{organismLabel}}  ({{organismLink organism}})</dd>
-						{{/if}}
-  						
-  						{{#if pathwayOntologies}}
-							<dt>Ontologies</dt>
-                  			<dd>
-                  			{{#each ontology in pathwayOntologies}}
-								<p>{{ontologyLink ontology}}</p>
-							{{/each}}
-                  			</dd>
-						{{/if}}
-						
-						<!--genes-->
-						{{#if geneProductLabel}}
-							<dt>Gene product</dt>
-                  			<dd>{{geneProductLabel}}  ({{geneProductURI}}) <p>{{about}}</p></dd>
-						{{/if}}
-						
-						{{#if parts}}
-							<dt>Parts</dt>
-							<dd>
-							{{#each part in parts}}
-								<p>{{vocabPart part.type}} {{#if showProvenance}}({{pathwayShortLink part.about}}) {{provenanceLinkout part.about wikipathwaysProvenance.source}}{{else}}({{pathwayShortLink part.about}}){{/if}}</p>
-							{{/each}}
-							</dd>
-						{{/if}}
-             
-     			</div>
-     			
-    		</div>
-  		</div>
+		<div class="col-sm-4 col-sm-pull-8 col-md-3 col-md-pull-9">
+			{{partial "pathways/pathwayIndexDetails"}}
+		</div>
 	</div>
-	</div>
-	
 </div>

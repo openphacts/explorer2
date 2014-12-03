@@ -1,34 +1,45 @@
 App.CompoundsIndexController = Ember.ObjectController.extend({
 
-  needs: ['application'],
+    needs: ['application'],
 
-  queryParams: ['uri'],
-  uri: '',
+    queryParams: ['uri'],
+    uri: '',
 
-  showProvenance: false,
+    showProvenance: false,
 
-  hasPathways: function() {
-      if(this.get('model.pathwayRecords') != null && this.get('model.pathwayRecords') > 0) {
-        return true;
-      }
-  }.property('model.pathwayRecords'),
+    favourite: function() {
+        return this.get('model').get('favourite');
+    }.property('model.favourite'),
 
-  hasPharmacology: function() {
-      if(this.get('model.pharmacologyRecords') != null && this.get('model.pharmacologyRecords') > 0) {
-        return true;
-      }
-  }.property('model.pharmacologyRecords'),
+    provenanceEnabled: function() {
+        return this.get('showProvenance') === true;
+    }.property('showProvenance'),
 
-  actions: {
-  	  enableProvenance: function() {
-    	this.set('showProvenance', true);
-    	console.log("Compund provenance enabled");
-	  },
+    hasPathways: function() {
+        if (this.get('model.pathwayRecords') != null && this.get('model.pathwayRecords') > 0) {
+            return true;
+        }
+    }.property('model.pathwayRecords'),
 
-  	  disableProvenance: function() {
-      	this.set('showProvenance', false);
-    	console.log("Compound provenance disabled");
-  	  }
-  }
-	
+    hasPharmacology: function() {
+        if (this.get('model.pharmacologyRecords') != null && this.get('model.pharmacologyRecords') > 0) {
+            return true;
+        }
+    }.property('model.pharmacologyRecords'),
+
+    actions: {
+        changeFavouriteStatus: function() {
+            console.log('changing favourite status');
+            this.get('controllers.application').addFavourite('compounds', this.get('model').get('URI'), this.get('model').get('prefLabel'), this.get('model'));
+        },
+
+        enableProvenance: function() {
+            this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	},
+
+        disableProvenance: function() {
+            this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+        }
+    }
+
 });

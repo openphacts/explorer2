@@ -1,0 +1,117 @@
+<!-- Modal -->
+<div id="compoundStructureFilterModalView" class="modal fade"  style="width: inherit;"tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">Filters for {{this.prefLabel}} {{structureSearchType}}</h3>
+			</div>
+			<div class="modal-body" style="overflow-y: visible;">
+				<table>
+					<tbody>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum Molecular Weight" value=mwSelectedLowerValue id="mwLowerValueInput"}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Molecular Weight</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum Molecular Weight" value=mwSelectedHigherValue id="mwHigherValueInput" max=maxMWT min=minMWT}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum MW Freebase" value=mwFreebaseSelectedLowerValue id="mwFreebaseLowerValueInput" max=maxMWFreebase min=minMWFreebase}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Molecular Weight Freebase</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum MW Freebase" value=mwFreebaseSelectedHigherValue id="mwFreebaseHigherValueInput" max=maxMWFreebase min=minMWFreebase}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum H-Bond Acceptors" value=hBondAcceptorsSelectedLowerValue id="hBondAcceptorsLowerValueInput" max=maxHBondAcceptors min=minHBondAcceptors}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">H-bond Acceptors</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum H-Bond Acceptors" value=hBondAcceptorsSelectedHigherValue id="hBondAcceptorsHigherValueInput"}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum H-Bond Donors" value=hBondDonorsSelectedLowerValue id="hBondDonorsLowerValueInput" max=maxHBondDonors min=minHBondDonors}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">H-bond Donors</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum H-Bond Donors" value=hBondDonorsSelectedHigherValue id="hBondDonorsHigherValueInput" max=maxHBondDonors min=minHBondDonors}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum Log P" value=logPSelectedLowerValue id="logPLowerValueInput" max=maxLogP min=minLogP}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">logP</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum Log P" value=logPSelectedHigherValue id="logPHigherValueInput" max=maxLogP min=minLogP}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum Polar Surface Area" value=polarSurfaceAreaSelectedLowerValue  id="polarSurfaceAreaLowerValueInput" max=maxPSA min=minPSA}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Polar Surface Area</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum Polar Surface Area" value=polarSurfaceAreaSelectedHigherValue id="polarSurfaceAreaHigherValueInput" max=maxPSA min=minPSA}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum Rule of 5 Violations" value=ro5SelectedLowerValue id="ro5LowerValueInput" max=maxRO5 min=minRO5}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Rule of 5 Violations</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum Rule of 5 Violations" value=ro5SelectedHigherValue id="ro5HigherValueInput" max=maxRO5 min=minRO5}}</td>
+						</tr>
+						<tr>
+							<td class="small-padding-right">{{input type="text" class="form-control" placeholder="Minimum Rotatable Bonds" value=rbSelectedLowerValue id="rbLowerValueInput" max=maxRB min=minRB}}</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Number of Rotatable Bonds</p>
+							</td>
+							<td class="medium-padding-bottom"><=</td>
+							<td class="small-padding-left">{{input type="text" class="form-control" placeholder="Maximum Rotatable Bonds" value=rbSelectedHigherValue  id="rbHigherValueInput" max=maxRB min=minRB}}</td>
+						</tr>
+						{{#if subSearch}}
+						<tr>
+							<td class="small-padding-right"></td>
+							<td></td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Relevance</p>
+							</td>
+							<td class="medium-padding-bottom">>=</td>
+							<td class="centre">{{input type="text" class="form-control" placeholder="Minimum Relevance" value=relSelectedHigherValue id="relValueInput" max=maxRel min=minRel}}</td>
+						</tr>
+						{{/if}}
+						{{#if simSearch}}
+						<tr>
+							<td class="small-padding-right"></td>
+							<td></td>
+							<td class="centre medium-padding-bottom">
+								<p class="structure-filter-para">Relevance</p>
+							</td>
+							<td class="medium-padding-bottom">>=</td>
+							<td class="centre">{{input type="text" class="form-control" placeholder="Minimum relevance" value=relSelectedHigherValue id="relValueInput" max=maxRel min=minRel}}</td>
+						</tr>
+						{{/if}}
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+				<button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End of Modal -->

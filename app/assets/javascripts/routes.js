@@ -17,6 +17,9 @@ App.Router.map(function() {
     this.route("search", { path: "/search" }, function() {
 
     });
+    this.route('favourites', { path: '/favourites' }, function() {
+
+    });
     this.resource('compounds', { path: '/compounds' }, function() {
         this.route('pharmacology', { path: '/pharmacology' }, function(){});
         this.route('pathways', { path: '/pathways' }, function(){});

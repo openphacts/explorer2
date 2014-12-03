@@ -6,10 +6,9 @@ class CoreApiCallsController < ApplicationController
   # Get the list of organisms for use in the filter
   # autocompleter
   def organisms
-    organisms = []
     query = params[:query]
-    Rails.cache.fetch('org_' + params[:query], :expires_in => 6.months) { Organism.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.each do |organism|
-      organisms.push(organism.label)
+    organisms = Rails.cache.fetch('org_' + params[:query], :expires_in => 6.months) { Organism.where(["label LIKE ?", "%#{params[:query]}%"]).limit(20) }.map do |organism|
+	    {value: organism.label}
     end
 
     respond_to do |format|

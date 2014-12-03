@@ -1,0 +1,13 @@
+<tbody>
+	{{#each  pathway in pathways}}
+	<tr class="record-deco">
+		<td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
+		<td class="cell-basictext">{{textLink pathway.identifier}}</td>
+		<td class="cell-longtext">{{pathway.description}} {{#if showProvenance}}{{provenanceLinkout pathway.wikipathwaysProvenance.description pathway.wikipathwaysProvenance.source}}{{/if}}</td>
+		<td class="cell-basictext">{{pathway.pathwayOntology}}</td>
+		<td class="cell-basictext">{{pathwayOrganismLink pathway.organism pathway.organismLabel}} {{#if showProvenance}}{{provenanceLinkout pathway.wikipathwaysProvenance.organismLabel pathway.wikipathwaysProvenance.source}}{{/if}}</td>
+		<td class="cell-basictext">{{pathway.geneProduct}}</td>
+		<td class="cell-basictext">{{pathwayRevision pathway.revision}}</td>
+	</tr>
+	{{/each}}
+</tbody>

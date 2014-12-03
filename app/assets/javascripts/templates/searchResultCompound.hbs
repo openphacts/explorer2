@@ -1,0 +1,32 @@
+<div class="single-search-result compound-info-box medium-margin-right medium-margin-bottom col-xs-12 col-sm-5 col-md-3 col-lg-3">
+<h4 class="centre break-word">
+	{{#if result.prefLabel}}
+	{{#link-to "compounds.index" (query-params uri=result.URI)}}{{result.prefLabel}}{{/link-to}}
+	{{else}}
+	{{#link-to "compounds.index" (query-params uri=result.URI)}}<span class="muted">No label</span>{{/link-to}}
+	{{/if}}
+</h4>
+<div class="thumbnail compound-result-image" title="Click to search for compounds with this structure">
+	{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI}}{{/link-to}}
+</div>
+<p class="centre">{{formatMolecularFormula result.molform}}</p>
+<p>{{result.description}}</p>
+{{#if result.pharmacologyInfoAvailable}}
+{{#if result.hasPharmacology}}
+{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge small-margin-left">{{result.pharmacologyRecords}}</span>
+{{else}}
+<em class="muted">No pharmacology</em>
+{{/if}}
+{{else}}
+<small><em>Fetching Pharmacology Count</em></small>
+{{/if}}
+{{#if result.pathwayInfoAvailable}}
+{{#if result.hasPathways}}
+{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}<span class="badge small-margin-left">{{result.pathwayRecords}}</span>
+{{else}}
+<em class="muted">No pathways</em>
+{{/if}}
+{{else}}
+<small><em>Fetching Pathway Count</em></small>
+{{/if}}
+</div>

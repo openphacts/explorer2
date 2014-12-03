@@ -36,6 +36,12 @@ App.TargetsIndexController = Ember.ObjectController.extend({
             this.set('showProvenance', false);
             console.log("Target provenance disabled");
         },
+
+        changeFavouriteStatus: function() {
+            console.log('changing favourite status');
+            this.get('controllers.application').addFavourite('targets', this.get('model').get('URI'), this.get('model').get('prefLabel'), this.get('model'));
+        },
+
         drawProtein: function() {
             var me = this;
             if (me.get('content').get('seeAlso').length > 0) {

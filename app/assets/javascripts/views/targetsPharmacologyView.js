@@ -1,19 +1,56 @@
 App.TargetsPharmacologyView = Ember.View.extend({
   didInsertElement: function() {
-	  $('#assay_organism_box').typeahead({
-        source: function (query, process) {
-            $.getJSON(organismsUrl, { query: query }, function (data) {
-                return process(data);
-            })
-        }
+
+	    var assay_engine = new Bloodhound({
+		      name: 'assayorganisms',
+		  remote: organismsUrl + 'query=%QUERY',
+		  datumTokenizer: function(d) {
+			      return Bloodhound.tokenizers.whitespace(d.val);
+			        },
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		limit: 20
+	    });
+	    assay_engine.initialize();
+      $('#assay_organism_box').typeahead({
+        minLength: 3
+      },
+	{
+		source: assay_engine.ttAdapter(),
+	       templates: {
+		           empty: [
+	            '<div class="empty-message">',
+	            'unable to find any assay organisms matching the current query',
+	            '</div>'
+	          ].join('\n'),
+	          suggestion: Handlebars.compile('<p><strong>{{value}}</strong></p>')
+	        }
       });
+
+var target_engine = new Bloodhound({
+		      name: 'targetorganisms',
+		  remote: organismsUrl + 'query=%QUERY',
+		  datumTokenizer: function(d) {
+			      return Bloodhound.tokenizers.whitespace(d.val);
+			        },
+		  queryTokenizer: Bloodhound.tokenizers.whitespace,
+		limit: 20
+	    });
+	    target_engine.initialize();
       $('#target_organism_box').typeahead({
-        source: function (query, process) {
-            $.getJSON(organismsUrl, { query: query }, function (data) {
-                return process(data);
-            })
-        }
+        minLength: 3
+      },
+	{
+		source: target_engine.ttAdapter(),
+	       templates: {
+		           empty: [
+	            '<div class="empty-message">',
+	            'unable to find any target organisms matching the current query',
+	            '</div>'
+	          ].join('\n'),
+	          suggestion: Handlebars.compile('<p><strong>{{value}}</strong></p>')
+	        }
       });
+
     var view = this;
     $(window).bind("scroll", function() {
       view.didScroll();

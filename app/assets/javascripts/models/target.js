@@ -21,6 +21,7 @@ App.Target = App.SearchResult.extend({
     isCompound: false,
     isTarget: true,
     URI: DS.attr('string'),
+    favourite: DS.attr('boolean'),
     // provenance
     chemblProvenance: DS.attr(),
     drugbankProvenance: DS.attr(),

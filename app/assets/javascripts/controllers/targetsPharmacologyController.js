@@ -52,7 +52,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
 
   page: null,
     
-  showPharmaProvenance: false,
+  showProvenance: false,
 
   fetchingCount: false,
 
@@ -556,7 +556,9 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
         me.set('totalCount', count);
         if (count > 0) {
 		    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
-        }
+        } else {
+          me.get('controllers.application').set('fetching', false);
+	}
       }
     };
     searcher.targetPharmacologyCount(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
@@ -578,13 +580,14 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
   goToTop: function() {
       window.scrollTo(0,0);
   },
-  enableProvenance: function() {
-      this.set('showPharmaProvenance', true);
-  },
 
-  disableProvenance: function() {
-      this.set('showPharmaProvenance', false);
-  },
+  enableProvenance: function() {
+    	this.get('showProvenance') === false ? this.set('showProvenance', true) : '';
+	  },
+
+  	  disableProvenance: function() {
+      	this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+  	  },
 
   tsvDownload: function(target) {
     var me = this;

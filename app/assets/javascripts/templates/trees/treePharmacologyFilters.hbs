@@ -1,0 +1,75 @@
+<!-- Modal -->
+<div id="enzymePharmaFilterModalView" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
+			</div>
+			<div class="modal-body">
+				<div id="activity-filters">
+					<p><h4>Activity Filter</h4></p>
+					{{view Ember.Select
+					content=activityTypes
+					optionLabelPath="content.label"
+					prompt="Select an activity"
+					value=selectedActivity
+					selection=selectedActivity
+					}}
+					{{view Ember.Select
+					content=conditions
+					prompt="Select an operator"
+					value=selectedCondition
+					selection=selectedCondition
+					}}
+					{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
+					{{view Ember.Select
+					content=activityUnits
+					optionLabelPath="content.label"
+					prompt="Select a unit"
+					value=selectedUnit
+					selection=selectedUnit
+					}}
+				</div>
+				<div>
+					<h5>Return activities with the following relation(s) only</h5>
+					<p class="small-padding-right activity-relation-operator">&gt;</p>
+					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+					<p class="small-padding-right activity-relation-operator">&lt;</p>
+					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+					<p class="small-padding-right activity-relation-operator">=</p>
+					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+					<p class="small-padding-right activity-relation-operator">&ge;</p>
+					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+					<p class="small-padding-right activity-relation-operator">&le;</p>
+					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+				</div>
+				<div id="pchembl-filters">
+					<p><h4>pChembl Filter</h4></p>
+					{{view Ember.Select
+					content=pchemblConditions
+					prompt="Select an operator"
+					value=selectedPchemblCondition
+					selection=selectedPchemblCondition
+					}}
+					{{input type="text" placeholder="Enter a pchembl value" value=pchemblValue id="pchemblValueInput"}}
+				</div>
+				<div>
+					<p><h4>Organism filters</h4></p>
+					<div>
+						<h5 style="display: inline;">Assay:</h5> {{input type="text" placeholder="Enter name of an assay organism" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box"}}
+					</div>
+					<div>
+						<h5 style="display: inline;">Target:</h5> {{input type="text" placeholder="Enter name of a target organism" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box"}}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+				<button class="btn btn-warning" {{action "resetFilters"}} title="Reset the filters to default values">Reset filters</button>
+				<button class="btn btn-primary" {{action "applyFilters"}} title="Apply the filters you have selected">Apply filters</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End of Modal -->
