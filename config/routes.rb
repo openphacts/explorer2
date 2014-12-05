@@ -49,7 +49,7 @@ Explorer2::Application.routes.draw do
       get :tsv_download
       get :tsv_status
       get :organisms
-      get :lenses
+#      get :lenses
       post :chemspider_tab_separated_file
     end
   end
