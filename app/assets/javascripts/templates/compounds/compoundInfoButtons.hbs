@@ -17,6 +17,18 @@
 		{{/if}}
 		{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default" }}Search by structure{{/link-to}}
 		{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default" }}Draw Molecule{{/link-to}}
+		{{view Ember.Select
+		content=lenses
+		optionValuePath="content.uri"
+		optionLabelPath="content.name"
+		prompt="Select a Lens"
+		value=defaultLens
+		selection=selectedLens
+		}}
+		<button class="btn btn-default" title="Apply the selected lens" {{action "applyLens"}}>Apply</button>
+		<button class="btn btn-default" title="Reset the lens back to 'default'" {{action "resetLens"}}>Reset</button>
+		<a id="lenses-popover" class="inline"><i class="icon-question-sign" title="Show/hide lens descriptions"></i></a>
+
 	</div>
 	<div class="hidden-md hidden-lg">
 		<!-- Show as dropdown on smaller screens -->
@@ -37,17 +49,6 @@
 				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
 				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
 			</ul>
-			{{view Ember.Select
-			content=lenses
-			optionLabelPath="content.name"
-			optionValuePath="content.uri"
-			prompt="Select a Lens"
-			value=selectedLens
-			selection=selectedLens
-			}}
-			<button class="btn medium-margin-bottom" title="Apply the selected lens" {{action "applyLens"}}>Apply</button>
-			<button class="btn medium-margin-bottom" title="Reset the lens back to 'default'" {{action "resetLens"}}>Reset</button>
-			<a id="lenses-popover" class="inline"><i class="icon-question-sign" title="Show/hide lens descriptions"></i></a>
 		</div>
 	</div>
 </div>

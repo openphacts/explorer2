@@ -6,8 +6,10 @@ App.CompoundsIndexRoute = Ember.Route.extend({
    console.log('compound index controller');
    controller.set('model', model);
    var compound = model;
+   if (params.queryParams.lens != null) {
+     controller.set('defaultLens', params.queryParams.lens); 
+   }
    this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
-
    var molfile = this.controllerFor('application').get('molfile');
    //set the favourite status for this compound
    this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
@@ -38,6 +40,9 @@ App.CompoundsIndexRoute = Ember.Route.extend({
 	console.log('compound index model')
     //var uri = this.get('queryParameters').uri;
     var uri = params.uri
+//    if (params.lens != null) {
+//      this.controllerFor('compounds.index').set('selectedLens', params.lens);
+//    }
     var compound = this.controllerFor('compounds').store.find('compound', uri);
     return compound;
  },

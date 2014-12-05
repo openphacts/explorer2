@@ -4,6 +4,7 @@ App.ApplicationController = Ember.Controller.extend({
     jobsList: [],
     alertsAvailable: false,
     lenses: null,
+    lensesInfo: null,
     iex: false,
 
     // use for structure drawing

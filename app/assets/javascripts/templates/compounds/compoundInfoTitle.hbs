@@ -4,7 +4,7 @@
 	<div class="col-xs-12 col-sm-9">
 		{{#if showProvenance}}
 		<h1 class="break-word">
-		{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</span>{{/if}}
+			{{#if prefLabel}}{{prefLabel}}{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</span>{{/if}}
 		</h1>
 		{{else}}
 		<h1 class="break-word">
@@ -12,4 +12,18 @@
 		</h1>
 		{{/if}}
 	</div>
+	<div class="hidden-sm hidden-md hidden-lg">
+		{{view Ember.Select
+		content=lenses
+		optionLabelPath="content.name"
+		optionValuePath="content.uri"
+		prompt="Select a Lens"
+		value=defaultLens
+		selection=selectedLens
+		}}
+		<button class="btn btn-default" title="Apply the selected lens" {{action "applyLens"}}>Apply</button>
+		<button class="btn btn-default" title="Reset the lens back to 'default'" {{action "resetLens"}}>Reset</button>
+		<a id="lenses-popover" class="inline"><i class="icon-question-sign" title="Show/hide lens descriptions"></i></a>
+	</div>
+
 </div>

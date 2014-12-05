@@ -2,9 +2,9 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
     needs: ['application'],
     lenses: Em.computed.alias('controllers.application.lenses'),
-    queryParams: ['uri, lens'],
+    queryParams: ['uri', 'lens'],
     uri: '',
-    lens: '',
+    lens: null,
     // The lens name for the uri param
     truncatedLens: '',
 
@@ -12,6 +12,8 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
     lensedCompounds: [],
 
     displayedLens: null,
+
+    defaultLens: null,
 
     selectedLens: null,
 
@@ -49,6 +51,29 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
         disableProvenance: function() {
             this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
+        },
+
+        applyLens: function() {
+            var lens = this.get('selectedLens');
+            if (lens != null) {
+                this.transitionToRoute('compounds.index', {
+                    queryParams: {
+                        'uri': this.get('model').get('URI'),
+                        'lens': lens.uri
+                    }
+                });
+            }
+        },
+
+        resetLens: function() {
+            this.set('selectedLens', null);
+            this.transitionToRoute('compounds.index', {
+                queryParams: {
+                    'uri': this.get('model').get('URI'),
+                    'lens': null
+                }
+            });
+
         }
     }
 

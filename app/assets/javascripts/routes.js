@@ -83,18 +83,19 @@ App.ApplicationRoute = Ember.Route.extend({
         console.log('application route setup controller');
         controller.set('iex', !oldIE);
         var me = controller;
-        var fetchLensesRequest = $.ajax({
-            url: lensesUrl,
-            dataType: 'json',
-            cache: true,
-            success: function(response, status, request) {
-                console.log('fetch lense request success');
-                me.set('lenses', response);
-            },
-            error: function(request, status, error) {
-                console.log('fetch lense request fail');
-            }
-        });
+        controller.set('lenses', lenses);
+	//var fetchLensesRequest = $.ajax({
+        //    url: lensesUrl,
+        //    dataType: 'json',
+        //    cache: true,
+        //    success: function(response, status, request) {
+        //        console.log('fetch lense request success');
+        //        me.set('lenses', response);
+        //    },
+        //    error: function(request, status, error) {
+        //        console.log('fetch lense request fail');
+        //    }
+       // });
     }
 
 });
