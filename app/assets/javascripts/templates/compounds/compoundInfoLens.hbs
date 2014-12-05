@@ -1,0 +1,24 @@
+<div>
+	{{#if lens}}
+	<div class="centre">
+		<h5>Matching compounds for {{displayedLens.name}} lens</h5></div>
+	{{else}}
+	<div class="centre">
+		<h5>No matching compounds found for {{displayedLens.name}} lens</h5>
+	</div>
+	{{/if}}
+	{{#each lensedCompounds}}
+	<div class="img-polaroid medium-margin">
+		{{#link-to 'compounds.index' (query-params uri=csURI) title="Go to page for this compound"}}{{cs_image_src csURI}}{{/link-to}}
+	</div>
+	<p class="centre">
+	{{#link-to 'compounds.index' (query-params uri=csURI) title="Go to page for this compound"}}
+	{{#if prefLabel}}
+	{{prefLabel}}
+	{{else}}
+	<span class="muted">No label</span>
+	{{/if}}
+	{{/link-to}}
+	</p>
+	{{/each}}
+</div>

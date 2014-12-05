@@ -5,20 +5,46 @@ App.CompoundsIndexRoute = Ember.Route.extend({
     setupController: function(controller, model, params) {
         console.log('compound index controller');
         controller.set('model', model);
+        controller.set('lensedCompounds', []);
         var compound = model;
-	//Reset the lens
-        if (params.queryParams.lens != null) {
+	var me = controller;
+        var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+
+        //Reset the lens
+        var lens = params.queryParams.lens ? params.queryParams.lens : null;
+        var lensCallback = function(success, status, response) {
+            if (success && response) {
+                compoundLensResult = compoundSearcher.parseCompoundLensResponse(response);
+                var cwCompounds = compoundLensResult.lensCW;
+                if (compoundLensResult.lensChemspider.length !== 0) {
+                    me.set('haveLens', true);
+                    me.set('displayedLens', me.get('selectedLens'));
+                    $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
+                        me.store.find('compound', lensedCompound.csURI).then(function(compound) {
+                            me.get('lensedCompounds').pushObject(compound);
+                        });
+                    });
+                } else {
+                    me.set('haveLens', false);
+                    me.set('displayedLens', me.get('selectedLens'));
+                }
+            } else {
+                //nothing
+            }
+        }
+        if (lens != null) {
             controller.set('defaultLens', params.queryParams.lens);
+            //find the lensed compounds
+	    compoundSearcher.fetchCompound(compound.get('URI'), lens, lensCallback);
         } else {
             controller.set('defaultLens', null);
-	    controller.set('selectedLens', null);
-	}
+            controller.set('selectedLens', null);
+        }
         this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
         var molfile = this.controllerFor('application').get('molfile');
         //set the favourite status for this compound
         this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
-        var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
         var pathwaysCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
@@ -37,8 +63,8 @@ App.CompoundsIndexRoute = Ember.Route.extend({
             }
         };
         var compoundURI = compound.get('URI');
-        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
-        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
+        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, lens, pathwaysCountCallback);
+        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, lens, pharmaCountCallback);
         Ember.run(function() {
             compound.set('molfile', molfile)
         });

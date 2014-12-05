@@ -5,6 +5,9 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
     queryParams: ['uri', 'lens'],
     uri: '',
     lens: null,
+    //Has any lens info come back from the API
+    haveLens: false,
+
     // The lens name for the uri param
     truncatedLens: '',
 
