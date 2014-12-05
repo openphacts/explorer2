@@ -50,5 +50,17 @@
 				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
 			</ul>
 		</div>
+		<span class="hidden-xs">{{view Ember.Select
+		content=lenses
+		optionValuePath="content.uri"
+		optionLabelPath="content.name"
+		prompt="Select a Lens"
+		value=defaultLens
+		selection=selectedLens
+		}}
+		<button class="btn btn-default" title="Apply the selected lens" {{action "applyLens"}}>Apply</button>
+		<button class="btn btn-default" title="Reset the lens back to 'default'" {{action "resetLens"}}>Reset</button>
+		<a id="lenses-popover" class="inline"><i class="icon-question-sign" title="Show/hide lens descriptions"></i></a>
+	</span>
 	</div>
 </div>
