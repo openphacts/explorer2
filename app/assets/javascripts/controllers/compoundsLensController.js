@@ -1,18 +1,16 @@
-App.CompoundsLensController = Ember.ObjectController.extend({
+App.CompoundsLensController = Ember.ArrayController.extend({
 
     needs: ['application'],
     lenses: Em.computed.alias('controllers.application.lenses'),
     queryParams: ['uri', 'lens'],
     uri: '',
     lens: null,
+    compound: null,
     //Has any lens info come back from the API
     haveLens: false,
 
     // The lens name for the uri param
     truncatedLens: '',
-
-    // Contains a list of compounds and their properties fetched when a lens is applied
-    lensedCompounds: [],
 
     displayedLens: null,
 
@@ -44,16 +42,16 @@ App.CompoundsLensController = Ember.ObjectController.extend({
     }.property('showProvenance'),
 
     hasPathways: function() {
-        if (this.get('model.pathwayRecords') != null && this.get('model.pathwayRecords') > 0) {
+        if (this.get('compound.pathwayRecords') != null && this.get('compound.pathwayRecords') > 0) {
             return true;
         }
-    }.property('model.pathwayRecords'),
+    }.property('compound.pathwayRecords'),
 
     hasPharmacology: function() {
-        if (this.get('model.pharmacologyRecords') != null && this.get('model.pharmacologyRecords') > 0) {
+        if (this.get('compound.pharmacologyRecords') != null && this.get('compound.pharmacologyRecords') > 0) {
             return true;
         }
-    }.property('model.pharmacologyRecords'),
+    }.property('compound.pharmacologyRecords'),
 
     actions: {
         changeFavouriteStatus: function() {
@@ -73,10 +71,10 @@ App.CompoundsLensController = Ember.ObjectController.extend({
             var lens = this.get('selectedLens');
             console.log('apply lens ' + lens.name);
             if (lens != null) {
-                this.send('invalidateModel');
+                //this.send('invalidateModel');
                 this.transitionToRoute('compounds.lens', {
                     queryParams: {
-                        'uri': this.get('model').get('URI'),
+                        'uri': this.get('compound').get('URI'),
                         'lens': lens.uri
                     }
                 });

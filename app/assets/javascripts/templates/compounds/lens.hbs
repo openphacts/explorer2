@@ -1,21 +1,21 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb hidden-xs">
 	<li><a href="/">Home</a></li>
-	<li>{{prefLabel}}</li>
+	<li>{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}</li>
 	<li>Lens</li>
 	<li class="active">{{lensName}}</li>
 </ul>
 
 <!-- main -->
 <div class="medium-margin-bottom">
-	<h1 class="break-word">{{prefLabel}} <small>with {{lensName}} lens applied</small></h1>
+	<h1 class="break-word">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}} <small>with {{lensName}} lens applied</small></h1>
 </div>
 <div class="medium-margin-bottom">
 	{{#if hasPharmacology}}
-	{{#link-to "compounds.pharmacology" (query-params uri=this.URI lens=lens) class="btn btn-default" title="Pharmacology with lens applied"}}Pharmacology with lens({{this.pharmacologyRecords}}){{/link-to}}
+	{{#link-to "compounds.pharmacology" (query-params uri=compound.URI lens=lens) class="btn btn-default" title="Pharmacology with lens applied"}}Pharmacology<span class="small-margin-left badge">{{compound.pharmacologyRecords}}</span>{{/link-to}}
 	{{/if}}
 	{{#if hasPathways}}
-	{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}
+	{{#link-to "compounds.pathways" (query-params uri=compound.URI) class="btn btn-default" }}Pathways<span class="small-margin-left badge">{{compound.pathwayRecords}}</span>{{/link-to}}
 	{{/if}}
 	{{view Ember.Select
 	content=lenses

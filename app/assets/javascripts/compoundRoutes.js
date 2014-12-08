@@ -313,7 +313,6 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
 
 App.CompoundsStructureRoute = Ember.Route.extend({
 
-
     setupController: function(controller, model, params) {
         controller.set('content', model);
         controller.set('totalCount', null);
@@ -519,14 +518,38 @@ App.CompoundsLensRoute = Ember.Route.extend({
     setupController: function(controller, model, params) {
         console.log('compound index controller');
         controller.set('model', model);
-        controller.set('lensedCompounds', []);
-        var compound = model;
         var me = controller;
+        var lens = params.queryParams.lens ? params.queryParams.lens : null;
         var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
         var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+        controller.get('store').find('compound', params.queryParams.uri).then(function(compound) {
+            me.set('compound', compound);
+            var thisCompound = compound;
+            var molfile = me.get('controllers.application').get('molfile');
+            var pathwaysCountCallback = function(success, status, response) {
+                if (success && response) {
+                    var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
+                    Ember.run(function() {
+                        thisCompound.set('pathwayRecords', count);
+                    });
+                }
+            };
+            var pharmaCountCallback = function(success, status, response) {
+                if (success && response) {
+                    var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
+                    Ember.run(function() {
+                        thisCompound.set('pharmacologyRecords', count)
+                    });
+                }
+            };
+            var compoundURI = compound.get('URI');
+            pathwaysSearcher.countPathwaysByCompound(compoundURI, null, lens, pathwaysCountCallback);
+            compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, lens, pharmaCountCallback);
+            Ember.run(function() {
+                thisCompound.set('molfile', molfile)
+            });
 
-        //Reset the lens
-        var lens = params.queryParams.lens ? params.queryParams.lens : null;
+        });;
         var lensCallback = function(success, status, response) {
             if (success && response) {
                 compoundLensResult = compoundSearcher.parseCompoundLensResponse(response);
@@ -536,7 +559,7 @@ App.CompoundsLensRoute = Ember.Route.extend({
                     me.set('displayedLens', me.get('selectedLens'));
                     $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
                         me.store.find('compound', lensedCompound.csURI).then(function(compound) {
-                            me.get('lensedCompounds').pushObject(compound);
+                            me.get('model').pushObject(compound);
                         });
                     });
                 } else {
@@ -551,50 +574,19 @@ App.CompoundsLensRoute = Ember.Route.extend({
             controller.set('defaultLens', params.queryParams.lens);
             controller.set('initialLens', params.queryParams.lens);
             //find the lensed compounds
-            compoundSearcher.fetchCompound(compound.get('URI'), lens, lensCallback);
+            compoundSearcher.fetchCompound(params.queryParams.uri, lens, lensCallback);
         } else {
             controller.set('intialLens', null);
             controller.set('defaultLens', null);
             controller.set('selectedLens', null);
         }
-        this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
-        var molfile = this.controllerFor('application').get('molfile');
-        //set the favourite status for this compound
-        this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
-        var pathwaysCountCallback = function(success, status, response) {
-            if (success && response) {
-                var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
-                Ember.run(function() {
-                    compound.set('pathwayRecords', count);
-                });
-            }
-        };
-
-        var pharmaCountCallback = function(success, status, response) {
-            if (success && response) {
-                var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
-                Ember.run(function() {
-                    compound.set('pharmacologyRecords', count)
-                });
-            }
-        };
-        var compoundURI = compound.get('URI');
-        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, lens, pathwaysCountCallback);
-        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, lens, pharmaCountCallback);
-        Ember.run(function() {
-            compound.set('molfile', molfile)
-        });
     },
 
     model: function(params) {
-        console.log('compound index model')
-            //var uri = this.get('queryParameters').uri;
-        var uri = params.uri
-            //    if (params.lens != null) {
-            //      this.controllerFor('compounds.index').set('selectedLens', params.lens);
-            //    }
-        var compound = this.controllerFor('compounds').store.find('compound', uri);
-        return compound;
+        console.log('compound lens model')
+            //var uri = params.uri
+            //var compound = this.controllerFor('compounds.lens').get('store').find('compound', uri);
+        return []; //compound;
     },
 
     beforeModel: function() {
@@ -613,11 +605,11 @@ App.CompoundsLensRoute = Ember.Route.extend({
         }
     },
     actions: {
-        queryParamsDidChange: function() {
-            this.refresh();
-        },
-        invalidateModel: function() {
-            this.refresh();
-        }
+        //queryParamsDidChange: function() {
+        //    this.refresh();
+        //},
+        //invalidateModel: function() {
+        //    this.refresh();
+        //}
     }
 });
