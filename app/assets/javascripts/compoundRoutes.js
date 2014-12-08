@@ -7,40 +7,40 @@ App.CompoundsIndexRoute = Ember.Route.extend({
         controller.set('model', model);
         controller.set('lensedCompounds', []);
         var compound = model;
-	var me = controller;
+        var me = controller;
         var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
         var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
 
         //Reset the lens
-        var lens = params.queryParams.lens ? params.queryParams.lens : null;
-        var lensCallback = function(success, status, response) {
-            if (success && response) {
-                compoundLensResult = compoundSearcher.parseCompoundLensResponse(response);
-                var cwCompounds = compoundLensResult.lensCW;
-                if (compoundLensResult.lensChemspider.length !== 0) {
-                    me.set('haveLens', true);
-                    me.set('displayedLens', me.get('selectedLens'));
-                    $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
-                        me.store.find('compound', lensedCompound.csURI).then(function(compound) {
-                            me.get('lensedCompounds').pushObject(compound);
-                        });
-                    });
-                } else {
-                    me.set('haveLens', false);
-                    me.set('displayedLens', me.get('selectedLens'));
-                }
-            } else {
-                //nothing
-            }
-        }
-        if (lens != null) {
-            controller.set('defaultLens', params.queryParams.lens);
-            //find the lensed compounds
-	    compoundSearcher.fetchCompound(compound.get('URI'), lens, lensCallback);
-        } else {
-            controller.set('defaultLens', null);
-            controller.set('selectedLens', null);
-        }
+        //        var lens = params.queryParams.lens ? params.queryParams.lens : null;
+        //        var lensCallback = function(success, status, response) {
+        //            if (success && response) {
+        //                compoundLensResult = compoundSearcher.parseCompoundLensResponse(response);
+        //                var cwCompounds = compoundLensResult.lensCW;
+        //                if (compoundLensResult.lensChemspider.length !== 0) {
+        //                    me.set('haveLens', true);
+        //                    me.set('displayedLens', me.get('selectedLens'));
+        //                    $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
+        //                        me.store.find('compound', lensedCompound.csURI).then(function(compound) {
+        //                            me.get('lensedCompounds').pushObject(compound);
+        //                        });
+        //                    });
+        //                } else {
+        //                    me.set('haveLens', false);
+        //                    me.set('displayedLens', me.get('selectedLens'));
+        //                }
+        //            } else {
+        //                //nothing
+        //            }
+        //        }
+        //        if (lens != null) {
+        //            controller.set('defaultLens', params.queryParams.lens);
+        //            //find the lensed compounds
+        //	    compoundSearcher.fetchCompound(compound.get('URI'), lens, lensCallback);
+        //        } else {
+        //            controller.set('defaultLens', null);
+        //            controller.set('selectedLens', null);
+        //        }
         this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
         var molfile = this.controllerFor('application').get('molfile');
         //set the favourite status for this compound
@@ -63,8 +63,8 @@ App.CompoundsIndexRoute = Ember.Route.extend({
             }
         };
         var compoundURI = compound.get('URI');
-        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, lens, pathwaysCountCallback);
-        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, lens, pharmaCountCallback);
+        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
+        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
         Ember.run(function() {
             compound.set('molfile', molfile)
         });
@@ -511,5 +511,113 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
     beforeModel: function() {
         this.controllerFor('application').set('fetching', false);
         enable_scroll();
+    }
+});
+
+App.CompoundsLensRoute = Ember.Route.extend({
+
+    setupController: function(controller, model, params) {
+        console.log('compound index controller');
+        controller.set('model', model);
+        controller.set('lensedCompounds', []);
+        var compound = model;
+        var me = controller;
+        var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+
+        //Reset the lens
+        var lens = params.queryParams.lens ? params.queryParams.lens : null;
+        var lensCallback = function(success, status, response) {
+            if (success && response) {
+                compoundLensResult = compoundSearcher.parseCompoundLensResponse(response);
+                var cwCompounds = compoundLensResult.lensCW;
+                if (compoundLensResult.lensChemspider.length !== 0) {
+                    me.set('haveLens', true);
+                    me.set('displayedLens', me.get('selectedLens'));
+                    $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
+                        me.store.find('compound', lensedCompound.csURI).then(function(compound) {
+                            me.get('lensedCompounds').pushObject(compound);
+                        });
+                    });
+                } else {
+                    me.set('haveLens', false);
+                    me.set('displayedLens', me.get('selectedLens'));
+                }
+            } else {
+                //nothing
+            }
+        }
+        if (lens != null) {
+            controller.set('defaultLens', params.queryParams.lens);
+            controller.set('initialLens', params.queryParams.lens);
+            //find the lensed compounds
+            compoundSearcher.fetchCompound(compound.get('URI'), lens, lensCallback);
+        } else {
+            controller.set('intialLens', null);
+            controller.set('defaultLens', null);
+            controller.set('selectedLens', null);
+        }
+        this.controllerFor('application').findFavourite(model.get('URI'), 'compounds', model);
+        var molfile = this.controllerFor('application').get('molfile');
+        //set the favourite status for this compound
+        this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
+        var pathwaysCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
+                Ember.run(function() {
+                    compound.set('pathwayRecords', count);
+                });
+            }
+        };
+
+        var pharmaCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = compoundSearcher.parseCompoundPharmacologyCountResponse(response);
+                Ember.run(function() {
+                    compound.set('pharmacologyRecords', count)
+                });
+            }
+        };
+        var compoundURI = compound.get('URI');
+        pathwaysSearcher.countPathwaysByCompound(compoundURI, null, lens, pathwaysCountCallback);
+        compoundSearcher.compoundPharmacologyCount(compoundURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, lens, pharmaCountCallback);
+        Ember.run(function() {
+            compound.set('molfile', molfile)
+        });
+    },
+
+    model: function(params) {
+        console.log('compound index model')
+            //var uri = this.get('queryParameters').uri;
+        var uri = params.uri
+            //    if (params.lens != null) {
+            //      this.controllerFor('compounds.index').set('selectedLens', params.lens);
+            //    }
+        var compound = this.controllerFor('compounds').store.find('compound', uri);
+        return compound;
+    },
+
+    beforeModel: function() {
+        this.controllerFor('application').set('fetching', false);
+        enable_scroll();
+    },
+    // If we are leaving compounds index then make sure lens param is reset
+    resetController: function(controller, isExiting, transition) {
+        if (isExiting) {
+            controller.set('lens', null);
+        }
+    },
+    queryParams: {
+        lens: {
+            refreshModel: true
+        }
+    },
+    actions: {
+        queryParamsDidChange: function() {
+            this.refresh();
+        },
+        invalidateModel: function() {
+            this.refresh();
+        }
     }
 });

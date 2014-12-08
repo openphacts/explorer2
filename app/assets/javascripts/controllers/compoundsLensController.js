@@ -1,9 +1,10 @@
-App.CompoundsIndexController = Ember.ObjectController.extend({
+App.CompoundsLensController = Ember.ObjectController.extend({
 
     needs: ['application'],
     lenses: Em.computed.alias('controllers.application.lenses'),
-    queryParams: ['uri'],
+    queryParams: ['uri', 'lens'],
     uri: '',
+    lens: null,
     //Has any lens info come back from the API
     haveLens: false,
 
@@ -19,7 +20,20 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
     selectedLens: null,
 
+    initialLens: null,
+
     showProvenance: false,
+
+    lensName: function() {
+        var defLens = this.get('initialLens');
+        var lensName;
+        this.get('lenses').forEach(function(lens, index, array) {
+            if (lens.uri === defLens) {
+                lensName = lens.name;
+            }
+        });
+        return lensName;
+    }.property('initialLens'),
 
     favourite: function() {
         return this.get('model').get('favourite');
@@ -57,7 +71,9 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
 
         applyLens: function() {
             var lens = this.get('selectedLens');
+            console.log('apply lens ' + lens.name);
             if (lens != null) {
+                this.send('invalidateModel');
                 this.transitionToRoute('compounds.lens', {
                     queryParams: {
                         'uri': this.get('model').get('URI'),
@@ -65,7 +81,7 @@ App.CompoundsIndexController = Ember.ObjectController.extend({
                     }
                 });
             }
-        }//,
+        }
 
         //resetLens: function() {
         //    this.set('selectedLens', null);

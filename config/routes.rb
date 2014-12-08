@@ -15,6 +15,7 @@ Explorer2::Application.routes.draw do
   match 'compounds/structure' => 'home#index'
   match 'compounds/pathways' => 'home#index'
   match 'compounds/draw' => 'home#index'
+  match 'compounds/lens' => 'home#index'
 
   match 'targets' => 'home#index'
   match 'targets/pharmacology' => 'home#index'

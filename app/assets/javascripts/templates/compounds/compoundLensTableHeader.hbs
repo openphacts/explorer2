@@ -1,0 +1,19 @@
+<thead id="tablehead" class="headingstyle">
+	<tr>
+		<!-- Each header has an action which triggers when clicked and asks the controller to sort the column -->
+		<!-- The header also has an icon which is shown if controller says that it is sorted. A controller bound -->
+		<!-- CSS class is used to style the header when it is selected-->
+		<th class="table-header-structure-image" style="width: 10%;">Image</th>
+		<th style="width: 20%;" {{action "sortHeader" "prefLabel"}} {{bind-attr class=":th-hover prefLabelSortASC:sortASC prefLabelSortDESC:sortDESC"}}>Name{{#if prefLabelSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if prefLabelSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<!-- If substructure or similarity search then reduce description column by 5% to take account of additional relevance column -->
+		<th style="width: 10%" {{action "sortHeader" "fullMWT"}} {{bind-attr class=":th-hover fullMWTSortASC:sortASC fullMWTSortDESC:sortDESC"}}>Molecular Weight{{#if fullMWTSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if fullMWTSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 5%;" {{action "sortHeader" "hba"}} {{bind-attr class=":th-hover hbaSortASC:sortASC hbaSortDESC:sortDESC"}}>HBA{{#if hbaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 5%;" {{action "sortHeader" "hbd"}} {{bind-attr class=":th-hover hbdSortASC:sortASC hbdSortDESC:sortDESC"}}>HBD{{#if hbdSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if hbdSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 10%;" {{action "sortHeader" "logp"}} {{bind-attr class=":th-hover logpSortASC:sortASC logpSortDESC:sortDESC"}}>logP{{#if logpSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if logpSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 10%;" {{action "sortHeader" "molform"}} {{bind-attr class=":th-hover molformSortASC:sortASC molformSortDESC:sortDESC"}}>Molecular formula{{#if molformSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if molformSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 10%;" {{action "sortHeader" "mwFreebase"}} {{bind-attr class=":th-hover mwFreebaseSortASC:sortASC mwFreebaseSortDESC:sortDESC"}}>MW Freebase{{#if mwFreebaseSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if mwFreebaseSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 10%;" {{action "sortHeader" "psa"}} {{bind-attr class=":th-hover psaSortASC:sortASC psaSortDESC:sortDESC"}}>PSA{{#if psaSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if psaSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 5%;" {{action "sortHeader" "ro5Violations"}} {{bind-attr class=":th-hover ro5ViolationsSortASC:sortASC ro5ViolationsSortDESC:sortDESC"}}>RO5 Violations{{#if ro5ViolationsSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if ro5ViolationsSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+		<th style="width: 5%;" {{action "sortHeader" "rtb"}} {{bind-attr class=":th-hover rtbSortASC:sortASC rtbSortDESC:sortDESC"}}>RTB{{#if rtbSortASC}}<i class="icon-chevron-up small-margin-left"></i>{{/if}}{{#if rtbSortDESC}}<i class="icon-chevron-down small-margin-left"></i>{{/if}}</th>
+	</tr>
+</thead>

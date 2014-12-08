@@ -685,6 +685,75 @@ Openphacts.CompoundSearch.prototype.parseCompoundLensResponse = function(respons
     var lensDrugbank = [];
     var lensCW = [];
     var lensChembl = [];
+    var topLevelResponse = response.primaryTopic[constants.IN_DATASET];
+    if (constants.SRC_CLS_MAPPINGS[topLevelResponse] === 'chemspiderValue') {
+        var prefLabel = null,
+            cwURI = null,
+            description = null,
+            biotransformationItem = null,
+            toxicity = null,
+            proteinBinding = null,
+            csURI = null,
+            hba = null,
+            hbd = null,
+            inchi = null,
+            logp = null,
+            psa = null,
+            ro5Violations = null,
+            smiles = null,
+            chemblURI = null,
+            fullMWT = null,
+            molform = null,
+            mwFreebase = null,
+            rtb = null,
+            inchiKey = null,
+            drugbankURI = null,
+            molweight = null,
+            molformula = null;
+
+        csURI = response.primaryTopic["_about"] !== null ? response.primaryTopic["_about"] : csURI;
+        hba = response.primaryTopic.hba != null ? response.primaryTopic.hba : hba;
+        hbd = response.primaryTopic.hbd != null ? response.primaryTopic.hbd : hbd;
+        inchi = response.primaryTopic.inchi != null ? response.primaryTopic.inchi : inchi;
+        logp = response.primaryTopic.logp != null ? response.primaryTopic.logp : logp;
+        psa = response.primaryTopic.psa != null ? response.primaryTopic.psa : psa;
+        ro5Violations = response.primaryTopic.ro5_violations != null ? response.primaryTopic.ro5_violations : ro5Violations;
+        smiles = response.primaryTopic.smiles != null ? response.primaryTopic.smiles : smiles;
+        inchiKey = response.primaryTopic.inchikey != null ? response.primaryTopic.inchikey : inchikey;
+        rtb = response.primaryTopic.rtb != null ? response.primaryTopic.rtb : rtb;
+        fullMWT = response.primaryTopic.molweight != null ? response.primaryTopic.molweight : molweight;
+        molform = response.primaryTopic.molformula != null ? response.primaryTopic.molformula : molformula;
+
+        // provenance 
+        chemspiderLinkOut = csURI;
+        chemspiderProvenance = {};
+        chemspiderProvenance['source'] = 'chemspider';
+        chemspiderProvenance['hba'] = chemspiderLinkOut;
+        chemspiderProvenance['hbd'] = chemspiderLinkOut;
+        chemspiderProvenance['inchi'] = chemspiderLinkOut;
+        chemspiderProvenance['logp'] = chemspiderLinkOut;
+        chemspiderProvenance['psa'] = chemspiderLinkOut;
+        chemspiderProvenance['ro5violations'] = chemspiderLinkOut;
+        chemspiderProvenance['smiles'] = chemspiderLinkOut;
+        chemspiderProvenance['inchiKey'] = chemspiderLinkOut;
+        chemspiderProvenance['molform'] = chemspiderLinkOut;
+        lensChemspider.push({
+            "csURI": csURI,
+            "hba": hba,
+            "hbd": hbd,
+            "inchi": inchi,
+            "logp": logp,
+            "psa": psa,
+            "ro5Violations": ro5Violations,
+            "smiles": smiles,
+            "fullMWT": fullMWT,
+            "molform": molform,
+            "rtb": rtb,
+            "inchiKey": inchiKey,
+            "chemspiderProvenance": chemspiderProvenance
+        })
+
+    }
     $.each(response.primaryTopic.exactMatch, function(i, match) {
         var src = match[constants.IN_DATASET];
         var prefLabel = null,

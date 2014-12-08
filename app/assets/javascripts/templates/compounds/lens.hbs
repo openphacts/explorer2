@@ -1,0 +1,35 @@
+<!-- breadcrumb	-->
+<ul class="breadcrumb hidden-xs">
+	<li><a href="/">Home</a></li>
+	<li>{{prefLabel}}</li>
+	<li>Lens</li>
+	<li class="active">{{lensName}}</li>
+</ul>
+
+<!-- main -->
+<div class="medium-margin-bottom">
+	<h1 class="break-word">{{prefLabel}} <small>with {{lensName}} lens applied</small></h1>
+</div>
+<div class="medium-margin-bottom">
+	{{#if hasPharmacology}}
+	{{#link-to "compounds.pharmacology" (query-params uri=this.URI lens=lens) class="btn btn-default" title="Pharmacology with lens applied"}}Pharmacology with lens({{this.pharmacologyRecords}}){{/link-to}}
+	{{/if}}
+	{{#if hasPathways}}
+	{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}
+	{{/if}}
+	{{view Ember.Select
+	content=lenses
+	optionValuePath="content.uri"
+	optionLabelPath="content.name"
+	prompt="Select a Lens"
+	value=defaultLens
+	selection=selectedLens
+	}}
+	<button class="btn btn-default" title="Apply the selected lens" {{action "applyLens"}}>Apply lens</button>
+</div>
+<div class="table-responsive">
+	<table>
+		{{partial "compounds/compoundLensTableHeader"}}
+		{{partial "compounds/compoundLensTableBody"}}
+	</table>
+</div>

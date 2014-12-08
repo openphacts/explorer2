@@ -1,0 +1,17 @@
+<tbody>
+	{{#each compound in lensedCompounds}}
+	<tr class="record-deco">
+		<td>{{#link-to "compounds.draw" (query-params smiles=compound.smiles) title="Draw this compound"}}{{cs_image_src compound.URI}}{{/link-to}}</td>
+		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}{{#if showProvenance}}{{#if compound.prefLabel}}{{provenanceLinkout compound.cwURI 'conceptwiki'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.fullMWT}}{{#if showProvenance}}{{#if compound.fullMWT}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.hba}}{{#if showProvenance}}{{#if compound.hba}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.hbd}}{{#if showProvenance}}{{#if compound.hbd}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.logp}}{{#if showProvenance}}{{#if compound.logp}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{formatMolecularFormula compound.molform}}</td>
+		<td class="cell-basictext">{{compound.mwFreebase}}{{#if showProvenance}}{{#if compound.mwFreebase}}{{provenanceLinkout compound.chemblURI 'chembl'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.psa}}{{#if showProvenance}}{{#if compound.psa}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.ro5Violations}}{{#if showProvenance}}{{#if compound.ro5Violations}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+		<td class="cell-basictext">{{compound.rtb}}{{#if showProvenance}}{{#if compound.rtb}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
+	</tr>
+	{{/each}}
+</tbody>

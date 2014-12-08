@@ -39,6 +39,9 @@ App.Router.map(function() {
         this.route('draw', {
             path: '/draw'
         }, function() {});
+	this.route('lens', {
+            path: '/lens'
+        }, function() {});
     });
     this.resource('targets', {
         path: '/targets'
