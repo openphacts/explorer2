@@ -1,5 +1,5 @@
 <tbody>
-	{{#each compound in model}}
+	{{#each compound in lensedCompounds}}
 	<tr class="record-deco">
 		<td>{{#link-to "compounds.draw" (query-params smiles=compound.smiles) title="Draw this compound"}}{{cs_image_src compound.URI}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}{{#if showProvenance}}{{#if compound.prefLabel}}{{provenanceLinkout compound.cwURI 'conceptwiki'}}{{/if}}{{/if}}</td>

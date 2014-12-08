@@ -89,6 +89,8 @@ App.CompoundsIndexRoute = Ember.Route.extend({
     resetController: function(controller, isExiting, transition) {
         if (isExiting) {
             controller.set('lens', null);
+	    controller.set('defaultLens', null);
+	    controller.set('selectedLens', null);
         }
     },
     actions: {
@@ -519,6 +521,7 @@ App.CompoundsLensRoute = Ember.Route.extend({
         console.log('compound index controller');
         controller.set('model', model);
         var me = controller;
+	controller.set('filteredCompounds', []);
         var lens = params.queryParams.lens ? params.queryParams.lens : null;
         var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
         var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
@@ -560,6 +563,7 @@ App.CompoundsLensRoute = Ember.Route.extend({
                     $.each(compoundLensResult.lensChemspider, function(index, lensedCompound) {
                         me.store.find('compound', lensedCompound.csURI).then(function(compound) {
                             me.get('model').pushObject(compound);
+			    me.get('filteredCompounds').pushObject(compound);
                         });
                     });
                 } else {
