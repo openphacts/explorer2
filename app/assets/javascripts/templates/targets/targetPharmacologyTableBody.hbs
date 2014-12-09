@@ -1,7 +1,7 @@
 <tbody>
 	{{#each pharmaRecord in pharmacology}}
 	<tr class="record-deco">
-		<td>{{#link-to "compounds.draw" (query-params smiles=pharmaRecord.compoundSmiles) title="Draw this compound"}}{{cs_image_src pharmaRecord.csCompoundUri}}{{/link-to}}</td>
+		<td>{{#link-to "compounds.draw" (query-params smiles=pharmaRecord.compoundSmiles) title="Draw this compound"}}{{cs_image_src pharmaRecord.csCompoundUri '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
 		<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>

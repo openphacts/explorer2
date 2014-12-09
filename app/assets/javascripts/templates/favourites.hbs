@@ -15,8 +15,8 @@
 			{{#each}}
 			{{#if isCompound}}
 			<div class="row">
-				<div class="col-xs-12 col-md-2">{{cs_image_src csURI}}</div>
-				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
+				<div class="col-xs-12 col-sm-4 col-md-2">{{cs_image_src csURI '100%' '100%'}}</div>
+				<div class="col-xs-12 col-sm-4 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
 			</div>
 			{{/if}}
 			{{/each}}

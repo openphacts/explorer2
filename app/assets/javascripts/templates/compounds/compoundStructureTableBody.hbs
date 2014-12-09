@@ -1,7 +1,7 @@
 <tbody>
 	{{#each structureRecord in structure}}
 	<tr class="record-deco">
-		<td>{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles) title="Draw this compound"}}{{cs_image_src structureRecord.URI}}{{/link-to}}</td>
+		<td>{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles) title="Draw this compound"}}{{cs_image_src structureRecord.URI '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}{{#if showProvenance}}{{#if structureRecord.prefLabel}}{{provenanceLinkout structureRecord.cwURI 'conceptwiki'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.description}}{{#if showProvenance}}{{#if structureRecord.description}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.biotransformationItem}}{{#if showProvenance}}{{#if structureRecord.biotransformationItem}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
