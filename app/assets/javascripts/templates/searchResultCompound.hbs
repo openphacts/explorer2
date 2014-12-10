@@ -7,7 +7,7 @@
 	{{/if}}
 </h4>
 <div class="thumbnail compound-result-image" title="Click to search for compounds with this structure">
-	{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI}}{{/link-to}}
+	{{#link-to "compounds.structure" (query-params uri=result.URI type="exact")}}{{cs_image_src result.csURI '100%' '100%'}}{{/link-to}}
 </div>
 <p class="centre">{{formatMolecularFormula result.molform}}</p>
 <p>{{result.description}}</p>

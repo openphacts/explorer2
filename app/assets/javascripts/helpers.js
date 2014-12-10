@@ -169,9 +169,9 @@ Ember.Handlebars.registerBoundHelper('enzymeECNumber', function(uri) {
     return new Handlebars.SafeString(uri.split('/').pop());	
   }	
 });
-Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, options) {
+Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, height, width, options) {
   if (options && csURL) {
-      return new Handlebars.SafeString('<img width="128" height="128" src="http://ops.rsc.org/' + csURL.split("/").pop() + '/image">');
+      return new Handlebars.SafeString('<img width="' + width + '" height="' + height + '" src="http://ops.rsc.org/' + csURL.split("/").pop() + '/image">');
   }
 });
 Ember.Handlebars.registerBoundHelper('target_image_src', function(target, options) {
