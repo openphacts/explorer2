@@ -1,3 +1,7 @@
+Ember.Handlebars.registerBoundHelper('roundToTwo', function(value) {
+    var twoDec = Math.round(Number(value)*100)/100
+    return new Handlebars.SafeString(twoDec);
+});
 Ember.Handlebars.registerBoundHelper('diseaseClassLink', function(link) {
     var aLink = '<a href="' + link.URI +'" target="_blank">' + link.name +'</a>'
     return new Handlebars.SafeString(aLink);
