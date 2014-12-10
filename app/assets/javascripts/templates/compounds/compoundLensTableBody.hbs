@@ -1,7 +1,7 @@
 <tbody>
 	{{#each compound in lensedCompounds}}
 	<tr class="record-deco">
-		<td>{{#link-to "compounds.draw" (query-params smiles=compound.smiles) title="Draw this compound"}}{{cs_image_src compound.URI}}{{/link-to}}</td>
+		<td>{{#link-to "compounds.draw" (query-params smiles=compound.smiles) title="Draw this compound"}}{{cs_image_src compound.URI '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=compound.URI)}}{{compound.prefLabel}}{{/link-to}}{{#if showProvenance}}{{#if compound.prefLabel}}{{provenanceLinkout compound.cwURI 'conceptwiki'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{compound.fullMWT}}{{#if showProvenance}}{{#if compound.fullMWT}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{compound.hba}}{{#if showProvenance}}{{#if compound.hba}}{{provenanceLinkout compound.csURI 'chemspider'}}{{/if}}{{/if}}</td>
