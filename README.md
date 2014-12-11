@@ -41,6 +41,10 @@ There are now too many compounds to do the autocomplete by reading a text file f
 
 It will probably take the console a few hours to get through them all (there are now over 1 million!). Do the same for Target & Organism.
 
+Testing
+-------
+The Ember JS side of things uses the [Qunit](http://qunitjs.com/ "Qunit JavaScript test framework") test framework with [Karma](https://github.com/karma-runner/karma "Karma test runner") for automation. The javascript test files are within `app/assets/javascripts/tests`. We recommend looking at the [Ember testing guides](http://emberjs.com/guides/testing/ "Ember testing guides") but here is some setup info. The Karma test runner setup files are contained in `test/karma`. The js to load and browsers to test are defined in `karma.conf.js`. To install Karma you will need [Node JS](http://nodejs.org/ "Node JS") (stop, come back, it's not that hard). Then you need to run `npm install` which installs the dependencies listed in the `package.json` file. These dependencies will be installed local to the karma directory so you will probably need to set up a path to find them `export PATH="./node_modules/.bin:$PATH"`. You will also need Karma's command line interface `npm install -g karma-cli`. Then to run the tests do `karma start`.
+
 Ketcher
 -------
 The Explorer uses an embedded version of the [Ketcher](http://ggasoftware.com/opensource/ketcher "Ketcher tool for drawing chemical compounds") compound drawing tool by [GGA Software Services](http://ggasoftware.com "GGA Software Services"). 
