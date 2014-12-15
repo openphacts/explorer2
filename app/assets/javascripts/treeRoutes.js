@@ -87,6 +87,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
+                me.set('page', 1);
                 me.get('controllers.application').set('fetching', false);
                 var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
                 $.each(pharmaResults, function(index, pharma) {
@@ -100,19 +101,24 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         };
         var compoundPharmaCallback = function(success, status, response) {
             if (success) {
+                me.set('page', 1);
+                me.get('controllers.application').set('fetching', false);
                 var pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
                 $.each(pharmaResults, function(index, pharma) {
                     var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
                     me.addObject(pharmaRecord);
                 });
+            } else {
+                App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
+                me.get('controllers.application').set('fetching', false);
             }
+
         }
         var compoundCountCallback = function(success, status, response) {
             if (success) {
                 var count = searcher.parseCompoundClassPharmacologyCount(response);
                 me.set('totalCount', count);
                 if (count > 0) {
-                    me.get('controllers.application').set('fetching', false);
                     me.set('treeType', 'chebi');
                     searcher.getCompoundClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, compoundPharmaCallback);
                 } else {

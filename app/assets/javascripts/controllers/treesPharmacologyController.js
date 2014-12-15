@@ -220,9 +220,9 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 };
                 this.get('controllers.application').set('fetching', true);
                 if (this.get('treeType') === 'chebi') {
-                    searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
+                    searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, null, pharmaCallback);
                 } else {
-                    searcher.getTargetClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
+                    searcher.getTargetClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, null, pharmaCallback);
                 }
             } else {
                 enable_scroll();
@@ -334,7 +334,6 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             }
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
-                    me.page++;
                     var pharmaResults;
                     if (me.get('treeType') === 'chebi') {
                         pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
