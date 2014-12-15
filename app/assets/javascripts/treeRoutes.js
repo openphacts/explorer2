@@ -42,14 +42,18 @@ App.TreesIndexRoute = Ember.Route.extend({
 
     model: function(params) {
         console.log('enzymes route model');
-	if (params.ontology == null) {
-            this.transitionTo('trees.index', {queryParams: {'ontology': 'enzyme'}});
-	} else {
+        if (params.ontology == null) {
+            this.transitionTo('trees.index', {
+                queryParams: {
+                    'ontology': 'enzyme'
+                }
+            });
+        } else {
             this.controllerFor('trees.index').set('defaultTree', params.ontology);
             this.controllerFor('trees.index').set('initialTree', params.ontology);
             this.controllerFor('trees.index').set('selectedTree', params.ontology);
-	}
-	return [];
+        }
+        return [];
     },
 
     beforeModel: function() {
@@ -80,32 +84,60 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         console.log('tree pharma controller setup');
         var me = controller;
         controller.set('content', model);
-        var thisEnzyme = model;
         var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 me.get('controllers.application').set('fetching', false);
                 var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
                 $.each(pharmaResults, function(index, pharma) {
                     var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
-                    thisEnzyme.get('pharmacology').addObject(pharmaRecord);
+                    me.addObject(pharmaRecord);
                 });
             } else {
                 App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
                 me.get('controllers.application').set('fetching', false);
             }
         };
+        var compoundClassMembersCallback = function(success, status, response) {
+            if (success) {
+                var compounds = compoundSearcher.parseCompoundClassMembersResponse(response);
+                compounds.forEach(function(compound, index, array) {
+                    me.store.find('compound', compound.URI).then(function(compound) {
+                        me.addObject(compound);
+                    });
+                });
+            }
+        }
+        var compoundCountCallback = function(success, status, response) {
+            if (success) {
+                var count = compoundSearcher.parseCompoundClassMembersCountResponse(response);
+                me.set('totalCount', count);
+                if (count > 0) {
+                    me.get('controllers.application').set('fetching', false);
+                    me.set('treeType', 'chebi');
+                    compoundSearcher.compoundClassMembers(params.queryParams.uri, 1, 50, null, null, compoundClassMembersCallback);
+                } else {
+                    me.get('controllers.application').set('fetching', false);
+                }
+            } else {
+                me.get('controllers.application').set('fetching', false);
+            }
+        }
         var countCallback = function(success, status, response) {
             if (success) {
                 var count = searcher.parseTargetClassPharmacologyCount(response);
-                controller.set('totalCount', count);
-                if (count > 0) {
-                    searcher.getTargetClassPharmacologyPaginated(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
+                if (count === 0) {
+                    // it could be a compound class so check that as well
+                    compoundSearcher.compoundClassMembersCount(params.queryParams.uri, null, compoundCountCallback);
                 } else {
-                    me.get('controllers.application').set('fetching', false);
-                    //App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
-
+                    controller.set('totalCount', count);
+                    searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
                 }
+            } else {
+                me.get('controllers.application').set('fetching', false);
+                //App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
+
             }
         };
         var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
@@ -129,7 +161,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         me.get('controllers.application').set('fetching', true);
         // we might already have been on this route
         if (controller.get('totalCount') == null) {
-            searcher.getTargetClassPharmacologyCount(thisEnzyme.id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
+            searcher.getTargetClassPharmacologyCount(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, countCallback);
         } else {
             me.get('controllers.application').set('fetching', false);
         }
@@ -138,9 +170,10 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
     model: function(params) {
         console.log('tree pharma controller model');
         this.controllerFor('trees.pharmacology').set('totalCount', null);
-        var uri = params.uri;
-        var tree = this.controllerFor('trees').store.find('tree', uri);
-        return tree;
+        //var uri = params.uri;
+        //var tree = this.controllerFor('trees').store.find('tree', uri);
+        //return tree;
+        return [];
     },
 
     beforeModel: function() {

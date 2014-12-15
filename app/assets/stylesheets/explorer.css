@@ -543,3 +543,7 @@ div.dl-horizontal dl dd {
 .favourite-image {
     background-color: #f5f5f5
 }
+/* To avoid the molform appeaering above the summary */
+.high-z {
+    z-index: 1000;
+}
