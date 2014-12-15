@@ -727,6 +727,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
             var thisTarget = this.get('content');
+	    var tree_path = this.get('treeType') === 'chebi' ? 'tree_compound' : 'tree';
             var tsvCreateRequest = $.ajax({
                 url: tsvCreateUrl,
                 dataType: 'json',
@@ -735,7 +736,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                     _format: "json",
                     uri: this.get('uri'),
                     total_count: me.totalCount,
-                    request_type: 'tree',
+                    request_type: tree_path,
                     pchembl_value_type: pChemblValueType,
                     pchembl_value: currentPchemblValue,
                     activity_relation: activityRelation,
