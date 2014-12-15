@@ -3006,6 +3006,229 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
     });
     return records;
 }
+
+Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyCount = function(response) {
+    var constants = new Openphacts.Constants();
+    return response.primaryTopic[constants.COMPOUND_PHARMACOLOGY_COUNT];
+}
+
+Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = function(response) {
+    var constants = new Openphacts.Constants();
+    var records = [];
+    $.each(response.items, function(i, item) {
+        var targets = [];
+        var chemblActivityURI = null,
+            pmid = null,
+            relation = null,
+            standardUnits = null,
+            standardValue = null,
+            activityType = null,
+            inDataset = null,
+            fullMWT = null,
+            chemblURI = null,
+            cwURI = null,
+            prefLabel = null,
+            csURI = null,
+            inchi = null,
+            inchiKey = null,
+            smiles = null,
+            ro5Violations = null,
+            targetURI = null,
+            targetTitle = null,
+            targetOrganism = null,
+            assayURI = null,
+            assayDescription = null,
+            assayOrganism = null,
+            publishedRelation = null,
+            publishedType = null,
+            publishedUnits = null,
+            publishedValue = null,
+            standardUnits = null,
+            standardValue = null,
+            pChembl = null,
+            activityType = null,
+            activityRelation = null,
+            activityValue = null,
+            activityUnits = null,
+            conceptwikiProvenance = {}, chemspiderProvenance = {}, assayTargetProvenance = {}, assayProvenance = {};
+        chemblActivityURI = item["_about"];
+        pmid = item.pmid;
+
+        activityType = item.activity_type;
+        activityRelation = item.activity_relation;
+        activityValue = item.activity_value;
+        var units = item.activity_unit;
+        if (units) {
+            activityUnits = units.prefLabel;
+        }
+
+        relation = item.relation ? item.relation : null;
+        standardUnits = item.standardUnits;
+        standardValue = item.standardValue ? item.standardValue : null;
+        activityType = item.activity_type;
+        inDataset = item[constants.IN_DATASET];
+        forMolecule = item[constants.FOR_MOLECULE];
+        chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
+        pChembl = item.pChembl ? item.pChembl : null;
+        $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
+            var src = match[constants.IN_DATASET];
+            if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                cwURI = match[constants.ABOUT];
+                prefLabel = match[constants.PREF_LABEL];
+                var conceptWikiLinkOut = cwURI;
+                conceptwikiProvenance['source'] = 'conceptwiki';
+                conceptwikiProvenance['prefLabel'] = conceptWikiLinkOut;
+            } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                csURI = match[constants.ABOUT];
+                inchi = match[constants.INCHI];
+                inchiKey = match[constants.INCHIKEY];
+                smiles = match[constants.SMILES];
+                ro5Violations = match[constants.RO5_VIOLATIONS] !== null ? match[constants.RO5_VIOLATIONS] : null;
+                fullMWT = match[constants.MOLWT] ? match[constants.MOLWT] : null;
+                var chemspiderLinkOut = csURI;
+                chemspiderProvenance['source'] = 'chemspider';
+                chemspiderProvenance['hba'] = chemspiderLinkOut;
+                chemspiderProvenance['hbd'] = chemspiderLinkOut;
+                chemspiderProvenance['inchi'] = chemspiderLinkOut;
+                chemspiderProvenance['logp'] = chemspiderLinkOut;
+                chemspiderProvenance['psa'] = chemspiderLinkOut;
+                chemspiderProvenance['ro5violations'] = chemspiderLinkOut;
+                chemspiderProvenance['smiles'] = chemspiderLinkOut;
+                chemspiderProvenance['inchiKey'] = chemspiderLinkOut;
+                chemspiderProvenance['molform'] = chemspiderLinkOut;
+            }
+        });
+        var targets = item.hasAssay.hasTarget;
+        var assayTargets = [];
+        if ($.isArray(targets)) {
+            $.each(targets, function(index, target) {
+                var targetURI = target[constants.ABOUT];
+                var targetTitle = target.title;
+                var targetOrganismNames = target.targetOrganismName;
+                var targetComponents = target.hasTargetComponent;
+                var assayTargetComponents = [];
+                if (targetComponents) {
+                    if ($.isArray(targetComponents)) {
+                        $.each(targetComponents, function(j, targetComponent) {
+                            var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
+                            var targetComponentURI = targetComponent[constants.EXACT_MATCH];
+                            assayTargetComponents.push({
+                                "label": targetComponentLabel,
+                                "uri": targetComponentURI
+                            });
+                        });
+                    } else {
+                        var targetComponentLabel = null;
+                        if (targetComponents[constants.EXACT_MATCH]) {
+                            targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                        }
+                        //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                        var targetComponentURI = targetComponents[constants.ABOUT];
+                        assayTargetComponents.push({
+                            "label": targetComponentLabel,
+                            "uri": targetComponentURI
+                        });
+                    }
+                }
+                assayTargets.push({
+                    "uri": targetURI,
+                    "title": targetTitle,
+                    "targetComponents": assayTargetComponents,
+                    "targetOrganismNames": targetOrganismNames
+                });
+            });
+        } else {
+            var targetURI = targets[constants.ABOUT];
+            var targetTitle = targets.title;
+            var targetOrganismNames = targets.targetOrganismName;
+            var targetComponents = targets.hasTargetComponent;
+            var assayTargetComponents = [];
+            if (targetComponents) {
+                if ($.isArray(targetComponents)) {
+                    $.each(targetComponents, function(j, targetComponent) {
+                        var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
+                        var targetComponentURI = targetComponent[constants.ABOUT];
+                        assayTargetComponents.push({
+                            "label": targetComponentLabel,
+                            "uri": targetComponentURI
+                        });
+                    });
+                } else {
+                    var targetComponentLabel = null;
+                    if (targetComponents[constants.EXACT_MATCH]) {
+                        targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                    }
+                    //var targetComponentLabel = targetComponents[constants.EXACT_MATCH].prefLabel;
+                    var targetComponentURI = targetComponents[constants.ABOUT];
+                    assayTargetComponents.push({
+                        "label": targetComponentLabel,
+                        "uri": targetComponentURI
+                    });
+                }
+            }
+            var assayTargetLinkOut = targetURI;
+            assayTargetProvenance['targetOrganismName'] = targetURI;
+            assayTargetProvenance['targetComponents'] = targetURI;
+            assayTargetProvenance['targetTitle'] = targetURI;
+            assayTargets.push({
+                "uri": targetURI,
+                "title": targetTitle,
+                "targetComponents": assayTargetComponents,
+                "targetOrganismNames": targetOrganismNames
+            });
+        }
+        var onAssay = item[constants.ON_ASSAY];
+        assayURI = onAssay["_about"] ? onAssay["_about"] : null;
+        assayDescription = onAssay.description ? onAssay.description : null;
+        assayOrganismName = onAssay.assayOrganismName ? onAssay.assayOrganismName : null;
+        var assayOrganismLinkOut = assayURI;
+        assayProvenance['assayDescription'] = assayOrganismLinkOut;
+        assayProvenance['assayOrganismName'] = assayOrganismLinkOut;
+        publishedRelation = item.publishedRelation ? item.publishedRelation : null;
+        publishedType = item.publishedType ? item.publishedType : null;
+        publishedUnits = item.publishedUnits ? item.publishedUnits : null;
+        publishedValue = item.publishedValue ? item.publishedValue : null;
+        standardUnits = item.standardUnits ? item.standardUnits : null;
+        records.push({
+            'targets': assayTargets,
+            'chemblActivityURI': chemblActivityURI,
+            'pmid': pmid,
+            'relation': relation,
+            'standardUnits': standardUnits,
+            'standardValue': standardValue,
+            'activityType': activityType,
+            'activityRelation': activityRelation,
+            'activityUnits': activityUnits,
+            'activityValue': activityValue,
+            'inDataset': inDataset,
+            'fullMWT': fullMWT,
+            'chemblURI': chemblURI,
+            'cwURI': cwURI,
+            'prefLabel': prefLabel,
+            'csURI': csURI,
+            'inchi': inchi,
+            'inchiKey': inchiKey,
+            'smiles': smiles,
+            'ro5Violations': ro5Violations,
+            //targetURI: targetURI,
+            //targetTitle: targetTitle,
+            //targetOrganism: targetOrganism,
+            'assayURI': assayURI,
+            'assayDescription': assayDescription,
+            'assayOrganismName': assayOrganismName,
+            'publishedRelation': publishedRelation,
+            'publishedType': publishedType,
+            'publishedUnits': publishedUnits,
+            'publishedValue': publishedValue,
+            'pChembl': pChembl,
+            'conceptWikiProvenance': conceptwikiProvenance,
+            'chemspiderProvenance': chemspiderProvenance,
+            'assayTargetProvenance': assayTargetProvenance,
+            'assayProvenance': assayProvenance
+        });
+    });
+    return records;
+}
 //This content is released under the MIT License, http://opensource.org/licenses/MIT. See licence.txt for more details.
 
 /**

@@ -201,7 +201,12 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 var pharmaCallback = function(success, status, response) {
                     if (success && response) {
                         me.page++;
-                        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+                        var pharmaResults;
+                        if (me.get('treeType') === 'chebi') {
+                            pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
+                        } else {
+                            pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+                        }
                         $.each(pharmaResults, function(index, pharma) {
                             var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
                             me.pushObject(pharmaRecord);
@@ -213,24 +218,9 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         enable_scroll();
                     }
                 };
-                var compoundClassMembersCallback = function(success, status, response) {
-                    if (success) {
-                        var compounds = compoundSearcher.parseCompoundClassMembersResponse(response);
-                        compounds.forEach(function(compound, index, array) {
-                            me.store.find('compound', compound.URI).then(function(compound) {
-                                me.pushObject(compound);
-                            });
-                        });
-                        me.get('controllers.application').set('fetching', false);
-                        enable_scroll();
-                    } else {
-                        me.get('controllers.application').set('fetching', false);
-                        enable_scroll();
-                    }
-                }
                 this.get('controllers.application').set('fetching', true);
                 if (this.get('treeType') === 'chebi') {
-                    compoundSearcher.compoundClassMembers(this.get('uri'), this.get('page'), 50, null, null, compoundClassMembersCallback);
+                    searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
                 } else {
                     searcher.getTargetClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page, 50, null, pharmaCallback);
                 }
@@ -345,7 +335,12 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;
-                    var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+                    var pharmaResults;
+                    if (me.get('treeType') === 'chebi') {
+                        pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
+                    } else {
+                        pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+                    }
                     $.each(pharmaResults, function(index, pharma) {
                         var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
                         me.pushObject(pharmaRecord);
@@ -358,7 +353,11 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 }
             };
             var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
-            searcher.getTargetClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page, 50, sortBy, pharmaCallback);
+            if (this.get('treeType') === 'chebi') {
+                searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page, 50, sortBy, pharmaCallback);
+            } else {
+                searcher.getTargetClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page, 50, sortBy, pharmaCallback);
+            }
         },
         applyFilters: function() {
             var sortBy = null;

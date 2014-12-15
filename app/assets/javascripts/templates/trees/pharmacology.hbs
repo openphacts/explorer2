@@ -10,13 +10,8 @@
 {{#if notEmpty}}
 <div class="table-responsive">
 	<table class="mytable" style="border-spacing: 0;">
-		{{#if compoundClass}}
-		{{partial "trees/compoundClassTableHeader"}}
-		{{partial "trees/compoundClassTableBody"}}
-		{{else}}
 		{{partial "trees/treePharmacologyTableHeader"}}
 		{{partial "trees/treePharmacologyTableBody"}}
-		{{/if}}
 	</table>
 </div>
 {{/if}}

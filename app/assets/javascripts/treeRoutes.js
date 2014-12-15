@@ -85,7 +85,6 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         var me = controller;
         controller.set('content', model);
         var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
-        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 me.get('controllers.application').set('fetching', false);
@@ -99,24 +98,23 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                 me.get('controllers.application').set('fetching', false);
             }
         };
-        var compoundClassMembersCallback = function(success, status, response) {
+        var compoundPharmaCallback = function(success, status, response) {
             if (success) {
-                var compounds = compoundSearcher.parseCompoundClassMembersResponse(response);
-                compounds.forEach(function(compound, index, array) {
-                    me.store.find('compound', compound.URI).then(function(compound) {
-                        me.addObject(compound);
-                    });
+                var pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
+                $.each(pharmaResults, function(index, pharma) {
+                    var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
+                    me.addObject(pharmaRecord);
                 });
             }
         }
         var compoundCountCallback = function(success, status, response) {
             if (success) {
-                var count = compoundSearcher.parseCompoundClassMembersCountResponse(response);
+                var count = searcher.parseCompoundClassPharmacologyCount(response);
                 me.set('totalCount', count);
                 if (count > 0) {
                     me.get('controllers.application').set('fetching', false);
                     me.set('treeType', 'chebi');
-                    compoundSearcher.compoundClassMembers(params.queryParams.uri, 1, 50, null, null, compoundClassMembersCallback);
+                    searcher.getCompoundClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, compoundPharmaCallback);
                 } else {
                     me.get('controllers.application').set('fetching', false);
                 }
@@ -129,7 +127,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                 var count = searcher.parseTargetClassPharmacologyCount(response);
                 if (count === 0) {
                     // it could be a compound class so check that as well
-                    compoundSearcher.compoundClassMembersCount(params.queryParams.uri, null, compoundCountCallback);
+                    searcher.getCompoundClassPharmacologyCount(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, compoundCountCallback);
                 } else {
                     controller.set('totalCount', count);
                     searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
