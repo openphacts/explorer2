@@ -195,12 +195,107 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
 
         fetchMore: function() {
             if (this.get('model.length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
+                //first set all the current filters
                 var me = this;
-                var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
-                var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+                var assayOrganism = this.get('assayOrganismQuery');
+                var targetOrganism = this.get('targetOrganismQuery');
+                var targetType = null;
+                var lens = null;
+                var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
+                var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+                var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+                var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
+                var activityRelation = null;
+                var minActivityValue = null;
+                var maxActivityValue = null;
+                var maxExActivityValue = null;
+                var activityValue = null;
+                var minExActivityValue = null;
+                // only set activity filter if all filter boxes have been selected
+                if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+                    switch (condition) {
+                        case '>':
+                            minExActivityValue = currentActivityValue;
+                            break;
+                        case '<':
+                            maxExActivityValue = currentActivityValue;
+                            break;
+                        case '=':
+                            activityValue = currentActivityValue;
+                            break;
+                        case '<=':
+                            maxActivityValue = currentActivityValue;
+                            break;
+                        case '>=':
+                            minActivityValue = currentActivityValue;
+                            break;
+                    }
+                }
+
+                var pchemblCondition = this.get('selectedPchemblCondition') != null ? this.get('selectedPchemblCondition') : null;
+                var currentPchemblValue = this.get('pchemblValue') != null ? this.get('pchemblValue') : null;
+                var minPchemblValue = null;
+                var maxPchemblValue = null;
+                var maxExPchemblValue = null;
+                var minExPchemblValue = null;
+                var actualPchemblValue = null;
+                // pchembl filter only valid if all filter bits selected
+                if (pchemblCondition != null && currentPchemblValue != null) {
+                    switch (pchemblCondition) {
+                        case '>':
+                            minExPchemblValue = currentPchemblValue;
+                            break;
+                        case '<':
+                            maxExPchemblValue = currentPchemblValue;
+                            break;
+                        case '=':
+                            actualPchemblValue = currentPchemblValue;
+                            break;
+                        case '<=':
+                            maxPchemblValue = currentPchemblValue;
+                            break;
+                        case '>=':
+                            minPchemblValue = currentPchemblValue;
+                            break;
+                    }
+                }
+                var activityRelations = [];
+                if (this.get('greaterThan') === true) {
+                    activityRelations.push(">");
+                }
+                if (this.get('lessThan') === true) {
+                    activityRelations.push("<");
+                }
+                if (this.get('greaterThanOrEqual') === true) {
+                    activityRelations.push(">=");
+                }
+                if (this.get('lessThanOrEqual') === true) {
+                    activityRelations.push("<=");
+                }
+                if (this.get('equalTo') === true) {
+                    activityRelations.push("=");
+                }
+                // if there are any relations then add them all to the string with the "|" (OR) separator otherwise activityRelation will still be null
+                // a trailing "|" is fine according to tests on the LD API
+                if (activityRelations.length > 0) {
+                    activityRelation = "";
+                    $.each(activityRelations, function(index, relation) {
+                        activityRelation = activityRelation + relation + "|";
+                    });
+                }
+                this.get('controllers.application').set('fetching', true);
+                var sortBy = null;
+                if (this.get('currentHeader') !== null && this.get('sortedHeader') == null) {
+                    // we have previously sorted descending on a header and it is still current
+                    sortBy = 'DESC(?' + this.get('currentHeader') + ')';
+                } else if (this.get('currentHeader') !== null) {
+                    //we have previously sorted on a header
+                    sortBy = '?' + this.get('currentHeader');
+                }
+
                 var pharmaCallback = function(success, status, response) {
                     if (success && response) {
-                        me.page++;
+                        me.set('page', me.get('page') + 1);
                         var pharmaResults;
                         if (me.get('treeType') === 'chebi') {
                             pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
@@ -218,11 +313,11 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         enable_scroll();
                     }
                 };
-                this.get('controllers.application').set('fetching', true);
+                var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
                 if (this.get('treeType') === 'chebi') {
-                    searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, null, pharmaCallback);
+                    searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page + 1, 50, sortBy, pharmaCallback);
                 } else {
-                    searcher.getTargetClassPharmacologyPaginated(this.get('uri'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, this.page + 1, 50, null, pharmaCallback);
+                    searcher.getTargetClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page + 1, 50, sortBy, pharmaCallback);
                 }
             } else {
                 enable_scroll();
