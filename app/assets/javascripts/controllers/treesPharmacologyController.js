@@ -540,6 +540,14 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         break;
                 }
             }
+            var sortBy = null;
+            if (this.get('currentHeader') !== null && this.get('sortedHeader') == null) {
+                // we have previously sorted descending on a header and it is still current
+                sortBy = 'DESC(?' + this.get('currentHeader') + ')';
+            } else if (this.get('currentHeader') !== null) {
+                //we have previously sorted on a header
+                sortBy = '?' + this.get('currentHeader');
+            }
             var me = this;
             me.set('page', 1);
             me.clear();
