@@ -1,9 +1,4 @@
 {{partial "alertsModal"}}
-{{#view App.FlashView id="flash-view"}}
-<div id="message">
-	{{view.content.message}}
-</div>
-{{/view}}
 {{partial "navbar"}}
 {{#if notOldIE}}
 <div {{bind-attr class="fetching::invisible :spinner :bar"}}>
@@ -21,5 +16,6 @@
 {{/if}}
 
 <div class='content container-fluid'>
+	{{partial "flashMessages"}}
 	{{outlet}}
 </div>

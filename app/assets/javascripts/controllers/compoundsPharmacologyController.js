@@ -1,6 +1,6 @@
 App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
-  needs: ["compounds", "application"],
+  needs: ["compounds", "application", "flash"],
 
   showProvenance: false,
 
@@ -496,12 +496,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 		success: function(response, status, request) {
 			console.log('tsv create request success');
             me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
-			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
+	    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'notice', message: 'Creating TSV file for download. You will be alerted when ready.'}));
             //me.monitorTSVCreation(response.uuid);
 		},
 		error: function(request, status, error) {
 			console.log('tsv create request fail');
-			  App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
+	me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'Could not create TSV file, please contact support quoting error: ' + error }));
 		}
 	});
 
