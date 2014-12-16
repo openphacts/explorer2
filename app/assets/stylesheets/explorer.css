@@ -251,7 +251,7 @@ sub {
 /* end summary pages */
 
 .release-status {
-    color: red;
+    color: forestgreen;
     font-size: small;
     padding-left: 5px;
 }
