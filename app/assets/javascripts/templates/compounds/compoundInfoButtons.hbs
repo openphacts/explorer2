@@ -10,13 +10,13 @@
 			</label>
 		</span>
 		{{#if hasPharmacology}}
-		{{#link-to "compounds.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
+		{{#link-to "compounds.pharmacology" (query-params uri=this.URI) class="btn btn-default small-margin-bottom"}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}
 		{{/if}}
 		{{#if hasPathways}}
-		{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{this.pathwayRecords}}){{/link-to}}
+		{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default small-margin-bottom"}}Pathways ({{this.pathwayRecords}}){{/link-to}}
 		{{/if}}
-		{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default" }}Search by structure{{/link-to}}
-		{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default" }}Draw Molecule{{/link-to}}
+		{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default small-margin-bottom"}}Search by structure{{/link-to}}
+		{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default small-margin-bottom"}}Draw Molecule{{/link-to}}
 	</div>
 	<div class="hidden-md hidden-lg">
 		<!-- Show as dropdown on smaller screens -->
