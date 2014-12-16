@@ -748,7 +748,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                     target_organism: targetOrganism
                 },
                 success: function(response, status, request) {
-                    me.get('controllers.application').addJob(response.uuid, thisTarget.get('name'), filtersString);
+                    me.get('controllers.application').addJob(response.uuid, me.get('uri'), filtersString);
                     App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
                     //me.monitorTSVCreation(response.uuid);
                 },
