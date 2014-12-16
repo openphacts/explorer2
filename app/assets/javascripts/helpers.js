@@ -86,14 +86,25 @@ Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
   return new Handlebars.SafeString('<td class="centre break-all small-padding-right" title="' + job.get('filters') + '">' + job.get('label') + '</td>');
 });
 Ember.Handlebars.registerBoundHelper('progressBar', function(job) {
-  return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
-}, 'percentage');
+	//Job completed
+	if (job.get('percentage') === 100 && job.get('status') === 'complete') {
+		return new Handlebars.SafeString('<div class="progress-bar progress-bar-success progress-bar-striped no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
+	}
+	//Job processing
+	if (job.get('percentage') < 100 && job.get('status') === 'processing') {
+		return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
+	}
+	//Job failed
+	if (job.get('status') === 'failed') {
+		return new Handlebars.SafeString('<div class="progress-bar progress-bar-danger progress-bar-striped no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
+	}
+}, 'percentage', 'status');
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {
-    return new Handlebars.SafeString("<a class='btn btn-sm small-margin-left small-margin-right' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "' title='TSV file ready. Click button to download.'>Download</a>");
+    return new Handlebars.SafeString("<a class='btn btn-default btn-sm small-margin-left small-margin-right' target='_blank' href='" + tsvDownloadUrl + "uuid=" + uuid + "' title='TSV file ready. Click button to download.'>Download</a>");
   } else {
-    return new Handlebars.SafeString("<button type='button' class='btn btn-sm btn-disabled small-margin-left small-margin-right' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
+    return new Handlebars.SafeString("<button type='button' class='btn btn-default btn-sm btn-disabled small-margin-left small-margin-right' disabled='disabled' title='TSV file still being created. Download button disabled until ready.'>Download</button>");
   }
 });
 Ember.Handlebars.registerHelper("log", function(context) {
