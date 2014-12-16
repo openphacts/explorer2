@@ -83,11 +83,11 @@ Ember.Handlebars.registerBoundHelper('textLink', function(link) {
   }
 });
 Ember.Handlebars.registerBoundHelper('getLabelWithTooltip', function(job) {
-  return new Handlebars.SafeString('<td class="centre break-all small-padding-right" title="' + job.filters + '">' + job.label + '</td>');
+  return new Handlebars.SafeString('<td class="centre break-all small-padding-right" title="' + job.get('filters') + '">' + job.get('label') + '</td>');
 });
-Ember.Handlebars.registerBoundHelper('progressBar', function(percentage) {
-  return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" title="' + percentage + '%" style="width: ' + percentage + '%;"></div>');
-});
+Ember.Handlebars.registerBoundHelper('progressBar', function(job) {
+  return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
+}, 'percentage');
 Ember.Handlebars.registerBoundHelper('completedJob', function(status, uuid) {
   var html = "";
   if (status == "complete") {

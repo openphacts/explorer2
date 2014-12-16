@@ -15,7 +15,7 @@
 						</thead>
 						<tbody>
 							{{#each job in jobsList}}
-							<tr class="record-deco">{{getLabelWithTooltip job}}<td><div class="progress no-margin">{{progressBar job.percentage}}</div></td><td class="centre">{{job.status}}</td><td class="centre">{{completedJob job.status job.uuid}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
+							<tr class="record-deco">{{getLabelWithTooltip job}}<td><div class="progress no-margin">{{progressBar job}}</div></td><td class="centre">{{job.status}}</td><td class="centre">{{completedJob job.status job.uuid}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
 							{{/each}}
 						</tbody>
 					</table>

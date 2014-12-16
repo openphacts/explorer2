@@ -21,7 +21,7 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(jobID, label, filters) {
-        this.jobsList.pushObject(Ember.Object.create({
+        this.jobsList.pushObject(this.get('store').createRecord('job', {
             uuid: jobID,
             percentage: 0,
             status: "processing",
