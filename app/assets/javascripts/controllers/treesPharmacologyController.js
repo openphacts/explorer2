@@ -1,6 +1,6 @@
 App.TreesPharmacologyController = Ember.ArrayController.extend({
 
-    needs: ['trees', 'application'],
+    needs: ['trees', 'application', 'flash'],
 
     queryParams: ['uri'],
 
@@ -581,7 +581,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         searcher.getTargetClassPharmacologyPaginated(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
                     } else {
                         me.get('controllers.application').set('fetching', false);
-                        App.FlashQueue.pushFlash('error', 'No target class pharmacology available with those filters. Please apply different filters and try again');
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'No target class pharmacology available with those filters. Please apply different filters and try again'}));
                     }
                 }
             };
@@ -749,11 +749,10 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 },
                 success: function(response, status, request) {
                     me.get('controllers.application').addJob(response.uuid, me.get('uri'), filtersString);
-                    App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
-                    //me.monitorTSVCreation(response.uuid);
+		    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'notice', message: 'Creating TSV file for download. You will be alerted when ready.'}));
                 },
                 error: function(request, status, error) {
-                    App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
+                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'Could not create TSV file, please contact support quoting error: ' + error}));
                 }
             });
         }

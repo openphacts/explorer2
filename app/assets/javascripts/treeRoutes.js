@@ -95,7 +95,10 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                     me.addObject(pharmaRecord);
                 });
             } else {
-                App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
+                me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'Could not load pharmacology data. Please try again later..'
+                }));
                 me.get('controllers.application').set('fetching', false);
             }
         };
@@ -109,7 +112,10 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                     me.addObject(pharmaRecord);
                 });
             } else {
-                App.FlashQueue.pushFlash('error', 'Could not load  pharmacology data. Please try again later.');
+                me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'Could not load pharmacology data. Please try again later..'
+                }));
                 me.get('controllers.application').set('fetching', false);
             }
 
@@ -140,8 +146,6 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                 }
             } else {
                 me.get('controllers.application').set('fetching', false);
-                //App.FlashQueue.pushFlash('error', 'There is no pharmacology data for ' + thisEnzyme.id);
-
             }
         };
         var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
