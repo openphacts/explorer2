@@ -128,6 +128,11 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                     me.set('treeType', 'chebi');
                     searcher.getCompoundClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, compoundPharmaCallback);
                 } else {
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'notice',
+                        message: 'No pharmacology data available.'
+                    }));
+
                     me.get('controllers.application').set('fetching', false);
                 }
             } else {
