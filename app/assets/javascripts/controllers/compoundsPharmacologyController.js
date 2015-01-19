@@ -470,43 +470,21 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
             var thisCompound = this.get('content');
-            var tsvCreateRequest = $.ajax({
-                url: tsvCreateUrl,
-                dataType: 'json',
-                cache: true,
-                data: {
-                    _format: "json",
-                    uri: this.get('content').get('URI'),
-                    total_count: me.totalCount,
-                    request_type: 'compound',
-                    pchembl_value_type: pChemblValueType,
-                    pchembl_value: currentPchemblValue,
-                    activity_relation: activityRelation,
-                    activity_value_type: activityValueType,
-                    activity_value: currentActivityValue,
-                    activity_type: activity,
-                    activity_unit: unit,
-                    assay_organism: assayOrganism,
-                    target_organism: targetOrganism
-                },
-                success: function(response, status, request) {
-                    console.log('tsv create request success');
-                    me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'notice',
-                        message: 'Creating TSV file for download. You will be alerted when ready.'
-                    }));
-                    //me.monitorTSVCreation(response.uuid);
-                },
-                error: function(request, status, error) {
-                    console.log('tsv create request fail');
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'error',
-                        message: 'Could not create TSV file, please contact support quoting error: ' + error
-                    }));
-                }
-            });
-
+            var requestParams = {
+                uri: this.get('content').get('URI'),
+                total_count: me.totalCount,
+                request_type: 'compound',
+                pchembl_value_type: pChemblValueType,
+                pchembl_value: currentPchemblValue,
+                activity_relation: activityRelation,
+                activity_value_type: activityValueType,
+                activity_value: currentActivityValue,
+                activity_type: activity,
+                activity_unit: unit,
+                assay_organism: assayOrganism,
+                target_organism: targetOrganism
+            };
+            me.get('controllers.application').addJob(requestParams, thisCompound.get('prefLabel'), filtersString);
         },
 
         fetchMore: function() {

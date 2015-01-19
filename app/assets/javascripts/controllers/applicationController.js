@@ -23,7 +23,7 @@ App.ApplicationController = Ember.Controller.extend({
     fetching: false,
     searchQuery: '',
     //monitor the tsv creation
-    addJob: function(jobID, label, filters) {
+    addJob: function(params, label, filters) {
         this.jobsList.pushObject(this.get('store').createRecord('job', {
             uuid: jobID,
             percentage: 0,
