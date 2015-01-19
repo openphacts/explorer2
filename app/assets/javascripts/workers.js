@@ -11,7 +11,11 @@ onmessage = function(e) {
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-                //write results out to the tsvFile  
+		pharmaResults.forEach(function(result, index, results) {
+
+		});
+             
+		//write results out to the tsvFile  
                 //
                 i++;
                 if (i <= number_of_pages) {
