@@ -24,15 +24,41 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(params, label, filters) {
-        this.jobsList.pushObject(this.get('store').createRecord('job', {
-            uuid: jobID,
+        var me = this;
+        var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
             percentage: 0,
             status: "processing",
             label: label,
             filters: filters
         }));
-        var me = this;
-        this.checkTSV(jobID, this, true);
+
+        if (!!window.Worker) {
+            var myWorker = new Worker("/assets/workers.js");
+
+            myWorker.postMessage([ldaBaseUrl, appID, appKey, params]);
+
+            myWorker.onmessage = function(e) {
+                console.log('Message received from worker: ' + e.data);
+                //job may have been removed by the user in the mean time
+                if (e.data.percentage !== 0) {
+                    job.set('percentage', e.data.percentage);
+                }
+                if (e.data.status === "finished") {
+                    job.set('status', 'complete');
+                    me.set('alertsAvailable', true);
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'success',
+                        message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                    }));
+                } else if (e.data.status === "failed") {
+                    job.set('status', 'failed');
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'error',
+                        message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'
+                    }));
+                }
+            }
+        }
     },
     checkTSV: function(jobID, controller, go) {
         console.log("Check TSV is " + go + " for " + jobID);
@@ -61,11 +87,17 @@ App.ApplicationController = Ember.Controller.extend({
                         if (status === "finished") {
                             me.jobsList.findBy("uuid", jobID).set('status', 'complete');
                             me.set('alertsAvailable', true);
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'success', message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'}));
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'success',
+                                message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                            }));
                             runAgain = false;
                         } else if (status === "failed") {
                             me.jobsList.findBy("uuid", jobID).set('status', 'failed');
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'}));
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'error',
+                                message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'
+                            }));
                             runAgain = false;
                         }
                     } else {
