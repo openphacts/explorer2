@@ -593,9 +593,6 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
             //reset the totalCount just to be sure
             searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countOnlyCallback);
         }
-<<<<<<< HEAD
-
-
     },
     model: function(params) {
         var uri = params.uri;

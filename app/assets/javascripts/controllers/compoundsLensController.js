@@ -228,7 +228,6 @@ App.CompoundsLensController = Ember.ArrayController.extend({
 
         applyLens: function() {
             var lens = this.get('selectedLens');
-            console.log('apply lens ' + lens.name);
             if (lens != null) {
                 //this.send('invalidateModel');
                 this.transitionToRoute('compounds.lens', {
