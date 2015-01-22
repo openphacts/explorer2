@@ -1,6 +1,6 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
-  needs: ['application'],
+  needs: ['application', 'flash'],
 
   infoHide: false,
 
@@ -399,12 +399,17 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
 		success: function(response, status, request) {
 			console.log('tsv create request success');
             me.get('controllers.application').addJob(response.uuid, me.get('smilesValue'), filtersString);
-			App.FlashQueue.pushFlash('notice', 'Creating TSV file for download. You will be alerted when ready.');
-            //me.monitorTSVCreation(response.uuid);
+            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'notice',
+                        message: 'Creating TSV file for download. You will be alerted when ready.'
+                    }));
 		},
 		error: function(request, status, error) {
 			console.log('tsv create request error');
-			  App.FlashQueue.pushFlash('error', 'Could not create TSV file, please contact support quoting error: ' + error);
+			me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'error',
+                        message: 'Could not create TSV file, please contact support quoting error: ' + error
+                    }));
 		}
 	});
     },

@@ -11,11 +11,11 @@
 				<div class="table-responsive">
 					<table class="mytable centersummary">
 						<thead id="tablehead" class="headingstyle">
-							<tr><th style="width: 30%;">Label</th><th style="width:30%;">Percentage</th><th style="width:20%;">Status</th><th style="width:10%;"></th><th style="width: 10%;"></th></tr>
+							<tr><th class="centre" style="width: 30%;">Label</th><th class="centre" style="width:30%;">Percentage</th><th class="centre" style="width:20%;">Status</th><th class="centre" style="width:10%;"></th><th style="width: 10%;"></th></tr>
 						</thead>
 						<tbody>
 							{{#each job in jobsList}}
-							<tr class="record-deco">{{getLabelWithTooltip job}}<td>{{progressBar job.percentage}}</td><td>{{job.status}}</td><td>{{completedJob job.status job.uuid}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
+							<tr class="record-deco">{{getLabelWithTooltip job}}<td><div class="progress no-margin">{{progressBar job}}</div></td><td class="centre">{{job.status}}</td><td class="centre">{{completedJob job.status job.uuid}}</td><td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td></tr>
 							{{/each}}
 						</tbody>
 					</table>

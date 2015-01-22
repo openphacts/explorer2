@@ -1,5 +1,8 @@
 App.ApplicationController = Ember.Controller.extend({
 
+    //flash messages displayed in main application view
+    needs: ['flash'],
+    flashMessages: Ember.computed.alias("controllers.flash.model"),
     //jobsList used in the view to loop over the entries
     jobsList: [],
     alertsAvailable: false,
@@ -23,7 +26,7 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(jobID, label, filters) {
-        this.jobsList.pushObject(Ember.Object.create({
+        this.jobsList.pushObject(this.get('store').createRecord('job', {
             uuid: jobID,
             percentage: 0,
             status: "processing",
@@ -60,11 +63,11 @@ App.ApplicationController = Ember.Controller.extend({
                         if (status === "finished") {
                             me.jobsList.findBy("uuid", jobID).set('status', 'complete');
                             me.set('alertsAvailable', true);
-                            App.FlashQueue.pushFlash('notice', 'TSV file is ready for download, click the "Alerts Bell" for more info.');
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'success', message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'}));
                             runAgain = false;
                         } else if (status === "failed") {
                             me.jobsList.findBy("uuid", jobID).set('status', 'failed');
-                            App.FlashQueue.pushFlash('error', 'TSV file failed during creation, click the "Alerts Bell" for more info.');
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'}));
                             runAgain = false;
                         }
                     } else {

@@ -9,3 +9,5 @@
 //= require ./models/pathway.js
 //= require ./models/structure.js
 //= require ./models/disease.js
+//= require ./models/job.js
+//= require ./models/flashMessage.js

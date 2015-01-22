@@ -1,6 +1,6 @@
 App.CompoundsDrawController = Ember.ObjectController.extend({
 
-    needs: ['application'],
+    needs: ['application', 'flash'],
 
     queryParams: ['smiles'],
 
@@ -28,7 +28,10 @@ App.CompoundsDrawController = Ember.ObjectController.extend({
                     });
                 } else {
                     me.get('controllers.application').set('fetching', false);
-                    App.FlashQueue.pushFlash('error', 'No compound found with this structure');
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'error',
+                        message: 'No compound found with this structure.'
+                    }));
                 }
             }
             structureSearcher.smilesToURL(smiles, structureCallback);

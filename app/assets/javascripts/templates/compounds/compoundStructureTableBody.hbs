@@ -4,9 +4,6 @@
 		<td>{{#link-to "compounds.draw" (query-params smiles=structureRecord.smiles) title="Draw this compound"}}{{cs_image_src structureRecord.URI '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=structureRecord.URI)}}{{structureRecord.prefLabel}}{{/link-to}}{{#if showProvenance}}{{#if structureRecord.prefLabel}}{{provenanceLinkout structureRecord.cwURI 'conceptwiki'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.description}}{{#if showProvenance}}{{#if structureRecord.description}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
-		<td class="cell-basictext">{{structureRecord.biotransformationItem}}{{#if showProvenance}}{{#if structureRecord.biotransformationItem}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
-		<td class="cell-basictext">{{structureRecord.toxicity}}{{#if showProvenance}}{{#if structureRecord.toxicity}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
-		<td class="cell-basictext">{{structureRecord.proteinBinding}}{{#if showProvenance}}{{#if structureRecord.proteinBinding}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.fullMWT}}{{#if showProvenance}}{{#if structureRecord.fullMWT}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.hba}}{{#if showProvenance}}{{#if structureRecord.hba}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.hbd}}{{#if showProvenance}}{{#if structureRecord.hbd}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
@@ -17,10 +14,10 @@
 		<td class="cell-basictext">{{structureRecord.ro5Violations}}{{#if showProvenance}}{{#if structureRecord.ro5Violations}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		<td class="cell-basictext">{{structureRecord.rtb}}{{#if showProvenance}}{{#if structureRecord.rtb}}{{provenanceLinkout structureRecord.csURI 'chemspider'}}{{/if}}{{/if}}</td>
 		{{#if isCurrentSubstructureSearch}}
-		<td class="cell-basictext">{{structureRecord.relevance}}</td>
+		<td class="cell-basictext">{{roundToTwo structureRecord.relevance}}</td>
 		{{/if}}
 		{{#if isCurrentSimilaritySearch}}
-		<td class="cell-basictext">{{structureRecord.relevance}}</td>
+		<td class="cell-basictext">{{roundToTwo structureRecord.relevance}}</td>
 		{{/if}}
 	</tr>
 	{{/each}}
