@@ -43,9 +43,10 @@ App.ApplicationController = Ember.Controller.extend({
                 if (e.data.percentage !== 0) {
                     job.set('percentage', e.data.percentage);
                 }
-                if (e.data.status === "finished") {
+                if (e.data.status === "complete") {
                     job.set('status', 'complete');
-                    me.set('alertsAvailable', true);
+                    job.set('percentage', 100);
+		    me.set('alertsAvailable', true);
                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                         type: 'success',
                         message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
