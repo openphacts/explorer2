@@ -25,7 +25,10 @@ App.ApplicationController = Ember.Controller.extend({
     //monitor the tsv creation
     addJob: function(params, label, filters) {
         var me = this;
+        var id = params.uri + Date.now();
         var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
+            // not really a UUID but consistent with other parts of the code
+            uuid: id,
             percentage: 0,
             status: "processing",
             label: label,
@@ -42,17 +45,65 @@ App.ApplicationController = Ember.Controller.extend({
                 //job may have been removed by the user in the mean time
                 if (e.data.status === "processing") {
                     job.set('percentage', e.data.percent);
-		    myWorker.postMessage(['continue']);
+                    myWorker.postMessage(['continue']);
                 } else if (e.data.status === "complete") {
                     job.set('status', 'complete');
                     job.set('percentage', 100);
-		    me.set('alertsAvailable', true);
+                    me.set('alertsAvailable', true);
                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                         type: 'success',
                         message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
                     }));
+                    // save the TSV file locally
+                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                    // DON'T use "var indexedDB = ..." if you're not in a function.
+                    // Moreover, you may need references to some window.IDB* objects:
+                    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+                    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+                    // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+                    if (!window.indexedDB) {
+                        window.alert("Your browser doesn't support a stable version of IndexedDB. TSV files cannot be stored locally.");
+                    }
+                    var db;
+                    var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
+                    request.onerror = function(event) {
+                        console.log("Could not open tsvfiles db");
+                    };
+                    request.onupgradeneeded = function(event) {
+                        var db = event.target.result;
+
+                        var objectStore = db.createObjectStore("tsvfile", {
+                            keyPath: "uriDate"
+                        });
+                    };
+                    request.onsuccess = function(event) {
+                        var db = event.target.result;
+                        var transaction = db.transaction("tsvfile", "readwrite");
+                        transaction.oncomplete = function(event) {
+                            console.log("Saved tsv file");
+                        };
+
+                        transaction.onerror = function(event) {
+                            // Don't forget to handle errors!
+                            console.log("Transaction error for tsv file");
+                        };
+                        var objectStore = transaction.objectStore('tsvfile');
+                        var addRequest = objectStore.add({
+                            // slightly clumsy key but it will do 
+                            'uriDate': id,
+                            'label': label,
+                            'filters': filters,
+                            'tsvFile': e.data.tsvFile
+                        });
+                        addRequest.onsuccess = function(event) {
+                            console.log('Saved tsv file');
+                        }
+                        addRequest.onerror = function(event) {
+                            console.log("Couldn't save tsv file");
+                        };
+                    }
                 } else {
-		// Job has failed
+                    // Job has failed
                     job.set('status', 'failed');
                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                         type: 'error',
@@ -146,6 +197,9 @@ App.ApplicationController = Ember.Controller.extend({
                     var db = event.target.result;
 
                     var objectStore = db.createObjectStore("compounds", {
+                        keyPath: "uri"
+                    });
+                    var objectStore = db.createObjectStore("targets", {
                         keyPath: "uri"
                     });
                 };
@@ -325,6 +379,10 @@ App.ApplicationController = Ember.Controller.extend({
             });
             //this.transitionToRoute("/search?query=" + query);
             //this.transitionToRoute('search', params);
+        },
+
+        downloadTSV: function(tsvFileID) {
+            console.log('download ' + tsvFileID);
         }
     }
 });

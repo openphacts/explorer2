@@ -10,7 +10,7 @@ var appID = null;
 var requestType = null;
 var searcher = null;
 onmessage = function(e) {
-
+    // The woker can be told to 'start' or to 'continue'
     state = e.data[0];
     if (state === "start") {
         ldaBaseURL = e.data[1];
