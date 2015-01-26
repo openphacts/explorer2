@@ -35,15 +35,15 @@ App.ApplicationController = Ember.Controller.extend({
         if (!!window.Worker) {
             var myWorker = new Worker("/assets/workers.js");
 
-            myWorker.postMessage([ldaBaseUrl, appID, appKey, params]);
+            myWorker.postMessage(['start', ldaBaseUrl, appID, appKey, params]);
 
             myWorker.onmessage = function(e) {
                 console.log('Message received from worker: ' + e.data);
                 //job may have been removed by the user in the mean time
-                if (e.data.percentage !== 0) {
-                    job.set('percentage', e.data.percentage);
-                }
-                if (e.data.status === "complete") {
+                if (e.data.status === "processing") {
+                    job.set('percentage', e.data.percent);
+		    myWorker.postMessage(['continue']);
+                } else if (e.data.status === "complete") {
                     job.set('status', 'complete');
                     job.set('percentage', 100);
 		    me.set('alertsAvailable', true);
@@ -51,7 +51,8 @@ App.ApplicationController = Ember.Controller.extend({
                         type: 'success',
                         message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
                     }));
-                } else if (e.data.status === "failed") {
+                } else {
+		// Job has failed
                     job.set('status', 'failed');
                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                         type: 'error',
