@@ -354,6 +354,11 @@ App.ApplicationController = Ember.Controller.extend({
         mapSearch.mapURL(URI, null, null, null, callback);
     },
 
+    jobComplete: function(job) {
+        console.log('job complete');
+	return false;
+    },
+
     actions: {
 
         dismissAlerts: function() {
