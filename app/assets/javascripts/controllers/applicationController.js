@@ -356,7 +356,7 @@ App.ApplicationController = Ember.Controller.extend({
 
     jobComplete: function(job) {
         console.log('job complete');
-	return false;
+        return false;
     },
 
     actions: {
@@ -373,21 +373,69 @@ App.ApplicationController = Ember.Controller.extend({
         query: function() {
             console.log('app controller query');
             var query = this.get('searchQuery');
-            //this.set('searchQuery', query);
-            //this.transitionToRoute('search', { query: query }); NOTE: this is how you would transition to /search/blah
-            //var params = Ember.Router.QueryParameters.create({ query: query });
-            //this.transitionToRoute('search', {queryParams: {query: this.get('searchQuery')}});
             this.transitionToRoute('search', {
                 queryParams: {
                     query: query
                 }
             });
-            //this.transitionToRoute("/search?query=" + query);
-            //this.transitionToRoute('search', params);
         },
 
         downloadTSV: function(tsvFileID) {
             console.log('download ' + tsvFileID);
+            // save the TSV file locally
+            window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            // DON'T use "var indexedDB = ..." if you're not in a function.
+            // Moreover, you may need references to some window.IDB* objects:
+            window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+            window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+            // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+            if (!window.indexedDB) {
+                window.alert("Your browser doesn't support a stable version of IndexedDB. TSV files cannot be stored locally.");
+            }
+            var db;
+            var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
+            request.onerror = function(event) {
+                console.log("Could not open tsvfiles db");
+            };
+            request.onupgradeneeded = function(event) {
+                var db = event.target.result;
+
+                var objectStore = db.createObjectStore("tsvfile", {
+                    keyPath: "uriDate"
+                });
+            };
+            request.onsuccess = function(event) {
+                var db = event.target.result;
+                var transaction = db.transaction("tsvfile", "readwrite");
+                transaction.oncomplete = function(event) {
+                    console.log("Saved tsv file");
+                };
+
+                transaction.onerror = function(event) {
+                    // Don't forget to handle errors!
+                    console.log("Transaction error for tsv file");
+                };
+                var objectStore = transaction.objectStore('tsvfile');
+                var findURIRequest = objectStore.get(tsvFileID);
+                findURIRequest.onerror = function(event) {
+                    //no entry in db for this uri
+                    console.log("DB retrieval error for " + tsvFileID);
+                };
+                findURIRequest.onsuccess = function(event) {
+                    //update the entry
+                    var data = findURIRequest.result;
+                    if (data != null) {
+                        if (data.tsvFile !== null) {
+                            var blob = new Blob([data.tsvFile], {
+                                type: "text/tsv;charset=utf-8"
+                            });
+                            saveAs(blob, data.label + ".tsv");
+                        } else {
+                            // no tsv data so....e
+                        }
+                    }
+                };
+            }
         }
     }
 });

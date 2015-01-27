@@ -20,7 +20,7 @@
 								<td><div class="progress no-margin">{{progressBar job}}</div></td>
 								<td class="centre">{{job.status}}</td>
 								<td class="centre">
-									<button class="btn btn-default btn-small small-margin-left small-margin-right" {{action 'downloadTSV' job}}>Download</button>
+									<button class="btn btn-default btn-small small-margin-left small-margin-right" {{action 'downloadTSV' job.uuid}}>Download</button>
 								</td>
 								<td><button type="button" class="close" title="Remove this job" {{action "removeJob" job}} >×</button></td>
 							</tr>

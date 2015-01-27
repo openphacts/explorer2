@@ -31,6 +31,8 @@
 //= require models
 //= require URI
 //= require purl
+//= require Blob
+//= require FileSaver
 //= require_tree ./templates
 //= require_tree ./views
 
