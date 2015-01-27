@@ -43,6 +43,9 @@
 .centre {
     text-align: center;
 }
+.no-float {
+	float: none;
+}
 .middle {
     vertical-align: middle;
 }

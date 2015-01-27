@@ -5,6 +5,7 @@ App.ApplicationController = Ember.Controller.extend({
     flashMessages: Ember.computed.alias("controllers.flash.model"),
     //jobsList used in the view to loop over the entries
     jobsList: [],
+    workersList: {},
     alertsAvailable: false,
     iex: false,
 
@@ -25,10 +26,12 @@ App.ApplicationController = Ember.Controller.extend({
     //monitor the tsv creation
     addJob: function(params, label, filters) {
         var me = this;
-        var id = params.uri + Date.now();
+        var date = Date.now();
+        var id = params.uri + date;
         var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
-            // not really a UUID but consistent with other parts of the code
+            // not really a UUID but term consistent with other parts of the code
             uuid: id,
+            date: date,
             percentage: 0,
             status: "processing",
             label: label,
@@ -37,7 +40,8 @@ App.ApplicationController = Ember.Controller.extend({
 
         if (!!window.Worker) {
             var myWorker = new Worker("/assets/workers.js");
-
+            // keep track of workers in case we need to remove it due to user stopping job before finish
+            me.get('workersList')[encodeURIComponent(id)] = myWorker;
             myWorker.postMessage(['start', ldaBaseUrl, appID, appKey, params]);
 
             myWorker.onmessage = function(e) {
@@ -91,15 +95,18 @@ App.ApplicationController = Ember.Controller.extend({
                         var addRequest = objectStore.add({
                             // slightly clumsy key but it will do 
                             'uriDate': id,
+                            'date': date,
                             'label': label,
                             'filters': filters,
                             'tsvFile': e.data.tsvFile
                         });
                         addRequest.onsuccess = function(event) {
                             console.log('Saved tsv file');
+                            myWorker.terminate();
                         }
                         addRequest.onerror = function(event) {
                             console.log("Couldn't save tsv file");
+                            myWorker.terminate();
                         };
                     }
                 } else {
@@ -111,61 +118,6 @@ App.ApplicationController = Ember.Controller.extend({
                     }));
                 }
             }
-        }
-    },
-    checkTSV: function(jobID, controller, go) {
-        console.log("Check TSV is " + go + " for " + jobID);
-        var jobID = jobID;
-        var me = controller;
-        var runAgain = true;
-        if (go !== false) {
-            $.ajax({
-                url: tsvStatusUrl,
-                dataType: 'json',
-                cache: true,
-                data: {
-                    _format: "json",
-                    uuid: jobID,
-                },
-                success: function(response, status, request) {
-                    console.log('tsv monitor status ' + response.status);
-                    status = response.status;
-                    var percentage = response.percentage;
-                    var job = me.jobsList.findBy("uuid", jobID);
-                    //job may have been removed by the user in the mean time
-                    if (job != null) {
-                        if (percentage !== 0) {
-                            me.jobsList.findBy("uuid", jobID).set('percentage', percentage);
-                        }
-                        if (status === "finished") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'complete');
-                            me.set('alertsAvailable', true);
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                                type: 'success',
-                                message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
-                            }));
-                            runAgain = false;
-                        } else if (status === "failed") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'failed');
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                                type: 'error',
-                                message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'
-                            }));
-                            runAgain = false;
-                        }
-                    } else {
-                        runAgain = false;
-                    }
-
-                },
-                error: function(request, status, error) {
-                    console.log('tsv create request error');
-                },
-                complete: setTimeout(function() {
-                    me.checkTSV(jobID, me, runAgain)
-                }, 5000),
-                timeout: 2000
-            });
         }
     },
 
@@ -354,11 +306,6 @@ App.ApplicationController = Ember.Controller.extend({
         mapSearch.mapURL(URI, null, null, null, callback);
     },
 
-    jobComplete: function(job) {
-        console.log('job complete');
-        return false;
-    },
-
     actions: {
 
         dismissAlerts: function() {
@@ -366,12 +313,11 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         removeJob: function(job) {
-            console.log("removing job " + job.get('uuid'));
+            this.get('workersList')[encodeURIComponent(job.get('uuid'))].terminate();
             this.jobsList.removeObject(job);
         },
 
         query: function() {
-            console.log('app controller query');
             var query = this.get('searchQuery');
             this.transitionToRoute('search', {
                 queryParams: {
@@ -381,17 +327,9 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         downloadTSV: function(tsvFileID) {
-            console.log('download ' + tsvFileID);
-            // save the TSV file locally
             window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-            // DON'T use "var indexedDB = ..." if you're not in a function.
-            // Moreover, you may need references to some window.IDB* objects:
             window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
             window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-            // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-            if (!window.indexedDB) {
-                window.alert("Your browser doesn't support a stable version of IndexedDB. TSV files cannot be stored locally.");
-            }
             var db;
             var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
             request.onerror = function(event) {
@@ -408,7 +346,7 @@ App.ApplicationController = Ember.Controller.extend({
                 var db = event.target.result;
                 var transaction = db.transaction("tsvfile", "readwrite");
                 transaction.oncomplete = function(event) {
-                    console.log("Saved tsv file");
+                    console.log("Downloaded tsv file");
                 };
 
                 transaction.onerror = function(event) {
@@ -418,11 +356,10 @@ App.ApplicationController = Ember.Controller.extend({
                 var objectStore = transaction.objectStore('tsvfile');
                 var findURIRequest = objectStore.get(tsvFileID);
                 findURIRequest.onerror = function(event) {
-                    //no entry in db for this uri
+                    //no entry in db for this tsv file
                     console.log("DB retrieval error for " + tsvFileID);
                 };
                 findURIRequest.onsuccess = function(event) {
-                    //update the entry
                     var data = findURIRequest.result;
                     if (data != null) {
                         if (data.tsvFile !== null) {
