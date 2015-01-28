@@ -215,11 +215,14 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
     actions: {
 
         sortHeader: function(header) {
-            console.log('sorting by ' + header);
             //first set all the current filters
             var assayOrganism = this.get('assayOrganismQuery');
-            var targetOrganism = this.get('targetOrganismQuery');
-            var targetType = null;
+	    // The organism filter box might have been emptied by deleting the text
+            assayOrganism = assayOrganism === "" ? null : assayOrganism;
+	    var targetOrganism = this.get('targetOrganismQuery');
+	    targetOrganism = targetOrganism === "" ? null : targetOrganism;
+ 
+	    var targetType = null;
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;

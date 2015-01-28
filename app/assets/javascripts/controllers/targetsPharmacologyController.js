@@ -191,8 +191,11 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
         sortHeader: function(header) {
             //first set all the current filters
             var assayOrganism = this.get('assayOrganismQuery');
-            var targetOrganism = this.get('targetOrganismQuery');
-            var targetType = null;
+	    // The organism filter box might have been emptied by deleting the text
+            assayOrganism = assayOrganism === "" ? null : assayOrganism;
+	    var targetOrganism = this.get('targetOrganismQuery');
+	    targetOrganism = targetOrganism === "" ? null : targetOrganism; 
+	    var targetType = null;
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
@@ -204,8 +207,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             var maxExActivityValue = null;
             var activityValue = null;
             var minExActivityValue = null;
-            // only set activity filter if all filter boxes have been selected
-            if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+            // only set activity filter if there is a condition and a value (same as compound pharma)
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         minExActivityValue = currentActivityValue;
@@ -332,8 +335,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
                 var maxExActivityValue = null;
                 var activityValue = null;
                 var minExActivityValue = null;
-                // only set activity filter if all filter boxes have been selected
-                if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+                // only set activity filter if there is a condition and a value (same as compound pharma)
+                if (condition != null && currentActivityValue != null) {
                     switch (condition) {
                         case '>':
                             minExActivityValue = currentActivityValue;
@@ -451,8 +454,8 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             var maxExActivityValue = null;
             var activityValue = null;
             var minExActivityValue = null;
-            // only set activity filter if all filter boxes have been selected
-            if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+            // only set activity filter if there is a condition and a value (same as compound pharma)
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         minExActivityValue = currentActivityValue;
@@ -612,9 +615,9 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             var activityValue = null;
             var minExActivityValue = null;
             var activityValueType = null;
-            // only set activity filter if all filter boxes have been selected
+            // only set activity filter if there is a condition and a value (same as compound pharma)
             //if (unit != null && activity != null && condition != null && currentActivityValue != null) {
-            if (condition != null) {
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         activityValueType = "minEx-activity_value";
@@ -709,41 +712,22 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
             var thisTarget = this.get('content');
-            var tsvCreateRequest = $.ajax({
-                url: tsvCreateUrl,
-                dataType: 'json',
-                cache: true,
-                data: {
-                    _format: "json",
-                    uri: this.get('content').get('URI'),
-                    total_count: me.totalCount,
-                    request_type: 'target',
-                    pchembl_value_type: pChemblValueType,
-                    pchembl_value: currentPchemblValue,
-                    activity_relation: activityRelation,
-                    activity_value_type: activityValueType,
-                    activity_value: currentActivityValue,
-                    activity_type: activity,
-                    activity_unit: unit,
-                    assay_organism: assayOrganism,
-                    target_organism: targetOrganism
-                },
-                success: function(response, status, request) {
-                    me.get('controllers.application').addJob(response.uuid, thisTarget.get('prefLabel'), filtersString);
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'notice',
-                        message: 'Creating TSV file for download. You will be alerted when ready.'
-                    }));
-                },
-                error: function(request, status, error) {
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'error',
-                        message: 'Could not create TSV file, please contact support quoting error: ' + error
-                    }));
-                }
-            });
+            var requestParams = {
+                uri: thisTarget.get('URI'),
+                total_count: me.totalCount,
+                request_type: 'target',
+                pchembl_value_type: pChemblValueType,
+                pchembl_value: currentPchemblValue,
+                activity_relation: activityRelation,
+                activity_value_type: activityValueType,
+                activity_value: currentActivityValue,
+                activity_type: activity,
+                activity_unit: unit,
+                assay_organism: assayOrganism,
+                target_organism: targetOrganism
+            };
+            me.get('controllers.application').addJob(requestParams, thisTarget.get('prefLabel'), filtersString);
         }
-
-    },
+    }
 
 });

@@ -526,7 +526,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             assay_description_item = null,
             compound_ro5_violations = null;
 
-        match.forEach(function(match, index, data) {
+        em.forEach(function(match, index, data) {
             var src = match[constants.IN_DATASET];
             if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                 cw_compound_uri = match["_about"];
@@ -540,7 +540,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
                 compound_inchikey = match['inchikey'];
                 compound_smiles = match['smiles'];
                 compound_full_mwt = match.molweight;
-                compound_ro5_violations = match.ro5_violations;
+                compound_ro5_violations = match.ro5_violations ? match.ro5_violations : null;
                 cs_src = match["inDataset"];
                 var chemSpiderLink = 'http://www.chemspider.com/' + csid;
                 compound_inchi_item = chemSpiderLink;
@@ -579,7 +579,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
         var target_concatenated_uris;
         var chemblTargetLink = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
         var target_organisms = new Array();
-        var targets = new Array();
+        var targets = [];
         if (target != null) {
             chembl_target_uri = target["_about"];
             //target_pref_label = target['prefLabel'];
@@ -620,7 +620,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
         var activity_relation = item['activity_relation'] ? item['activity_relation'] : null;
         activity_relation_item = chemblActivityLink;
         var activity_pubmed_id = item['pmid'] ? item['pmid'] : null;
-        var pChembl = item.pChembl;
+        var pChembl = item.pChembl ? item.pChembl : null;
         records.push({ //for compound
             'compoundInchikey': compound_inchikey,
             //compoundDrugType: compound_drug_type,
