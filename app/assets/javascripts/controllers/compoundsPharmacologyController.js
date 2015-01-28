@@ -772,21 +772,6 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
         disableProvenance: function() {
             this.get('showProvenance') === true ? this.set('showProvenance', false) : '';
-        },
-
-        webWorker: function() {
-            if (!!window.Worker) {
-                var myWorker = new Worker("/assets/workers.js");
-
-                myWorker.postMessage([ldaBaseUrl, appID, appKey]);
-
-                myWorker.onmessage = function(e) {
-                    console.log('Message received from worker: ' + e.data);
-                }
-            }
-        },
-        dataURIDownload: function() {
-            location.href = "data:application/octet-stream," + encodeURIComponent('Blah blah blah\nMore nonsense etc');
         }
 
     }

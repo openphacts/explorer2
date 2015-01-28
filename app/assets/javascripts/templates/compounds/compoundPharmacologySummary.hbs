@@ -6,8 +6,6 @@
 		<div class="hidden-xs hidden-sm">
 			<a href="#compoundPharmaFilterModalView" class="small-margin-bottom btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
 			<button class="btn btn-default small-margin-bottom" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
-			<button class="btn btn-default small-margin-bottom" {{action "webWorker" this}} title="Create a web worker">Create Worker</button>
-			<button class="btn btn-default small-margin-bottom" {{action "dataURIDownload" this}} title="Data URI download">Data URI download</button>
 			<span class="button-group" data-toggle="buttons">
 				<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
 					<input type="radio" name="options" id="option1" checked>Show provenance
