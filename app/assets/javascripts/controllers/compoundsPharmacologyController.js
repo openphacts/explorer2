@@ -750,6 +750,11 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             this.set('selectedPchemblValue', null);
             this.set('assayOrganismQuery', null);
             this.set('targetOrganismQuery', null);
+	    this.set('greaterThan', false);
+	    this.set('lessThan', false);
+	    this.set('equalTo',  false);
+	    this.set('greaterThanOrEqual', false);
+	    this.set('lessThanOrEqual', false);
         },
 
         goToTop: function() {
