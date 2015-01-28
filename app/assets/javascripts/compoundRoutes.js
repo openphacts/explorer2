@@ -96,9 +96,12 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
         controller.set('totalCount', null);
         var me = controller;
         // set all the current filters
-        var assayOrganism = me.get('assayOrganismQuery');
-        var targetOrganism = me.get('targetOrganismQuery');
-        var targetType = null;
+	var assayOrganism = me.get('assayOrganismQuery');
+	// The organism filter box might have been emptied by deleting the text
+        assayOrganism = assayOrganism === "" ? null : assayOrganism;
+	var targetOrganism = me.get('targetOrganismQuery');
+	targetOrganism = targetOrganism === "" ? null : targetOrganism;
+	var targetType = null;
         var lens = null;
         var activity = me.get('selectedActivity') != null ? me.get('selectedActivity').label : null;
         var unit = me.get('selectedUnit') != null ? me.get('selectedUnit').label : null;

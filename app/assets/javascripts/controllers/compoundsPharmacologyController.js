@@ -494,9 +494,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
                 this.get('controllers.application').set('fetching', true)
                     //first set all the current filters
-                var assayOrganism = this.get('assayOrganismQuery');
-                var targetOrganism = this.get('targetOrganismQuery');
-                var targetType = null;
+	 var assayOrganism = this.get('assayOrganismQuery');
+	    // The organism filter box might have been emptied by deleting the text
+            assayOrganism = assayOrganism === "" ? null : assayOrganism;
+	    var targetOrganism = this.get('targetOrganismQuery');
+	    targetOrganism = targetOrganism === "" ? null : targetOrganism;
+		var targetType = null;
                 var lens = null;
                 var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
                 var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
