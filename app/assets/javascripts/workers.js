@@ -24,6 +24,15 @@ onmessage = function(e) {
     }
     if (requestType === "compound") {
         var requestURL = ldaBaseURL + '/compound/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+        // Add any filters to the request
+        requestURL += params['pchembl_value_type'] !== null ? '&' + encodeURIComponent(params['pchembl_value_type']) + '=' + encodeURIComponent(params['pchembl_value']) : '';
+        requestURL += params['activity_value_type'] !== null ? '&' + encodeURIComponent(params['activity_value_type']) + '=' + encodeURIComponent(params['activity_value']) : '';
+        requestURL += params['activity_type'] !== null ? '&activity_type=' + encodeURIComponent(params['activity_type']) : '';
+        requestURL += params['activity_unit'] !== null ? '&activity_unit=' + encodeURIComponent(params['activity_unit']) : '';
+        requestURL += params['activity_relation'] !== null ? '&activity_relation=' + encodeURIComponent(params['activity_relation']) : '';
+        requestURL += params['assay_organism'] !== null ? '&assay_organism=' + encodeURIComponent(params['assay_organism']) : '';
+        requestURL += params['target_organism'] !== null ? '&target_organism=' + encodeURIComponent(params['target_organism']) : '';
+
         var failed = false;
         var processTSVFile = function() {
             nets({

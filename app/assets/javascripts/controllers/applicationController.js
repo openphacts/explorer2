@@ -43,6 +43,10 @@ App.ApplicationController = Ember.Controller.extend({
             // keep track of workers in case we need to remove it due to user stopping job before finish
             me.get('workersList')[encodeURIComponent(id)] = myWorker;
             myWorker.postMessage(['start', ldaBaseUrl, appID, appKey, params]);
+            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'success',
+                message: 'TSV file is being created. You will be alerted when it is ready for download. Click the "Alerts Bell" to view the current progress.'
+            }));
 
             myWorker.onmessage = function(e) {
                 console.log('Message received from worker: ' + e.data);
