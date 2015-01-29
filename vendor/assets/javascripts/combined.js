@@ -966,18 +966,11 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
         var pChembl = item['pChembl'] ? item['pChembl'] : null;
 
         var compound_full_mwt_item = null;
-
-        //big bits
         var forMolecule = item[constants.FOR_MOLECULE];
         var chembleMoleculeLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
-        if (forMolecule != null) {
-            var chembl_compound_uri = forMolecule[constants.ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
-            chembleMoleculeLink += chembl_compound_uri.split('/').pop();
-            compound_full_mwt_item = chembleMoleculeLink;
-            var em = forMolecule["exactMatch"];
-        }
-
+	var chembl_compound_uri = null;
+	var compound_full_mwt = null;
+	var em = null;
         var cw_compound_uri = null,
             compound_pref_label = null,
             cw_src = null,
@@ -995,6 +988,14 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
             compound_inchi_item = null,
             compound_inchikey_item = null,
             compound_pref_label_item = null;
+
+	if (forMolecule != null) {
+            chembl_compound_uri = forMolecule[constants.ABOUT];
+            compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+            chembleMoleculeLink += chembl_compound_uri.split('/').pop();
+            compound_full_mwt_item = chembleMoleculeLink;
+            em = forMolecule["exactMatch"];
+        }
         //during testing there have been cases where em is null
         var chemblMolecule = em != null ? em[constants.ABOUT] : null;
         if (em != null) {
@@ -1011,6 +1012,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     compound_inchi = match['inchi'];
                     compound_inchikey = match['inchikey'];
                     compound_smiles = match['smiles'];
+		    compound_full_mwt = match['molweight'];
                     var chemSpiderLink = 'http://www.chemspider.com/' + csid;
                     compound_smiles_item = chemSpiderLink;
                     compound_inchi_item = chemSpiderLink;

@@ -103,16 +103,37 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
         var pChembl = item['pChembl'] ? item['pChembl'] : null;
 
         var compound_full_mwt_item = null;
+	var chembl_compound_uri = null;
+	var compound_full_mwt = null;
+	var em = null;
+        var cw_compound_uri = null,
+            compound_pref_label = null,
+            cw_src = null,
+            cs_compound_uri = null,
+            compound_inchi = null,
+            compound_inchikey = null,
+            compound_smiles = null,
+            cs_src = null,
+            drugbank_compound_uri = null,
+            compound_drug_type = null,
+            compound_generic_name = null,
+            drugbank_src = null,
+            csid = null,
+            compound_smiles_item = null,
+            compound_inchi_item = null,
+            compound_inchikey_item = null,
+            compound_pref_label_item = null;
+
 
         //big bits
         var forMolecule = item[constants.FOR_MOLECULE];
         var chembleMoleculeLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
         if (forMolecule != null) {
-            var chembl_compound_uri = forMolecule[constants.ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+            chembl_compound_uri = forMolecule[constants.ABOUT];
+            compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
             chembleMoleculeLink += chembl_compound_uri.split('/').pop();
             compound_full_mwt_item = chembleMoleculeLink;
-            var em = forMolecule["exactMatch"];
+            em = forMolecule["exactMatch"];
         }
 
         var cw_compound_uri = null,
