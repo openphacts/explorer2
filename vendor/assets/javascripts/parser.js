@@ -343,9 +343,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         var uri = item[constants.ABOUT];
 
         // check if we already have the CS URI
-        var uriLink = document.createElement('a');
-        uriLink.href = uri;
-        var possibleURI = 'http://' + uriLink.hostname;
+        var possibleURI = 'http://' + uri.split('/')[2];
+	//var uriLink = document.createElement('a');
+        //uriLink.href = uri;
+        //var possibleURI = 'http://' + uriLink.hostname;
         csURI = constants.SRC_CLS_MAPPINGS[possibleURI] === 'chemspiderValue' ? uri : null;
 
         var drugbankProvenance, chemspiderProvenance, chemblProvenance;
@@ -368,7 +369,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         ro5Violations = item.ro5_violations != null ? item.ro5_violations : null;
         rtb = item.rtb !== null ? item.rtb : null;
         smiles = item.smiles != null ? item.smiles : null;
-
+        if (Array.isArray(item.exactMatch)) {
         item.exactMatch.forEach(function(match, i, data) {
             var src = match[constants.IN_DATASET];
             if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
@@ -381,6 +382,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
                 conceptWikiData = match;
             }
         });
+	}
         if (drugbankData) {
             description = drugbankData.description != null ? drugbankData.description : description;
             biotransformationItem = drugbankData.biotransformation != null ? drugbankData.biotransformation : biotransformationItem;
