@@ -130,9 +130,9 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
         var chembleMoleculeLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
         if (forMolecule != null) {
             chembl_compound_uri = forMolecule[constants.ABOUT];
-            compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+            //compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
             chembleMoleculeLink += chembl_compound_uri.split('/').pop();
-            compound_full_mwt_item = chembleMoleculeLink;
+            //compound_full_mwt_item = chembleMoleculeLink;
             em = forMolecule["exactMatch"];
         }
 
@@ -169,10 +169,12 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     compound_inchi = match['inchi'];
                     compound_inchikey = match['inchikey'];
                     compound_smiles = match['smiles'];
+		    compound_full_mwt = match['molweight'];
                     var chemSpiderLink = 'http://www.chemspider.com/' + csid;
                     compound_smiles_item = chemSpiderLink;
                     compound_inchi_item = chemSpiderLink;
                     compound_inchikey_item = chemSpiderLink;
+		    compound_full_mwt_item = chemSpiderLink;
                     cs_src = match["inDataset"];
                 } else if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                     drugbank_compound_uri = match[constants.ABOUT];
