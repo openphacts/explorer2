@@ -550,3 +550,6 @@ div.dl-horizontal dl dd {
 .high-z {
     z-index: 1000;
 }
+.alerts-available {
+	color: red;
+}
