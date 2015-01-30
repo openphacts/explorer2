@@ -301,7 +301,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
             assayDescription: assay_description,
             activityRelation: activity_relation,
             activityStandardUnits: activity_standard_units,
-            activityStandardValue: activity_standard_value,
+            //activityStandardValue: activity_standard_value,
             activityActivityType: activity_activity_type,
             activityValue: activity_activity_value,
 
