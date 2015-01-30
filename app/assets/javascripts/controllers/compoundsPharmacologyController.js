@@ -381,7 +381,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             var activityValueType = null;
             // only set activity filter if all filter boxes have been selected
             //if (unit != null && activity != null && condition != null && currentActivityValue != null) {
-            if (condition != null) {
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         activityValueType = "minEx-activity_value";
