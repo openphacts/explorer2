@@ -7,6 +7,8 @@
     // enable the query parameters
     ENV = {FEATURES: {'query-params-new': true}};
   </script>
+  <!-- Load browser polyfills for missing features, see https://github.com/Financial-Times/polyfill-service -->
+  <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
     <%= javascript_include_tag :application %>
     <title>Open PHACTS Explorer</title>
   <%= csrf_meta_tags %>
