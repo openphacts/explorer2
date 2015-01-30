@@ -11,6 +11,7 @@ var requestType = null;
 var searcher = null;
 var keys = null;
 var uris = null;
+var treeType = null;
 onmessage = function(e) {
     // The woker can be told to 'start' or to 'continue'
     state = e.data[0];
@@ -26,19 +27,30 @@ onmessage = function(e) {
             searcher = new Openphacts.CompoundSearch(ldaBaseURL, appID, appKey);
         } else if (requestType === "target") {
             searcher = new Openphacts.TargetSearch(ldaBaseURL, appID, appKey);
+        } else if (requestType === "tree") {
+            searcher = new Openphacts.TreeSearch(ldaBaseURL, appID, appKey);
+            treeType = params.tree_type;
         }
+
         if (requestType === "structure") {
             uris = params.uris;
             searcher = new Openphacts.CompoundSearch(ldaBaseURL, appID, appKey);
         }
     }
-    if (requestType === "compound" || requestType === "target") {
+    if (requestType === "compound" || requestType === "target" || requestType === "tree") {
         var requestURL;
         if (requestType === "compound") {
             requestURL = ldaBaseURL + '/compound/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
         } else if (requestType === "target") {
             requestURL = ldaBaseURL + '/target/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+        } else if (requestType === "tree") {
+            if (treeType === "tree") {
+                requestURL = ldaBaseURL + '/target/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+            } else {
+                requestURL = ldaBaseURL + '/compound/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+            }
         }
+
         // Add any filters to the request
         requestURL += params['pchembl_value_type'] !== null ? '&' + encodeURIComponent(params['pchembl_value_type']) + '=' + encodeURIComponent(params['pchembl_value']) : '';
         requestURL += params['activity_value_type'] !== null ? '&' + encodeURIComponent(params['activity_value_type']) + '=' + encodeURIComponent(params['activity_value']) : '';
@@ -66,6 +78,12 @@ onmessage = function(e) {
                         pharmaResults = searcher.parseCompoundPharmacologyResponse(pharmaResponse.result);
                     } else if (requestType === "target") {
                         pharmaResults = searcher.parseTargetPharmacologyResponse(pharmaResponse.result);
+                    } else if (requestType === "tree") {
+                        if (treeType === "tree") {
+                            pharmaResults = searcher.parseTargetClassPharmacologyPaginated(pharmaResponse.result);
+                        } else {
+                            pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(pharmaResponse.result);
+                        }
                     }
                     // Add the headers in the first line
                     if (i === 1) {
@@ -91,7 +109,14 @@ onmessage = function(e) {
                                 var value = result[key] ? result[key] : '';
                                 line += index < keys.length - 1 ? value + '\t' : value;
                             });
+                        } else if (requestType === "tree") {
+                            keys.forEach(function(key, index, keys) {
+                                // Change null values to empty string
+                                var value = result[key] ? result[key] : '';
+                                line += index < keys.length - 1 ? value + '\t' : value;
+                            });
                         }
+
                         line += "\r\n";
                         tsvFile += line;
                     });
