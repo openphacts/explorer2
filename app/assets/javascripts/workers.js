@@ -12,6 +12,8 @@ var searcher = null;
 var keys = null;
 var uris = null;
 var treeType = null;
+// Map of the OPS.js response param name to the renamed column headers wanted in the TSV 
+var headers = null;
 onmessage = function(e) {
     // The woker can be told to 'start' or to 'continue'
     state = e.data[0];
@@ -41,6 +43,32 @@ onmessage = function(e) {
         var requestURL;
         if (requestType === "compound") {
             requestURL = ldaBaseURL + '/compound/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+            headers = {
+                'compoundInchikey': 'InChiKey',
+                'compoundDrugType': 'Drug type',
+                'compoundGenericName': 'Generic name',
+                'targets': 'Target',
+                'compoundFullMwt': 'Molecular Weight',
+                'compoundPrefLabel': 'Compound preferred label',
+                'csid': 'OPS RSC identifier',
+                'compoundInchi': 'InChI',
+                'compoundSmiles': 'SMILES',
+                'targetOrganisms': 'Target Organism',
+                'assayOrganism': 'Assay Organism',
+                'assayDescription': 'Assay description',
+                'activityRelation': 'Activity relation',
+                'activityStandardUnits': 'Activity units',
+                'activityStandardValue': 'Activity value',
+                'activityActivityType': 'Acivity type',
+                'activityPubmedId': 'Pubmed ID',
+                'pChembl': 'pChembl',
+                'compoundDrugTypeSrc': 'Drugbank URI',
+                'chemblActivityUri': 'ChEMBL activity URI',
+                'chemblCompoundUri': 'ChEMBL compound URI',
+                'cwCompoundUri': 'Concept Wiki compound URI',
+                ' csCompoundUri': 'Ops.rsc URI',
+                'chemblAssayUri': 'ChEMBL assay URI'
+            };
         } else if (requestType === "target") {
             requestURL = ldaBaseURL + '/target/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
         } else if (requestType === "tree") {
@@ -85,20 +113,17 @@ onmessage = function(e) {
                             pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(pharmaResponse.result);
                         }
                     }
-		    var compoundHeaders = {'compoundImchiKey': 'InChiKey', 'compoundDrugType': 'Drug Type', 'compoundGenericName': 'GenericName', 'targets': 'Target', 'compoundFullMwt': 'Molecular Weight', 'compoundPrefLabel': 'Compound preferred label'};
+
                     // Add the headers in the first line
                     if (i === 1) {
-                        keys = Object.keys(pharmaResults[0]);
+                        keys = Object.keys(headers);
                         keys.forEach(function(key, index, keys) {
-                            tsvFile += index < keys.length - 1 ? key + '\t' : key + '\r\n';
+                            tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                         });
                     }
                     pharmaResults.forEach(function(result, index, results) {
                         var line = "";
                         if (requestType === "compound") {
- 
-     				// keep this list in case we want to cut down the columns some time
-                            //line = result.compoundInchikey + '\t' + result.compoundDrugType + '\t' + result.compoundGenericName + '\t' + result.targets + '\t' + result.compoundInchikeySrc + '\t' + result.compoundDrugTypeSrc + '\t' + result.compoundGenericNameSrc + '\t' + result.targetTitleSrc + '\t' + result.chemblActivityUri + '\t' + result.chemblCompoundUri + '\t' + result.compoundFullMwt + '\t' + result.cwCompoundUri + '\t' + result.compoundPrefLabel + '\t' + result.csCompoundUri + '\t' + result.csid + '\t' + result.compoundInchi + '\t' + result.compoundSmiles + '\t' + result.chemblAssayUri + '\t' + result.targetOrganisms + '\t' + result.assayOrganism + '\t' + result.assayDescription + '\t' + result.activityRelation + '\t' + result.activityStandardUnits + '\t' + result.activityStandardValue + '\t' + result.activityActivityType + '\t' + result.compoundFullMwtSrc + '\t' + result.compoundPrefLabelSrc + '\t' + result.compoundInchiSrc + '\t' + result.compoundSmilesSrc + '\t' + result.targetOrganismSrc + '\t' + result.assayOrganismSrc + '\t' + result.assayDescriptionSrc + '\t' + result.activityRelationSrc + '\t' + result.activityStandardUnitsSrc + '\t' + result.activityStandardValueSrc + '\t' + result.activityActivityTypeSrc + '\t' + result.activityPubmedId + '\t' + result.assayDescriptionItem + '\t' + result.assayOrganismItem + '\t' + result.activityActivityTypeItem + '\t' + result.activityRelationItem + '\t' + result.activityStandardValueItem + '\t' + result.activityStandardUnitsItem + '\t' + result.activityValue + '\t' + result.compoundFullMwtItem + '\t' + result.compoundSmilesItem + '\t' + result.compoundInchiItem + '\t' + result.compoundInchikeyItem + '\t' + result.compoundPrefLabelItem + '\t' + result.pChembl + '\t' + result.chemblProvenance;
                             keys.forEach(function(key, index, keys) {
                                 // Change null values to empty string
                                 var value = result[key] ? result[key] : '';
