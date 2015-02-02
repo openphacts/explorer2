@@ -58,7 +58,7 @@ onmessage = function(e) {
                 'assayDescription': 'Assay description',
                 'activityRelation': 'Activity relation',
                 'activityStandardUnits': 'Activity units',
-                'activityStandardValue': 'Activity value',
+                'activityValue': 'Activity value',
                 'activityActivityType': 'Acivity type',
                 'activityPubmedId': 'Pubmed ID',
                 'pChembl': 'pChembl',
@@ -66,7 +66,7 @@ onmessage = function(e) {
                 'chemblActivityUri': 'ChEMBL activity URI',
                 'chemblCompoundUri': 'ChEMBL compound URI',
                 'cwCompoundUri': 'Concept Wiki compound URI',
-                ' csCompoundUri': 'Ops.rsc URI',
+                'csCompoundUri': 'OPS RSC URI',
                 'chemblAssayUri': 'ChEMBL assay URI'
             };
         } else if (requestType === "target") {
@@ -115,11 +115,21 @@ onmessage = function(e) {
                     }
 
                     // Add the headers in the first line
-                    if (i === 1) {
-                        keys = Object.keys(headers);
-                        keys.forEach(function(key, index, keys) {
-                            tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
-                        });
+                    if (requestType === "compound") {
+                        if (i === 1) {
+                            keys = Object.keys(headers);
+                            keys.forEach(function(key, index, keys) {
+                                tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
+                            });
+                        }
+                    } else {
+                        // defined keys only for compound right now
+                        if (i === 1) {
+                            keys = Object.keys(pharmaResults[0]);
+                            keys.forEach(function(key, index, keys) {
+                                tsvFile += index < keys.length - 1 ? key + '\t' : key + '\r\n';
+                            });
+                        }
                     }
                     pharmaResults.forEach(function(result, index, results) {
                         var line = "";
