@@ -85,6 +85,7 @@ onmessage = function(e) {
                             pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(pharmaResponse.result);
                         }
                     }
+		    var compoundHeaders = {'compoundImchiKey': 'InChiKey', 'compoundDrugType': 'Drug Type', 'compoundGenericName': 'GenericName', 'targets': 'Target', 'compoundFullMwt': 'Molecular Weight', 'compoundPrefLabel': 'Compound preferred label'};
                     // Add the headers in the first line
                     if (i === 1) {
                         keys = Object.keys(pharmaResults[0]);
@@ -95,7 +96,8 @@ onmessage = function(e) {
                     pharmaResults.forEach(function(result, index, results) {
                         var line = "";
                         if (requestType === "compound") {
-                            // keep this list in case we want to cut down the columns some time
+ 
+     				// keep this list in case we want to cut down the columns some time
                             //line = result.compoundInchikey + '\t' + result.compoundDrugType + '\t' + result.compoundGenericName + '\t' + result.targets + '\t' + result.compoundInchikeySrc + '\t' + result.compoundDrugTypeSrc + '\t' + result.compoundGenericNameSrc + '\t' + result.targetTitleSrc + '\t' + result.chemblActivityUri + '\t' + result.chemblCompoundUri + '\t' + result.compoundFullMwt + '\t' + result.cwCompoundUri + '\t' + result.compoundPrefLabel + '\t' + result.csCompoundUri + '\t' + result.csid + '\t' + result.compoundInchi + '\t' + result.compoundSmiles + '\t' + result.chemblAssayUri + '\t' + result.targetOrganisms + '\t' + result.assayOrganism + '\t' + result.assayDescription + '\t' + result.activityRelation + '\t' + result.activityStandardUnits + '\t' + result.activityStandardValue + '\t' + result.activityActivityType + '\t' + result.compoundFullMwtSrc + '\t' + result.compoundPrefLabelSrc + '\t' + result.compoundInchiSrc + '\t' + result.compoundSmilesSrc + '\t' + result.targetOrganismSrc + '\t' + result.assayOrganismSrc + '\t' + result.assayDescriptionSrc + '\t' + result.activityRelationSrc + '\t' + result.activityStandardUnitsSrc + '\t' + result.activityStandardValueSrc + '\t' + result.activityActivityTypeSrc + '\t' + result.activityPubmedId + '\t' + result.assayDescriptionItem + '\t' + result.assayOrganismItem + '\t' + result.activityActivityTypeItem + '\t' + result.activityRelationItem + '\t' + result.activityStandardValueItem + '\t' + result.activityStandardUnitsItem + '\t' + result.activityValue + '\t' + result.compoundFullMwtItem + '\t' + result.compoundSmilesItem + '\t' + result.compoundInchiItem + '\t' + result.compoundInchikeyItem + '\t' + result.compoundPrefLabelItem + '\t' + result.pChembl + '\t' + result.chemblProvenance;
                             keys.forEach(function(key, index, keys) {
                                 // Change null values to empty string
