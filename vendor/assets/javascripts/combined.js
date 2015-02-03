@@ -991,9 +991,9 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
 
 	if (forMolecule != null) {
             chembl_compound_uri = forMolecule[constants.ABOUT];
-            compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+            //compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
             chembleMoleculeLink += chembl_compound_uri.split('/').pop();
-            compound_full_mwt_item = chembleMoleculeLink;
+            //compound_full_mwt_item = chembleMoleculeLink;
             em = forMolecule["exactMatch"];
         }
         //during testing there have been cases where em is null
@@ -1017,6 +1017,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     compound_smiles_item = chemSpiderLink;
                     compound_inchi_item = chemSpiderLink;
                     compound_inchikey_item = chemSpiderLink;
+		    compound_full_mwt_item = chemSpiderLink;
                     cs_src = match["inDataset"];
                 } else if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                     drugbank_compound_uri = match[constants.ABOUT];
@@ -1676,7 +1677,7 @@ Openphacts.TargetSearch.prototype.targetTypes = function(lens, callback) {
  */
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
-	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
+	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null, mass = null;
 	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var URI = response.primaryTopic[constants.ABOUT];
 	var id = URI.split("/").pop();
@@ -1761,7 +1762,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
-
+		    mass = uniprotData.mass ? uniprotData.mass : null;
 	            uniprotProvenance = {};
 	            uniprotLinkOut = uniprotURI;
 				uniprotProvenance['source'] = 'uniprot';
@@ -1773,6 +1774,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            uniprotProvenance['existence'] = uniprotLinkOut;
 	            uniprotProvenance['organism'] = uniprotLinkOut;
 	            uniprotProvenance['sequence'] = uniprotLinkOut;
+		    uniprotProvenance['mass'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
@@ -1797,6 +1799,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 		'keywords': keywords,
 		'functionAnnotation': functionAnnotation,
 		'alternativeName': alternativeName,
+		'mass': mass,
 		'existence': existence,
 		'organism': organism,
 		'sequence': sequence,
@@ -1820,11 +1823,11 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
  */
 Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) {
     var constants = new Openphacts.Constants();
-	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
-	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var targets = [];
 	$.each(response.items, function(index, item) {
-	var URI = item[constants.ABOUT];
+	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null, mass = null;
+	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
+		var URI = item[constants.ABOUT];
 	var id = URI.split("/").pop();
 	var keywords = [];
 	var classifiedWith = [];
@@ -1907,7 +1910,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
-
+		    mass = uniprotData.mass ? uniprotData.mass : null;
 	            uniprotProvenance = {};
 	            uniprotLinkOut = uniprotURI;
 				uniprotProvenance['source'] = 'uniprot';
@@ -1919,6 +1922,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 	            uniprotProvenance['existence'] = uniprotLinkOut;
 	            uniprotProvenance['organism'] = uniprotLinkOut;
 	            uniprotProvenance['sequence'] = uniprotLinkOut;
+		    uniprotProvenance['mass'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
@@ -1947,6 +1951,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 		'organism': organism,
 		'sequence': sequence,
 		'classifiedWith': classifiedWith,
+		'mass': mass,
 		'seeAlso': seeAlso,
         'prefLabel': label,
         'chemblItems': chemblItems,
@@ -1964,7 +1969,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
     var constants = new Openphacts.Constants();
 	var records = [];
 
-	$.each(response.items, function(index, item) {
+	response.items.forEach(function(item, index, items) {
 
 		chemblProvenance = {};
 		chemblProvenance['source'] = 'chembl';
@@ -2085,7 +2090,18 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		var activity_relation = item['activity_relation'] ? item['activity_relation'] : null;
 		activity_relation_item = chemblActivityLink;
 		var activity_pubmed_id = item['pmid'] ? item['pmid'] : null;
+		var activity_comment = item['activityComment'] ? item['activityComment'] : null;
         var pChembl = item.pChembl;
+	var documents = [];
+	if (item.hasDocument) {
+            if (Array.isArray(item.hasDocument)) {
+                item.hasDocument.forEach(function(document, index, documents) {
+                    documents.push(document);
+		});
+	    } else {
+                documents.push(item.hasDocument);
+	    }
+	}
 		records.push({ //for compound
 			'compoundInchikey': compound_inchikey,
 			//compoundDrugType: compound_drug_type,
@@ -2124,6 +2140,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			'activityStandardValue': activity_standard_value,
 			'activityActivityType': activity_activity_type,
 			'activityPubmedId': activity_pubmed_id,
+			'activityComment': activity_comment,
 
 			'compoundFullMwtSrc': chembl_src,
 			'compoundPrefLabelSrc': cw_src,
@@ -2154,7 +2171,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			'targets': targets,
             'pChembl': pChembl,
             'compoundRO5Violations': compound_ro5_violations,
-            'chemblProvenance': chemblProvenance
+            'chemblProvenance': chemblProvenance,
+	    'chemblDOIs' : documents
 		});
 	});
 	return records;
@@ -2814,9 +2832,9 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
         var targets = [];
         var chemblActivityURI = null,
             pmid = null,
-            relation = null,
-            standardUnits = null,
-            standardValue = null,
+            //relation = null,
+            //standardUnits = null,
+            //standardValue = null,
             activityType = null,
             inDataset = null,
             fullMWT = null,
@@ -2838,8 +2856,6 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             publishedType = null,
             publishedUnits = null,
             publishedValue = null,
-            standardUnits = null,
-            standardValue = null,
             pChembl = null,
             activityType = null,
             activityRelation = null,
@@ -2857,9 +2873,9 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             activityUnits = units.prefLabel;
         }
 
-        relation = item.relation ? item.relation : null;
-        standardUnits = item.standardUnits;
-        standardValue = item.standardValue ? item.standardValue : null;
+        //relation = item.relation ? item.relation : null;
+        //standardUnits = item.standardUnits;
+        //standardValue = item.standardValue ? item.standardValue : null;
         activityType = item.activity_type;
         inDataset = item[constants.IN_DATASET];
         forMolecule = item[constants.FOR_MOLECULE];
@@ -2988,9 +3004,9 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             'targets': assayTargets,
             'chemblActivityURI': chemblActivityURI,
             'pmid': pmid,
-            'relation': relation,
-            'standardUnits': standardUnits,
-            'standardValue': standardValue,
+            //'relation': relation,
+            //'standardUnits': standardUnits,
+            //'standardValue': standardValue,
             'activityType': activityType,
             'activityRelation': activityRelation,
             'activityUnits': activityUnits,
@@ -3038,9 +3054,9 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
         var chemblActivityURI = null,
             qudtURI = null,
             pmid = null,
-            relation = null,
-            standardUnits = null,
-            standardValue = null,
+            //relation = null,
+            //standardUnits = null,
+            //standardValue = null,
             activityType = null,
             inDataset = null,
             fullMWT = null,
@@ -3062,8 +3078,6 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             publishedType = null,
             publishedUnits = null,
             publishedValue = null,
-            standardUnits = null,
-            standardValue = null,
             pChembl = null,
             activityType = null,
             activityRelation = null,
@@ -3081,9 +3095,9 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             activityUnits = units.prefLabel;
         }
         qudtURI = item.qudt_uri ? item.qudt_uri : null;
-        relation = item.relation ? item.relation : null;
-        standardUnits = item.standardUnits;
-        standardValue = item.standardValue ? item.standardValue : null;
+        //relation = item.relation ? item.relation : null;
+        //standardUnits = item.standardUnits;
+        //standardValue = item.standardValue ? item.standardValue : null;
         activityType = item.activity_type;
         inDataset = item[constants.IN_DATASET];
         forMolecule = item[constants.FOR_MOLECULE];
@@ -3213,9 +3227,9 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             'targets': assayTargets,
             'chemblActivityURI': chemblActivityURI,
             'pmid': pmid,
-            'relation': relation,
-            'standardUnits': standardUnits,
-            'standardValue': standardValue,
+            //'relation': relation,
+            //'standardUnits': standardUnits,
+            //'standardValue': standardValue,
             'activityType': activityType,
             'activityRelation': activityRelation,
             'activityUnits': activityUnits,
