@@ -46,7 +46,7 @@ onmessage = function(e) {
             headers = {
                 'compoundInchikey': 'InChiKey',
                 'compoundDrugType': 'Drug type',
-                'compoundGenericName': 'Generic name',
+                'compoundGenericName': 'Compound Generic name',
                 'targets': 'Target',
                 'compoundFullMwt': 'Molecular Weight',
                 'compoundPrefLabel': 'Compound preferred label',
@@ -71,6 +71,32 @@ onmessage = function(e) {
             };
         } else if (requestType === "target") {
             requestURL = ldaBaseURL + '/target/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+	    headers = {
+                'compoundInchikey': 'InChiKey',
+		'targetTitle': 'Target title',
+                'targets': 'Target',
+                'compoundFullMwt': 'Molecular Weight',
+                'compoundPrefLabel': 'Compound preferred label',
+                'csid': 'OPS RSC identifier',
+                'compoundInchi': 'InChI',
+                'compoundSmiles': 'SMILES',
+                'targetOrganisms': 'Target Organism',
+                'assayOrganism': 'Assay Organism',
+                'assayDescription': 'Assay description',
+                'activityRelation': 'Activity relation',
+                'activityStandardUnits': 'Activity units',
+                'activityStandardValue': 'Activity value',
+                'activityActivityType': 'Acivity type',
+                'activityPubmedId': 'Pubmed ID',
+                'pChembl': 'pChembl',
+		'compoundRO5Violations': 'Rule of 5 violations',
+                'chemblActivityUri': 'ChEMBL activity URI',
+                'chemblCompoundUri': 'ChEMBL compound URI',
+		'chemblTargetUri': 'ChEMBL target URI',
+                'cwCompoundUri': 'Concept Wiki compound URI',
+                'csCompoundUri': 'OPS RSC URI',
+                'chemblAssayUri': 'ChEMBL assay URI'
+            };
         } else if (requestType === "tree") {
             if (treeType === "tree") {
                 requestURL = ldaBaseURL + '/target/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
@@ -115,7 +141,7 @@ onmessage = function(e) {
                     }
 
                     // Add the headers in the first line
-                    if (requestType === "compound") {
+                    if (requestType === "compound" || requestType === "target") {
                         if (i === 1) {
                             keys = Object.keys(headers);
                             keys.forEach(function(key, index, keys) {
@@ -133,14 +159,7 @@ onmessage = function(e) {
                     }
                     pharmaResults.forEach(function(result, index, results) {
                         var line = "";
-                        if (requestType === "compound") {
-                            keys.forEach(function(key, index, keys) {
-                                // Change null values to empty string
-                                var value = result[key] ? result[key] : '';
-                                line += index < keys.length - 1 ? value + '\t' : value;
-                            });
-
-                        } else if (requestType === "target") {
+                        if (requestType === "compound" || requestType === "target") {
                             keys.forEach(function(key, index, keys) {
                                 // Change null values to empty string
                                 var value = result[key] ? result[key] : '';
@@ -153,7 +172,6 @@ onmessage = function(e) {
                                 line += index < keys.length - 1 ? value + '\t' : value;
                             });
                         }
-
                         line += "\r\n";
                         tsvFile += line;
                     });
