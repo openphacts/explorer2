@@ -102,37 +102,66 @@ onmessage = function(e) {
         } else if (requestType === "tree") {
             if (treeType === "tree") {
                 requestURL = ldaBaseURL + '/target/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+                headers = {
+                    'inchiKey': 'InChiKey',
+                    //'targetTitle': 'Target title',
+                    'targets': 'Target',
+                    'fullMWT': 'Molecular Weight',
+                    'prefLabel': 'Compound preferred label',
+                    //'csid': 'OPS RSC identifier',
+                    'inchi': 'InChI',
+                    'smiles': 'SMILES',
+                    //'targetOrganisms': 'Target Organism',
+                    'assayOrganismName': 'Assay Organism',
+                    'assayDescription': 'Assay description',
+                    'activityType': 'Activity type',
+                    'activityRelation': 'Activity relation',
+                    'activityValue': 'Activity value',
+                    'activityUnits': 'Activity units',
+                    'activityComment': 'Activity comment',
+                    'pChembl': 'pChembl',
+                    'pmid': 'Pubmed ID',
+                    'chemblDOIs': 'Document DOIs',
+                    'ro5Violations': 'Rule of 5 violations',
+                    'chemblActivityURI': 'ChEMBL activity URI',
+                    'chemblURI': 'ChEMBL compound URI',
+                    //'chemblTargetUri': 'ChEMBL target URI',
+                    'cwURI': 'Concept Wiki compound URI',
+                    'csURI': 'OPS RSC URI',
+                    'assayURI': 'ChEMBL assay URI'
+                };
+
             } else {
                 requestURL = ldaBaseURL + '/compound/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+                headers = {
+                    'inchiKey': 'InChiKey',
+                    //'targetTitle': 'Target title',
+                    'targets': 'Target',
+                    'fullMWT': 'Molecular Weight',
+                    'prefLabel': 'Compound preferred label',
+                    //'csid': 'OPS RSC identifier',
+                    'inchi': 'InChI',
+                    'smiles': 'SMILES',
+                    //'targetOrganisms': 'Target Organism',
+                    'assayOrganismName': 'Assay Organism',
+                    'assayDescription': 'Assay description',
+                    'activityType': 'Activity type',
+                    'activityRelation': 'Activity relation',
+                    'activityValue': 'Activity value',
+                    'activityUnits': 'Activity units',
+                    'activityComment': 'Activity comment',
+                    'pChembl': 'pChembl',
+                    'pmid': 'Pubmed ID',
+                    'chemblDOIs': 'Document DOIs',
+                    'ro5Violations': 'Rule of 5 violations',
+                    'chemblActivityURI': 'ChEMBL activity URI',
+                    //'chemblURI': 'ChEMBL compound URI',
+                    //'chemblTargetUri': 'ChEMBL target URI',
+                    'cwURI': 'Concept Wiki compound URI',
+                    //'csURI': 'OPS RSC URI',
+                    'assayURI': 'ChEMBL assay URI'
+                };
             }
-            headers = {
-                'inchiKey': 'InChiKey',
-                //'targetTitle': 'Target title',
-                'targets': 'Target',
-                'fullMWT': 'Molecular Weight',
-                'prefLabel': 'Compound preferred label',
-                //'csid': 'OPS RSC identifier',
-                'inchi': 'InChI',
-                'smiles': 'SMILES',
-                //'targetOrganisms': 'Target Organism',
-                'assayOrganismName': 'Assay Organism',
-                'assayDescription': 'Assay description',
-                'activityType': 'Activity type',
-                'activityRelation': 'Activity relation',
-                'activityValue': 'Activity value',
-                'activityUnits': 'Activity units',
-                'activityComment': 'Activity comment',
-                'pChembl': 'pChembl',
-                'pmid': 'Pubmed ID',
-                'chemblDOIs': 'Document DOIs',
-                'ro5Violations': 'Rule of 5 violations',
-                'chemblActivityURI': 'ChEMBL activity URI',
-                'chemblURI': 'ChEMBL compound URI',
-                //'chemblTargetUri': 'ChEMBL target URI',
-                'cwURI': 'Concept Wiki compound URI',
-                'csURI': 'OPS RSC URI',
-                'assayURI': 'ChEMBL assay URI'
-            };
         }
 
         // Add any filters to the request
@@ -191,9 +220,22 @@ onmessage = function(e) {
                         var line = "";
                         if (requestType === "compound" || requestType === "target" || requestType === "tree") {
                             keys.forEach(function(key, index, keys) {
-                                // Change null values to empty string
-                                var value = result[key] ? result[key] : '';
-                                line += index < keys.length - 1 ? value + '\t' : value;
+                                // targets is an array
+                                if (key === "targets") {
+                                    var allTargetTitles = [];
+                                    var targetTitles = "";
+                                    result[key].forEach(function(target, index, all) {
+                                        if (target.title) {
+                                            allTargetTitles.push(target.title);
+                                        }
+                                    });
+                                    targetTitles = allTargetTitles.join(', ');
+                                    line += index < keys.length - 1 ? targetTitles + '\t' : targetTitles;
+                                } else {
+                                    // Change null values to empty string
+                                    var value = result[key] ? result[key] : '';
+                                    line += index < keys.length - 1 ? value + '\t' : value;
+                                }
                             });
                         }
                         line += "\r\n";
