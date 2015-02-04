@@ -215,7 +215,12 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
                 if (count > 0) {
                     me.set('fetching', true);
                     searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
-                }
+                } else {
+			me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'No pharmacology found for this compound.'
+                }));
+		}
             }
         };
         var countOnlyCallback = function(success, status, response) {
@@ -424,7 +429,12 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
                 controller.set('totalCount', count);
                 if (count > 0) {
                     searcher.byCompound(thisCompound.get('URI'), null, null, 1, 50, null, pathwaysByCompoundCallback);
-                }
+                } else {
+	me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'No pathways found for this compound.'
+                }));
+		}
             }
         };
 

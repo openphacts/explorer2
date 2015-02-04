@@ -14,6 +14,7 @@
 		<td class="cell-basictext">{{enzymePharma.activityRelation}}{{#if showProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
 		<td class="cell-basictext">{{enzymePharma.activityValue}}{{#if showProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
 		<td class="cell-basictext">{{enzymePharma.activityUnits}}{{#if showProvenance}}{{provenanceLinkout 'http://www.ebi.ac.uk/chembl' 'chembl'}}{{/if}}</td>
+		<td class="cell-basictext">{{enzymePharma.pChembl}} {{#if showProvenance}}{{#if enzymePharma.pChembl}}<span class="pchembl-prov">(<a href="https://www.ebi.ac.uk/chembl/faq#faq67" title="Click to view pChembl definition"><i class="fa fa-question"></i></a>)</span>{{/if}}{{/if}}</td>
 	</tr>
 	{{/each}}
 </tbody>
