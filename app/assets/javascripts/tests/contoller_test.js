@@ -6,7 +6,7 @@ setResolver(Ember.DefaultResolver.create({
 }));
 
 moduleFor('controller:compoundsIndex', 'Compounds Index Controller', {
-    needs: ['controller:application']
+	needs: ['controller:application', 'controller:flash']
 });
 test('can see the application controller', function() {
     expect(2);
