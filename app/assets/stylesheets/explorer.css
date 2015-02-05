@@ -43,6 +43,9 @@
 .centre {
     text-align: center;
 }
+.no-float {
+	float: none;
+}
 .middle {
     vertical-align: middle;
 }
@@ -546,4 +549,7 @@ div.dl-horizontal dl dd {
 /* To avoid the molform appeaering above the summary */
 .high-z {
     z-index: 1000;
+}
+.alerts-available {
+	color: red;
 }

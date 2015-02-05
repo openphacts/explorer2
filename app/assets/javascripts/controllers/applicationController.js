@@ -5,6 +5,7 @@ App.ApplicationController = Ember.Controller.extend({
     flashMessages: Ember.computed.alias("controllers.flash.model"),
     //jobsList used in the view to loop over the entries
     jobsList: [],
+    workersList: {},
     alertsAvailable: false,
     lenses: null,
     lensesInfo: null,
@@ -25,64 +26,104 @@ App.ApplicationController = Ember.Controller.extend({
     fetching: false,
     searchQuery: '',
     //monitor the tsv creation
-    addJob: function(jobID, label, filters) {
-        this.jobsList.pushObject(this.get('store').createRecord('job', {
-            uuid: jobID,
+    addJob: function(params, label, filters) {
+        var me = this;
+        var date = Date.now();
+        var id = params.uri + date;
+        var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
+            // not really a UUID but term consistent with other parts of the code
+            uuid: id,
+            date: date,
             percentage: 0,
             status: "processing",
             label: label,
             filters: filters
         }));
-        var me = this;
-        this.checkTSV(jobID, this, true);
-    },
-    checkTSV: function(jobID, controller, go) {
-        console.log("Check TSV is " + go + " for " + jobID);
-        var jobID = jobID;
-        var me = controller;
-        var runAgain = true;
-        if (go !== false) {
-            $.ajax({
-                url: tsvStatusUrl,
-                dataType: 'json',
-                cache: true,
-                data: {
-                    _format: "json",
-                    uuid: jobID,
-                },
-                success: function(response, status, request) {
-                    console.log('tsv monitor status ' + response.status);
-                    status = response.status;
-                    var percentage = response.percentage;
-                    var job = me.jobsList.findBy("uuid", jobID);
-                    //job may have been removed by the user in the mean time
-                    if (job != null) {
-                        if (percentage !== 0) {
-                            me.jobsList.findBy("uuid", jobID).set('percentage', percentage);
-                        }
-                        if (status === "finished") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'complete');
-                            me.set('alertsAvailable', true);
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'success', message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'}));
-                            runAgain = false;
-                        } else if (status === "failed") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'failed');
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'}));
-                            runAgain = false;
-                        }
-                    } else {
-                        runAgain = false;
-                    }
 
-                },
-                error: function(request, status, error) {
-                    console.log('tsv create request error');
-                },
-                complete: setTimeout(function() {
-                    me.checkTSV(jobID, me, runAgain)
-                }, 5000),
-                timeout: 2000
-            });
+        if (!!window.Worker) {
+            var myWorker = new Worker("/assets/workers.js");
+            // keep track of workers in case we need to remove it due to user stopping job before finish
+            me.get('workersList')[encodeURIComponent(id)] = myWorker;
+            myWorker.postMessage(['start', ldaBaseUrl, appID, appKey, params]);
+            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'success',
+                message: 'TSV file is being created. You will be alerted when it is ready for download. Click the "Alerts Bell" to view the current progress.'
+            }));
+
+            myWorker.onmessage = function(e) {
+                console.log('Message received from worker: ' + e.data);
+                //job may have been removed by the user in the mean time
+                if (e.data.status === "processing") {
+                    job.set('percentage', e.data.percent);
+                    myWorker.postMessage(['continue']);
+                } else if (e.data.status === "complete") {
+                    job.set('status', 'complete');
+                    job.set('percentage', 100);
+                    me.set('alertsAvailable', true);
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'success',
+                        message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                    }));
+                    // save the TSV file locally
+                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                    // DON'T use "var indexedDB = ..." if you're not in a function.
+                    // Moreover, you may need references to some window.IDB* objects:
+                    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+                    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+                    // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+                    if (!window.indexedDB) {
+                        window.alert("Your browser doesn't support a stable version of IndexedDB. TSV files cannot be stored locally.");
+                    }
+                    var db;
+                    var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
+                    request.onerror = function(event) {
+                        console.log("Could not open tsvfiles db");
+                    };
+                    request.onupgradeneeded = function(event) {
+                        var db = event.target.result;
+
+                        var objectStore = db.createObjectStore("tsvfile", {
+                            keyPath: "uriDate"
+                        });
+                    };
+                    request.onsuccess = function(event) {
+                        var db = event.target.result;
+                        var transaction = db.transaction("tsvfile", "readwrite");
+                        transaction.oncomplete = function(event) {
+                            console.log("Saved tsv file");
+                        };
+
+                        transaction.onerror = function(event) {
+                            // Don't forget to handle errors!
+                            console.log("Transaction error for tsv file");
+                        };
+                        var objectStore = transaction.objectStore('tsvfile');
+                        var addRequest = objectStore.add({
+                            // slightly clumsy key but it will do 
+                            'uriDate': id,
+                            'date': date,
+                            'label': label,
+                            'filters': filters,
+                            'tsvFile': e.data.tsvFile
+                        });
+                        addRequest.onsuccess = function(event) {
+                            console.log('Saved tsv file');
+                            myWorker.terminate();
+                        }
+                        addRequest.onerror = function(event) {
+                            console.log("Couldn't save tsv file");
+                            myWorker.terminate();
+                        };
+                    }
+                } else {
+                    // Job has failed
+                    job.set('status', 'failed');
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'error',
+                        message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'
+                    }));
+                }
+            }
         }
     },
 
@@ -114,6 +155,9 @@ App.ApplicationController = Ember.Controller.extend({
                     var db = event.target.result;
 
                     var objectStore = db.createObjectStore("compounds", {
+                        keyPath: "uri"
+                    });
+                    var objectStore = db.createObjectStore("targets", {
                         keyPath: "uri"
                     });
                 };
@@ -275,24 +319,66 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         removeJob: function(job) {
-            console.log("removing job " + job.get('uuid'));
+            this.get('workersList')[encodeURIComponent(job.get('uuid'))].terminate();
             this.jobsList.removeObject(job);
         },
 
         query: function() {
-            console.log('app controller query');
             var query = this.get('searchQuery');
-            //this.set('searchQuery', query);
-            //this.transitionToRoute('search', { query: query }); NOTE: this is how you would transition to /search/blah
-            //var params = Ember.Router.QueryParameters.create({ query: query });
-            //this.transitionToRoute('search', {queryParams: {query: this.get('searchQuery')}});
             this.transitionToRoute('search', {
                 queryParams: {
                     query: query
                 }
             });
-            //this.transitionToRoute("/search?query=" + query);
-            //this.transitionToRoute('search', params);
+        },
+
+        downloadTSV: function(tsvFileID) {
+            window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+            window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+            var db;
+            var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
+            request.onerror = function(event) {
+                console.log("Could not open tsvfiles db");
+            };
+            request.onupgradeneeded = function(event) {
+                var db = event.target.result;
+
+                var objectStore = db.createObjectStore("tsvfile", {
+                    keyPath: "uriDate"
+                });
+            };
+            request.onsuccess = function(event) {
+                var db = event.target.result;
+                var transaction = db.transaction("tsvfile", "readwrite");
+                transaction.oncomplete = function(event) {
+                    console.log("Downloaded tsv file");
+                };
+
+                transaction.onerror = function(event) {
+                    // Don't forget to handle errors!
+                    console.log("Transaction error for tsv file");
+                };
+                var objectStore = transaction.objectStore('tsvfile');
+                var findURIRequest = objectStore.get(tsvFileID);
+                findURIRequest.onerror = function(event) {
+                    //no entry in db for this tsv file
+                    console.log("DB retrieval error for " + tsvFileID);
+                };
+                findURIRequest.onsuccess = function(event) {
+                    var data = findURIRequest.result;
+                    if (data != null) {
+                        if (data.tsvFile !== null) {
+                            var blob = new Blob([data.tsvFile], {
+                                type: "text/tsv;charset=utf-8"
+                            });
+                            saveAs(blob, data.label + ".tsv");
+                        } else {
+                            // no tsv data so....e
+                        }
+                    }
+                };
+            }
         }
     }
 });

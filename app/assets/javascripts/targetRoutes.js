@@ -67,8 +67,8 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
         var maxExActivityValue = null;
         var activityValue = null;
         var minExActivityValue = null;
-        // only set activity filter if all filter boxes have been selected
-        if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+        // only set activity filter if there is a condition and a value (same as comp pharma)
+        if (condition != null && currentActivityValue != null) {
             switch (condition) {
                 case '>':
                     minExActivityValue = currentActivityValue;

@@ -1,3 +1,7 @@
+Ember.Handlebars.registerBoundHelper('getDateForJob', function(job) {
+    var dateString = new Date(job.get('date')).toLocaleString();
+    return new Handlebars.SafeString(dateString);
+});
 Ember.Handlebars.registerBoundHelper('roundToTwo', function(value) {
     var twoDec = Math.round(Number(value)*100)/100
     return new Handlebars.SafeString(twoDec);
