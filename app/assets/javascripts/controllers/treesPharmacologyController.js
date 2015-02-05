@@ -632,7 +632,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             var activityValueType = null;
             // only set activity filter if all filter boxes have been selected
             //if (unit != null && activity != null && condition != null && currentActivityValue != null) {
-            if (condition != null) {
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         activityValueType = "minEx-activity_value";
@@ -726,36 +726,23 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
 
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
-            var thisTarget = this.get('content');
-	    var tree_path = this.get('treeType') === 'chebi' ? 'tree_compound' : 'tree';
-            var tsvCreateRequest = $.ajax({
-                url: tsvCreateUrl,
-                dataType: 'json',
-                type: 'POST',
-                cache: true,
-                data: {
-                    _format: "json",
-                    uri: this.get('uri'),
-                    total_count: me.totalCount,
-                    request_type: tree_path,
-                    pchembl_value_type: pChemblValueType,
-                    pchembl_value: currentPchemblValue,
-                    activity_relation: activityRelation,
-                    activity_value_type: activityValueType,
-                    activity_value: currentActivityValue,
-                    activity_type: activity,
-                    activity_unit: unit,
-                    assay_organism: assayOrganism,
-                    target_organism: targetOrganism
-                },
-                success: function(response, status, request) {
-                    me.get('controllers.application').addJob(response.uuid, me.get('uri'), filtersString);
-		    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'notice', message: 'Creating TSV file for download. You will be alerted when ready.'}));
-                },
-                error: function(request, status, error) {
-                     me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'Could not create TSV file, please contact support quoting error: ' + error}));
-                }
-            });
+	    var tree_type = this.get('treeType') === 'chebi' ? 'tree_compound' : 'tree';
+                var requestParams = {
+                uri: this.get('uri'),
+                total_count: me.totalCount,
+                request_type: 'tree',
+		tree_type: tree_type,
+                pchembl_value_type: pChemblValueType,
+                pchembl_value: currentPchemblValue,
+                activity_relation: activityRelation,
+                activity_value_type: activityValueType,
+                activity_value: currentActivityValue,
+                activity_type: activity,
+                activity_unit: unit,
+                assay_organism: assayOrganism,
+                target_organism: targetOrganism
+            };
+            me.get('controllers.application').addJob(requestParams, this.get('uri'), filtersString);
         }
     }
 });

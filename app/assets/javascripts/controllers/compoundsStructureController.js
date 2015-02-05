@@ -384,34 +384,14 @@ App.CompoundsStructureController = Ember.ObjectController.extend({
     } else {
         filtersString += "Exact structure search";
     }
-
-	var tsvCreateRequest = $.ajax({
-		url: cs_download_url,
-        dataType: 'json',
-		cache: true,
-		// send as post because it can be a really long query string
-        type: "POST",
-		data: {
-			_format: "json",
-			uris: uris,
-            total: me.get('filteredCompounds').length
-		},
-		success: function(response, status, request) {
-			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid, me.get('smilesValue'), filtersString);
-            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'notice',
-                        message: 'Creating TSV file for download. You will be alerted when ready.'
-                    }));
-		},
-		error: function(request, status, error) {
-			console.log('tsv create request error');
-			me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'error',
-                        message: 'Could not create TSV file, please contact support quoting error: ' + error
-                    }));
-		}
-	});
+    var requestParams = {
+	    // Not really a uri but is just used as part of the id when saving the file so smiles is fine to use here
+	    uri: this.get('smilesValue'),
+	    uris: uris,
+	    total_count: me.get('filteredCompounds').length,
+	    request_type: 'structure'
+    };
+    me.get('controllers.application').addJob(requestParams, this.get('smilesValue'), filtersString);
     },
 
     applyFilters: function() {
