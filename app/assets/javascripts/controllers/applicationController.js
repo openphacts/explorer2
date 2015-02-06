@@ -125,7 +125,7 @@ App.ApplicationController = Ember.Controller.extend({
         } else {
             // No web worker so do it the old way
             window.alert("The TSV data cannot be processed because you are not using a browser with Web Workers enabled. Please use a modern version of IE(10+), Firefox or Chrome");
-	}
+        }
     },
 
     addFavourite: function(type, URI, label, model) {
