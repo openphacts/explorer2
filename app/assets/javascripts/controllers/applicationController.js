@@ -39,7 +39,7 @@ App.ApplicationController = Ember.Controller.extend({
         }));
 
         if (!!window.Worker) {
-            var myWorker = new Worker("/assets/workers.js");
+            var myWorker = new Worker("/workers.js");
             // keep track of workers in case we need to remove it due to user stopping job before finish
             me.get('workersList')[encodeURIComponent(id)] = myWorker;
             myWorker.postMessage(['start', ldaBaseUrl, appID, appKey, params]);
@@ -122,7 +122,10 @@ App.ApplicationController = Ember.Controller.extend({
                     }));
                 }
             }
-        }
+        } else {
+            // No web worker so do it the old way
+            window.alert("The TSV data cannot be processed because you are not using a browser with Web Workers enabled. Please use a modern version of IE(10+), Firefox or Chrome");
+	}
     },
 
     addFavourite: function(type, URI, label, model) {
