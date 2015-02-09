@@ -33,6 +33,7 @@
 //= require purl
 //= require Blob
 //= require FileSaver
+//= require IEWebworker
 //= require_tree ./templates
 //= require_tree ./views
 

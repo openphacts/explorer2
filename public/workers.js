@@ -172,17 +172,15 @@ onmessage = function(e) {
         requestURL += params['activity_relation'] !== null ? '&activity_relation=' + encodeURIComponent(params['activity_relation']) : '';
         requestURL += params['assay_organism'] !== null ? '&assay_organism=' + encodeURIComponent(params['assay_organism']) : '';
         requestURL += params['target_organism'] !== null ? '&target_organism=' + encodeURIComponent(params['target_organism']) : '';
-
+        requestURL += '&_format=json';
         var failed = false;
         var processTSVFile = function() {
             nets({
                 url: requestURL,
                 method: "GET",
+                useXDR: true,
                 // 30 second timeout just in case
-                timeout: 30000,
-                headers: {
-                    "Accept": "application/json"
-                }
+                timeout: 30000
             }, function(err, resp, body) {
                 if (err === null && body !== null) {
                     var pharmaResponse = JSON.parse(body.toString());
@@ -268,15 +266,13 @@ onmessage = function(e) {
         processTSVFile();
     } else if (requestType === "structure") {
         var allURIs = uris.join('|');
-        requestURL = ldaBaseURL + '/compound/batch?uri_list=' + encodeURIComponent(allURIs) + '&app_id=' + appID + '&app_key=' + appKey;
+        requestURL = ldaBaseURL + '/compound/batch?uri_list=' + encodeURIComponent(allURIs) + '&app_id=' + appID + '&app_key=' + appKey + '&_format=json';
         nets({
             url: requestURL,
             method: "GET",
+            useXDR: true,
             // 30 second timeout just in case
-            timeout: 30000,
-            headers: {
-                "Accept": "application/json"
-            }
+            timeout: 30000
         }, function(err, resp, body) {
             if (err === null && body !== null) {
                 var response = JSON.parse(body.toString());
