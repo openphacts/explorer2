@@ -294,16 +294,11 @@ sub {
  * =========================================================*/
 
 .spinner {
-    z-index: 2000;
-    width: 100px;
-    height: 100px;
-    margin: 30px auto;
-    position: fixed;
-    top: 40%;
-    right: 47%;
-    -webkit-animation: rotateit 1.3s linear infinite;
-    -moz-animation: rotateit 1.3s linear infinite;
-    animation: rotateit 1.3s linear infinite;
+  position: fixed;
+  top: 30%;
+  margin-left: 50%;
+  z-index: 2000;
+  font-size: xx-large;
 }
 @-webkit-keyframes rotateit {
     from {
