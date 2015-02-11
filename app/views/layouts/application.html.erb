@@ -16,6 +16,9 @@
     var ldaBaseUrl = '<%= AppSettings.config["api"]["url"] -%>';
     var appID = '<%= AppSettings.config["keys"]["app_id"] -%>';
     var appKey = '<%= AppSettings.config["keys"]["app_key"] -%>';
+    var tsvCreateUrl = '<%= tab_separated_file_core_api_calls_url -%>?';
+    var tsvStatusUrl = '<%= tsv_status_core_api_calls_url -%>?';
+    var tsvDownloadUrl = '<%= tsv_download_core_api_calls_url -%>?';
     var typeaheadUrl = '<%= typeahead_search_index_url -%>';
     var organismsUrl = '<%= organisms_core_api_calls_url -%>?';
     jQuery.support.cors = true;

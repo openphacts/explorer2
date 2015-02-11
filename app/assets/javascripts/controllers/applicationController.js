@@ -25,20 +25,20 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(params, label, filters) {
-        var me = this;
-        var date = Date.now();
-        var id = params.uri + date;
-        var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
-            // not really a UUID but term consistent with other parts of the code
-            uuid: id,
-            date: date,
-            percentage: 0,
-            status: "processing",
-            label: label,
-            filters: filters
-        }));
-
         if (!!window.Worker) {
+            var me = this;
+            var date = Date.now();
+            var id = params.uri + date;
+            var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
+                // not really a UUID but term consistent with other parts of the code
+                uuid: id,
+                date: date,
+                percentage: 0,
+                status: "processing",
+                label: label,
+                filters: filters
+            }));
+
             var myWorker = new Worker("/workers.js");
             // keep track of workers in case we need to remove it due to user stopping job before finish
             me.get('workersList')[encodeURIComponent(id)] = myWorker;
@@ -124,14 +124,21 @@ App.ApplicationController = Ember.Controller.extend({
             }
         } else {
             // No web worker so do it the old way
-this.checkTSV(jobID, this, true);
-            //window.alert("The TSV data cannot be processed because you are not using a browser with Web Workers enabled. Please use a modern version of IE(10+), Firefox or Chrome");
+            var jobID = params.jobID;
+            var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
+                uuid: jobID,
+                percentage: 0,
+                status: "processing",
+                label: label,
+                filters: filters,
+                local: false
+            }));
+            var me = this;
+            this.checkTSV(job, this, true);
         }
     },
 
-    checkTSV: function(jobID, controller, go) {
-        console.log("Check TSV is " + go + " for " + jobID);
-        var jobID = jobID;
+    checkTSV: function(job, controller, go) {
         var me = controller;
         var runAgain = true;
         if (go !== false) {
@@ -147,20 +154,25 @@ this.checkTSV(jobID, this, true);
                     console.log('tsv monitor status ' + response.status);
                     status = response.status;
                     var percentage = response.percentage;
-                    var job = me.jobsList.findBy("uuid", jobID);
                     //job may have been removed by the user in the mean time
                     if (job != null) {
                         if (percentage !== 0) {
-                            me.jobsList.findBy("uuid", jobID).set('percentage', percentage);
+                            job.set('percentage', percentage);
                         }
                         if (status === "finished") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'complete');
+                            job.set('status', 'complete');
                             me.set('alertsAvailable', true);
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'success', message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'}));
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'success',
+                                message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                            }));
                             runAgain = false;
                         } else if (status === "failed") {
-                            me.jobsList.findBy("uuid", jobID).set('status', 'failed');
-                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'}));
+                            job.set('status', 'failed');
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'error',
+                                message: 'TSV file failed during creation, click the "Alerts Bell" for more info.'
+                            }));
                             runAgain = false;
                         }
                     } else {
@@ -172,7 +184,7 @@ this.checkTSV(jobID, this, true);
                     console.log('tsv create request error');
                 },
                 complete: setTimeout(function() {
-                    me.checkTSV(jobID, me, runAgain)
+                    me.checkTSV(job, me, runAgain)
                 }, 5000),
                 timeout: 2000
             });

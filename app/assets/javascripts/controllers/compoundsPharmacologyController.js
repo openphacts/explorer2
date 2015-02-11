@@ -476,7 +476,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
             var thisCompound = this.get('content');
-            if (!!window.webworker) {
+            if (!!window.Worker) {
                 var requestParams = {
                     uri: this.get('content').get('URI'),
                     total_count: me.totalCount,
@@ -515,7 +515,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
                     },
                     success: function(response, status, request) {
                         console.log('tsv create request success');
-                        me.get('controllers.application').addJob(response.uuid, thisCompound.get('prefLabel'), filtersString);
+                        me.get('controllers.application').addJob({'jobID': response.uuid}, thisCompound.get('prefLabel'), filtersString);
                         me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                             type: 'notice',
                             message: 'Creating TSV file for download. You will be alerted when ready.'
