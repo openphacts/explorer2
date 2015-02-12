@@ -10,6 +10,9 @@ module('Integration: Transitions', {
   setup: function() {
     window.oldIE = false;
     window.typeaheadUrl = "http://localhost:3000/search/typeahead";
+    window.ldaBaseUrl = "https://beta.openphacts.org/1.4";
+    window.appID = "blah";
+    window.appKey = "blah";
   },
   teardown: function() {
     App.reset();
@@ -17,6 +20,7 @@ module('Integration: Transitions', {
 });
 
 test('search for something', function() {
+  expect(0);
   visit('/').then(function() {
   //notStrictEqual(find('.container'), null);
   //fillIn('#search_box', 'Aspirin');
