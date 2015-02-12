@@ -44,6 +44,7 @@ module.exports = function(config) {
             'app/assets/javascripts/models/pathway.js',
             'app/assets/javascripts/models/structure.js',
             'app/assets/javascripts/models/disease.js',
+	    'app/assets/javascripts/models/flashMessage.js',
             'app/assets/javascripts/templates/*',
             'app/assets/javascripts/views/*',
             'app/assets/javascripts/tests/controllers/*',

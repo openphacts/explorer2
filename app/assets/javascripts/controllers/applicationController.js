@@ -75,7 +75,7 @@ App.ApplicationController = Ember.Controller.extend({
                     var db;
                     var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
                     request.onerror = function(event) {
-                        console.log("Could not open tsvfiles db");
+                        console.log("Could not open tsvfiles db " + event);
                     };
                     request.onupgradeneeded = function(event) {
                         var db = event.target.result;
@@ -93,7 +93,7 @@ App.ApplicationController = Ember.Controller.extend({
 
                         transaction.onerror = function(event) {
                             // Don't forget to handle errors!
-                            console.log("Transaction error for tsv file");
+                            console.log("Transaction error for tsv file " + event);
                         };
                         var objectStore = transaction.objectStore('tsvfile');
                         var addRequest = objectStore.add({
@@ -109,7 +109,7 @@ App.ApplicationController = Ember.Controller.extend({
                             myWorker.terminate();
                         }
                         addRequest.onerror = function(event) {
-                            console.log("Couldn't save tsv file");
+                            console.log("Couldn't save tsv file " + event);
                             myWorker.terminate();
                         };
                     }

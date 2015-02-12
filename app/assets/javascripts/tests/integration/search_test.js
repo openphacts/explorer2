@@ -38,3 +38,24 @@ test('Browse by ontology link works', function() {
         equal(currentRouteName(), 'trees.index');
     });
 });
+test('Structure search link works', function() {
+    visit('/').then(function() {
+        click('#structure-search-link > a')
+    }).then(function() {
+        equal(currentRouteName(), 'compounds.structure.index');
+    });
+});
+test('Draw structure link works', function() {
+    visit('/').then(function() {
+        click('#structure-draw-link > a')
+    }).then(function() {
+        equal(currentRouteName(), 'compounds.draw.index');
+    });
+});
+test('Favourites link works', function() {
+    visit('/').then(function() {
+        click('#favourites-link > a')
+    }).then(function() {
+        equal(currentRouteName(), 'favourites.index');
+    });
+});
