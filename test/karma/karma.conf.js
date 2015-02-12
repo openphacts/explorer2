@@ -20,6 +20,7 @@ module.exports = function(config) {
             'vendor/assets/javascripts/ember-1.7.0.js',
             'vendor/assets/javascripts/ember-data-1.0.0-beta5.js',
             'vendor/assets/javascripts/qunit-ember.js',
+            'vendor/assets/javascripts/typeahead.bundle.js',
             'app/assets/javascripts/test_application.js',
             'app/assets/javascripts/routes.js',
             'app/assets/javascripts/compoundRoutes.js',
@@ -41,7 +42,10 @@ module.exports = function(config) {
             'app/assets/javascripts/models/pathway.js',
             'app/assets/javascripts/models/structure.js',
             'app/assets/javascripts/models/disease.js',
-            'app/assets/javascripts/tests/controllers/*'
+            'app/assets/javascripts/templates/*',
+            'app/assets/javascripts/views/*',
+            'app/assets/javascripts/tests/controllers/*',
+            'app/assets/javascripts/tests/integration/*'
         ],
 
 
@@ -55,7 +59,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-
+            "**/*.hbs": 'ember'
         },
 
 
