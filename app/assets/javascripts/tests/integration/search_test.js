@@ -7,28 +7,34 @@ setResolver(Ember.DefaultResolver.create({
 }));
 
 module('Integration: Transitions', {
-  setup: function() {
-    window.oldIE = false;
-    window.typeaheadUrl = "http://localhost:3000/search/typeahead";
-    window.ldaBaseUrl = "https://beta.openphacts.org/1.4";
-    window.appID = "blah";
-    window.appKey = "blah";
-  },
-  teardown: function() {
-    App.reset();
-  }
+    setup: function() {
+        window.oldIE = false;
+        window.typeaheadUrl = "http://localhost:3000/search/typeahead";
+        window.ldaBaseUrl = "https://beta.openphacts.org/1.4";
+        window.appID = "blah";
+        window.appKey = "blah";
+    },
+    teardown: function() {
+        App.reset();
+    }
 });
 
 test('search for something', function() {
-  expect(0);
-  visit('/').then(function() {
-  //notStrictEqual(find('.container'), null);
-  //fillIn('#search_box', 'Aspirin');
-  click('#search-button');
-
+    expect(1);
+    visit('/').then(function() {
+        fillIn('#search_box', 'Aspirin');
+    }).then(function() {
+        click('#search-button');
+    }).then(function() {
+        // just test the transition to search after button click, the actual results will not have loaded yet
+        equal(currentRouteName(), 'search.index');
+        //notStrictEqual(find('#search-results > ul > li:first').length, 0);;
+    });
 });
-  //fillIn('#search_box', 'Aspirin');
-  //click('#search-button');
-  andThen(function() {
-  });
+test('Browse by ontology link works', function() {
+    visit('/').then(function() {
+        click('#target-class > a')
+    }).then(function() {
+        equal(currentRouteName(), 'trees.index');
+    });
 });

@@ -7,7 +7,7 @@ App.TreesIndexRoute = Ember.Route.extend({
         var me = controller;
         var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
         var callback = function(success, status, response) {
-            me.get('controllers.application').set('fetching', false);
+            Ember.run(function() {me.get('controllers.application').set('fetching', false);});
             if (success && response) {
                 var root = searcher.parseRootNodes(response);
                 var allRoot = [];
@@ -41,6 +41,7 @@ App.TreesIndexRoute = Ember.Route.extend({
     },
 
     model: function(params) {
+	    var me = this;
         console.log('enzymes route model');
         if (params.ontology == null) {
             this.transitionTo('trees.index', {
@@ -49,9 +50,9 @@ App.TreesIndexRoute = Ember.Route.extend({
                 }
             });
         } else {
-            this.controllerFor('trees.index').set('defaultTree', params.ontology);
-            this.controllerFor('trees.index').set('initialTree', params.ontology);
-            this.controllerFor('trees.index').set('selectedTree', params.ontology);
+            Ember.run(function(){me.controllerFor('trees.index').set('defaultTree', params.ontology);});
+            Ember.run(function(){me.controllerFor('trees.index').set('initialTree', params.ontology);});
+            Ember.run(function(){me.controllerFor('trees.index').set('selectedTree', params.ontology);});
         }
         return [];
     },
