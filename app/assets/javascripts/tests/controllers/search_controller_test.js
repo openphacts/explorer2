@@ -18,7 +18,7 @@ test('can see the application controller', function() {
     appCtrl.set('alertsAvailable', true);
     equal(appCtrl.get('alertsAvailable'), true);
 });
-test('provenance can be enabled and disabled via the actions', function() {
+test('check and uncheck compounds and targets via the actions', function() {
     expect(6);
     var ctrl = this.subject();
     // check the properties before the action is triggered
@@ -32,4 +32,20 @@ test('provenance can be enabled and disabled via the actions', function() {
     equal(ctrl.get('targetsChecked'), false);
     ctrl.send('setTargetsChecked');
     equal(ctrl.get('targetsChecked'), true);
+});
+test('switch to list view and objecct view via the actions', function() {
+    expect(8);
+    var ctrl = this.subject();
+    // check the properties before the action is triggered
+    equal(ctrl.get('listView'), true);
+    equal(ctrl.get('objectView'), false);
+    ctrl.send('switchToObject');
+    equal(ctrl.get('listView'), false);
+    equal(ctrl.get('objectView'), true);
+    ctrl.send('switchToList');
+    equal(ctrl.get('listView'), true);
+    equal(ctrl.get('objectView'), false);
+    ctrl.send('switchToObject');
+    equal(ctrl.get('listView'), false);
+    equal(ctrl.get('objectView'), true);
 });
