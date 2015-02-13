@@ -17,7 +17,7 @@ App.FavouritesRoute = Ember.Route.extend({
             console.log('No indexed db in this browser');
             me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                 type: 'notice',
-                message: 'Your browser does not support a storing data locally. Favouriting compounds, targets etc will not be available.'
+                message: 'Your browser does not support storing data locally. Favouriting compounds, targets etc will not be available.'
             }));
         } else {
             var db;

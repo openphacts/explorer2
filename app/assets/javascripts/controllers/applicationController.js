@@ -325,79 +325,79 @@ App.ApplicationController = Ember.Controller.extend({
         console.log('finding a favourite ' + type + ' : ' + URI);
         var me = this;
         var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-        var callback = function(success, status, response) {
-            if (success) {
-                var compoundResult = {};
-                // need to find the Chemspider URI in the db
-                var uris = mapSearch.parseMapURLResponse(response);
-                //get the database and add/change contents for this uri
-                window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                // DON'T use "var indexedDB = ..." if you're not in a function.
-                // Moreover, you may need references to some window.IDB* objects:
-                window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-                window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-                // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-                if (!window.indexedDB) {
-                    window.alert("Your browser doesn't support a stable version of IndexedDB. Favouriting compounds, targets etc will not be available.");
-                }
-                var db;
-                var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
-                request.onerror = function(event) {
-                    console.log("A DB error");
-                };
-                request.onupgradeneeded = function(event) {
-                    var db = event.target.result;
-
-                    var objectStore = db.createObjectStore("compounds", {
-                        keyPath: "uri"
-                    });
-                    var objectStore = db.createObjectStore("targets", {
-                        keyPath: "uri"
-                    });
-
-                };
-                request.onsuccess = function(event) {
-                    var db = event.target.result;
-                    var transaction = db.transaction([type], "readwrite");
-                    transaction.oncomplete = function(event) {
-                        console.log("Started transaction for " + type + " : " + URI);
+        //get the database and add/change contents for this uri
+        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        // DON'T use "var indexedDB = ..." if you're not in a function.
+        // Moreover, you may need references to some window.IDB* objects:
+        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+        // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+        // Only try to find favourites if indexedDB is present
+        if (!!window.indexedDB) {
+            var callback = function(success, status, response) {
+                if (success) {
+                    var compoundResult = {};
+                    // need to find the Chemspider URI in the db
+                    var uris = mapSearch.parseMapURLResponse(response);
+                    var db;
+                    var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
+                    request.onerror = function(event) {
+                        console.log("A DB error");
                     };
+                    request.onupgradeneeded = function(event) {
+                        var db = event.target.result;
 
-                    transaction.onerror = function(event) {
-                        // Don't forget to handle errors!
-                        console.log("db find error");
+                        var objectStore = db.createObjectStore("compounds", {
+                            keyPath: "uri"
+                        });
+                        var objectStore = db.createObjectStore("targets", {
+                            keyPath: "uri"
+                        });
+
                     };
-                    var objectStore = transaction.objectStore(type);
-                    var foundIt = false;
-                    // check each URI one at a time to avoid any async problems
-                    (function nextURI() {
-                        if (!uris.length)
-                            return;
-                        var uri = uris.shift();
-                        var findURIRequest = objectStore.get(uri);
-                        findURIRequest.onerror = function(event) {
-                            //no entry in db for this uri
-                            console.log("DB retrieval error for " + uri);
+                    request.onsuccess = function(event) {
+                        var db = event.target.result;
+                        var transaction = db.transaction([type], "readwrite");
+                        transaction.oncomplete = function(event) {
+                            console.log("Started transaction for " + type + " : " + URI);
                         };
-                        findURIRequest.onsuccess = function(event) {
-                            //update the entry
-                            var data = findURIRequest.result;
-                            if (data != null) {
-                                if (data.favourite === true) {
-                                    model.set('favourite', true);
+
+                        transaction.onerror = function(event) {
+                            // Don't forget to handle errors!
+                            console.log("db find error");
+                        };
+                        var objectStore = transaction.objectStore(type);
+                        var foundIt = false;
+                        // check each URI one at a time to avoid any async problems
+                        (function nextURI() {
+                            if (!uris.length)
+                                return;
+                            var uri = uris.shift();
+                            var findURIRequest = objectStore.get(uri);
+                            findURIRequest.onerror = function(event) {
+                                //no entry in db for this uri
+                                console.log("DB retrieval error for " + uri);
+                            };
+                            findURIRequest.onsuccess = function(event) {
+                                //update the entry
+                                var data = findURIRequest.result;
+                                if (data != null) {
+                                    if (data.favourite === true) {
+                                        model.set('favourite', true);
+                                    } else {
+                                        // it is in the db but is not a favourite
+                                        model.set('favourite', false);
+                                    }
                                 } else {
-                                    // it is in the db but is not a favourite
-                                    model.set('favourite', false);
+                                    nextURI();
                                 }
-                            } else {
-                                nextURI();
-                            }
-                        };
-                    }());
+                            };
+                        }());
+                    }
                 }
             }
+            mapSearch.mapURL(URI, null, null, null, callback);
         }
-        mapSearch.mapURL(URI, null, null, null, callback);
     },
 
     actions: {
