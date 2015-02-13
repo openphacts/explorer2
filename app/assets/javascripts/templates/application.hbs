@@ -8,16 +8,7 @@
 {{/if}}
 {{partial "navbar"}}
 {{#if notOldIE}}
-<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-</div>
+<span class="spinner"><i {{bind-attr class=":fa :fa-spinner :fa-pulse fetching::invisible"}}></i></span>
 {{else}}
 <div {{bind-attr class="fetching::invisible :loading-info"}}>LOADING</div>
 {{/if}}

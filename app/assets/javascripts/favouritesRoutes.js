@@ -14,27 +14,34 @@ App.FavouritesRoute = Ember.Route.extend({
         window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
         // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
         if (!window.indexedDB) {
-            window.alert("Your browser doesn't support a stable version of IndexedDB. Favouriting compounds, targets etc will not be available.");
-        }
-        var db;
-        var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
-        request.onerror = function(event) {
-            console.log("A DB error");
-        };
-        request.onupgradeneeded = function(event) {
-            var db = event.target.result;
+            console.log('No indexed db in this browser');
+            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'notice',
+                message: 'Your browser does not support a storing data locally. Favouriting compounds, targets etc will not be available.'
+            }));
+        } else {
+            var db;
+            var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
+            request.onerror = function(event) {
+                console.log("A DB error");
+            };
+            request.onupgradeneeded = function(event) {
+                var db = event.target.result;
 
-            var objectStore = db.createObjectStore("compounds", {
-                keyPath: "uri"
-            });
-            var objectStore = db.createObjectStore("targets", {
-                keyPath: "uri"
-            });
+                var objectStore = db.createObjectStore("compounds", {
+                    keyPath: "uri"
+                });
+                var objectStore = db.createObjectStore("targets", {
+                    keyPath: "uri"
+                });
 
-        };
-        var types = {"compounds": "compound", "targets": "target"};
-        request.onsuccess = function(event) {
-            ["compounds", "targets"].forEach(function(type, index, array) {
+            };
+            var types = {
+                "compounds": "compound",
+                "targets": "target"
+            };
+            request.onsuccess = function(event) {
+                ["compounds", "targets"].forEach(function(type, index, array) {
                     var db = event.target.result;
                     var transaction = db.transaction([type], "readonly")
                     var objectStore = transaction.objectStore(type);
@@ -43,8 +50,8 @@ App.FavouritesRoute = Ember.Route.extend({
                         if (cursor) {
                             if (cursor.value.favourite === true) {
                                 me.store.find(types[type], cursor.value.uri).then(function(compound) {
-				    me.get('model').pushObject(compound);	
-				});;
+                                    me.get('model').pushObject(compound);
+                                });;
 
                                 //me.get('model').pushObject({
                                 //    "type": type,
@@ -52,11 +59,12 @@ App.FavouritesRoute = Ember.Route.extend({
                                 //    "label": cursor.value.label
                                 //});
                             }
-                            cursor.continue ();
+                            cursor.continue();
                         } else {}
                     };
                 });
             };
+        }
     },
 
     model: function(params) {
@@ -70,7 +78,9 @@ App.FavouritesRoute = Ember.Route.extend({
     },
 
     actions: {
-        error: function(error, transition) {}
+        error: function(error, transition) {
+            console.log('favourites error ' + error);
+        }
     }
 
 });

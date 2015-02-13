@@ -59,7 +59,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
 
     targetOrganismQuery: null,
 
-    showPharmaProvenance: false,
+    showProvenance: false,
 
     // I'm sure all this can be done more elegantly but....
 
