@@ -217,6 +217,10 @@ App.ApplicationController = Ember.Controller.extend({
                 var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
                 request.onerror = function(event) {
                     console.log("A DB error");
+me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'error',
+                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+            }));
                 };
                 request.onupgradeneeded = function(event) {
                     var db = event.target.result;
@@ -238,6 +242,10 @@ App.ApplicationController = Ember.Controller.extend({
                     transaction.onerror = function(event) {
                         // Don't forget to handle errors!
                         console.log("db find error");
+me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'error',
+                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+            }));
                     };
                     var objectStore = transaction.objectStore(type);
                     var foundIt = false;
@@ -268,7 +276,10 @@ App.ApplicationController = Ember.Controller.extend({
                                 var requestUpdate = objectStore.put(data);
                                 requestUpdate.onerror = function(event) {
                                     // Do something with the error
-                                    alert("Could not save favourite. Sorry.");
+me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'error',
+                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+            }));
                                 };
                                 requestUpdate.onsuccess = function(event) {
                                     // Success - the data is updated!
@@ -287,6 +298,10 @@ App.ApplicationController = Ember.Controller.extend({
                                 }
                                 addRequest.onerror = function(event) {
                                     console.log("Couldn't add data");
+me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'error',
+                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+            }));
                                 };
                             } else {
                                 // Check the next URI    
@@ -300,7 +315,7 @@ App.ApplicationController = Ember.Controller.extend({
         mapSearch.mapURL(URI, null, null, null, callback);
         } else {
             me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'warning',
+                type: 'notice',
                 message: "Your browser doesn't support local storage using IndexedDB. Favouriting compounds, targets etc will not be available."
             }));
         }
