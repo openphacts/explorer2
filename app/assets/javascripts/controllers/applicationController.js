@@ -25,9 +25,9 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(params, label, filters) {
-        if (!!window.Worker) {
             var me = this;
             var date = Date.now();
+        if (!!window.Worker) {
             var id = params.uri + date;
             var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
                 // not really a UUID but term consistent with other parts of the code
@@ -127,13 +127,13 @@ App.ApplicationController = Ember.Controller.extend({
             var jobID = params.jobID;
             var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
                 uuid: jobID,
+                date: date,
                 percentage: 0,
                 status: "processing",
                 label: label,
                 filters: filters,
                 local: false
             }));
-            var me = this;
             this.checkTSV(job, this, true);
         }
     },
@@ -141,6 +141,7 @@ App.ApplicationController = Ember.Controller.extend({
     checkTSV: function(job, controller, go) {
         var me = controller;
         var runAgain = true;
+        var jobID = job.get('uuid');
         if (go !== false) {
             $.ajax({
                 url: tsvStatusUrl,
@@ -193,6 +194,14 @@ App.ApplicationController = Ember.Controller.extend({
 
     addFavourite: function(type, URI, label, model) {
         console.log('changing favourite status');
+        //get the database and add/change contents for this uri
+        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        // DON'T use "var indexedDB = ..." if you're not in a function.
+        // Moreover, you may need references to some window.IDB* objects:
+        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+        // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+        if (!!window.indexedDB) {
         var me = this;
         var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
         var callback = function(success, status, response) {
@@ -200,16 +209,6 @@ App.ApplicationController = Ember.Controller.extend({
                 var compoundResult = {};
                 // need to find the Chemspider URI in the db
                 var uris = mapSearch.parseMapURLResponse(response);
-                //get the database and add/change contents for this uri
-                window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                // DON'T use "var indexedDB = ..." if you're not in a function.
-                // Moreover, you may need references to some window.IDB* objects:
-                window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-                window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-                // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-                if (!window.indexedDB) {
-                    window.alert("Your browser doesn't support a stable version of IndexedDB. Favouriting compounds, targets etc will not be available.");
-                }
                 var db;
                 var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
                 request.onerror = function(event) {
@@ -295,6 +294,12 @@ App.ApplicationController = Ember.Controller.extend({
             }
         }
         mapSearch.mapURL(URI, null, null, null, callback);
+        } else {
+            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                type: 'warning',
+                message: "Your browser doesn't support local storage using IndexedDB. Favouriting compounds, targets etc will not be available."
+            }));
+        }
     },
 
     findFavourite: function(URI, type, model) {
@@ -383,7 +388,10 @@ App.ApplicationController = Ember.Controller.extend({
         },
 
         removeJob: function(job) {
-            this.get('workersList')[encodeURIComponent(job.get('uuid'))].terminate();
+            // If it's a webworker then terminate it as well
+            if (!!window.Worker) {
+                this.get('workersList')[encodeURIComponent(job.get('uuid'))].terminate();
+            }
             this.jobsList.removeObject(job);
         },
 

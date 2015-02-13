@@ -39,7 +39,7 @@ class TsvFile < ActiveRecord::Base
           url_path = url_params + "&_page=#{i}&_pageSize=250"
           logger.info "Retrieving: " + url_path.to_s
           uri = URI.parse(url_path)
-          http = Net::HTTP.new(uri.host, uri.port)
+          http = Net::HTTP.new(uri.host, 443)
           http.use_ssl = true
           #by default Ruby 1.9 uses VERIFY_PEER
           #as long as it can find the ca certs all will be good but.....
@@ -92,7 +92,7 @@ class TsvFile < ActiveRecord::Base
 
           logger.info "Retrieving: " + url_params.to_s
           uri = URI.parse(url_params)
-          http = Net::HTTP.new(uri.host, uri.port)
+          http = Net::HTTP.new(uri.host, 443)
           http.use_ssl = true
           http.verify_mode = OpenSSL::SSL::VERIFY_NONE
           response = http.get(uri.request_uri)
