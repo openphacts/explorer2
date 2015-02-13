@@ -25,15 +25,15 @@ App.ApplicationController = Ember.Controller.extend({
     searchQuery: '',
     //monitor the tsv creation
     addJob: function(params, label, filters) {
-            var me = this;
-            var date = Date.now();
-// save the TSV file locally
-                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                    // DON'T use "var indexedDB = ..." if you're not in a function.
-                    // Moreover, you may need references to some window.IDB* objects:
-                    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-                    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-                    // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+        var me = this;
+        var date = Date.now();
+        // save the TSV file locally
+        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        // DON'T use "var indexedDB = ..." if you're not in a function.
+        // Moreover, you may need references to some window.IDB* objects:
+        window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+        window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+        // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
         if (!!window.Worker && !!window.indexedDB) {
             var id = params.uri + date;
             var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
@@ -99,21 +99,21 @@ App.ApplicationController = Ember.Controller.extend({
                         addRequest.onsuccess = function(event) {
                             console.log('Saved tsv file');
                             me.set('alertsAvailable', true);
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'success',
-                        message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
-                    }));
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'success',
+                                message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                            }));
 
                             myWorker.terminate();
                         }
                         addRequest.onerror = function(event) {
                             console.log("Couldn't save tsv file " + event);
                             // Job has failed
-                    job.set('status', 'failed');
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'error',
-                        message: 'TSV file failed to save locally. You may have a fault with your browsers IndexedDB storage.'
-                    }));
+                            job.set('status', 'failed');
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'error',
+                                message: 'TSV file failed to save locally. You may have a fault with your browsers IndexedDB storage.'
+                            }));
                             myWorker.terminate();
                         };
                     }
@@ -206,113 +206,113 @@ App.ApplicationController = Ember.Controller.extend({
         window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
         // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
         if (!!window.indexedDB) {
-        var me = this;
-        var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
-        var callback = function(success, status, response) {
-            if (success) {
-                var compoundResult = {};
-                // need to find the Chemspider URI in the db
-                var uris = mapSearch.parseMapURLResponse(response);
-                var db;
-                var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
-                request.onerror = function(event) {
-                    console.log("A DB error");
-me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
-            }));
-                };
-                request.onupgradeneeded = function(event) {
-                    var db = event.target.result;
-
-                    var objectStore = db.createObjectStore("compounds", {
-                        keyPath: "uri"
-                    });
-                    var objectStore = db.createObjectStore("targets", {
-                        keyPath: "uri"
-                    });
-                };
-                request.onsuccess = function(event) {
-                    var db = event.target.result;
-                    var transaction = db.transaction([type], "readwrite");
-                    transaction.oncomplete = function(event) {
-                        console.log("Saved favourite " + type + " : " + URI);
+            var me = this;
+            var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+            var callback = function(success, status, response) {
+                if (success) {
+                    var compoundResult = {};
+                    // need to find the Chemspider URI in the db
+                    var uris = mapSearch.parseMapURLResponse(response);
+                    var db;
+                    var request = window.indexedDB.open("openphacts.explorer.favourites", 1);
+                    request.onerror = function(event) {
+                        console.log("A DB error");
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'error',
+                            message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+                        }));
                     };
+                    request.onupgradeneeded = function(event) {
+                        var db = event.target.result;
 
-                    transaction.onerror = function(event) {
-                        // Don't forget to handle errors!
-                        console.log("db find error");
-me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
-            }));
+                        var objectStore = db.createObjectStore("compounds", {
+                            keyPath: "uri"
+                        });
+                        var objectStore = db.createObjectStore("targets", {
+                            keyPath: "uri"
+                        });
                     };
-                    var objectStore = transaction.objectStore(type);
-                    var foundIt = false;
-                    var totalURIS = uris.length;
-                    var keysChecked = 0;
-                    // check each URI one at a time to avoid any async problems
-                    (function nextURI() {
-                        if (!uris.length)
-                            return;
-                        var uri = uris.shift();
-                        var findURIRequest = objectStore.get(uri);
-                        findURIRequest.onerror = function(event) {
-                            //no entry in db for this uri
-                            console.log("DB retrieval error for " + uri);
+                    request.onsuccess = function(event) {
+                        var db = event.target.result;
+                        var transaction = db.transaction([type], "readwrite");
+                        transaction.oncomplete = function(event) {
+                            console.log("Saved favourite " + type + " : " + URI);
                         };
-                        findURIRequest.onsuccess = function(event) {
-                            keysChecked += 1;
-                            var data = findURIRequest.result;
-                            if (data != null) {
-                                foundIt = true;
-                                var fav = false;
-                                if (data.favourite === true) {
-                                    data.favourite = false;
+
+                        transaction.onerror = function(event) {
+                            // Don't forget to handle errors!
+                            console.log("db find error");
+                            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                type: 'error',
+                                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+                            }));
+                        };
+                        var objectStore = transaction.objectStore(type);
+                        var foundIt = false;
+                        var totalURIS = uris.length;
+                        var keysChecked = 0;
+                        // check each URI one at a time to avoid any async problems
+                        (function nextURI() {
+                            if (!uris.length)
+                                return;
+                            var uri = uris.shift();
+                            var findURIRequest = objectStore.get(uri);
+                            findURIRequest.onerror = function(event) {
+                                //no entry in db for this uri
+                                console.log("DB retrieval error for " + uri);
+                            };
+                            findURIRequest.onsuccess = function(event) {
+                                keysChecked += 1;
+                                var data = findURIRequest.result;
+                                if (data != null) {
+                                    foundIt = true;
+                                    var fav = false;
+                                    if (data.favourite === true) {
+                                        data.favourite = false;
+                                    } else {
+                                        data.favourite = true;
+                                        fav = true;
+                                    }
+                                    var requestUpdate = objectStore.put(data);
+                                    requestUpdate.onerror = function(event) {
+                                        // Do something with the error
+                                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                            type: 'error',
+                                            message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+                                        }));
+                                    };
+                                    requestUpdate.onsuccess = function(event) {
+                                        // Success - the data is updated!
+
+                                        model.set('favourite', fav);
+                                    };
+                                } else if (foundIt === false && keysChecked === totalURIS) {
+                                    // checked all the URIs and no entry in db for this uri
+                                    var addRequest = objectStore.add({
+                                        'uri': URI,
+                                        'label': label,
+                                        'favourite': true
+                                    });
+                                    addRequest.onsuccess = function(event) {
+                                        model.set('favourite', true);
+                                    }
+                                    addRequest.onerror = function(event) {
+                                        console.log("Couldn't add data");
+                                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                                            type: 'error',
+                                            message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
+                                        }));
+                                    };
                                 } else {
-                                    data.favourite = true;
-                                    fav = true;
+                                    // Check the next URI    
+                                    nextURI();
                                 }
-                                var requestUpdate = objectStore.put(data);
-                                requestUpdate.onerror = function(event) {
-                                    // Do something with the error
-me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
-            }));
-                                };
-                                requestUpdate.onsuccess = function(event) {
-                                    // Success - the data is updated!
-
-                                    model.set('favourite', fav);
-                                };
-                            } else if (foundIt === false && keysChecked === totalURIS) {
-                                // checked all the URIs and no entry in db for this uri
-                                var addRequest = objectStore.add({
-                                    'uri': URI,
-                                    'label': label,
-                                    'favourite': true
-                                });
-                                addRequest.onsuccess = function(event) {
-                                    model.set('favourite', true);
-                                }
-                                addRequest.onerror = function(event) {
-                                    console.log("Couldn't add data");
-me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: "There was a problem using your browsers storage. Please contact support for help in investigating.."
-            }));
-                                };
-                            } else {
-                                // Check the next URI    
-                                nextURI();
-                            }
-                        };
-                    }());
+                            };
+                        }());
+                    }
                 }
             }
-        }
-        mapSearch.mapURL(URI, null, null, null, callback);
+            mapSearch.mapURL(URI, null, null, null, callback);
         } else {
             me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
                 type: 'notice',
