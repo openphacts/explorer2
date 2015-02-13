@@ -36,9 +36,9 @@ App.TargetsIndexRoute = Ember.Route.extend({
             // TODO need to navigate back somewhere if there is an error, however using window.history.back()
             // might not go back to the correct place because the browser window might have been at a different
             // starting point than the ember app.
-            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+            this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
                 type: 'error',
-                message: 'This target is not available, please try a different one..'
+                message: 'This target is not available, please try a different one.'
             }));
         }
     }
