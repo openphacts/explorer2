@@ -27,7 +27,14 @@ App.ApplicationController = Ember.Controller.extend({
     addJob: function(params, label, filters) {
             var me = this;
             var date = Date.now();
-        if (!!window.Worker) {
+// save the TSV file locally
+                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                    // DON'T use "var indexedDB = ..." if you're not in a function.
+                    // Moreover, you may need references to some window.IDB* objects:
+                    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+                    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+                    // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+        if (!!window.Worker && !!window.indexedDB) {
             var id = params.uri + date;
             var job = this.jobsList.pushObject(this.get('store').createRecord('job', {
                 // not really a UUID but term consistent with other parts of the code
@@ -57,21 +64,6 @@ App.ApplicationController = Ember.Controller.extend({
                 } else if (e.data.status === "complete") {
                     job.set('status', 'complete');
                     job.set('percentage', 100);
-                    me.set('alertsAvailable', true);
-                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'success',
-                        message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
-                    }));
-                    // save the TSV file locally
-                    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                    // DON'T use "var indexedDB = ..." if you're not in a function.
-                    // Moreover, you may need references to some window.IDB* objects:
-                    window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
-                    window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
-                    // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
-                    if (!window.indexedDB) {
-                        window.alert("Your browser doesn't support a stable version of IndexedDB. TSV files cannot be stored locally.");
-                    }
                     var db;
                     var request = window.indexedDB.open("openphacts.explorer.tsvfiles", 1);
                     request.onerror = function(event) {
@@ -106,10 +98,22 @@ App.ApplicationController = Ember.Controller.extend({
                         });
                         addRequest.onsuccess = function(event) {
                             console.log('Saved tsv file');
+                            me.set('alertsAvailable', true);
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'success',
+                        message: 'TSV file is ready for download, click the "Alerts Bell" for more info.'
+                    }));
+
                             myWorker.terminate();
                         }
                         addRequest.onerror = function(event) {
                             console.log("Couldn't save tsv file " + event);
+                            // Job has failed
+                    job.set('status', 'failed');
+                    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                        type: 'error',
+                        message: 'TSV file failed to save locally. You may have a fault with your browsers IndexedDB storage.'
+                    }));
                             myWorker.terminate();
                         };
                     }
