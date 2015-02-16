@@ -6,6 +6,12 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
+  match '404Response' => 'home#index'
+
+  match '500Response' => 'home#index'
+
+  match 'ErrorResponse' => 'home#index'
+
   match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
   match 'search/typeaheadTargets' => 'search#typeaheadTargets'
@@ -45,11 +51,11 @@ Explorer2::Application.routes.draw do
 
   resources :core_api_calls, :except => [ :index, :show, :create, :new, :edit, :update, :destroy ] do
     collection do
-      #get :tab_separated_file
-      #get :tsv_download
-      #get :tsv_status
+      get :tab_separated_file
+      get :tsv_download
+      get :tsv_status
       get :organisms
-      #post :chemspider_tab_separated_file
+      post :chemspider_tab_separated_file
     end
   end
 
