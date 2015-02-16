@@ -19,10 +19,18 @@ App.Router.map(function() {
     }, function() {
 
     });
+    this.route("404Response", {
+        path: "/404Response"
+    });
+    this.route("500Response", {
+        path: "/500Response"
+    });
+    this.route("ErrorResponse", {
+        path: "/ErrorResponse"
+    });
     this.route('favourites', {
         path: '/favourites'
     }, function() {
-
     });
     this.resource('compounds', {
         path: '/compounds'
@@ -99,6 +107,21 @@ App.ApplicationRoute = Ember.Route.extend({
         //        console.log('fetch lense request fail');
         //    }
        // });
+    },
+
+    actions: {
+        error: function(error, transition) {
+            if (error && error === 404) {
+                // Can't find anything with that URI or general page not found response
+                return this.transitionTo('404Response');
+            } else if (error && error === 500) {
+                // App gone boom somehow             
+                return this.transitionTo('500Response');
+            } else if (error) {
+                // Any other error codes
+                return this.transitionTo('ErrorResponse');
+            }
+        }
     }
 
 });

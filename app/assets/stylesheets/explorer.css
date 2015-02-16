@@ -294,16 +294,11 @@ sub {
  * =========================================================*/
 
 .spinner {
-    z-index: 2000;
-    width: 100px;
-    height: 100px;
-    margin: 30px auto;
-    position: fixed;
-    top: 40%;
-    right: 47%;
-    -webkit-animation: rotateit 1.3s linear infinite;
-    -moz-animation: rotateit 1.3s linear infinite;
-    animation: rotateit 1.3s linear infinite;
+  position: fixed;
+  top: 30%;
+  margin-left: 50%;
+  z-index: 2000;
+  font-size: xx-large;
 }
 @-webkit-keyframes rotateit {
     from {
@@ -552,4 +547,16 @@ div.dl-horizontal dl dd {
 }
 .alerts-available {
 	color: red;
+}
+/* 404, 500 etc error messages, styling similar to the default rails one */
+div.page-error-message {
+    /* width: 25em; */
+    padding: 0 4em;
+    /* margin: 4em auto 0 auto; */
+    border: 1px solid #ccc;
+    border-right-color: #999;
+    border-bottom-color: #999;
+}
+div.page-error-message h1 {
+    color: red;
 }

@@ -1,16 +1,14 @@
 {{partial "alertsModal"}}
+{{#if notOldIE}}
+{{else}}
+<div class="alert alert-warning alert-dismissible" role="alert">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<strong>Warning!</strong> The Open PHACTS Explorer is designed to work with modern html5 and CSS3 enabled browsers such as <a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a>, <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a href="http://www.opera.com/">Opera</a> and <a href="http://windows.microsoft.com/en-GB/internet-explorer/download-ie">Internet Explorer 10 or higher</a>. Using an older browser may lead to a sub standard experience and in some cases may not work at all.
+</div>
+{{/if}}
 {{partial "navbar"}}
 {{#if notOldIE}}
-<div {{bind-attr class="fetching::invisible :spinner :bar"}}>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-	<div></div>
-</div>
+<span class="spinner"><i {{bind-attr class=":fa :fa-spinner :fa-pulse fetching::invisible"}}></i></span>
 {{else}}
 <div {{bind-attr class="fetching::invisible :loading-info"}}>LOADING</div>
 {{/if}}

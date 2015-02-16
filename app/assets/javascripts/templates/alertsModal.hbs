@@ -14,31 +14,35 @@
 							<tr><th class="centre" style="width: 10%">Date</th><th class="centre" style="width: 30%;">Label</th><th class="centre" style="width:30%;">Percentage</th><th class="centre" style="width:15%;">Status</th><th class="centre" style="width:10%;"></th><th style="width: 5%;"></th></tr>
 						</thead>
 						<tbody>
-							{{#each job in jobsList}}
-							{{#if job.complete}}
-							<tr class="record-deco">
-								<td class="small-padding">{{getDateForJob job}}</td>
-								{{getLabelWithTooltip job}}
-								<td><div class="progress no-margin">{{progressBar job}}</div></td>
-								<td class="centre">{{job.status}}</td>
-								<td class="centre">
-									<button class="btn btn-default btn-small small-margin-left small-margin-right" {{action 'downloadTSV' job.uuid}}>Download</button>
-								</td>
-								<td class="centre"><button type="button" class="close no-float" title="Remove this job" {{action "removeJob" job}} >×</button></td>
-							</tr>
-							{{else}}
-							<tr class="record-deco">
-								<td class="small-padding">{{getDateForJob job}}</td>
-								{{getLabelWithTooltip job}}
-								<td><div class="progress no-margin">{{progressBar job}}</div></td>
-								<td class="centre">{{job.status}}</td>
-								<td class="centre">
-									<button class="btn btn-default btn-small small-margin-left small-margin-right" disabled="disabled">Download</button>
-								</td>
-								<td class="centre"><button type="button" class="close no-float" title="Remove this job" {{action "removeJob" job}} >×</button></td>
-							</tr>
-							{{/if}}
-							{{/each}}
+						{{#each job in jobsList}}
+						{{#if job.complete}}
+						<tr class="record-deco">
+							<td class="small-padding">{{getDateForJob job}}</td>
+							{{getLabelWithTooltip job}}
+							<td><div class="progress no-margin">{{progressBar job}}</div></td>
+							<td class="centre">{{job.status}}</td>
+							<td class="centre">
+								{{#if job.local}}
+								<button class="btn btn-default btn-small small-margin-left small-margin-right" {{action 'downloadTSV' job.uuid}}>Download</button>
+								{{else}}
+								{{completedJob job.uuid}}
+								{{/if}}
+							</td>
+							<td class="centre"><button type="button" class="close no-float" title="Remove this job" {{action "removeJob" job}} >×</button></td>
+						</tr>
+						{{else}}
+						<tr class="record-deco">
+							<td class="small-padding">{{getDateForJob job}}</td>
+							{{getLabelWithTooltip job}}
+							<td><div class="progress no-margin">{{progressBar job}}</div></td>
+							<td class="centre">{{job.status}}</td>
+							<td class="centre">
+								<button class="btn btn-default btn-small small-margin-left small-margin-right" disabled="disabled">Download</button>
+							</td>
+							<td class="centre"><button type="button" class="close no-float" title="Remove this job" {{action "removeJob" job}} >×</button></td>
+						</tr>
+						{{/if}}
+						{{/each}}
 						</tbody>
 					</table>
 				</div>

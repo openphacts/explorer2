@@ -217,12 +217,12 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
         sortHeader: function(header) {
             //first set all the current filters
             var assayOrganism = this.get('assayOrganismQuery');
-	    // The organism filter box might have been emptied by deleting the text
+            // The organism filter box might have been emptied by deleting the text
             assayOrganism = assayOrganism === "" ? null : assayOrganism;
-	    var targetOrganism = this.get('targetOrganismQuery');
-	    targetOrganism = targetOrganism === "" ? null : targetOrganism;
- 
-	    var targetType = null;
+            var targetOrganism = this.get('targetOrganismQuery');
+            targetOrganism = targetOrganism === "" ? null : targetOrganism;
+
+            var targetType = null;
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
@@ -362,10 +362,10 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             var me = this;
             //first set all the current filters
             var assayOrganism = this.get('assayOrganismQuery');
-	    // The organism filter box might have been emptied by deleting the text
+            // The organism filter box might have been emptied by deleting the text
             assayOrganism = assayOrganism === "" ? null : assayOrganism;
-	    var targetOrganism = this.get('targetOrganismQuery');
-	    targetOrganism = targetOrganism === "" ? null : targetOrganism;
+            var targetOrganism = this.get('targetOrganismQuery');
+            targetOrganism = targetOrganism === "" ? null : targetOrganism;
             var targetType = null;
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
@@ -476,33 +476,75 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
             var thisCompound = this.get('content');
-            var requestParams = {
-                uri: this.get('content').get('URI'),
-                total_count: me.totalCount,
-                request_type: 'compound',
-                pchembl_value_type: pChemblValueType,
-                pchembl_value: currentPchemblValue,
-                activity_relation: activityRelation,
-                activity_value_type: activityValueType,
-                activity_value: currentActivityValue,
-                activity_type: activity,
-                activity_unit: unit,
-                assay_organism: assayOrganism,
-                target_organism: targetOrganism
-            };
-            me.get('controllers.application').addJob(requestParams, thisCompound.get('prefLabel'), filtersString);
+            if (!!window.Worker) {
+                var requestParams = {
+                    uri: this.get('content').get('URI'),
+                    total_count: me.totalCount,
+                    request_type: 'compound',
+                    pchembl_value_type: pChemblValueType,
+                    pchembl_value: currentPchemblValue,
+                    activity_relation: activityRelation,
+                    activity_value_type: activityValueType,
+                    activity_value: currentActivityValue,
+                    activity_type: activity,
+                    activity_unit: unit,
+                    assay_organism: assayOrganism,
+                    target_organism: targetOrganism
+                };
+                me.get('controllers.application').addJob(requestParams, thisCompound.get('prefLabel'), filtersString);
+            } else {
+                // Probably old IE or mobile browser
+                var tsvCreateRequest = $.ajax({
+                    url: tsvCreateUrl,
+                    dataType: 'json',
+                    type: 'POST',
+                    cache: true,
+                    data: {
+                        _format: "json",
+                        uri: this.get('content').get('URI'),
+                        total_count: me.totalCount,
+                        request_type: 'compound',
+                        pchembl_value_type: pChemblValueType,
+                        pchembl_value: currentPchemblValue,
+                        activity_relation: activityRelation,
+                        activity_value_type: activityValueType,
+                        activity_value: currentActivityValue,
+                        activity_type: activity,
+                        activity_unit: unit,
+                        assay_organism: assayOrganism,
+                        target_organism: targetOrganism
+                    },
+                    success: function(response, status, request) {
+                        console.log('tsv create request success');
+                        me.get('controllers.application').addJob({'jobID': response.uuid}, thisCompound.get('prefLabel'), filtersString);
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'notice',
+                            message: 'Creating TSV file for download. You will be alerted when ready.'
+                        }));
+                        //me.monitorTSVCreation(response.uuid);
+                    },
+                    error: function(request, status, error) {
+                        console.log('tsv create request fail');
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'error',
+                            message: 'Could not create TSV file, please contact support quoting error: ' + error
+                        }));
+                    }
+                });
+
+            }
         },
 
         fetchMore: function() {
             if (this.get('content').get('pharmacology').get('length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
                 this.get('controllers.application').set('fetching', true)
                     //first set all the current filters
-	 var assayOrganism = this.get('assayOrganismQuery');
-	    // The organism filter box might have been emptied by deleting the text
-            assayOrganism = assayOrganism === "" ? null : assayOrganism;
-	    var targetOrganism = this.get('targetOrganismQuery');
-	    targetOrganism = targetOrganism === "" ? null : targetOrganism;
-		var targetType = null;
+                var assayOrganism = this.get('assayOrganismQuery');
+                // The organism filter box might have been emptied by deleting the text
+                assayOrganism = assayOrganism === "" ? null : assayOrganism;
+                var targetOrganism = this.get('targetOrganismQuery');
+                targetOrganism = targetOrganism === "" ? null : targetOrganism;
+                var targetType = null;
                 var lens = null;
                 var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
                 var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
@@ -756,11 +798,11 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             this.set('selectedPchemblValue', null);
             this.set('assayOrganismQuery', null);
             this.set('targetOrganismQuery', null);
-	    this.set('greaterThan', false);
-	    this.set('lessThan', false);
-	    this.set('equalTo',  false);
-	    this.set('greaterThanOrEqual', false);
-	    this.set('lessThanOrEqual', false);
+            this.set('greaterThan', false);
+            this.set('lessThan', false);
+            this.set('equalTo', false);
+            this.set('greaterThanOrEqual', false);
+            this.set('lessThanOrEqual', false);
         },
 
         goToTop: function() {

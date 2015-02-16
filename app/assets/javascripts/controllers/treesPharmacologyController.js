@@ -59,7 +59,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
 
     targetOrganismQuery: null,
 
-    showPharmaProvenance: false,
+    showProvenance: false,
 
     // I'm sure all this can be done more elegantly but....
 
@@ -581,7 +581,10 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         searcher.getTargetClassPharmacologyPaginated(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
                     } else {
                         me.get('controllers.application').set('fetching', false);
-                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {type: 'error', message: 'No target class pharmacology available with those filters. Please apply different filters and try again'}));
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'error',
+                            message: 'No target class pharmacology available with those filters. Please apply different filters and try again'
+                        }));
                     }
                 }
             };
@@ -726,23 +729,62 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
 
             filtersString = filtersString == "" ? "No filters applied" : "Filters applied - " + filtersString;
 
-	    var tree_type = this.get('treeType') === 'chebi' ? 'tree_compound' : 'tree';
+            var tree_type = this.get('treeType') === 'chebi' ? 'tree_compound' : 'tree';
+            if (!!window.Worker) {
                 var requestParams = {
-                uri: this.get('uri'),
-                total_count: me.totalCount,
-                request_type: 'tree',
-		tree_type: tree_type,
-                pchembl_value_type: pChemblValueType,
-                pchembl_value: currentPchemblValue,
-                activity_relation: activityRelation,
-                activity_value_type: activityValueType,
-                activity_value: currentActivityValue,
-                activity_type: activity,
-                activity_unit: unit,
-                assay_organism: assayOrganism,
-                target_organism: targetOrganism
-            };
-            me.get('controllers.application').addJob(requestParams, this.get('uri'), filtersString);
+                    uri: this.get('uri'),
+                    total_count: me.totalCount,
+                    request_type: 'tree',
+                    tree_type: tree_type,
+                    pchembl_value_type: pChemblValueType,
+                    pchembl_value: currentPchemblValue,
+                    activity_relation: activityRelation,
+                    activity_value_type: activityValueType,
+                    activity_value: currentActivityValue,
+                    activity_type: activity,
+                    activity_unit: unit,
+                    assay_organism: assayOrganism,
+                    target_organism: targetOrganism
+                };
+                me.get('controllers.application').addJob(requestParams, this.get('uri'), filtersString);
+            } else {
+                var tsvCreateRequest = $.ajax({
+                    url: tsvCreateUrl,
+                    dataType: 'json',
+                    type: 'POST',
+                    cache: true,
+                    data: {
+                        _format: "json",
+                        uri: this.get('uri'),
+                        total_count: me.totalCount,
+                        request_type: tree_type,
+                        pchembl_value_type: pChemblValueType,
+                        pchembl_value: currentPchemblValue,
+                        activity_relation: activityRelation,
+                        activity_value_type: activityValueType,
+                        activity_value: currentActivityValue,
+                        activity_type: activity,
+                        activity_unit: unit,
+                        assay_organism: assayOrganism,
+                        target_organism: targetOrganism
+                    },
+                    success: function(response, status, request) {
+                        me.get('controllers.application').addJob({
+                            "jobID": response.uuid
+                        }, me.get('uri'), filtersString);
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'notice',
+                            message: 'Creating TSV file for download. You will be alerted when ready.'
+                        }));
+                    },
+                    error: function(request, status, error) {
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'error',
+                            message: 'Could not create TSV file, please contact support quoting error: ' + error
+                        }));
+                    }
+                });
+            }
         }
     }
 });
