@@ -207,8 +207,8 @@ App.ApplicationController = Ember.Controller.extend({
         window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
         window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
         // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
+        var me = this;
         if (!!window.indexedDB) {
-            var me = this;
             var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
             var callback = function(success, status, response) {
                 if (success) {
