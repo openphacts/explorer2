@@ -497,6 +497,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
                 var tsvCreateRequest = $.ajax({
                     url: tsvCreateUrl,
                     dataType: 'json',
+                    type: 'POST',
                     cache: true,
                     data: {
                         _format: "json",

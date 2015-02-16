@@ -32,16 +32,16 @@ App.TargetsIndexRoute = Ember.Route.extend({
     },
 
     actions: {
-        error: function(error, transition) {
+ //       error: function(error, transition) {
             // TODO need to navigate back somewhere if there is an error, however using window.history.back()
             // might not go back to the correct place because the browser window might have been at a different
             // starting point than the ember app.
             // Maybe just needs a 404 page eg return this.transitionTo('modelNotFound'); (from ember docs example)
-            this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: 'This target is not available, please try a different one.'
-            }));
-        }
+//            this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+//                type: 'error',
+//                message: 'This target is not available, please try a different one.'
+//            }));
+//        }
     }
 
 });

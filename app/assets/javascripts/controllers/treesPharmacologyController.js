@@ -751,12 +751,13 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 var tsvCreateRequest = $.ajax({
                     url: tsvCreateUrl,
                     dataType: 'json',
+                    type: 'POST',
                     cache: true,
                     data: {
                         _format: "json",
                         uri: this.get('uri'),
                         total_count: me.totalCount,
-                        request_type: tree_path,
+                        request_type: tree_type,
                         pchembl_value_type: pChemblValueType,
                         pchembl_value: currentPchemblValue,
                         activity_relation: activityRelation,
