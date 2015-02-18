@@ -16,8 +16,8 @@ RUN cp config/app_settings.yml_example config/app_settings.yml
 RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
-RUN wget -o filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2
-RUN wget -o filestore/compounds.txt.bz2.sha1 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
+RUN wget -O filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2
+RUN wget -O filestore/compounds.txt.bz2.sha1 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
 RUN sha1sum -c filestore/compounds.txt.bz2.sha1 && \
   bunzip2 filestore/compounds.txt.bz2 && \
   rake explorer:load_all_assets && \
