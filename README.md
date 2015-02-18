@@ -32,8 +32,8 @@ Autocompleter
 -------------
 There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
 
-* Get the compounds from https://www.dropbox.com/s/n1bhwkcqhupggg9/compounds.zip?dl=0 and put in filestore directory
-* Unzip filestore/compounds.zip
+* Get the file compounds.txt.bz2 from http://data.openphacts.org/1.4/explorer2/ and put in filestore directory
+* Unzip the compounds file
 * Run `rake explorer:load_all_assets`. To load in to production db prepend with `RAILS_ENV=production`
   * Or start a rails console (rails c) and enter the following commands to add compound models to the database  
 
@@ -45,7 +45,7 @@ There are now too many compounds to do the autocomplete by reading a text file f
     end
 
 
-It will probably take the console a few hours to get through them all (there are now over 1 million!). Do the same for Target & Organism.
+It will probably take the console a few hours to get through them all (there are now over 1 million!). If you are doing it manually then do the same for targets & organism using  the files which are already in filestore directory.
 
 Testing
 -------
