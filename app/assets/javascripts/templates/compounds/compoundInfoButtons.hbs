@@ -29,10 +29,10 @@
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
 				{{#if hasPharmacology}}
-				<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology ({{this.pharmacologyRecords}}){{/link-to}}</li>
+				<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology<span class="badge small-margin-left">{{this.pharmacologyRecords}}</span>{{/link-to}}</li>
 				{{/if}}
 				{{#if hasPathways}}
-				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways ({{this.pathwayRecords}}){{/link-to}}</;i>
+				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways<span class="badge small-margin-left">{{this.pathwayRecords}}</span>{{/link-to}}</;i>
 				{{/if}}
 				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
 				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>

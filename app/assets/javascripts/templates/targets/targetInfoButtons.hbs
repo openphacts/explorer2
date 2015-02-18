@@ -26,9 +26,9 @@
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
 				{{#if threeDeeEnabled}}<li><a href="#" {{action 'drawProtein'}} title="Visualize this target in 3D">View in 3D</a></li>{{/if}}
-				<li>{{#link-to "targets.pharmacology" (query-params uri=this.URI)}}Pharmacology{{/link-to}}</li>
-				<li>{{#link-to "targets.pathways" (query-params uri=this.URI)}}Pathways{{/link-to}}</li>
-				{{#if hasDiseases}}<li>{{#link-to 'targets.diseases' (query-params uri=URI)}}Diseases ({{diseaseRecords}}){{/link-to}}</li>{{/if}}
+				<li>{{#link-to "targets.pharmacology" (query-params uri=this.URI)}}Pharmacology<span class="badge small-margin-left">{{pharmacologyRecords}}</span>{{/link-to}}</li>
+				{{#if hasPathways}}<li>{{#link-to "targets.pathways" (query-params uri=this.URI)}}Pathways<span class="badge small-margin-left">{{pathwaysRecords}}</span>{{/link-to}}</li>{{/if}}
+				{{#if hasDiseases}}<li>{{#link-to 'targets.diseases' (query-params uri=URI)}}Diseases<span class="badge small-margin-left">{{diseaseRecords}}</span>{{/link-to}}</li>{{/if}}
 			</ul>
 		</div>
 	</div>
