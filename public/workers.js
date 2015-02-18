@@ -231,6 +231,16 @@ onmessage = function(e) {
                                     });
                                     targetTitles = allTargetTitles.join(', ');
                                     line += index < keys.length - 1 ? targetTitles + '\t' : targetTitles;
+                                } else if (key === "targetOrganisms") {
+                                    if (result[key] != null) {
+                                        var value = "[";
+                                        result[key].forEach(function(organism, index, organisms) {
+                                            value += organism.organism != null && organism.organism !== "" ? organism.organism + ", " : "";
+                                            value += organism.item != null ? organism.item : "";
+                                        });
+                                        value += "]";
+                                        line += index < keys.length - 1 ? value + '\t' : value;
+                                    }
                                 } else {
                                     // Change null values to empty string
                                     var value = result[key] !== null ? result[key] : '';
