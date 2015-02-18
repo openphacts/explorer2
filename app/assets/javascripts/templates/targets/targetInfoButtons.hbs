@@ -10,9 +10,9 @@
 			</label>
 		</span>
 		{{#if threeDeeEnabled}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :btn-small"}} title="Visualize this target in 3D">3D</button>{{/if}}
-		{{#if hasPharmacology}}{{#link-to "targets.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{pharmacologyRecords}}){{/link-to}}{{/if}}
-		{{#if hasPathways}}{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{pathwaysRecords}}){{/link-to}}{{/if}}
-		{{#if hasDiseases}}{{#link-to "targets.diseases" (query-params uri=URI) class="btn btn-default"}}Diseases ({{diseaseRecords}}){{/link-to}}{{/if}}
+		{{#if hasPharmacology}}{{#link-to "targets.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology<span class="badge small-margin-left">{{pharmacologyRecords}}</span>{{/link-to}}{{/if}}
+		{{#if hasPathways}}{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways<span class="badge small-margin-left">{{pathwaysRecords}}</span>{{/link-to}}{{/if}}
+		{{#if hasDiseases}}{{#link-to "targets.diseases" (query-params uri=URI) class="btn btn-default"}}Diseases<span class="badge small-margin-left">{{diseaseRecords}}</span>{{/link-to}}{{/if}}
 
 	</div>
 	<!-- Show as dropdown on smaller screens -->
