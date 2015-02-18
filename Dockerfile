@@ -11,10 +11,6 @@ RUN bundle install
 RUN cp config/database.yml_example config/database.yml
 RUN cp config/environments/production.rb_example config/environments/production.rb
 RUN cp config/app_settings.yml_example config/app_settings.yml
-RUN sed -i 's/url *:.*/url: ENV["API_URL"]/' config/app_settings.yml
-RUN sed -i 's/app_id *:.*/app_id: ENV["API_APP_ID"]/' config/app_settings.yml
-RUN sed -i 's/app_key *:.*/app_key : ENV["API_APP_KEY"]/' config/app_settings.yml
-RUN cat config/app_settings.yml
 RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
