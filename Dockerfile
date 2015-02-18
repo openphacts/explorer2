@@ -16,10 +16,11 @@ RUN cp config/app_settings.yml_example config/app_settings.yml
 RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
-RUN wget -O filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2
-RUN wget -O filestore/compounds.txt.bz2.sha1 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
-RUN sha1sum -c filestore/compounds.txt.bz2.sha1 && \
-  bunzip2 filestore/compounds.txt.bz2 && \
+WORKDIR /explorer2/filestore
+RUN wget http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
+RUN sha1sum -c compounds.txt.bz2.sha1 && \
+  bunzip2 compounds.txt.bz2 && \
+  cd .. && \
   rake explorer:load_all_assets && \
   rm filestore/compounds.txt
 
@@ -29,6 +30,7 @@ ENV API_URL https://beta.openphacts.org/1.4
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
 
+WORKDIR /explorer2
 EXPOSE 3000
 ENTRYPOINT ["/explorer2/docker/entrypoint.sh"]
 CMD ["rails", "server"]
