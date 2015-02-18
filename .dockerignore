@@ -1,0 +1,8 @@
+Dockerfile
+/.bundle
+db/*.sqlite3
+log/
+tmp
+*~
+*.swp
+vendor/ruby
