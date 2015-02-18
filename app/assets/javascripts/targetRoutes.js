@@ -7,7 +7,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
         controller.set('model', model);
         var target = model;
         var diseaseSearcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
-
+	var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
         var diseaseCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = diseaseSearcher.parseDiseasesByTargetCountResponse(response);
@@ -17,6 +17,15 @@ App.TargetsIndexRoute = Ember.Route.extend({
             }
         };
         diseaseSearcher.diseasesByTargetCount(target.get('URI'), null, diseaseCountCallback);
+        var pharmaCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
+                Ember.run(function() {
+			target.set('pharmacologyRecords', count);
+		});
+	    };
+	}
+	targetSearcher.targetPharmacologyCount(target.get('URI'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
         this.controllerFor('application').findFavourite(model.get('URI'), 'targets', model);
     },
 
