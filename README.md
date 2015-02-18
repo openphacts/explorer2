@@ -11,25 +11,31 @@ Technology
 Setup
 =====
 
-* Run ruby -v to check your Ruby version and install if required.
-* Run bundle install to grab any required gems.
-* Copy config/database.yml_example to config/database.yml and uncomment/configure your database of choice
-* Copy config/environments/development.rb_example to config/environments/development.rb (and production/test)
-* Run rake db:create:all
-* Run rake db:migrate
+* `ruby -v` to check your Ruby version and install if required. 
+  * You may want to use [https://rvm.io/](rvm) to handle multiple versions of ruby
+* `bundle install` 
+* Copy `config/database.yml_example` to `config/database.yml` and uncomment/configure your database of choice
+* Copy `config/environments/development.rb_example` to `config/environments/development.rb`
+  * (and production/test)
 * [Register](http://dev.openphacts.org "Open PHACTS developer home") to get your application keys.
-* Copy config/app_settings.yml_example to config/app_settings.yml and change the app keys and API url to the appropriate values. Add settings for ketcher (see below).
+* Copy `config/app_settings.yml_example` to `config/app_settings.yml` 
+  * change the `url`, `app_id` and `app_key` app keys and API url to the appropriate values. 
+  * Add settings for [ketcher](#ketcher) (see below).
+* `rake db:create:all`
+* `rake db:migrate`
+* `rake assets:precompile`
+* `rails s`
 
-Run rails s to start the server and navigate your browser to localhost:3000
+Now navigate your browser to http://localhost:3000/
 
 Autocompleter
 -------------
 There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
 
 * Gunzip filestore/compounds.tar.gz
-* Either run the rake task rake explorer:load_all_assets. To load in to production db prepend with RAILS_ENV=production
-* Or start a rails console (rails c)
-* Enter the following commands to add compound models to the database  
+* Run `rake explorer:load_all_assets`. To load in to production db prepend with `RAILS_ENV=production`
+  * Or start a rails console (rails c)
+  * Enter the following commands to add compound models to the database  
 
     file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")  
     file.each_line do |line|  
