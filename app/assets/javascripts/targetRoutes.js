@@ -16,15 +16,26 @@ App.TargetsIndexRoute = Ember.Route.extend({
                 });
             }
         };
-        diseaseSearcher.diseasesByTargetCount(target.get('URI'), null, diseaseCountCallback);
         var pharmaCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
                 Ember.run(function() {
 			target.set('pharmacologyRecords', count);
 		});
-	    };
+	    }
 	}
+	var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        //how many pathways for this compound
+        var pathwaysCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
+                Ember.run(function() {
+			target.set('pathwaysRecords', count);
+		});
+	    }
+	}
+        diseaseSearcher.diseasesByTargetCount(target.get('URI'), null, diseaseCountCallback);
+	pathwaysSearcher.countPathwaysByTarget(target.get('URI'), null, null, pathwaysCountCallback);
 	targetSearcher.targetPharmacologyCount(target.get('URI'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
         this.controllerFor('application').findFavourite(model.get('URI'), 'targets', model);
     },
@@ -257,7 +268,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
             }
         };
 
-        //load the pathways for this compound
+        //load the pathways for this target
         var pathwaysByTargetCallback = function(success, status, response) {
                 if (success && response) {
                     var pathwayResults = searcher.parseByTargetResponse(response);

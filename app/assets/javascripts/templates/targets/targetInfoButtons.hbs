@@ -11,7 +11,7 @@
 		</span>
 		{{#if threeDeeEnabled}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :btn-small"}} title="Visualize this target in 3D">3D</button>{{/if}}
 		{{#if hasPharmacology}}{{#link-to "targets.pharmacology" (query-params uri=this.URI) class="btn btn-default" }}Pharmacology ({{pharmacologyRecords}}){{/link-to}}{{/if}}
-		{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways{{/link-to}}
+		{{#if hasPathways}}{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default" }}Pathways ({{pathwaysRecords}}){{/link-to}}{{/if}}
 		{{#if hasDiseases}}{{#link-to "targets.diseases" (query-params uri=URI) class="btn btn-default"}}Diseases ({{diseaseRecords}}){{/link-to}}{{/if}}
 
 	</div>
