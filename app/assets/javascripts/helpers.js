@@ -96,7 +96,7 @@ Ember.Handlebars.registerBoundHelper('progressBar', function(job) {
 	}
 	//Job processing
 	if (job.get('percentage') < 100 && job.get('status') === 'processing') {
-		return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" role="progressbar" title="' + job.get('percentage') + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage') + '% Complete</span></div>');
+		return new Handlebars.SafeString('<div class="progress-bar progress-bar-info progress-bar-striped active no-margin" role="progressbar" title="' + job.get('percentage').toFixed() + '%" style="width: ' + job.get('percentage') + '%;" aria-valuenow="' + job.get('percentage') + '" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">' + job.get('percentage').toFixed() + '% Complete</span></div>');
 	}
 	//Job failed
 	if (job.get('status') === 'failed') {
