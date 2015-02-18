@@ -14,7 +14,9 @@ RUN cp config/app_settings.yml_example config/app_settings.yml
 RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
-#RUN rake explorer:load_all_assets
+RUN wget -o filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2
+RUN bunzip2 filestore/compounds.txt.bz2
+RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
 ENV API_URL https://beta.openphacts.org/1.4
