@@ -45,8 +45,9 @@ There are now too many compounds to do the autocomplete by reading a text file f
     c.save  
     end
 
+  It will probably take the console a few hours to get through them all (there are now over 1 million!). 
 
-It will probably take the console a few hours to get through them all (there are now over 1 million!). Do the same for Target & Organism.
+  Do the same for `targets.txt` and `organisms.txt`.
 
 Testing
 -------
