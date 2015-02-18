@@ -231,7 +231,9 @@ onmessage = function(e) {
                                     });
                                     targetTitles = allTargetTitles.join(', ');
                                     line += index < keys.length - 1 ? targetTitles + '\t' : targetTitles;
-                                } else {
+                                } else if (key === "targetOrganisms") {
+					console.log("target organisms");
+				} else {
                                     // Change null values to empty string
                                     var value = result[key] !== null ? result[key] : '';
                                     line += index < keys.length - 1 ? value + '\t' : value;
