@@ -32,13 +32,8 @@ Autocompleter
 -------------
 There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
 
-<<<<<<< HEAD
 * `wget -o filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2`
 * `bunzip2` filestore/compounds.txt.bz2
-=======
-* Get the file compounds.txt.bz2 from http://data.openphacts.org/1.4/explorer2/ and put in filestore directory
-* Unzip the compounds file
->>>>>>> f077baa04aa8823f18785772fce1d6a6d7197cad
 * Run `rake explorer:load_all_assets`. To load in to production db prepend with `RAILS_ENV=production`
   * Or start a rails console (rails c) and enter the following commands to add compound models to the database  
 
