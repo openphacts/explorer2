@@ -13,7 +13,11 @@ App.ApplicationController = Ember.Controller.extend({
 
     // use for structure drawing
     molfile: null,
+    cookieAcceptance: false,
 
+    notCookie: function() {
+        return !this.get('cookieAcceptance');
+    }.property('cookieAcceptance'),
     notOldIE: function() {
         return this.get('iex');
     }.property('iex'),
@@ -472,6 +476,15 @@ App.ApplicationController = Ember.Controller.extend({
                     }
                 };
             }
+        },
+        // User clicks button to accept cookies and storage
+        setUserAcceptanceCookie: function() {
+            var d = new Date();
+            // Set expiry of cookie in 10 years!
+            d.setTime(d.getTime() + (3650 * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = "explorerCookieAcceptance=true;" + expires;
+            this.set('cookieAcceptance', true);
         }
     }
 });

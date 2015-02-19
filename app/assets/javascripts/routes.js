@@ -98,6 +98,14 @@ App.ApplicationRoute = Ember.Route.extend({
         //        console.log('fetch lense request fail');
         //    }
        // });
+        var name = "explorerCookieAcceptance" + "=";
+        var ca = document.cookie.split(';');
+        ca.forEach(function(cookie, index, cookies) {
+            var cookieData = cookie.split('=');
+            if (cookieData[0] === "explorerCookieAcceptance") {
+                controller.set('cookieAcceptance', true);
+            }
+        });
     },
 
     actions: {
