@@ -3,6 +3,28 @@ Introduction
 
 The Open PHACTS Explorer is an HTML5 & CSS3 application for chemical information discovery and browsing. It is used to search for chemical compound and target information using a web  search interface. It uses [Ruby on Rails](http://www.rubyonrails.org "Ruby on Rails Web Application framework"), [Ember JS](http://emberjs.com "Ember JS Javascript MVC framework") and [OPS.JS](http://github.com/openphacts/ops.js "OPS.JS Javascript library for accessing the Open PHACTS Linked Data API"). The Explorer uses the [Open PHACTS Linked Data API](http://dev.openphacts.org "Open PHACTS Linked Data API developer documentation and registration").
 
+Docker image
+============
+
+The experimental [Docker](https://www.docker.com/) image [openphacts/explorer2](https://registry.hub.docker.com/u/openphacts/explorer2/)
+can be used to run the explorer2 on any Linux host with Docker:
+
+    docker pull openphacts/explorer2
+    docker run -p 3000:3000 -e RAILS_ENV=development -it openphacts/explorer2 
+
+This will start Explorer2 on [http://localhost:3000/](http://localhost:3000/)
+
+FIXME: The autocomplete data for the search is not loaded.
+
+The environment variables that can be set, together with their defaults:
+
+```
+-e RAILS_ENV=production
+-e API_URL=https://beta.openphacts.org/1.4
+-e API_APP_ID=161aeb7d
+-e API_APP_KEY=cffc292726627ffc50ece1dccd15aeaf
+```
+
 Technology
 ==========
 
@@ -12,7 +34,7 @@ Setup
 =====
 
 * `ruby -v` to check your Ruby version and install if required. 
-  * You may want to use [https://rvm.io/](rvm) to handle multiple versions of ruby
+  * You may want to use [rvm](https://rvm.io/) to handle multiple versions of ruby
 * `bundle install` 
 * Copy `config/database.yml_example` to `config/database.yml` and uncomment/configure your database of choice
 * Copy `config/environments/development.rb_example` to `config/environments/development.rb`
@@ -26,7 +48,7 @@ Setup
 * `rake assets:precompile`
 * `rails s`
 
-Now navigate your browser to http://localhost:3000/
+Now navigate your browser to [http://localhost:3000/](http://localhost:3000/)
 
 Autocompleter
 -------------
