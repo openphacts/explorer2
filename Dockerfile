@@ -17,9 +17,9 @@ RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
 WORKDIR /explorer2/filestore
-RUN wget http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
-RUN sha1sum -c compounds.txt.bz2.sha1 && \
-  bunzip2 compounds.txt.bz2 && \
+RUN wget -q http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
+RUN sha1sum -c compounds.txt.bz2.sha1
+RUN bunzip2 compounds.txt.bz2
 
 WORKDIR /explorer2
 
