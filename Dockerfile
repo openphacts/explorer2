@@ -20,9 +20,11 @@ WORKDIR /explorer2/filestore
 RUN wget http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
 RUN sha1sum -c compounds.txt.bz2.sha1 && \
   bunzip2 compounds.txt.bz2 && \
-  cd .. && \
-  rake explorer:load_all_assets && \
-  rm filestore/compounds.txt
+
+WORKDIR /explorer2
+
+## Takes more than 2 hours :(
+# RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
 ENV API_URL https://beta.openphacts.org/1.4
@@ -30,7 +32,6 @@ ENV API_URL https://beta.openphacts.org/1.4
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
 
-WORKDIR /explorer2
 EXPOSE 3000
 ENTRYPOINT ["/explorer2/docker/entrypoint.sh"]
 CMD ["rails", "server"]
