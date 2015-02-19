@@ -1,4 +1,10 @@
 {{partial "alertsModal"}}
+{{#if notCookie}}
+<div class="alert alert-warning alert-dismissible" role="alert">
+The Open PHACTS Explorer uses cookies and browser storage to enhance the user experience. We do not track how you use the Explorer and no information about you is stored on our servers. If you have any concerns about privacy or data protection please contact <a href="http://support.openphacts.org">support</a>.
+	<button class="btn btn-info" {{action "setUserAcceptanceCookie"}}>OK, I understand</button>
+</div>
+{{/if}}
 {{#if notOldIE}}
 {{else}}
 <div class="alert alert-warning alert-dismissible" role="alert">
