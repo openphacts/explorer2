@@ -12,7 +12,7 @@ Setup
 =====
 
 * `ruby -v` to check your Ruby version and install if required. 
-  * You may want to use [https://rvm.io/](rvm) to handle multiple versions of ruby
+  * You may want to use [rvm](https://rvm.io/) to handle multiple versions of ruby
 * `bundle install` 
 * Copy `config/database.yml_example` to `config/database.yml` and uncomment/configure your database of choice
 * Copy `config/environments/development.rb_example` to `config/environments/development.rb`
@@ -26,7 +26,7 @@ Setup
 * `rake assets:precompile`
 * `rails s`
 
-Now navigate your browser to http://localhost:3000/
+Now navigate your browser to [http://localhost:3000/](http://localhost:3000/)
 
 Autocompleter
 -------------
