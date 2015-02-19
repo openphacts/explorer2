@@ -97,13 +97,24 @@ App.ApplicationRoute = Ember.Route.extend({
         error: function(error, transition) {
             if (error && error === 404) {
                 // Can't find anything with that URI or general page not found response
-                return this.transitionTo('404Response');
+                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'Sorry, can\'t find what you are looking for. If you think it should exist then please contact support using the help link above.'
+                }));
             } else if (error && error === 500) {
-                // App gone boom somehow             
-                return this.transitionTo('500Response');
+                // App gone boom somehow
+                console.log('500');
+                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
+                }));
             } else if (error) {
                 // Any other error codes
-                return this.transitionTo('ErrorResponse');
+                console.log('general error');
+                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+                    type: 'error',
+                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
+                }));
             }
         }
     }
