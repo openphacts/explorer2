@@ -19,15 +19,6 @@ App.Router.map(function() {
     }, function() {
 
     });
-    this.route("404Response", {
-        path: "/404Response"
-    });
-    this.route("500Response", {
-        path: "/500Response"
-    });
-    this.route("ErrorResponse", {
-        path: "/ErrorResponse"
-    });
     this.route('favourites', {
         path: '/favourites'
     }, function() {
