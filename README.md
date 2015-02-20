@@ -44,7 +44,6 @@ Setup
 * [Register](http://dev.openphacts.org "Open PHACTS developer home") to get your application keys.
 * Copy `config/app_settings.yml_example` to `config/app_settings.yml` 
   * change the `url`, `app_id` and `app_key` app keys and API url to the appropriate values. 
-  * Add settings for [ketcher](#ketcher) (see below).
 * `rake db:create:all`
 * `rake db:migrate`
   * add `RAILS_ENV="production"` or `RAILS_ENV="test"` to migrate those environments, by default it wil be `development`

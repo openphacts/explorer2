@@ -6,15 +6,9 @@ Explorer2::Application.routes.draw do
 
   match 'search' => 'home#index'
 
-  match '404Response' => 'home#index'
+  #match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
 
-  match '500Response' => 'home#index'
-
-  match 'ErrorResponse' => 'home#index'
-
-  match 'search/typeaheadCompounds' => 'search#typeaheadCompounds'
-
-  match 'search/typeaheadTargets' => 'search#typeaheadTargets'
+  #match 'search/typeaheadTargets' => 'search#typeaheadTargets'
 
   match 'compounds' => 'home#index'
   match 'compounds/pharmacology' => 'home#index'
@@ -39,13 +33,6 @@ Explorer2::Application.routes.draw do
   resources :search, :only => [ :index ] do
     collection do
       get 'typeahead'
-    end
-  end
-
-  resources :ketcher, :only => [ :index ] do
-    collection do
-      get :knocknock
-      get :layout
     end
   end
 
