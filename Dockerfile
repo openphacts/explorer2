@@ -23,8 +23,7 @@ RUN bunzip2 compounds.txt.bz2
 
 WORKDIR /explorer2
 
-## Takes more than 2 hours :(
-# RUN rake explorer:load_all_assets
+RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
 ENV API_URL https://beta.openphacts.org/1.4
