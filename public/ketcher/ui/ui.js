@@ -9,7 +9,7 @@
  * This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
  * WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
  ***************************************************************************/
-var ebi_smiles_to_ctab_url = "https://wwwdev.ebi.ac.uk/chembl/api/utils/smiles2ctab";
+var ebi_smiles_to_ctab_url = "https://www.ebi.ac.uk/chembl/api/utils/smiles2ctab";
 if (typeof(ui) == 'undefined')
     ui = function () {};
 

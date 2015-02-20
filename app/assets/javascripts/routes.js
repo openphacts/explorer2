@@ -87,7 +87,7 @@ App.ApplicationRoute = Ember.Route.extend({
         var ca = document.cookie.split(';');
         ca.forEach(function(cookie, index, cookies) {
             var cookieData = cookie.split('=');
-            if (cookieData[0] === "explorerCookieAcceptance") {
+            if (cookieData[0].trim() === "explorerCookieAcceptance") {
                 controller.set('cookieAcceptance', true);
             }
         });
