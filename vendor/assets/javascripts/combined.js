@@ -289,6 +289,7 @@ Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
     this.appID = appID;
     this.appKey = appKey;
 }
+
 /**
  * Fetch the compound represented by the URI provided.
  * @param {string} URI - The URI for the compound of interest.
@@ -320,6 +321,7 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(URI, lens, callback
         callback.call(this, false, response.status);
     });
 }
+
 /**
  * Fetch the compounds matching the list of URIs provided.
  * @param {string} URIList - An array of URIs for the compounds of interest.
@@ -352,6 +354,7 @@ Openphacts.CompoundSearch.prototype.fetchCompoundBatch = function(URIList, lens,
         callback.call(this, false, response.status);
     });
 }
+
 /**
  * Count the number of compounds classified with the class represented by the URI provided.
  * @param {string} URI - The URI for the class of interest.
@@ -422,6 +425,7 @@ Openphacts.CompoundSearch.prototype.compoundClassMembers = function(URI, page, p
         callback.call(this, false, response.status);
     });
 }
+
 /**
  * Fetch pharmacology records for the compound represented by the URI provided.
  * @param {string} URI - The URI for the compound of interest
@@ -492,6 +496,7 @@ Openphacts.CompoundSearch.prototype.compoundPharmacology = function(URI, assayOr
         callback.call(this, false, response.status);
     });
 }
+
 /**
  * Fetch a count of the pharmacology records belonging to the compound represented by the URI provided.
  * @param {string} URI - The URI for the compound of interest
@@ -556,6 +561,7 @@ Openphacts.CompoundSearch.prototype.compoundPharmacologyCount = function(URI, as
         callback.call(this, false, response.status);
     });
 }
+
 /**
  * The classes the given compound URI has been classified with eg ChEBI
  * @param {string} URI - The URI for the compound of interest
@@ -583,6 +589,7 @@ Openphacts.CompoundSearch.prototype.compoundClassifications = function(URI, tree
         }
     });
 }
+
 /**
  * Parse the results from {@link Openphacts.CompoundSearch#fetchCompound}
  * @param {Object} response - the JSON response from {@link Openphacts.CompoundSearch#fetchCompound}
@@ -619,9 +626,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
     var uri = response.primaryTopic[constants.ABOUT];
 
     // check if we already have the CS URI
-    var uriLink = document.createElement('a');
-    uriLink.href = uri;
-    var possibleURI = 'http://' + uriLink.hostname;
+    var possibleURI = 'http://' + uri.split('/')[2];
+    //var uriLink = document.createElement('a');
+    //uriLink.href = uri;
+    //var possibleURI = 'http://' + uriLink.hostname;
     csURI = constants.SRC_CLS_MAPPINGS[possibleURI] === 'chemspiderValue' ? uri : null;
 
     var drugbankProvenance, chemspiderProvenance, chemblProvenance;
@@ -645,18 +653,20 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
     rtb = response.primaryTopic.rtb !== null ? response.primaryTopic.rtb : null;
     smiles = response.primaryTopic.smiles != null ? response.primaryTopic.smiles : null;
 
-    $.each(response.primaryTopic.exactMatch, function(i, match) {
-        var src = match[constants.IN_DATASET];
-        if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
-            drugbankData = match;
-        } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
-            chemspiderData = match;
-        } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
-            chemblData = match;
-        } else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
-            conceptWikiData = match;
-        }
-    });
+    if (Array.isArray(response.primaryTopic.exactMatch)) {
+        response.primaryTopic.exactMatch.forEach(function(match, i, allValues) {
+            var src = match[constants.IN_DATASET];
+            if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                drugbankData = match;
+            } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                chemspiderData = match;
+            } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
+                chemblData = match;
+            } else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                conceptWikiData = match;
+            }
+        });
+    }
     if (drugbankData) {
         description = drugbankData.description != null ? drugbankData.description : description;
         biotransformationItem = drugbankData.biotransformation != null ? drugbankData.biotransformation : biotransformationItem;
@@ -750,6 +760,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundResponse = function(response) {
 
     };
 }
+
 /**
  * Parse the results from {@link Openphacts.CompoundSearch#fetchCompoundBatch}
  * @param {Object} response - the JSON response from {@link Openphacts.CompoundSearch#fetchCompoundBatch}
@@ -788,9 +799,10 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         var uri = item[constants.ABOUT];
 
         // check if we already have the CS URI
-        var uriLink = document.createElement('a');
-        uriLink.href = uri;
-        var possibleURI = 'http://' + uriLink.hostname;
+        var possibleURI = 'http://' + uri.split('/')[2];
+        //var uriLink = document.createElement('a');
+        //uriLink.href = uri;
+        //var possibleURI = 'http://' + uriLink.hostname;
         csURI = constants.SRC_CLS_MAPPINGS[possibleURI] === 'chemspiderValue' ? uri : null;
 
         var drugbankProvenance, chemspiderProvenance, chemblProvenance;
@@ -813,19 +825,20 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         ro5Violations = item.ro5_violations != null ? item.ro5_violations : null;
         rtb = item.rtb !== null ? item.rtb : null;
         smiles = item.smiles != null ? item.smiles : null;
-
-        $.each(item.exactMatch, function(i, match) {
-            var src = match[constants.IN_DATASET];
-            if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
-                drugbankData = match;
-            } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
-                chemspiderData = match;
-            } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
-                chemblData = match;
-            } else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
-                conceptWikiData = match;
-            }
-        });
+        if (Array.isArray(item.exactMatch)) {
+            item.exactMatch.forEach(function(match, i, allValues) {
+                var src = match[constants.IN_DATASET];
+                if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
+                    drugbankData = match;
+                } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemspiderValue') {
+                    chemspiderData = match;
+                } else if (constants.SRC_CLS_MAPPINGS[src] == 'chemblValue') {
+                    chemblData = match;
+                } else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
+                    conceptWikiData = match;
+                }
+            });
+        }
         if (drugbankData) {
             description = drugbankData.description != null ? drugbankData.description : description;
             biotransformationItem = drugbankData.biotransformation != null ? drugbankData.biotransformation : biotransformationItem;
@@ -953,18 +966,11 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
         var pChembl = item['pChembl'] ? item['pChembl'] : null;
 
         var compound_full_mwt_item = null;
-
-        //big bits
         var forMolecule = item[constants.FOR_MOLECULE];
         var chembleMoleculeLink = 'https://www.ebi.ac.uk/chembldb/compound/inspect/';
-        if (forMolecule != null) {
-            var chembl_compound_uri = forMolecule[constants.ABOUT];
-            var compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
-            chembleMoleculeLink += chembl_compound_uri.split('/').pop();
-            compound_full_mwt_item = chembleMoleculeLink;
-            var em = forMolecule["exactMatch"];
-        }
-
+	var chembl_compound_uri = null;
+	var compound_full_mwt = null;
+	var em = null;
         var cw_compound_uri = null,
             compound_pref_label = null,
             cw_src = null,
@@ -982,6 +988,14 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
             compound_inchi_item = null,
             compound_inchikey_item = null,
             compound_pref_label_item = null;
+
+	if (forMolecule != null) {
+            chembl_compound_uri = forMolecule[constants.ABOUT];
+            //compound_full_mwt = forMolecule['full_mwt'] ? forMolecule['full_mwt'] : null;
+            chembleMoleculeLink += chembl_compound_uri.split('/').pop();
+            //compound_full_mwt_item = chembleMoleculeLink;
+            em = forMolecule["exactMatch"];
+        }
         //during testing there have been cases where em is null
         var chemblMolecule = em != null ? em[constants.ABOUT] : null;
         if (em != null) {
@@ -998,10 +1012,12 @@ Openphacts.CompoundSearch.prototype.parseCompoundPharmacologyResponse = function
                     compound_inchi = match['inchi'];
                     compound_inchikey = match['inchikey'];
                     compound_smiles = match['smiles'];
+		    compound_full_mwt = match['molweight'];
                     var chemSpiderLink = 'http://www.chemspider.com/' + csid;
                     compound_smiles_item = chemSpiderLink;
                     compound_inchi_item = chemSpiderLink;
                     compound_inchikey_item = chemSpiderLink;
+		    compound_full_mwt_item = chemSpiderLink;
                     cs_src = match["inDataset"];
                 } else if (constants.SRC_CLS_MAPPINGS[src] == 'drugbankValue') {
                     drugbank_compound_uri = match[constants.ABOUT];
@@ -1661,7 +1677,7 @@ Openphacts.TargetSearch.prototype.targetTypes = function(lens, callback) {
  */
 Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
     var constants = new Openphacts.Constants();
-	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
+	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null, mass = null;
 	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var URI = response.primaryTopic[constants.ABOUT];
 	var id = URI.split("/").pop();
@@ -1746,7 +1762,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
-
+		    mass = uniprotData.mass ? uniprotData.mass : null;
 	            uniprotProvenance = {};
 	            uniprotLinkOut = uniprotURI;
 				uniprotProvenance['source'] = 'uniprot';
@@ -1758,6 +1774,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 	            uniprotProvenance['existence'] = uniprotLinkOut;
 	            uniprotProvenance['organism'] = uniprotLinkOut;
 	            uniprotProvenance['sequence'] = uniprotLinkOut;
+		    uniprotProvenance['mass'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
@@ -1782,6 +1799,7 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
 		'keywords': keywords,
 		'functionAnnotation': functionAnnotation,
 		'alternativeName': alternativeName,
+		'mass': mass,
 		'existence': existence,
 		'organism': organism,
 		'sequence': sequence,
@@ -1805,11 +1823,11 @@ Openphacts.TargetSearch.prototype.parseTargetResponse = function(response) {
  */
 Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) {
     var constants = new Openphacts.Constants();
-	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null;
-	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
 	var targets = [];
 	$.each(response.items, function(index, item) {
-	var URI = item[constants.ABOUT];
+	var drugbankData = null, chemblData = null, uniprotData = null, cellularLocation = null, molecularWeight = null, numberOfResidues = null, theoreticalPi = null, drugbankURI = null, functionAnnotation  =null, alternativeName = null, existence = null, organism = null, sequence = null, uniprotURI = null, URI = null, cwUri = null, mass = null;
+	var drugbankProvenance, chemblProvenance, uniprotProvenance, conceptwikiProvenance;
+		var URI = item[constants.ABOUT];
 	var id = URI.split("/").pop();
 	var keywords = [];
 	var classifiedWith = [];
@@ -1892,7 +1910,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 	            existence = uniprotData.existence ? uniprotData.existence : null;
 	            organism = uniprotData.organism ? uniprotData.organism : null;
 	            sequence = uniprotData.sequence ? uniprotData.sequence : null;
-
+		    mass = uniprotData.mass ? uniprotData.mass : null;
 	            uniprotProvenance = {};
 	            uniprotLinkOut = uniprotURI;
 				uniprotProvenance['source'] = 'uniprot';
@@ -1904,6 +1922,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 	            uniprotProvenance['existence'] = uniprotLinkOut;
 	            uniprotProvenance['organism'] = uniprotLinkOut;
 	            uniprotProvenance['sequence'] = uniprotLinkOut;
+		    uniprotProvenance['mass'] = uniprotLinkOut;
 			} else if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                   // if using a chembl id to search then the about would be a chembl id rather than the
                   // cw one which we want
@@ -1932,6 +1951,7 @@ Openphacts.TargetSearch.prototype.parseTargetBatchResponse = function(response) 
 		'organism': organism,
 		'sequence': sequence,
 		'classifiedWith': classifiedWith,
+		'mass': mass,
 		'seeAlso': seeAlso,
         'prefLabel': label,
         'chemblItems': chemblItems,
@@ -1949,7 +1969,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
     var constants = new Openphacts.Constants();
 	var records = [];
 
-	$.each(response.items, function(index, item) {
+	response.items.forEach(function(item, index, items) {
 
 		chemblProvenance = {};
 		chemblProvenance['source'] = 'chembl';
@@ -1976,7 +1996,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 
 		var cw_compound_uri = null, compound_pref_label = null, cw_src = null, cs_compound_uri = null, compound_inchi = null, compound_inchikey = null, compound_smiles = null, cs_src = null, drugbank_compound_uri = null, compound_drug_type = null, compound_generic_name = null, drugbank_src = null, csid = null, compound_pref_label_item = null, compound_inchi_item = null, compound_inchikey_item = null, compound_smiles_item = null, assay_description = null, assay_description_item = null, compound_ro5_violations = null;
 
-		$.each(em, function(index, match) {
+		em.forEach(function(match, index, all) {
           var src = match[constants.IN_DATASET];
           if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
               cw_compound_uri = match["_about"];
@@ -2070,7 +2090,18 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 		var activity_relation = item['activity_relation'] ? item['activity_relation'] : null;
 		activity_relation_item = chemblActivityLink;
 		var activity_pubmed_id = item['pmid'] ? item['pmid'] : null;
+		var activity_comment = item['activityComment'] ? item['activityComment'] : null;
         var pChembl = item.pChembl;
+	var documents = [];
+	if (item.hasDocument) {
+            if (Array.isArray(item.hasDocument)) {
+                item.hasDocument.forEach(function(document, index, documents) {
+                    documents.push(document);
+		});
+	    } else {
+                documents.push(item.hasDocument);
+	    }
+	}
 		records.push({ //for compound
 			'compoundInchikey': compound_inchikey,
 			//compoundDrugType: compound_drug_type,
@@ -2109,6 +2140,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			'activityStandardValue': activity_standard_value,
 			'activityActivityType': activity_activity_type,
 			'activityPubmedId': activity_pubmed_id,
+			'activityComment': activity_comment,
 
 			'compoundFullMwtSrc': chembl_src,
 			'compoundPrefLabelSrc': cw_src,
@@ -2139,7 +2171,8 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
 			'targets': targets,
             'pChembl': pChembl,
             'compoundRO5Violations': compound_ro5_violations,
-            'chemblProvenance': chemblProvenance
+            'chemblProvenance': chemblProvenance,
+	    'chemblDOIs' : documents
 		});
 	});
 	return records;
@@ -2795,13 +2828,13 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyCount = function(res
 Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function(response) {
     var constants = new Openphacts.Constants();
     var records = [];
-    $.each(response.items, function(i, item) {
+    response.items.forEach(function(item, i, all) {
         var targets = [];
         var chemblActivityURI = null,
             pmid = null,
-            relation = null,
-            standardUnits = null,
-            standardValue = null,
+            //relation = null,
+            //standardUnits = null,
+            //standardValue = null,
             activityType = null,
             inDataset = null,
             fullMWT = null,
@@ -2823,8 +2856,6 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             publishedType = null,
             publishedUnits = null,
             publishedValue = null,
-            standardUnits = null,
-            standardValue = null,
             pChembl = null,
             activityType = null,
             activityRelation = null,
@@ -2842,15 +2873,15 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             activityUnits = units.prefLabel;
         }
 
-        relation = item.relation ? item.relation : null;
-        standardUnits = item.standardUnits;
-        standardValue = item.standardValue ? item.standardValue : null;
+        //relation = item.relation ? item.relation : null;
+        //standardUnits = item.standardUnits;
+        //standardValue = item.standardValue ? item.standardValue : null;
         activityType = item.activity_type;
         inDataset = item[constants.IN_DATASET];
         forMolecule = item[constants.FOR_MOLECULE];
         chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
         pChembl = item.pChembl ? item.pChembl : null;
-        $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
+        forMolecule[constants.EXACT_MATCH].forEach(function(match, j, all) {
             var src = match[constants.IN_DATASET];
             if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                 cwURI = match[constants.ABOUT];
@@ -2880,16 +2911,16 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
         });
         var targets = item.hasAssay.hasTarget;
         var assayTargets = [];
-        if ($.isArray(targets)) {
-            $.each(targets, function(index, target) {
+        if (Array.isArray(targets)) {
+            targets.forEach(function(target, index, all) {
                 var targetURI = target[constants.ABOUT];
                 var targetTitle = target.title;
                 var targetOrganismNames = target.targetOrganismName;
                 var targetComponents = target.hasTargetComponent;
                 var assayTargetComponents = [];
                 if (targetComponents) {
-                    if ($.isArray(targetComponents)) {
-                        $.each(targetComponents, function(j, targetComponent) {
+                    if (Array.isArray(targetComponents)) {
+                        targetComponents.forEach(function(targetComponent, j, all) {
                             var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
                             var targetComponentURI = targetComponent[constants.EXACT_MATCH];
                             assayTargetComponents.push({
@@ -2924,8 +2955,8 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             var targetComponents = targets.hasTargetComponent;
             var assayTargetComponents = [];
             if (targetComponents) {
-                if ($.isArray(targetComponents)) {
-                    $.each(targetComponents, function(j, targetComponent) {
+                if (Array.isArray(targetComponents)) {
+                    targetComponents.forEach(function(targetComponent, j, all) {
                         var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
                         var targetComponentURI = targetComponent[constants.ABOUT];
                         assayTargetComponents.push({
@@ -2969,13 +3000,25 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
         publishedUnits = item.publishedUnits ? item.publishedUnits : null;
         publishedValue = item.publishedValue ? item.publishedValue : null;
         standardUnits = item.standardUnits ? item.standardUnits : null;
-        records.push({
+	var activity_comment = item['activityComment'] ? item['activityComment'] : null;
+	var documents = [];
+	if (item.hasDocument) {
+            if (Array.isArray(item.hasDocument)) {
+                item.hasDocument.forEach(function(document, index, documents) {
+                    documents.push(document);
+		});
+	    } else {
+                documents.push(item.hasDocument);
+	    }
+	}
+
+	records.push({
             'targets': assayTargets,
             'chemblActivityURI': chemblActivityURI,
             'pmid': pmid,
-            'relation': relation,
-            'standardUnits': standardUnits,
-            'standardValue': standardValue,
+            //'relation': relation,
+            //'standardUnits': standardUnits,
+            //'standardValue': standardValue,
             'activityType': activityType,
             'activityRelation': activityRelation,
             'activityUnits': activityUnits,
@@ -3004,7 +3047,9 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
             'conceptWikiProvenance': conceptwikiProvenance,
             'chemspiderProvenance': chemspiderProvenance,
             'assayTargetProvenance': assayTargetProvenance,
-            'assayProvenance': assayProvenance
+            'assayProvenance': assayProvenance,
+	    'chemblDOIs': documents,
+	    'activityComment': activity_comment
         });
     });
     return records;
@@ -3018,14 +3063,14 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyCount = function(r
 Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = function(response) {
     var constants = new Openphacts.Constants();
     var records = [];
-    $.each(response.items, function(i, item) {
+    response.items.forEach(function(item, i, all) {
         var targets = [];
         var chemblActivityURI = null,
             qudtURI = null,
             pmid = null,
-            relation = null,
-            standardUnits = null,
-            standardValue = null,
+            //relation = null,
+            //standardUnits = null,
+            //standardValue = null,
             activityType = null,
             inDataset = null,
             fullMWT = null,
@@ -3047,8 +3092,6 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             publishedType = null,
             publishedUnits = null,
             publishedValue = null,
-            standardUnits = null,
-            standardValue = null,
             pChembl = null,
             activityType = null,
             activityRelation = null,
@@ -3066,15 +3109,15 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             activityUnits = units.prefLabel;
         }
         qudtURI = item.qudt_uri ? item.qudt_uri : null;
-        relation = item.relation ? item.relation : null;
-        standardUnits = item.standardUnits;
-        standardValue = item.standardValue ? item.standardValue : null;
+        //relation = item.relation ? item.relation : null;
+        //standardUnits = item.standardUnits;
+        //standardValue = item.standardValue ? item.standardValue : null;
         activityType = item.activity_type;
         inDataset = item[constants.IN_DATASET];
         forMolecule = item[constants.FOR_MOLECULE];
         chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
         pChembl = item.pChembl ? item.pChembl : null;
-        $.each(forMolecule[constants.EXACT_MATCH], function(j, match) {
+        forMolecule[constants.EXACT_MATCH].forEach(function(match, j, all) {
             var src = match[constants.IN_DATASET];
             if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                 cwURI = match[constants.ABOUT];
@@ -3104,16 +3147,16 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
         });
         var targets = item.hasAssay.hasTarget;
         var assayTargets = [];
-        if ($.isArray(targets)) {
-            $.each(targets, function(index, target) {
+        if (Array.isArray(targets)) {
+            targets.forEach(function(target, index, all) {
                 var targetURI = target[constants.ABOUT];
                 var targetTitle = target.title;
                 var targetOrganismNames = target.targetOrganismName;
                 var targetComponents = target.hasTargetComponent;
                 var assayTargetComponents = [];
                 if (targetComponents) {
-                    if ($.isArray(targetComponents)) {
-                        $.each(targetComponents, function(j, targetComponent) {
+                    if (Array.isArray(targetComponents)) {
+                        targetComponents.forEach(function(targetComponent, j, all) {
                             var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
                             var targetComponentURI = targetComponent[constants.EXACT_MATCH];
                             assayTargetComponents.push({
@@ -3148,8 +3191,8 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             var targetComponents = targets.hasTargetComponent;
             var assayTargetComponents = [];
             if (targetComponents) {
-                if ($.isArray(targetComponents)) {
-                    $.each(targetComponents, function(j, targetComponent) {
+                if (Array.isArray(targetComponents)) {
+                    targetComponents.forEach(function(targetComponent, j, all) {
                         var targetComponentLabel = targetComponent[constants.EXACT_MATCH].prefLabel;
                         var targetComponentURI = targetComponent[constants.ABOUT];
                         assayTargetComponents.push({
@@ -3193,14 +3236,26 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
         publishedUnits = item.publishedUnits ? item.publishedUnits : null;
         publishedValue = item.publishedValue ? item.publishedValue : null;
         standardUnits = item.standardUnits ? item.standardUnits : null;
-        records.push({
+	var activity_comment = item['activityComment'] ? item['activityComment'] : null;
+	var documents = [];
+	if (item.hasDocument) {
+            if (Array.isArray(item.hasDocument)) {
+                item.hasDocument.forEach(function(document, index, documents) {
+                    documents.push(document);
+		});
+	    } else {
+                documents.push(item.hasDocument);
+	    }
+	}
+
+	records.push({
             'qudtURI': qudtURI,
             'targets': assayTargets,
             'chemblActivityURI': chemblActivityURI,
             'pmid': pmid,
-            'relation': relation,
-            'standardUnits': standardUnits,
-            'standardValue': standardValue,
+            //'relation': relation,
+            //'standardUnits': standardUnits,
+            //'standardValue': standardValue,
             'activityType': activityType,
             'activityRelation': activityRelation,
             'activityUnits': activityUnits,
@@ -3229,7 +3284,9 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             'conceptWikiProvenance': conceptwikiProvenance,
             'chemspiderProvenance': chemspiderProvenance,
             'assayTargetProvenance': assayTargetProvenance,
-            'assayProvenance': assayProvenance
+            'assayProvenance': assayProvenance,
+	    'chemblDOIs': documents,
+	    'activityComment': activity_comment
         });
     });
     return records;
@@ -4632,7 +4689,7 @@ Openphacts.Version = function Version() {
 
 Openphacts.Version.prototype.information = function() {
 	return {
-               "version": "3.0.0", 
+               "version": "4.1.0", 
                "author": "Ian Dunlop",
 	       "ORCID": "http://orcid.org/0000-0001-7066-3350",
                "title": "OPS.js",
@@ -4641,7 +4698,7 @@ Openphacts.Version.prototype.information = function() {
                "organization": "School of Computer Science",
                "address": "University of Manchester, UK",
                "year": "2014",
-               "month": "November",
+               "month": "December",
                "url": "http://github.com/openphacts/ops.js",
                "LDA-version": "1.4"
            }; 

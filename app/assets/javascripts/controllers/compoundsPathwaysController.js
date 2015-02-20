@@ -1,6 +1,6 @@
 App.CompoundsPathwaysController = Ember.ObjectController.extend({
 
-    needs: ['application'],
+    needs: ['application', 'flash'],
 
     queryParams: ['uri'],
 
@@ -27,9 +27,9 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
     actions: {
         fetchMore: function() {
             if (this.get('model.pathways.length') < this.totalCount && this.totalCount > 0 && this.get('controllers.application').get('fetching') === false) {
-                me.get('controllers.application').set('fetching', true);
                 var me = this;
-                var thisCompound = this.get('content');
+                me.get('controllers.application').set('fetching', true);
+		var thisCompound = this.get('content');
                 var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
                 var pathwaysByCompoundCallback = function(success, status, response) {
                     if (success && response) {

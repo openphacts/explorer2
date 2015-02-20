@@ -1,548 +1,601 @@
 App.CompoundsStructureController = Ember.ObjectController.extend({
 
-  needs: ['application', 'flash'],
+    needs: ['application', 'flash'],
 
-  infoHide: false,
+    infoHide: false,
 
-  showProvenance: false,
+    showProvenance: false,
 
-  currentStructure: null,
+    currentStructure: null,
 
-  searchOptionsVisible: function() {
-    return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
-  }.property('structureSearchType'),
-  //structure search type radio button selection
-  isSelected: 1,
+    searchOptionsVisible: function() {
+        return this.get('structureSearchType') === 'exact' || this.get('structureSearchType') === 'similarity';
+    }.property('structureSearchType'),
+    //structure search type radio button selection
+    isSelected: 1,
 
-  isExactSearch:  function() {
-    return this.get('structureSearchType') === 'exact';
-  }.property('structureSearchType'),
+    isExactSearch: function() {
+        return this.get('structureSearchType') === 'exact';
+    }.property('structureSearchType'),
 
-  isSubstructureSearch: function() {
-    return this.get('structureSearchType') === 'substructure';
-  }.property('structureSearchType'),
+    isSubstructureSearch: function() {
+        return this.get('structureSearchType') === 'substructure';
+    }.property('structureSearchType'),
 
-  isSimilaritySearch: function() {
-    return this.get('structureSearchType') === 'similarity';
-  }.property('structureSearchType'),
+    isSimilaritySearch: function() {
+        return this.get('structureSearchType') === 'similarity';
+    }.property('structureSearchType'),
 
-  isCurrentSubstructureSearch: function() {
-    return this.get('currentStructure') === 'substructure';
-  }.property('currentStructure'),
+    isCurrentSubstructureSearch: function() {
+        return this.get('currentStructure') === 'substructure';
+    }.property('currentStructure'),
 
-  isCurrentSimilaritySearch: function() {
-    return this.get('currentStructure') === 'similarity';
-  }.property('currentStructure'),
+    isCurrentSimilaritySearch: function() {
+        return this.get('currentStructure') === 'similarity';
+    }.property('currentStructure'),
 
-  exactMatch: true, 
+    exactMatch: true,
 
-  substructureMatch: false,
+    substructureMatch: false,
 
-  similarityMatch: false,
+    similarityMatch: false,
 
-  smilesValue: null,
+    smilesValue: null,
 
-  //placeholder for smiles
-  origSmilesValue: null,
+    //placeholder for smiles
+    origSmilesValue: null,
 
-  searchTypes: [{type: 'Exact', value: 'exact'}, {type: 'Sub-structure', value: 'substructure'}, {type: 'Similarity', value: 'similarity'}],
+    searchTypes: [{
+        type: 'Exact',
+        value: 'exact'
+    }, {
+        type: 'Sub-structure',
+        value: 'substructure'
+    }, {
+        type: 'Similarity',
+        value: 'similarity'
+    }],
 
-  thresholdTypes: [{type: 'Tanimoto', id: 0}, {type: 'Tversky', id: 1}, {type: 'Euclidian', id: 2}],
+    thresholdTypes: [{
+        type: 'Tanimoto',
+        id: 0
+    }, {
+        type: 'Tversky',
+        id: 1
+    }, {
+        type: 'Euclidian',
+        id: 2
+    }],
 
-  matchTypes: [{type: 'exact', id: 0}, {type: 'All Tautomers', id: 1}, {type: 'Same skeleton including H', id: 2}, {type: 'Same skeleton excluding H', id: 3}, {type: 'Isomers', id: 4}],
+    matchTypes: [{
+        type: 'exact',
+        id: 0
+    }, {
+        type: 'All Tautomers',
+        id: 1
+    }, {
+        type: 'Same skeleton including H',
+        id: 2
+    }, {
+        type: 'Same skeleton excluding H',
+        id: 3
+    }, {
+        type: 'Isomers',
+        id: 4
+    }],
 
-  selectedMatchType: 0,
+    selectedMatchType: 0,
 
-  selectedThresholdType: 0,
+    selectedThresholdType: 0,
 
-  structureSearchType: "exact",
+    structureSearchType: "exact",
 
-  //placeholder for the initial search type the route was entered with
-  initStructureSearchType: null,
+    //placeholder for the initial search type the route was entered with
+    initStructureSearchType: null,
 
-  queryParams: ['smiles', 'type', 'thresholdtype', 'match', 'threshold', 'records'],
+    queryParams: ['smiles', 'type', 'thresholdtype', 'match', 'threshold', 'records'],
 
-  smiles: null,
+    smiles: null,
 
-  thresholdtype: null,
+    thresholdtype: null,
 
-  match: null,
+    match: null,
 
-  threshold: null,
+    threshold: null,
 
-  records: null,
+    records: null,
 
-  thresholdPercent: 0.90,
+    thresholdPercent: 0.90,
 
-  maxRecords: 100,
+    maxRecords: 100,
 
-  filteredCompounds: [],
+    filteredCompounds: [],
 
-  uri: null,
+    uri: null,
 
-  type: null,
+    type: null,
 
-  page: null,
+    page: null,
 
-  totalCount: null,
+    totalCount: null,
 
-  sortedHeader: null,
+    sortedHeader: null,
 
-  currentHeader: null,
+    currentHeader: null,
 
-  mwSelectedLowerValue: null,
+    mwSelectedLowerValue: null,
 
-  mwSelectedHigherValue: null,
+    mwSelectedHigherValue: null,
 
-  mwSelectedFreebaseLowerValue: null,
+    mwSelectedFreebaseLowerValue: null,
 
-  mwSelectedFreebaseHigherValue: null,
+    mwSelectedFreebaseHigherValue: null,
 
-  hBondAcceptorsSelectedLowerValue: null,
+    hBondAcceptorsSelectedLowerValue: null,
 
-  hBondAcceptorsSelectedHigherValue: null,
+    hBondAcceptorsSelectedHigherValue: null,
 
-  hBondDonorsSelectedLowerValue: null,
+    hBondDonorsSelectedLowerValue: null,
 
-  hBondDonorsSelectedHigherValue: null,
+    hBondDonorsSelectedHigherValue: null,
 
-  logPSelectedLowerValue: null,
+    logPSelectedLowerValue: null,
 
-  logPSelectedHigherValue: null,
+    logPSelectedHigherValue: null,
 
-  polarSurfaceAreaSelectedLowerValue: null,
+    polarSurfaceAreaSelectedLowerValue: null,
 
-  polarSurfaceAreaSelectedHigherValue: null,
+    polarSurfaceAreaSelectedHigherValue: null,
 
-  ro5SelectedLowerValue: null,
+    ro5SelectedLowerValue: null,
 
-  ro5SelectedHigherValue: null,
+    ro5SelectedHigherValue: null,
 
-  rbSelectedLowerValue: null,
+    rbSelectedLowerValue: null,
 
-  rbSelectedHigherValue: null,
+    rbSelectedHigherValue: null,
 
-  relSelectedLowerValue: null,
+    relSelectedLowerValue: null,
 
-  relSelectedHigherValue: null,
+    relSelectedHigherValue: null,
 
-  getMolfile: function() {
-    return this.get('controllers.application').get('molfile');
-  },
-
-  currentCount: function() {
-    return this.get('filteredCompounds.length');
-  }.property('filteredCompounds.length'),
-
-  structure: (function() {
-    return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-      sortProperties: null,
-      sortAscending: false,
-      content: this.get('filteredCompounds')
-    });
-  }).property('filteredCompounds'),
-
-  notEmpty: function() {
-    return this.get('model.length') > 0;
-  }.property('model.length'),
-
-  exactSearch: function() {
-    if (this.get('initStructureSearchType') === "exact") {
-	  this.set('exactMatch', true);
-	  return true;
-    } else {
-	  this.set('exactMatch', false);
-	  return false;
-    }
-  }.property('structureSearchType'),
-
-  subSearch: function() {
-    if (this.get('initStructureSearchType') === "substructure") {
-	  this.set('substructureMatch', true);
-	  return true;
-    } else {
-	  this.set('substructureMatch', false);
-	  return false;
-    }
-
-  }.property('structureSearchType'),
-
-  simSearch: function() {
-    if (this.get('initStructureSearchType') === "similarity") {
-	  this.set('similarityMatch', true);
-	  return true;
-    } else {
-	  this.set('similarityMatch', false);
-	  return false;
-    }
-  }.property('structureSearchType'),
-
-  prefLabelSortASC: function() {
-	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
-  }.property('sortedHeader'),
-
-  prefLabelSortDESC: function() {
-	return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  descriptionSortASC: function() {
-	return this.get('currentHeader') === "description" && this.get('sortedHeader') === "description";
-  }.property('sortedHeader'),
-
-  descriptionSortDESC: function() {
-	return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  biotransSortASC: function() {
-	return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === "biotransformationItem";
-  }.property('sortedHeader'),
-
-  biotransSortDESC: function() {
-	return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  toxicitySortASC: function() {
-	return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === "toxicity";
-  }.property('sortedHeader'),
-
-  toxicitySortDESC: function() {
-	return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  proteinBindingSortASC: function() {
-	return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === "proteinBinding";
-  }.property('sortedHeader'),
-
-  proteinBindingSortDESC: function() {
-	return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  smilesSortASC: function() {
-	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === "smiles";
-  }.property('sortedHeader'),
-
-  smilesSortDESC: function() {
-	return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  chemblURISortASC: function() {
-	return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === "chemblURI";
-  }.property('sortedHeader'),
-
-  chemblURISortDESC: function() {
-	return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  fullMWTSortASC: function() {
-	return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === "fullMWT";
-  }.property('sortedHeader'),
-
-  fullMWTSortDESC: function() {
-	return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  hbaSortASC: function() {
-	return this.get('currentHeader') === "hba" && this.get('sortedHeader') === "hba";
-  }.property('sortedHeader'),
-
-  hbaSortDESC: function() {
-	return this.get('currentHeader') === "hba" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  hbdSortASC: function() {
-	return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === "hbd";
-  }.property('sortedHeader'),
-
-  hbdSortDESC: function() {
-	return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  inchiSortASC: function() {
-	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === "inchi";
-  }.property('sortedHeader'),
-
-  inchiSortDESC: function() {
-	return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  inchiKeySortASC: function() {
-	return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === "inchiKey";
-  }.property('sortedHeader'),
-
-  inchiKeySortDESC: function() {
-	return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  logpSortASC: function() {
-	return this.get('currentHeader') === "logp" && this.get('sortedHeader') === "logp";
-  }.property('sortedHeader'),
-
-  logpSortDESC: function() {
-	return this.get('currentHeader') === "logp" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  molformSortASC: function() {
-	return this.get('currentHeader') === "molform" && this.get('sortedHeader') === "molform";
-  }.property('sortedHeader'),
-
-  molformSortDESC: function() {
-	return this.get('currentHeader') === "molform" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  mwFreebaseSortASC: function() {
-	return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === "mwFreebase";
-  }.property('sortedHeader'),
-
-  mwFreebaseSortDESC: function() {
-	return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  psaSortASC: function() {
-	return this.get('currentHeader') === "psa" && this.get('sortedHeader') === "psa";
-  }.property('sortedHeader'),
-
-  psaSortDESC: function() {
-	return this.get('currentHeader') === "psa" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  ro5ViolationsSortASC: function() {
-	return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === "ro5Violations";
-  }.property('sortedHeader'),
-
-  ro5ViolationsSortDESC: function() {
-	return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  rtbSortASC: function() {
-	return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === "rtb";
-  }.property('sortedHeader'),
-
-  rtbSortDESC: function() {
-	return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  relevanceSortASC: function() {
-	return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === "relevance";
-  }.property('sortedHeader'),
-
-  relevanceSortDESC: function() {
-	return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === null;
-  }.property('sortedHeader'),
-
-  actions: {
-
-     fetchMore: function() {
-       console.log('fetch more structures');
-     },
-
-     sortHeader: function(header) {
-       var sortHeader=[];
-       sortHeader.push(header);
-       if (this.get('currentHeader') === header && this.get('sortedHeader') === header) {
-         this.get('structure').set('sortProperties', sortHeader);
-         this.get('structure').set('sortAscending', false);
-         //descending
-         //reset so next time for same one will be ascending
-         this.set('sortedHeader', null);
-       } else {
-         //ascending
-         //next time will be descending
-         this.get('structure').set('sortProperties', sortHeader);
-         this.get('structure').set('sortAscending', true);
-	     this.set('sortedHeader', header);
-	     this.set('currentHeader', header);
-       }
+    getMolfile: function() {
+        return this.get('controllers.application').get('molfile');
     },
 
-    tsvDownload: function() {
-    var me = this;
-    var uris = [];
-    $.each(this.get('filteredCompounds'), function(index, compound) {
-        uris.push(compound.get('URI'));
-    });
-    
-    var filtersString = "";
-    if (this.structureSearchType === "similarity") {
-        filtersString += "Similarity structure search";
-        switch(this.selectedThresholdType)
-        {
-        case 0:
-          filtersString += ": threshold type=Tanimoto";
-          break;
-        case 1:
-          filtersString += ": threshold type=Tversky";
-          break;
-        case 2:
-          filtersString += ": threshold type=Euclidian";
-          break;
+    currentCount: function() {
+        return this.get('filteredCompounds.length');
+    }.property('filteredCompounds.length'),
+
+    structure: (function() {
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: null,
+            sortAscending: false,
+            content: this.get('filteredCompounds')
+        });
+    }).property('filteredCompounds'),
+
+    notEmpty: function() {
+        return this.get('model.length') > 0;
+    }.property('model.length'),
+
+    exactSearch: function() {
+        if (this.get('initStructureSearchType') === "exact") {
+            this.set('exactMatch', true);
+            return true;
+        } else {
+            this.set('exactMatch', false);
+            return false;
         }
-        filtersString += ": threshold=" + this.thresholdPercent;
-        //filtersString += ": max records=" + this.maxRecords;
-    } else if (this.structureSearchType === "substructure") {
-        filtersString += "Sub-structure search";
-        //filtersString += ": max records=" + this.maxRecords;
-    } else {
-        filtersString += "Exact structure search";
+    }.property('structureSearchType'),
+
+    subSearch: function() {
+        if (this.get('initStructureSearchType') === "substructure") {
+            this.set('substructureMatch', true);
+            return true;
+        } else {
+            this.set('substructureMatch', false);
+            return false;
+        }
+
+    }.property('structureSearchType'),
+
+    simSearch: function() {
+        if (this.get('initStructureSearchType') === "similarity") {
+            this.set('similarityMatch', true);
+            return true;
+        } else {
+            this.set('similarityMatch', false);
+            return false;
+        }
+    }.property('structureSearchType'),
+
+    prefLabelSortASC: function() {
+        return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
+    }.property('sortedHeader'),
+
+    prefLabelSortDESC: function() {
+        return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    descriptionSortASC: function() {
+        return this.get('currentHeader') === "description" && this.get('sortedHeader') === "description";
+    }.property('sortedHeader'),
+
+    descriptionSortDESC: function() {
+        return this.get('currentHeader') === "description" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    biotransSortASC: function() {
+        return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === "biotransformationItem";
+    }.property('sortedHeader'),
+
+    biotransSortDESC: function() {
+        return this.get('currentHeader') === "biotransformationItem" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    toxicitySortASC: function() {
+        return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === "toxicity";
+    }.property('sortedHeader'),
+
+    toxicitySortDESC: function() {
+        return this.get('currentHeader') === "toxicity" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    proteinBindingSortASC: function() {
+        return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === "proteinBinding";
+    }.property('sortedHeader'),
+
+    proteinBindingSortDESC: function() {
+        return this.get('currentHeader') === "proteinBinding" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    smilesSortASC: function() {
+        return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === "smiles";
+    }.property('sortedHeader'),
+
+    smilesSortDESC: function() {
+        return this.get('currentHeader') === "smiles" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    chemblURISortASC: function() {
+        return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === "chemblURI";
+    }.property('sortedHeader'),
+
+    chemblURISortDESC: function() {
+        return this.get('currentHeader') === "chemblURI" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    fullMWTSortASC: function() {
+        return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === "fullMWT";
+    }.property('sortedHeader'),
+
+    fullMWTSortDESC: function() {
+        return this.get('currentHeader') === "fullMWT" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    hbaSortASC: function() {
+        return this.get('currentHeader') === "hba" && this.get('sortedHeader') === "hba";
+    }.property('sortedHeader'),
+
+    hbaSortDESC: function() {
+        return this.get('currentHeader') === "hba" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    hbdSortASC: function() {
+        return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === "hbd";
+    }.property('sortedHeader'),
+
+    hbdSortDESC: function() {
+        return this.get('currentHeader') === "hbd" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    inchiSortASC: function() {
+        return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === "inchi";
+    }.property('sortedHeader'),
+
+    inchiSortDESC: function() {
+        return this.get('currentHeader') === "inchi" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    inchiKeySortASC: function() {
+        return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === "inchiKey";
+    }.property('sortedHeader'),
+
+    inchiKeySortDESC: function() {
+        return this.get('currentHeader') === "inchiKey" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    logpSortASC: function() {
+        return this.get('currentHeader') === "logp" && this.get('sortedHeader') === "logp";
+    }.property('sortedHeader'),
+
+    logpSortDESC: function() {
+        return this.get('currentHeader') === "logp" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    molformSortASC: function() {
+        return this.get('currentHeader') === "molform" && this.get('sortedHeader') === "molform";
+    }.property('sortedHeader'),
+
+    molformSortDESC: function() {
+        return this.get('currentHeader') === "molform" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    mwFreebaseSortASC: function() {
+        return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === "mwFreebase";
+    }.property('sortedHeader'),
+
+    mwFreebaseSortDESC: function() {
+        return this.get('currentHeader') === "mwFreebase" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    psaSortASC: function() {
+        return this.get('currentHeader') === "psa" && this.get('sortedHeader') === "psa";
+    }.property('sortedHeader'),
+
+    psaSortDESC: function() {
+        return this.get('currentHeader') === "psa" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    ro5ViolationsSortASC: function() {
+        return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === "ro5Violations";
+    }.property('sortedHeader'),
+
+    ro5ViolationsSortDESC: function() {
+        return this.get('currentHeader') === "ro5Violations" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    rtbSortASC: function() {
+        return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === "rtb";
+    }.property('sortedHeader'),
+
+    rtbSortDESC: function() {
+        return this.get('currentHeader') === "rtb" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    relevanceSortASC: function() {
+        return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === "relevance";
+    }.property('sortedHeader'),
+
+    relevanceSortDESC: function() {
+        return this.get('currentHeader') === "relevance" && this.get('sortedHeader') === null;
+    }.property('sortedHeader'),
+
+    actions: {
+
+        fetchMore: function() {
+            console.log('fetch more structures');
+        },
+
+        sortHeader: function(header) {
+            var sortHeader = [];
+            sortHeader.push(header);
+            if (this.get('currentHeader') === header && this.get('sortedHeader') === header) {
+                this.get('structure').set('sortProperties', sortHeader);
+                this.get('structure').set('sortAscending', false);
+                //descending
+                //reset so next time for same one will be ascending
+                this.set('sortedHeader', null);
+            } else {
+                //ascending
+                //next time will be descending
+                this.get('structure').set('sortProperties', sortHeader);
+                this.get('structure').set('sortAscending', true);
+                this.set('sortedHeader', header);
+                this.set('currentHeader', header);
+            }
+        },
+
+        tsvDownload: function() {
+            var me = this;
+            var uris = [];
+            $.each(this.get('filteredCompounds'), function(index, compound) {
+                uris.push(compound.get('URI'));
+            });
+
+            var filtersString = "";
+            if (this.structureSearchType === "similarity") {
+                filtersString += "Similarity structure search";
+                switch (this.selectedThresholdType) {
+                    case 0:
+                        filtersString += ": threshold type=Tanimoto";
+                        break;
+                    case 1:
+                        filtersString += ": threshold type=Tversky";
+                        break;
+                    case 2:
+                        filtersString += ": threshold type=Euclidian";
+                        break;
+                }
+                filtersString += ": threshold=" + this.thresholdPercent;
+                //filtersString += ": max records=" + this.maxRecords;
+            } else if (this.structureSearchType === "substructure") {
+                filtersString += "Sub-structure search";
+                //filtersString += ": max records=" + this.maxRecords;
+            } else {
+                filtersString += "Exact structure search";
+            }
+            if (!!window.Worker) {
+                var requestParams = {
+                    // Not really a uri but is just used as part of the id when saving the file so smiles is fine to use here
+                    uri: this.get('smilesValue'),
+                    uris: uris,
+                    total_count: me.get('filteredCompounds').length,
+                    request_type: 'structure'
+                };
+                me.get('controllers.application').addJob(requestParams, this.get('smilesValue'), filtersString);
+            } else {
+                var tsvCreateRequest = $.ajax({
+                    url: cs_download_url,
+                    dataType: 'json',
+                    cache: true,
+                    // send as post because it can be a really long query string
+                    type: "POST",
+                    data: {
+                        _format: "json",
+                        uris: uris,
+                        total: me.get('filteredCompounds').length
+                    },
+                    success: function(response, status, request) {
+                        console.log('tsv create request success');
+                        me.get('controllers.application').addJob({
+                            "jobID": response.uuid
+                        }, me.get('smilesValue'), filtersString);
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'notice',
+                            message: 'Creating TSV file for download. You will be alerted when ready.'
+                        }));
+                    },
+                    error: function(request, status, error) {
+                        console.log('tsv create request error');
+                        me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+                            type: 'error',
+                            message: 'Could not create TSV file, please contact support quoting error: ' + error
+                        }));
+                    }
+                });
+            }
+        },
+
+        applyFilters: function() {
+            console.log('compound structure filters');
+            var me = this;
+            me.get('filteredCompounds').clear();
+            $.each(me.get('content'), function(index, compound) {
+                var mwFilter = false;
+                var mwFreebaseFilter = false;
+                var hbaFilter = false;
+                var hbdFilter = false;
+                var logpFilter = false;
+                var ro5Filter = false;
+                var psaFilter = false;
+                var rtbFilter = false;
+                var relFilter = false;
+                if (me.get('mwSelectedLowerValue') != "" && me.get('mwSelectedHigherValue') != "" && me.get('mwSelectedLowerValue') != null && me.get('mwSelectedHigherValue') != null && Number(me.get('mwSelectedLowerValue')) <= Number(me.get('mwSelectedHigherValue'))) {
+                    if (Number(compound.get('fullMWT')) >= Number(me.get('mwSelectedLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwSelectedHigherValue'))) {
+                        // compound is within the params so we add it 
+                        mwFilter = true;
+                    }
+                } else {
+                    // this filter is valid since we are not checking it so we would add the compound regardless
+                    mwFilter = true;
+                }
+                if (me.get('mwFreebaseSelectedLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseSelectedLowerValue') != null && me.get('mwFreebaseSelectedHigherValue') != null && Number(me.get('mwFreebaseSelectedLowerValue')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
+                    if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseSelectedLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
+                        mwFreebaseFilter = true;
+                    }
+                } else {
+                    mwFreebaseFilter = true;
+                }
+                if (me.get('hBondAcceptorsSelectedLowerValue') != "" && me.get('hBondAcceptorsSelectedHigherValue') != "" && me.get('hBondAcceptorsSelectedLowerValue') != null && me.get('hBondAcceptorsSelectedHigherValue') != null && Number(me.get('hBondAcceptorsSelectedLowerValue')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
+                    if (Number(compound.get('hba')) >= Number(me.get('hBondAcceptorsSelectedLowerValue')) && Number(compound.get('hba')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
+                        hbaFilter = true;
+                    }
+                } else {
+                    hbaFilter = true;
+                }
+                if (me.get('hBondDonorsSelectedLowerValue') != "" && me.get('hBondDonorsSelectedHigherValue') != "" && me.get('hBondDonorsSelectedLowerValue') != null && me.get('hBondDonorsSelectedHigherValue') != null && Number(me.get('hBondDonorsSelectedLowerValue')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
+                    if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsSelectedLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
+                        hbdFilter = true;
+                    }
+                } else {
+                    hbdFilter = true;
+                }
+                if (me.get('logPSelectedLowerValue') != "" && me.get('logPSelectedHigherValue') != "" && me.get('logPSelectedLowerValue') != null && me.get('logPSelectedHigherValue') != null && Number(me.get('logPSelectedLowerValue')) <= Number(me.get('logPSelectedHigherValue'))) {
+                    if (Number(compound.get('logp')) >= Number(me.get('logPSelectedLowerValue')) && Number(compound.get('logp')) <= Number(me.get('logPSelectedHigherValue'))) {
+                        logpFilter = true;
+                    }
+                } else {
+                    logpFilter = true;
+                }
+                if (me.get('ro5SelectedLowerValue') != "" && me.get('ro5SelectedHigherValue') != "" && me.get('ro5SelectedLowerValue') != null && me.get('ro5SelectedHigherValue') != null && Number(me.get('ro5SelectedLowerValue')) <= Number(me.get('ro5SelectedHigherValue'))) {
+                    if (Number(compound.get('ro5Violations')) >= Number(me.get('ro5SelectedLowerValue')) && Number(compound.get('ro5Violations')) <= Number(me.get('ro5SelectedHigherValue'))) {
+                        ro5Filter = true;
+                    }
+                } else {
+                    ro5Filter = true;
+                }
+                if (me.get('polarSurfaceAreaSelectedLowerValue') != "" && me.get('polarSurfaceAreaSelectedHigherValue') != "" && me.get('polarSurfaceAreaSelectedLowerValue') != null && me.get('polarSurfaceAreaSelectedHigherValue') != null && Number(me.get('polarSurfaceAreaSelectedLowerValue')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
+                    if (Number(compound.get('psa')) >= Number(me.get('polarSurfaceAreaSelectedLowerValue')) && Number(compound.get('psa')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
+                        psaFilter = true;
+                    }
+                } else {
+                    psaFilter = true;
+                }
+                if (me.get('rbSelectedLowerValue') != "" && me.get('rbSelectedHigherValue') != "" && me.get('rbSelectedLowerValue') != null && me.get('rbSelectedHigherValue') != null && Number(me.get('rbSelectedLowerValue')) <= Number(me.get('rbSelectedHigherValue'))) {
+                    if (Number(compound.get('rtb')) >= Number(me.get('rbSelectedLowerValue')) && Number(compound.get('rtb')) <= Number(me.get('rbSelectedHigherValue'))) {
+                        rtbFilter = true;
+                    }
+                } else {
+                    rtbFilter = true;
+                }
+                if (me.get('relSelectedHigherValue') != "" && me.get('relSelectedHigherValue') != null) {
+                    if (Number(compound.get('relevance')) >= Number(me.get('relSelectedHigherValue'))) {
+                        relFilter = true;
+                    }
+                } else {
+                    relFilter = true;
+                }
+
+
+
+                // check all the filter flags and add the compound if all are true
+                console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter + ' logp ' + logpFilter + ' ro5 ' + ro5Filter + ' psa ' + psaFilter + ' rtb ' + rtbFilter + ' rel ' + relFilter);
+                if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true && logpFilter == true && ro5Filter == true && psaFilter == true && rtbFilter == true && relFilter == true) {
+                    me.get('filteredCompounds').pushObject(compound);
+                }
+            });
+            $('#compoundStructureFilterModalView').modal('toggle');
+        },
+
+        resetFilters: function() {
+            console.log('reset structure filters');
+            this.set('mwSelectedLowerValue', null);
+            this.set('mwSelectedHigherValue', null);
+            this.set('mwSelectedFreebaseLowerValue', null);
+            this.set('mwSelectedFreebaseHigherValue', null);
+            this.set('hBondAcceptorsSelectedLowerValue', null);
+            this.set('hBondAcceptorsSelectedHigherValue', null);
+            this.set('hBondDonorsSelectedLowerValue', null);
+            this.set('hBondDonorsSelectedHigherValue', null);
+            this.set('logPSelectedLowerValue', null);
+            this.set('logPSelectedHigherValue', null);
+            this.set('polarSurfaceAreaSelectedLowerValue', null);
+            this.set('polarSurfaceAreaSelectedHigherValue', null);
+            this.set('ro5SelectedLowerValue', null);
+            this.set('ro5SelectedHigherValue', null);
+            this.set('rbSelectedLowerValue', null);
+            this.set('rbSelectedHigherValue', null);
+            this.set('relSelectedLowerValue', null);
+            this.set('relSelectedHigherValue', null);
+        },
+
+        searchForSMILES: function() {
+            this.transitionToRoute('compounds.structure', {
+                queryParams: {
+                    'smiles': me.get('smilesValue'),
+                    'type': 'exact'
+                }
+            });
+        },
+
+        drawThisSMILES: function() {
+            this.transitionToRoute('compounds.draw', {
+                queryParams: {
+                    smiles: this.get('smilesValue')
+                }
+            });
+        },
+        enableProvenance: function() {
+            this.set('showProvenance', true);
+        },
+        disableProvenance: function() {
+            this.set('showProvenance', false);
+        },
+        goToTop: function() {
+            window.scrollTo(0, 0);
+        }
+
     }
-
-	var tsvCreateRequest = $.ajax({
-		url: cs_download_url,
-        dataType: 'json',
-		cache: true,
-		// send as post because it can be a really long query string
-        type: "POST",
-		data: {
-			_format: "json",
-			uris: uris,
-            total: me.get('filteredCompounds').length
-		},
-		success: function(response, status, request) {
-			console.log('tsv create request success');
-            me.get('controllers.application').addJob(response.uuid, me.get('smilesValue'), filtersString);
-            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'notice',
-                        message: 'Creating TSV file for download. You will be alerted when ready.'
-                    }));
-		},
-		error: function(request, status, error) {
-			console.log('tsv create request error');
-			me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                        type: 'error',
-                        message: 'Could not create TSV file, please contact support quoting error: ' + error
-                    }));
-		}
-	});
-    },
-
-    applyFilters: function() {
-	  console.log('compound structure filters');
-	  var me = this;
-	  me.get('filteredCompounds').clear();
-	  $.each(me.get('content'), function(index, compound) {
-		    var mwFilter = false;
-		    var mwFreebaseFilter = false;
-		    var hbaFilter = false;
-		    var hbdFilter = false;
-		    var logpFilter = false;
-		    var ro5Filter = false;
-		    var psaFilter = false;
-		    var rtbFilter = false;
-		    var relFilter = false;
-			if (me.get('mwSelectedLowerValue') != "" && me.get('mwSelectedHigherValue') != "" && me.get('mwSelectedLowerValue') != null && me.get('mwSelectedHigherValue') != null && Number(me.get('mwSelectedLowerValue')) <= Number(me.get('mwSelectedHigherValue'))) {
-              if (Number(compound.get('fullMWT')) >= Number(me.get('mwSelectedLowerValue')) && Number(compound.get('fullMWT')) <= Number(me.get('mwSelectedHigherValue'))) {
-	            // compound is within the params so we add it 
-	            mwFilter = true;          
-              }
-		    } else {
-			  // this filter is valid since we are not checking it so we would add the compound regardless
-			  mwFilter = true;
-		    }
-			if (me.get('mwFreebaseSelectedLowerValue') != "" && me.get('mwFreebaseHigherValue') != "" && me.get('mwFreebaseSelectedLowerValue') != null && me.get('mwFreebaseSelectedHigherValue') != null && Number(me.get('mwFreebaseSelectedLowerValue')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
-              if (Number(compound.get('mwFreebase')) >= Number(me.get('mwFreebaseSelectedLowerValue')) && Number(compound.get('mwFreebase')) <= Number(me.get('mwFreebaseSelectedHigherValue'))) {
-                mwFreebaseFilter = true;
-              }
-		    } else {
-			  mwFreebaseFilter = true;
-		    }	      	
-			if (me.get('hBondAcceptorsSelectedLowerValue') != "" && me.get('hBondAcceptorsSelectedHigherValue') != "" && me.get('hBondAcceptorsSelectedLowerValue') != null && me.get('hBondAcceptorsSelectedHigherValue') != null && Number(me.get('hBondAcceptorsSelectedLowerValue')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
-              if (Number(compound.get('hba')) >= Number(me.get('hBondAcceptorsSelectedLowerValue')) && Number(compound.get('hba')) <= Number(me.get('hBondAcceptorsSelectedHigherValue'))) {
-                hbaFilter = true;
-              }
-		    } else {
-			  hbaFilter = true;
-		    }
-			if (me.get('hBondDonorsSelectedLowerValue') != "" && me.get('hBondDonorsSelectedHigherValue') != "" && me.get('hBondDonorsSelectedLowerValue') != null && me.get('hBondDonorsSelectedHigherValue') != null && Number(me.get('hBondDonorsSelectedLowerValue')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
-              if (Number(compound.get('hbd')) >= Number(me.get('hBondDonorsSelectedLowerValue')) && Number(compound.get('hbd')) <= Number(me.get('hBondDonorsSelectedHigherValue'))) {
-                hbdFilter = true;
-              }
-		    } else {
-			  hbdFilter = true;
-		    }
-			if (me.get('logPSelectedLowerValue') != "" && me.get('logPSelectedHigherValue') != "" && me.get('logPSelectedLowerValue') != null && me.get('logPSelectedHigherValue') != null && Number(me.get('logPSelectedLowerValue')) <= Number(me.get('logPSelectedHigherValue'))) {
-              if (Number(compound.get('logp')) >= Number(me.get('logPSelectedLowerValue')) && Number(compound.get('logp')) <= Number(me.get('logPSelectedHigherValue'))) {
-                logpFilter = true;
-              }
-		    } else {
-			  logpFilter = true;
-		    }
-			if (me.get('ro5SelectedLowerValue') != "" && me.get('ro5SelectedHigherValue') != "" && me.get('ro5SelectedLowerValue') != null && me.get('ro5SelectedHigherValue') != null && Number(me.get('ro5SelectedLowerValue')) <= Number(me.get('ro5SelectedHigherValue'))) {
-              if (Number(compound.get('ro5Violations')) >= Number(me.get('ro5SelectedLowerValue')) && Number(compound.get('ro5Violations')) <= Number(me.get('ro5SelectedHigherValue'))) {
-                ro5Filter = true;
-              }
-		    } else {
-			  ro5Filter = true;
-		    }
-			if (me.get('polarSurfaceAreaSelectedLowerValue') != "" && me.get('polarSurfaceAreaSelectedHigherValue') != "" && me.get('polarSurfaceAreaSelectedLowerValue') != null && me.get('polarSurfaceAreaSelectedHigherValue') != null && Number(me.get('polarSurfaceAreaSelectedLowerValue')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
-              if (Number(compound.get('psa')) >= Number(me.get('polarSurfaceAreaSelectedLowerValue')) && Number(compound.get('psa')) <= Number(me.get('polarSurfaceAreaSelectedHigherValue'))) {
-                psaFilter = true;
-              }
-		    } else {
-			  psaFilter = true;
-		    }
-			if (me.get('rbSelectedLowerValue') != "" && me.get('rbSelectedHigherValue') != "" && me.get('rbSelectedLowerValue') != null && me.get('rbSelectedHigherValue') != null && Number(me.get('rbSelectedLowerValue')) <= Number(me.get('rbSelectedHigherValue'))) {
-              if (Number(compound.get('rtb')) >= Number(me.get('rbSelectedLowerValue')) && Number(compound.get('rtb')) <= Number(me.get('rbSelectedHigherValue'))) {
-                rtbFilter = true;
-              }
-		    } else {
-			  rtbFilter = true;
-		    }
-			if (me.get('relSelectedHigherValue') != "" && me.get('relSelectedHigherValue') != null) {
-              if (Number(compound.get('relevance')) >= Number(me.get('relSelectedHigherValue'))) {
-                relFilter = true;
-              }
-		    } else {
-			  relFilter = true;
-		    }
-		
-		
-		
-		    // check all the filter flags and add the compound if all are true
-		    console.log('mw ' + mwFilter + ' freebase ' + mwFreebaseFilter + ' hba ' + hbaFilter + ' hbd ' + hbdFilter + ' logp ' + logpFilter + ' ro5 ' + ro5Filter + ' psa ' + psaFilter + ' rtb ' + rtbFilter + ' rel ' + relFilter);    	
-		    if (mwFilter == true && mwFreebaseFilter == true && hbaFilter == true && hbdFilter == true && logpFilter == true && ro5Filter == true && psaFilter == true && rtbFilter == true && relFilter == true) {
-			  me.get('filteredCompounds').pushObject(compound);
-		    }
-	  });
-      $('#compoundStructureFilterModalView').modal('toggle');
-    },
-
-    resetFilters: function() {
-      console.log('reset structure filters');
-      this.set('mwSelectedLowerValue', null);
-      this.set('mwSelectedHigherValue', null);
-      this.set('mwSelectedFreebaseLowerValue', null);
-      this.set('mwSelectedFreebaseHigherValue', null);
-      this.set('hBondAcceptorsSelectedLowerValue', null);
-      this.set('hBondAcceptorsSelectedHigherValue', null);
-      this.set('hBondDonorsSelectedLowerValue', null);
-      this.set('hBondDonorsSelectedHigherValue', null);
-      this.set('logPSelectedLowerValue', null);
-      this.set('logPSelectedHigherValue', null);
-      this.set('polarSurfaceAreaSelectedLowerValue', null);
-      this.set('polarSurfaceAreaSelectedHigherValue', null);
-      this.set('ro5SelectedLowerValue', null);
-      this.set('ro5SelectedHigherValue', null);
-      this.set('rbSelectedLowerValue', null);
-      this.set('rbSelectedHigherValue', null);
-      this.set('relSelectedLowerValue', null);
-      this.set('relSelectedHigherValue', null);
-    },
-
-    searchForSMILES: function() {
-        this.transitionToRoute('compounds.structure', {queryParams: {'smiles': me.get('smilesValue'), 'type': 'exact'}});
-    },
-
-    drawThisSMILES: function() {
-      this.transitionToRoute('compounds.draw', {queryParams: {smiles: this.get('smilesValue')}});
-    },
-enableProvenance: function() {
-      this.set('showProvenance', true);
-  },
-  disableProvenance: function() {
-      this.set('showProvenance', false);
-  },
-  goToTop: function() {
-      window.scrollTo(0,0);
-  }
-
-  }
 });

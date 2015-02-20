@@ -39,11 +39,15 @@ class TsvFile < ActiveRecord::Base
           url_path = url_params + "&_page=#{i}&_pageSize=250"
           logger.info "Retrieving: " + url_path.to_s
           uri = URI.parse(url_path)
-          http = Net::HTTP.new(uri.host, uri.port)
-          http.use_ssl = true
-          #by default Ruby 1.9 uses VERIFY_PEER
-          #as long as it can find the ca certs all will be good but.....
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          http = Net::HTTP.new(uri.host,uri.port)
+          #5 minute timeout
+          http.read_timeout = 300
+          if uri.scheme == "https" 
+            http.use_ssl = true
+            #by default Ruby 1.9 uses VERIFY_PEER
+            #as long as it can find the ca certs all will be good but.....
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
           response = http.get(uri.request_uri)
           # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
           tab_data = CSV.parse(response.body, {:col_sep => "\t", :headers => true, :quote_char => "\a"})
@@ -86,15 +90,19 @@ class TsvFile < ActiveRecord::Base
     CSV.open(file.path, "w", {:col_sep=>"\t", :headers=>true}) do |tab|
       #tab << all_headers
       params[:uris].each do |uri|
-        
         url_params = domain + path + "?uri=" + CGI::escape(uri) + "&_format=tsv&app_id=" + app_id + "&app_key=" + app_key
         begin
-
           logger.info "Retrieving: " + url_params.to_s
           uri = URI.parse(url_params)
           http = Net::HTTP.new(uri.host, uri.port)
-          http.use_ssl = true
-          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          #5 minute timeout
+          http.read_timeout = 300
+          if uri.scheme == "https" 
+            http.use_ssl = true
+            #by default Ruby 1.9 uses VERIFY_PEER
+            #as long as it can find the ca certs all will be good but.....
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
           response = http.get(uri.request_uri)
           # CSV has problems parsing escaped double quotes like \", set the quote character to be the ascii bell one since it really should not show up in a tsv file
           tab_data = CSV.parse(response.body, {:col_sep => "\t", :headers=>true, :quote_char => "\a"})

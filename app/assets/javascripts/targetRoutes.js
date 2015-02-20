@@ -7,7 +7,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
         controller.set('model', model);
         var target = model;
         var diseaseSearcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
-
+	var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
         var diseaseCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = diseaseSearcher.parseDiseasesByTargetCountResponse(response);
@@ -16,7 +16,27 @@ App.TargetsIndexRoute = Ember.Route.extend({
                 });
             }
         };
+        var pharmaCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
+                Ember.run(function() {
+			target.set('pharmacologyRecords', count);
+		});
+	    }
+	}
+	var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        //how many pathways for this compound
+        var pathwaysCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
+                Ember.run(function() {
+			target.set('pathwaysRecords', count);
+		});
+	    }
+	}
         diseaseSearcher.diseasesByTargetCount(target.get('URI'), null, diseaseCountCallback);
+	pathwaysSearcher.countPathwaysByTarget(target.get('URI'), null, null, pathwaysCountCallback);
+	targetSearcher.targetPharmacologyCount(target.get('URI'), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
         this.controllerFor('application').findFavourite(model.get('URI'), 'targets', model);
     },
 
@@ -32,15 +52,16 @@ App.TargetsIndexRoute = Ember.Route.extend({
     },
 
     actions: {
-        error: function(error, transition) {
+ //       error: function(error, transition) {
             // TODO need to navigate back somewhere if there is an error, however using window.history.back()
             // might not go back to the correct place because the browser window might have been at a different
             // starting point than the ember app.
-            me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
-                type: 'error',
-                message: 'This target is not available, please try a different one..'
-            }));
-        }
+            // Maybe just needs a 404 page eg return this.transitionTo('modelNotFound'); (from ember docs example)
+//            this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+//                type: 'error',
+//                message: 'This target is not available, please try a different one.'
+//            }));
+//        }
     }
 
 });
@@ -67,8 +88,8 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
         var maxExActivityValue = null;
         var activityValue = null;
         var minExActivityValue = null;
-        // only set activity filter if all filter boxes have been selected
-        if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+        // only set activity filter if there is a condition and a value (same as comp pharma)
+        if (condition != null && currentActivityValue != null) {
             switch (condition) {
                 case '>':
                     minExActivityValue = currentActivityValue;
@@ -247,7 +268,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
             }
         };
 
-        //load the pathways for this compound
+        //load the pathways for this target
         var pathwaysByTargetCallback = function(success, status, response) {
                 if (success && response) {
                     var pathwayResults = searcher.parseByTargetResponse(response);

@@ -7,19 +7,19 @@
     // enable the query parameters
     ENV = {FEATURES: {'query-params-new': true}};
   </script>
+  <!-- Load browser polyfills for missing features, see https://github.com/Financial-Times/polyfill-service -->
+  <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
     <%= javascript_include_tag :application %>
     <title>Open PHACTS Explorer</title>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
-    //var compound_info_search_url = "http://api.openphacts.org/compound?_callback=?";
-    //var search_url = "http://ops.conceptwiki.org/web-ws/concept/search/byTag?callback=?";
     var ldaBaseUrl = '<%= AppSettings.config["api"]["url"] -%>';
     var appID = '<%= AppSettings.config["keys"]["app_id"] -%>';
     var appKey = '<%= AppSettings.config["keys"]["app_key"] -%>';
-    var typeaheadUrl = '<%= typeahead_search_index_url -%>';
     var tsvCreateUrl = '<%= tab_separated_file_core_api_calls_url -%>?';
     var tsvStatusUrl = '<%= tsv_status_core_api_calls_url -%>?';
     var tsvDownloadUrl = '<%= tsv_download_core_api_calls_url -%>?';
+    var typeaheadUrl = '<%= typeahead_search_index_url -%>';
     var organismsUrl = '<%= organisms_core_api_calls_url -%>?';
     var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
     jQuery.support.cors = true;
@@ -34,15 +34,8 @@
   </head>
   <body>
     
-	<!--[if lte IE 9]>
-
-<div id="browser-alert" style="background-color: white; font-weight: bold; font-size: x-large;margin: 10px; border: 1px solid black; padding: 5px;">The Open PHACTS Explorer is designed to work with modern html5 and CSS3 enabled browsers such as <a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a>, <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a>, <a href="http://www.opera.com/">Opera</a> and <a href="http://windows.microsoft.com/en-GB/internet-explorer/download-ie">Internet Explorer 10 or higher</a>. Using an older browser may lead to a sub standard experience and in some cases may not work at all.<button type="button" class="close" onClick="$('#browser-alert').hide();" title="Close this alert">&times;</button>
-</div>
-
-    <![endif]-->
-    
 <script type="text/javascript">var oldIE = false;</script>
-    <!--[if lt IE 9]>
+    <!--[if lte IE 9]>
     
     <script type="text/javascript">
         oldIE = true;
