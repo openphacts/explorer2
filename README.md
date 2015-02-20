@@ -45,7 +45,9 @@ Setup
   * Add settings for [ketcher](#ketcher) (see below).
 * `rake db:create:all`
 * `rake db:migrate`
-* `rake assets:precompile`
+  * add `RAILS_ENV="production"` or `RAILS_ENV="test"` to migrate those environments, by default it wil be `development`
+* `rake assets:precompile` if running in `production` environment
+  * If running webrick in production then change `config.serve_static_assets = false` to `config.serve_static_assets = true` in `config/environments/production.rb`
 * `rails s`
 
 Now navigate your browser to [http://localhost:3000/](http://localhost:3000/)
