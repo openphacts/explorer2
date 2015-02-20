@@ -7,15 +7,21 @@ namespace :explorer do
   end
   
   def load_compounds
-    compounds_file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")
+    compounds = []
+    compounds_file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")    
     compounds_file.each_line do |line|
-      c = Compound.new
-      c.label = line.chomp
-      c.save
-      puts "Compound: " + c.label
+      compounds << [line.chomp]
+      if compounds.length > 10000 then
+        Compound.import([:label], compounds)
+        compounds = []
+        print "."
+      end
     end
+    # and the remaining <1000 compounds
+    Compound.import([:label], compounds)
+    puts "Imported compounds"
   end
-  
+
   def load_targets
     targets_file = File.new(File.join(Rails.root, "filestore", "targets.txt"), "r")
     targets_file.each_line do |line|
