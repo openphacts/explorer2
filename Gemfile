@@ -30,3 +30,5 @@ gem 'daemons'
 gem 'execjs'
 gem 'uuidtools'
 gem 'font-awesome-rails'
+gem "activerecord-import", ">= 0.2.0"
+
