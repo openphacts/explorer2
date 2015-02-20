@@ -7,6 +7,7 @@ namespace :explorer do
   end
   
   def load_compounds
+    puts "Compounds"
     compounds = []
     compounds_file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")    
     compounds_file.each_line do |line|
@@ -17,28 +18,28 @@ namespace :explorer do
         print "."
       end
     end
-    # and the remaining <1000 compounds
+    # and the remaining compounds
     Compound.import([:label], compounds)
-    puts "Imported compounds"
+    puts ""
   end
 
   def load_targets
+    puts "Targets"
+    targets = []
     targets_file = File.new(File.join(Rails.root, "filestore", "targets.txt"), "r")
     targets_file.each_line do |line|
-      t = Target.new
-      t.label = line.chomp
-      t.save
-      puts "Target: " + t.label
+      targets << [line.chomp]
     end
+    Target.import([:label], targets)
   end
   
   def load_organisms
+    puts "Organisms"
+    organisms = []
     organisms_file = File.new(File.join(Rails.root, "filestore", "organisms.txt"), "r")
     organisms_file.each_line do |line|
-      o = Organism.new
-      o.label = line.chomp
-      o.save
-      puts "Organism: " + o.label
+      organisms << [line.chomp]
     end
+    Organism.import([:label], organisms)
   end
 end
