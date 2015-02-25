@@ -62,7 +62,16 @@ App.TargetsIndexRoute = Ember.Route.extend({
 //                message: 'This target is not available, please try a different one.'
 //            }));
 //        }
+    },
+
+    //if we leave the route then set the params to the defaults
+    resetController: function(controller, isExiting, transition) {
+        if (isExiting) {
+            // isExiting would be false if only the route's model was changing
+            controller.set('showProvenance', false);
+        }
     }
+
 
 });
 
@@ -231,6 +240,14 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
     beforeModel: function() {
         this.controllerFor('application').set('fetching', false);
         enable_scroll();
+    },
+
+    //if we leave the route then set the params to the defaults
+    resetController: function(controller, isExiting, transition) {
+        if (isExiting) {
+            // isExiting would be false if only the route's model was changing
+            controller.set('showProvenance', false);
+        }
     }
 
 });
