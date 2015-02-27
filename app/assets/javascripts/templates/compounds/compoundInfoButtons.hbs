@@ -1,11 +1,11 @@
 <div class="col-xs-12 col-sm-9 col-sm-offset-3 big-margin-bottom">
 	<!-- Show as buttons on larger screens -->
 	<div class="hidden-sm hidden-xs">
-		<span class="button-group" data-toggle="buttons">
-			<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
+		<span id="provenance-buttons" class="button-group" data-toggle="buttons">
+			<label id="show-provenance" {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
 				<input type="radio" name="options" id="option1" checked>Show provenance
 			</label>
-			<label {{action 'disableProvenance'}} class="small-margin-bottom btn btn-default active">
+			<label id="hide-provenance" {{action 'disableProvenance'}} class="small-margin-bottom btn btn-default active">
 				<input type="radio" name="options" id="option2">Hide provenance
 			</label>
 		</span>
@@ -15,7 +15,7 @@
 		{{#if hasPathways}}
 		{{#link-to "compounds.pathways" (query-params uri=this.URI) class="btn btn-default small-margin-bottom"}}Pathways<span class="badge small-margin-left">{{this.pathwayRecords}}</span>{{/link-to}}
 		{{/if}}
-		{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default small-margin-bottom"}}Search by structure{{/link-to}}
+		<span id="compound-info-structure-button">{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact") class="btn btn-default small-margin-bottom"}}Search by structure{{/link-to}}</span>
 		{{#link-to "compounds.draw" (query-params smiles=this.smiles) class="btn btn-default small-margin-bottom"}}Draw Molecule{{/link-to}}
 	</div>
 	<div class="hidden-md hidden-lg">
@@ -34,7 +34,7 @@
 				{{#if hasPathways}}
 				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways<span class="badge small-margin-left">{{this.pathwayRecords}}</span>{{/link-to}}</;i>
 				{{/if}}
-				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
+				<li id="compound-info-structure-button">{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
 				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
 			</ul>
 		</div>

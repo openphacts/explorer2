@@ -305,7 +305,9 @@ Openphacts.CompoundSearch = function CompoundSearch(baseURL, appID, appKey) {
  */
 Openphacts.CompoundSearch.prototype.fetchCompound = function(URI, lens, callback) {
     params = {};
-    params['_format'] = "json";
+var u = URI;
+console.log("ajax " + URI + " " + lens);   
+params['_format'] = "json";
     params['app_key'] = this.appKey;
     params['app_id'] = this.appID;
     params['uri'] = URI;
@@ -318,6 +320,7 @@ Openphacts.CompoundSearch.prototype.fetchCompound = function(URI, lens, callback
     }).done(function(response, status, request) {
         callback.call(this, true, request.status, response.result);
     }).fail(function(response, status, statusText) {
+console.log(u + " fail: responseText...." + response.responseText + " response.status....." + response.status + " status......" + status + " statusText....." + statusText);
         callback.call(this, false, response.status);
     });
 }

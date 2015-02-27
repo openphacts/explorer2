@@ -8,6 +8,6 @@
     "karma-phantomjs-launcher": "0.1.4",
     "qunitjs": "^1.17.0",
     "karma-qunit": "0.1.4",
-    "karma-ember-preprocessor"
+    "karma-ember-preprocessor": "^1.6.1"
   }
 }

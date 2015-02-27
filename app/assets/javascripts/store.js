@@ -1,18 +1,24 @@
 App.CompoundAdapter = DS.Adapter.extend({
     find: function(store, type, id) {
+console.log("compound store find: " + id);
         var compoundResult;
         // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
             var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+console.log("vars are: " + ldaBaseUrl + " " + appID + " " + appKey);
+console.log("compound searcher");
             // get the compound details  
             var callback = function(success, status, response) {
                 if (success) {
+console.log("compound success");
                     compoundResult = searcher.parseCompoundResponse(response);
                     compoundResult['pathways'] = [];
                     Ember.run(function() {
+console.log("compound resolve");
                         resolve(compoundResult)
                     });
                 } else {
+console.log("compound fail " + status);
                     Ember.run(function() {
                         reject(status)
                     });

@@ -44,7 +44,7 @@ module.exports = function(config) {
             'app/assets/javascripts/models/pathway.js',
             'app/assets/javascripts/models/structure.js',
             'app/assets/javascripts/models/disease.js',
-	    'app/assets/javascripts/models/flashMessage.js',
+            'app/assets/javascripts/models/flashMessage.js',
             'app/assets/javascripts/templates/*',
             'app/assets/javascripts/views/*',
             'app/assets/javascripts/tests/controllers/*',
@@ -91,9 +91,15 @@ module.exports = function(config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],// 'PhantomJS_without_security'],
 
-
+        // you can define custom flags
+        customLaunchers: {
+            PhantomJS_without_security: {
+                base: 'PhantomJS',
+                flags: ['--web-security=no']
+            }
+        },
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: true

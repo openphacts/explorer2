@@ -3,11 +3,11 @@
 	<!--title and formula-->
 	<div class="col-xs-12 col-sm-9 no-padding-left">
 		{{#if showProvenance}}
-		<h1 class="break-word">
+		<h1 id="compound-info-pref-label" class="break-word">
 			{{#if prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{provenanceLinkout cwURI 'conceptwiki'}}{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
 		</h1>
 		{{else}}
-		<h1 class="break-word">
+		<h1 id="compound-info-pref-label" class="break-word">
 			{{#if prefLabel}}{{prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{else}}<span class="muted">No label</span><i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{/if}}
 		</h1>
 		{{/if}}
