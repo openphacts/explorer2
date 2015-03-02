@@ -1,7 +1,7 @@
 <div id="summary-anchor">
 	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
 		<div id="compound-image" {{bind-attr class=":hidden-xs :left :small-padding infoHide:hide:"}}>{{cs_image_src csURI '128px' '128px'}}</div>
-		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
+		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabelHelper prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
 		<span class="hidden-xs medium-padding-left text-bottom">
 			{{!-- <a href="#compoundPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>

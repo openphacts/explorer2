@@ -16,7 +16,7 @@
 			{{#if isCompound}}
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-md-2 favourite-image medium-margin-top">{{cs_image_src csURI '100%' '100%'}}</div>
-				<div class="col-xs-12 col-sm-4 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
+				<div class="col-xs-12 col-sm-4 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabelHelper prefLabel}}{{/link-to}}</p></div>
 			</div>
 			{{/if}}
 			{{/each}}
@@ -26,7 +26,7 @@
 			{{#if isTarget}}
 			<div class="row">
 				<div class="col-xs-12 col-md-2 medium-margin-top">{{target_image_src seeAlso}}</div>
-				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</p></div>
+				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabelHelper prefLabel}}{{/link-to}}</p></div>
 			</div>
 			{{/if}}
 			{{/each}}

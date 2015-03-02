@@ -1,3 +1,6 @@
+Ember.Handlebars.registerBoundHelper('prefLabelHelper', function(prefLabel) {
+    return new Handlebars.SafeString(prefLabel != null ? prefLabel : '<span class="text-muted">No label</span>');
+});
 Ember.Handlebars.registerBoundHelper('getDateForJob', function(job) {
     var dateString = new Date(job.get('date')).toLocaleString();
     return new Handlebars.SafeString(dateString);
