@@ -60,7 +60,6 @@ App.ApplicationController = Ember.Controller.extend({
             }));
 
             myWorker.onmessage = function(e) {
-                console.log('Message received from worker: ' + e.data);
                 //job may have been removed by the user in the mean time
                 if (e.data.status === "processing") {
                     job.set('percentage', e.data.percent);
@@ -160,7 +159,6 @@ App.ApplicationController = Ember.Controller.extend({
                     uuid: jobID,
                 },
                 success: function(response, status, request) {
-                    console.log('tsv monitor status ' + response.status);
                     status = response.status;
                     var percentage = response.percentage;
                     //job may have been removed by the user in the mean time
@@ -190,6 +188,7 @@ App.ApplicationController = Ember.Controller.extend({
 
                 },
                 error: function(request, status, error) {
+                    //TODO Flash alert message                    
                     console.log('tsv create request error');
                 },
                 complete: setTimeout(function() {
