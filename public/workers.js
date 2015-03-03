@@ -233,13 +233,15 @@ onmessage = function(e) {
                                     line += index < keys.length - 1 ? targetTitles + '\t' : targetTitles;
                                 } else if (key === "targetOrganisms") {
                                     if (result[key] != null) {
-                                        var value = "[";
+                                        var value = "";
                                         result[key].forEach(function(organism, index, organisms) {
-                                            value += organism.organism != null && organism.organism !== "" ? organism.organism : "";
-                                            value += organism.organism != null && organism.organism !== "" && organism.item != null && organism.item !== "" ? ", " : "";
-                                            value += organism.item != null && organism.item !== "" ? organism.item : "";
+                                            value += organism.organism != null && organism.organism !== "" ? organism.organism + ", " : "";
+                                            //value += organism.organism != null && organism.organism !== "" && organism.item != null && organism.item !== "" ? ", " : "";
+                                            //value += organism.item != null && organism.item !== "" ? organism.item : "";
                                         });
-                                        value += "]";
+                                        //value += "]";
+                                        // remove the last space and comma
+                                        value = value.trim().slice(0, -1);
                                         line += index < keys.length - 1 ? value + '\t' : value;
                                     }
                                 } else {
