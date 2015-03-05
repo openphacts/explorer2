@@ -77,14 +77,9 @@ App.SearchController = Ember.ArrayController.extend({
 
     doSearch: function() {
         var me = this;
-        var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey);
-        var cwCompoundCallback = function(success, status, response) {
-            Ember.run(function() {
-                me.get('controllers.application').set('fetching', false)
-            });
-            if (success && response) {
-                var results = searcher.parseResponse(response);
-                $.each(results, function(index, result) {
+        //var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new Openphacts.IRS2Search("http://search.s11.no/");
+        function addCompound(result) {
                     //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
                     //the promise is generated inside the store adapter for compound, see store.js
                     Ember.run(function() {
@@ -124,19 +119,8 @@ App.SearchController = Ember.ArrayController.extend({
                             pathwaysSearcher.countPathwaysByCompound(compoundURI, null, null, pathwaysCountCallback);
                         })
                     });
-                });
-            } else {
-                // an error in the response, ignore for now
-            }
-        };
-        var cwTargetCallback = function(success, status, response) {
-            Ember.run(function() {
-                me.get('controllers.application').set('fetching', false)
-            });
-            if (success && response) {
-                var results = searcher.parseResponse(response);
-                $.each(results, function(index, result) {
-                    //find the target then add to the search results when the 'promise' returns
+        }
+        function addTarget(result) {
                     Ember.run(function() {
                         me.store.find('target', result.uri).then(function(target) {
                             if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
@@ -177,59 +161,23 @@ App.SearchController = Ember.ArrayController.extend({
                             pathwaysSearcher.countPathwaysByTarget(targetURI, null, null, pathwaysCountCallback);
                         })
                     });
-                });
-            } else {
-                // an error in the response, ignore for now
-            }
-        };
-        var cwGeneTargetCallback = function(success, status, response) {
+        }
+        var searchCallback = function(success, status, response) {
             Ember.run(function() {
                 me.get('controllers.application').set('fetching', false)
             });
             if (success && response) {
                 var results = searcher.parseResponse(response);
                 $.each(results, function(index, result) {
-                    //find the target then add to the search results when the 'promise' returns
-                    Ember.run(function() {
-                        me.store.find('target', result.uri).then(function(target) {
-                            if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
-                                Ember.run(function() {
-                                    target.set('exactMatch', true)
-                                });
-                                me.addExactMatch(target);
-                            } else {
-                                me.addSearchResult(target);
-                            }
-                            //how many pathways & pharmacology for this target
-                            var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                            var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
-
-                            var pathwaysCountCallback = function(success, status, response) {
-                                if (success && response) {
-                                    var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
-                                    Ember.run(function() {
-                                        target.set('pathwayRecords', count)
-                                    });
-                                }
-                            };
-
-                            var pharmaCountCallback = function(success, status, response) {
-                                if (success && response) {
-                                    var count = targetSearcher.parseTargetPharmacologyCountResponse(response);
-                                    Ember.run(function() {
-                                        target.set('pharmacologyRecords', count)
-                                    });
-                                }
-                            };
-
-                            var targetURI = target.get('URI');
-                            targetSearcher.targetPharmacologyCount(targetURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
-                            pathwaysSearcher.countPathwaysByTarget(targetURI, null, null, pathwaysCountCallback);
-                        })
-                    });
+                    if (result._type == "compound") {
+                      addCompound(result);
+                    } else {
+                      // blindly assume it's a target-like thing
+                      addTarget(result);
+                    }
                 });
             } else {
-                // an error in the response, ignore for now
+                // FIXME: handle errors
             }
         };
         var structureSearcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
@@ -282,9 +230,7 @@ App.SearchController = Ember.ArrayController.extend({
         me.set('totalTargets', 0);
         me.get('controllers.application').set('fetching', true);
         //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
-        //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '4', cwCompoundCallback);
+        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), searchCallback);
         //smiles for compounds
         structureSearcher.smilesToURL(me.getCurrentQuery(), structureCallback);
 
