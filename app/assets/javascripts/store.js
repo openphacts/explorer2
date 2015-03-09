@@ -36,7 +36,7 @@ App.TargetAdapter = DS.Adapter.extend({
                     });
                 } else {
                     Ember.run(function() {
-                        reject(status)
+                        reject({"message": status})
                     });
                 }
             }
