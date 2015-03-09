@@ -1,4 +1,18 @@
 {{#if is404}}
-It's a 404
+<div class="page-error-message">
+	<h1>404</h1>
+	<p>Sorry, can't find what you are looking for. If you think it should exist then please contact <a href="http://support.openphacts.org">support</a>.</p>
+</div>
 {{/if}}
-Something went wrong!
+{{#if is500}}
+<div class="page-error-message">
+	<h1>500</h1>
+	<p>Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to <a href="http://support.openphacts.org">support</a>.</p>
+</div>
+{{/if}}
+{{#if isGeneralError}}
+<div class="page-error-message">
+	<h1>Error</h1>
+	<p>Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to <a href="http://support.openphacts.org">support</a>.</p>
+</div>
+{{/if}}
