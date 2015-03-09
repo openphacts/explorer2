@@ -2,7 +2,7 @@
 	<button class="btn btn-default btn-sm" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button>
 </div>
 <ul class="breadcrumb hidden-xs">
-	<li><a href="/">Home</a></li>
+	<li>{{#link-to "index"}}Home{{/link-to}}</li>
 	<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
 	<li class="active">Pathways</li>
 </ul>
