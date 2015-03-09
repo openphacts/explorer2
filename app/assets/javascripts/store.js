@@ -14,7 +14,7 @@ App.CompoundAdapter = DS.Adapter.extend({
                     });
                 } else {
                     Ember.run(function() {
-                        reject(status)
+                        reject({"message": status})
                     });
                 }
             }
@@ -61,7 +61,7 @@ App.PathwayAdapter = DS.Adapter.extend({
                     });
                 } else {
                     Ember.run(function() {
-                        reject(status)
+                        reject({"message": status})
                     });
                 }
             };
@@ -97,7 +97,7 @@ App.DiseaseAdapter = DS.Adapter.extend({
                     });
                 } else {
                     Ember.run(function() {
-                        reject(status)
+                        reject({"message": status})
                     });
                 }
             };
@@ -106,4 +106,3 @@ App.DiseaseAdapter = DS.Adapter.extend({
         return promise;
     }
 });
-
