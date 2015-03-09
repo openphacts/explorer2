@@ -81,6 +81,8 @@ App.ErrorRoute = Ember.Route.extend({
 
 setupController: function(controller, model, params) {
 console.log('error route');
+controller.set('model', model);
+console.log('model set');
 },
 
 model: function(params) {

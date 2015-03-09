@@ -14,7 +14,6 @@
 		<div class="tab-pane active" id="favourite-compounds">
 			{{#each favourite in model}}
 			{{#if favourite.isCompound}}
-{{log "compound"}}
 			<div class="row">
 				<div class="col-xs-12 col-sm-4 col-md-2 favourite-image medium-margin-top">{{cs_image_src favourite.csURI '100%' '100%'}}</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 medium-padding-top break-word"><p>{{#link-to "compounds.index" (query-params uri=favourite.URI)}}{{prefLabelHelper favourite.prefLabel}}{{/link-to}}</p></div>
@@ -25,7 +24,6 @@
 			<div class="tab-pane" id="favourite-targets">
 			{{#each favourite in model}}
 			{{#if favourite.isTarget}}
-{{log "target"}}
 			<div class="row">
 				<div class="col-xs-12 col-md-2 medium-margin-top">{{target_image_src favourite.seeAlso}}</div>
 				<div class="col-xs-12 col-md-4 medium-padding-top break-word"><p>{{#link-to "targets.index" (query-params uri=favourite.URI)}}{{prefLabelHelper favourite.prefLabel}}{{/link-to}}</p></div>
