@@ -6,7 +6,7 @@
 			<p>{{#link-to "targets.index" (query-params uri=target.about)}}{{target.title}}{{/link-to}}</p>
 			{{/each}}
 		</td>
-		<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
+		<td class="cell-basictext">{{#each targetOrganism in pharmaRecord.targetOrganisms}} {{targetOrganism.organism}} {{/each}}</td>
 		<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
