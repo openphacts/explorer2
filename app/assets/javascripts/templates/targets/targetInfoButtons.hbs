@@ -9,7 +9,7 @@
 				<input type="radio" name="options" id="option2">Hide provenance
 			</label>
 		</span>
-		{{#if threeDeeEnabled}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :small-margin-bottom"}} title="Visualize this target in 3D">3D</button>{{/if}}
+		{{#if threeDeeEnabled}}{{#if hasPDB}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :small-margin-bottom"}} title="Visualize this target in 3D">3D</button>{{/if}}{{/if}}
 		{{#if hasPharmacology}}{{#link-to "targets.pharmacology" (query-params uri=this.URI) class="btn btn-default small-margin-bottom" }}Pharmacology<span class="badge small-margin-left">{{pharmacologyRecords}}</span>{{/link-to}}{{/if}}
 		{{#if hasPathways}}{{#link-to "targets.pathways" (query-params uri=this.URI) class="btn btn-default small-margin-bottom" }}Pathways<span class="badge small-margin-left">{{pathwaysRecords}}</span>{{/link-to}}{{/if}}
 		{{#if hasDiseases}}{{#link-to "targets.diseases" (query-params uri=URI) class="btn btn-default small-margin-bottom"}}Diseases<span class="badge small-margin-left">{{diseaseRecords}}</span>{{/link-to}}{{/if}}
@@ -25,7 +25,7 @@
 				<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
-				{{#if threeDeeEnabled}}<li><a href="#" {{action 'drawProtein'}} title="Visualize this target in 3D">View in 3D</a></li>{{/if}}
+				{{#if threeDeeEnabled}}{{#if hasPDB}}<li><a href="#" {{action 'drawProtein'}} title="Visualize this target in 3D">View in 3D</a></li>{{/if}}{{/if}}
 				<li>{{#link-to "targets.pharmacology" (query-params uri=this.URI)}}Pharmacology<span class="badge small-margin-left">{{pharmacologyRecords}}</span>{{/link-to}}</li>
 				{{#if hasPathways}}<li>{{#link-to "targets.pathways" (query-params uri=this.URI)}}Pathways<span class="badge small-margin-left">{{pathwaysRecords}}</span>{{/link-to}}</li>{{/if}}
 				{{#if hasDiseases}}<li>{{#link-to 'targets.diseases' (query-params uri=URI)}}Diseases<span class="badge small-margin-left">{{diseaseRecords}}</span>{{/link-to}}</li>{{/if}}
