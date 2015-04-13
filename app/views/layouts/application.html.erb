@@ -34,13 +34,37 @@
   <body>
     
 <script type="text/javascript">var oldIE = false;</script>
-    <!--[if lte IE 9]>
+<!--[if lte IE 9]>
     
     <script type="text/javascript">
         oldIE = true;
     </script>
 
     <![endif]-->
+    <script type="text/javascript">
+	    var frag_id = window.location.hash;
+	    if (frag_id) {
+	        var form = null;
+		var uri = null;
+		//remove the #! from the start and split into array of key/value params
+		var splitParams = frag_id.substr(2, frag_id.length).split('&');
+                splitParams.forEach(function(splitParam, index) {
+                    var param = splitParam.split('=');
+		    if (param[0] === 'p') {
+			form = param[1];
+		    } else if (param[0] === 'u') {
+		        uri = param[1];
+		    }
+		});
+		if (form !== null && uri !== null) {
+		    //check for each 'form' type and redirect to the correct exp2 url
+		    if (form === 'CmpdByNameForm') {
+		        var rloc = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + window.location.pathname + 'compounds?uri=' + uri; 
+		        window.location = rloc; 
+		    }
+		}
+	    }
+    </script>
     <%= yield %>
   </body>
 </html>
