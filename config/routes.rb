@@ -46,6 +46,8 @@ Explorer2::Application.routes.draw do
     end
   end
 
+  match '*path' => 'home#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

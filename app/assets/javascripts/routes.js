@@ -74,7 +74,9 @@ App.Router.map(function() {
             path: '/targets'
         }, function() {});
     });
-
+    this.route('catchall', {
+        path: '/*wildcard'
+    });
 });
 
 App.ErrorRoute = Ember.Route.extend({
@@ -108,29 +110,41 @@ App.ApplicationRoute = Ember.Route.extend({
     },
 
     actions: {
-//        error: function(error, transition) {
+                //error: function(error, transition) {
 //            if (error && error === 404) {
-//                // Can't find anything with that URI or general page not found response
-//                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
-//                    type: 'error',
-//                    message: 'Sorry, can\'t find what you are looking for. If you think it should exist then please contact support using the help link above.'
-//                }));
-//            } else if (error && error === 500) {
-//                // App gone boom somehow
-//                console.log('500');
-//                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
-//                    type: 'error',
-//                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
-//                }));
-//            } else if (error) {
-//                // Any other error codes
-//                console.log('general error');
-//                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
-//                    type: 'error',
-//                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
-//                }));
-//            }
-//        }
+        //                // Can't find anything with that URI or general page not found response
+        //                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+        //                    type: 'error',
+        //                    message: 'Sorry, can\'t find what you are looking for. If you think it should exist then please contact support using the help link above.'
+        //                }));
+        //            } else if (error && error === 500) {
+        //                // App gone boom somehow
+        //                console.log('500');
+        //                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+        //                    type: 'error',
+        //                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
+        //                }));
+        //            } else if (error) {
+        //                // Any other error codes
+        //                console.log('general error');
+        //                this.controllerFor('flash').pushObject(this.get('store').createRecord('flashMessage', {
+        //                    type: 'error',
+        //                    message: 'Sorry, something seems to have gone wrong. Please try again. If the problem persists report it to support using the help link above.'
+        //                }));
+        //            }
+//                }
+    }
+
+});
+//App.CatchallRoute = Ember.Route.extend({ 
+//    beforeModel: function() {
+//        this.transitionTo('error'); 
+//    }
+//});
+App.ErrorRoute = Ember.Route.extend({
+
+    setupController: function(controller, model, params) {
+        controller.set('model', model);
     }
 
 });

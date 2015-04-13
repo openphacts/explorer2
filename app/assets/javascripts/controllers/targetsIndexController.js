@@ -17,8 +17,12 @@ App.TargetsIndexController = Ember.ObjectController.extend({
     webGLEnabled: Modernizr.webgl,
 
     hasPDB: function() {
-        return this.get('content').get('seeAlso').length > 0;
-    }.property('content.seeAlso'),
+        if (this.get('model').get('seeAlso').length > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }.property('model.seeAlso'),
 
     threeDeeEnabled: function() {
         return Modernizr.webgl == true && Modernizr.canvas == true;
