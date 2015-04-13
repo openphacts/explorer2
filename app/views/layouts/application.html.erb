@@ -3,13 +3,12 @@
   <head>
 	  <meta name="viewport" content="width=device-width, initial-scale=1">      
 	  <%= stylesheet_link_tag :application, :media => :all %>
-  <script type="text/javascript">
+	  <script type="text/javascript">
     // enable the query parameters
     ENV = {FEATURES: {'query-params-new': true}};
   </script>
   <!-- Load browser polyfills for missing features, see https://github.com/Financial-Times/polyfill-service -->
   <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
-    <%= javascript_include_tag :application %>
     <title>Open PHACTS Explorer</title>
   <%= csrf_meta_tags %>
   <script type="text/javascript">
@@ -22,7 +21,6 @@
     var typeaheadUrl = '<%= typeahead_search_index_url -%>';
     var organismsUrl = '<%= organisms_core_api_calls_url -%>?';
     var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
-    jQuery.support.cors = true;
   </script>
   <!-- <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js'></script> -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,28 +41,16 @@
     <![endif]-->
     <script type="text/javascript">
 	    var frag_id = window.location.hash;
-	    if (frag_id) {
-	        var form = null;
-		var uri = null;
-		//remove the #! from the start and split into array of key/value params
-		var splitParams = frag_id.substr(2, frag_id.length).split('&');
-                splitParams.forEach(function(splitParam, index) {
-                    var param = splitParam.split('=');
-		    if (param[0] === 'p') {
-			form = param[1];
-		    } else if (param[0] === 'u') {
-		        uri = param[1];
-		    }
-		});
-		if (form !== null && uri !== null) {
-		    //check for each 'form' type and redirect to the correct exp2 url
-		    if (form === 'CmpdByNameForm') {
-		        var rloc = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + window.location.pathname + 'compounds?uri=' + uri; 
-		        window.location = rloc; 
-		    }
-		}
+	    if (frag_id !== null && frag_id !== "") {
+		    var rloc = window.location.protocol + "//" + window.location.hostname + ':' + window.location.port + window.location.pathname + '?' + location.hash.substr(2,frag_id.length);
+		    window.location = rloc; 
 	    }
     </script>
     <%= yield %>
+
+    <%= javascript_include_tag :application %>
+    <script type="text/javascript">
+        jQuery.support.cors = true;
+    </script>
   </body>
 </html>
