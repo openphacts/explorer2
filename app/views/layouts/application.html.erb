@@ -7,6 +7,18 @@
     // enable the query parameters
     ENV = {FEATURES: {'query-params-new': true}};
   </script>
+    <script type="text/javascript">
+	    var frag_id = window.location.hash;
+	    if (frag_id !== null && frag_id !== "") {
+		    var rloc = window.location.protocol + "//" + window.location.hostname + ':' + window.location.port + window.location.pathname + '?' + location.hash.substr(2,frag_id.length);
+		    window.location = rloc; 
+	    }
+    </script>
+    <%= javascript_include_tag :application %>
+    <script type="text/javascript">
+        jQuery.support.cors = true;
+    </script>
+
   <!-- Load browser polyfills for missing features, see https://github.com/Financial-Times/polyfill-service -->
   <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script>
     <title>Open PHACTS Explorer</title>
@@ -39,18 +51,6 @@
     </script>
 
     <![endif]-->
-    <script type="text/javascript">
-	    var frag_id = window.location.hash;
-	    if (frag_id !== null && frag_id !== "") {
-		    var rloc = window.location.protocol + "//" + window.location.hostname + ':' + window.location.port + window.location.pathname + '?' + location.hash.substr(2,frag_id.length);
-		    window.location = rloc; 
-	    }
-    </script>
     <%= yield %>
-
-    <%= javascript_include_tag :application %>
-    <script type="text/javascript">
-        jQuery.support.cors = true;
-    </script>
   </body>
 </html>
