@@ -2,11 +2,9 @@
 	{{#each pharmaRecord in pharmacology}}
 	<tr class="record-deco">
 		<td style="vertical-align:middle;" height="70">
-			{{#each target in pharmaRecord.targets}}
-			<p>{{#link-to "targets.index" (query-params uri=target.about)}}{{target.title}}{{/link-to}}</p>
-			{{/each}}
+		<p>{{#link-to "targets.index" (query-params uri=pharmaRecord.targetURI)}}{{pharmaRecord.targetTitle}}{{/link-to}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.targetProvenance pharmaRecord.chemblProvenance.source}}{{/if}}</p>
 		</td>
-		<td class="cell-basictext">{{#each pharmaRecord.targetOrganisms}} {{this.organism}} {{/each}}</td>
+		<td class="cell-basictext">{{pharmaRecord.targetOrganismName}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.targetProvenance pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="cell-basictext">{{pharmaRecord.assayOrganism}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayOrganismItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="cell-longtext">{{pharmaRecord.assayDescription}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.assayDescriptionItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
 		<td class="cell-basictext">{{pharmaRecord.activityActivityType}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.activityActivityTypeItem pharmaRecord.chemblProvenance.source}}{{/if}}</td>
