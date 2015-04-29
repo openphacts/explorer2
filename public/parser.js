@@ -738,7 +738,8 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
         forMolecule = item[constants.FOR_MOLECULE];
         chemblURI = forMolecule[constants.ABOUT] ? forMolecule[constants.ABOUT] : null;
         pChembl = item.pChembl ? item.pChembl : null;
-        forMolecule[constants.EXACT_MATCH].forEach(function(match, j, all) {
+        if (forMolecule[constants.EXACT_MATCH] != null) {
+	forMolecule[constants.EXACT_MATCH].forEach(function(match, j, all) {
             var src = match[constants.IN_DATASET];
             if (constants.SRC_CLS_MAPPINGS[src] == 'conceptWikiValue') {
                 cwURI = match[constants.ABOUT];
@@ -766,6 +767,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                 chemspiderProvenance['molform'] = chemspiderLinkOut;
             }
         });
+	}
         var targets = item.hasAssay.hasTarget;
         var assayTargets = [];
         if (Array.isArray(targets)) {

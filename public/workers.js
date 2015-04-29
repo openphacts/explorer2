@@ -177,8 +177,8 @@ onmessage = function(e) {
             nets({
                 url: requestURL,
                 method: "GET",
-                // 30 second timeout just in case
-                timeout: 30000,
+                // 300 second timeout just in case
+                timeout: 300000,
                 headers: {
                     "Accept": "application/json"
                 }
