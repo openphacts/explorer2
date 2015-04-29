@@ -458,7 +458,6 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
     });
     return compounds;
 }
-
 Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(response) {
     var constants = new Openphacts.Constants();
     var records = [];
@@ -563,51 +562,28 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
         var target_concatenated_uris;
         var chemblTargetLink = 'https://www.ebi.ac.uk/chembldb/target/inspect/';
         var target_organisms = new Array();
-        var targets = [];
-        // Target has a title, a target organism and a target component. Each target component has an exactMatch singleton which
-        // contains a prefLabel and a URI
-        if (target != null) {
-            chembl_target_uri = target["_about"];
-            //target_pref_label = target['prefLabel'];
-            //TODO The exact match stuff does not seem to exist any more
-            //targetMatch = target['exactMatch'];
-            target_title = target.title;
-            //if (targetMatch != null) {
-            //	var targetMatchURI = targetMatch["_about"];
-            //	target_pref_label = targetMatch['prefLabel'];
-            //	target_pref_label_item = targetMatchURI;
-            //	target_title = target_pref_label ? target_pref_label : null;
-            //}
-            var targetComponents = [];
-            if (target[constants.HAS_TARGET_COMPONENT] != null) {
-                Openphacts.arrayify(target[constants.HAS_TARGET_COMPONENT]).forEach(function(targetComponent, index, allTargetComponents) {
-                    var targetComponentDetails = {
-                        'URI': targetComponent[constants.ABOUT]
-                    };
-                    if (targetComponent[constants.EXACT_MATCH] != null) {
-                        targetComponentDetails['prefLabel'] = targetComponent[constants.EXACT_MATCH].prefLabel;
-                        targetComponentDetails['prefLabelURI'] = targetComponent[constants.EXACT_MATCH][constants.ABOUT];
-                    }
-
-                    targetComponents.push(targetComponentDetails);
-                });
+            // For Target
+            var target_components = [];
+	    var target_title = null;
+	    var target_organism_name = null;
+	    var target_uri = null;
+	    if (target != null) {
+                target_title = target.title;
+		target_uri = target._about;
+                target_provenance = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target._about.split('/').pop();
+		target_organism_name = target.assay_organism != null ? target.assay_organism : null;
+		if (target.hasTargetComponent != null) {
+			Openphacts.arrayify(target.hasTargetComponent).forEach(function(targetComponent, i) {
+				var tc = {};
+				tc.uri = targetComponent._about;
+				if (targetComponent.exactMatch != null) {
+					tc.labelProvenance = targetComponent._about;
+					tc.label = targetComponent.prefLabel;
+				}
+				target_components.push(tc);
+			});
+		}
             }
-            target_organism = target['assay_organism'];
-            target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
-            //target_concatenated_uris = target['concatenatedURIs'];
-            var target_organisms_inner = {};
-            target_organisms_inner['organism'] = target_organism;
-            target_organisms_inner['src'] = target_organism_item;
-            target_organisms.push(target_organisms_inner);
-            var targets_inner = {};
-            targets_inner['targetComponents'] = targetComponents;
-            targets_inner['type'] = target.type != null ? target.type : null;
-
-            targets_inner['title'] = target_title;
-            //targets_inner['cw_uri'] = target_pref_label_item ? target_pref_label_item : null;
-            targets_inner['URI'] = target[constants.ABOUT];
-            targets.push(targets_inner);
-        }
 
         var chemblActivityLink = 'https://www.ebi.ac.uk/ebisearch/search.ebi?t=' + chembl_activity_uri.split('/').pop().split('_').pop() + '&db=chembl-activity';
 
@@ -642,7 +618,11 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             //compoundGenericNameSrc: drugbank_src,
             'targetTitleSrc': chembl_src,
             //targetConcatenatedUrisSrc: chembl_src,
-
+	    targetTitle: target_title,
+	    targetOrganismName: target_organism_name,
+	    targetComponents: target_components,
+	    targetURI: target_uri,
+	    targetProvenance: target_provenance,
 
             //for target
             'chemblActivityUri': chembl_activity_uri,
@@ -657,9 +637,6 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             'chemblAssayUri': chembl_assay_uri,
             'chemblTargetUri': chembl_target_uri,
 
-            //targetOrganism: target_organism,
-            'targetOrganisms': target_organisms,
-            //targetPrefLabel: target_pref_label,
 
             'assayOrganism': assay_organism,
             'assayDescription': assay_description,
@@ -696,7 +673,6 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             'assayOrganismItem': assay_organism_item,
             //assayDescriptionItem: assay_description_item,
             //targetOrganismItem: target_organism_item,
-            'targets': targets,
             'pChembl': pChembl,
             'compoundRO5Violations': compound_ro5_violations,
             'chemblProvenance': chemblProvenance,
