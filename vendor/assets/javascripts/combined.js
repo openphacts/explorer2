@@ -2296,7 +2296,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
                     targetComponents.push(targetComponentDetails);
                 });
             }
-            target_organism = target['targetOrganismName'];
+            target_organism = target['assay_organism'];
             target_organism_item = chemblTargetLink + chembl_target_uri.split('/').pop();
             //target_concatenated_uris = target['concatenatedURIs'];
             var target_organisms_inner = {};
