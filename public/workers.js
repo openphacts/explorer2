@@ -104,7 +104,9 @@ onmessage = function(e) {
                 headers = {
                     'inchiKey': 'InChiKey',
                     //'targetTitle': 'Target title',
-                    'targets': 'Target',
+                    //'targets': 'Target',
+		    'targetTitle': 'Target title',
+		    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
