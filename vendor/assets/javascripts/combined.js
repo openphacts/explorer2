@@ -967,10 +967,10 @@ Openphacts.CompoundSearch.prototype.parseChemspiderBlock = function(chemspiderBl
     psa = chemspiderData.psa != null ? chemspiderData.psa : psa;
     ro5Violations = chemspiderData.ro5_violations != null ? chemspiderData.ro5_violations : ro5Violations;
     smiles = chemspiderData.smiles != null ? chemspiderData.smiles : smiles;
-    inchiKey = chemspiderData.inchikey != null ? chemspiderData.inchikey : inchikey;
+    inchiKey = chemspiderData.inchikey != null ? chemspiderData.inchikey : null;
     rtb = chemspiderData.rtb != null ? chemspiderData.rtb : rtb;
-    fullMWT = chemspiderData.molweight != null ? chemspiderData.molweight : molweight;
-    molform = chemspiderData.molformula != null ? chemspiderData.molformula : molformula;
+    fullMWT = chemspiderData.molweight != null ? chemspiderData.molweight : null;
+    molform = chemspiderData.molformula != null ? chemspiderData.molformula : null;
 
     // provenance 
     chemspiderLinkOut = URI;

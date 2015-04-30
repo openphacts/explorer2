@@ -373,6 +373,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             // provenance
             drugbankLinkout = drugbankURI;
             drugbankProvenance = {};
+	    drugbankProvenanceURI = drugbankLinkout;
             drugbankProvenance['source'] = 'drugbank';
             drugbankProvenance['description'] = drugbankLinkout;
             drugbankProvenance['biotransformation'] = drugbankLinkout;
@@ -397,6 +398,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             // provenance 
             chemspiderLinkOut = csURI;
             chemspiderProvenance = {};
+	    chemspiderProvenanceURI = chemspiderProvenanceLinkOut;
             chemspiderProvenance['source'] = 'chemspider';
             chemspiderProvenance['hba'] = chemspiderLinkOut;
             chemspiderProvenance['hbd'] = chemspiderLinkOut;
@@ -416,6 +418,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             // provenance
             chemblLinkOut = 'https://www.ebi.ac.uk/chembldb/compound/inspect/' + chemblURI.split("/").pop();
             chemblProvenance = {};
+	    chemblProvenanceURI = chemblLinkOut;
             chemblProvenance['source'] = 'chembl';
             chemblProvenance['fullMWT'] = chemblLinkOut;
             chemblProvenance['mwFreebase'] = chemblLinkOut;
@@ -427,6 +430,9 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         }
         compounds.push({
             "id": id,
+	"chemblProvenanceURI": chemblProvenanceURI,
+	"drugbankProvenanceURI": drugbankProvenanceURI,
+	"chemspiderProvenanceURI": chemspiderProvenanceURI,
             "cwURI": cwURI,
             "prefLabel": prefLabel,
             "URI": uri,

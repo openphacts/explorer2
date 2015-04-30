@@ -269,13 +269,13 @@ onmessage = function(e) {
             if (err === null && body !== null) {
                 var response = JSON.parse(body.toString());
                 var result = searcher.parseCompoundBatchResponse(response.result);
-                keys = Object.keys(result[0]);
-                keys.forEach(function(key, index, keys) {
-                    tsvFile += index < keys.length - 1 ? key + '\t' : key + '\r\n';
+		headers = {'cwURI': cwURI, 'prefLabel': prefLabel, 'URI': URI, 'description': description, 'biotransformationItem': biotransformationItem, 'toxicity': toxicity,'proteinBinding': proteinBinding, 'csURI': csURI, 'hba': hba, 'hbd': hbd, 'inchi': inchi, 'logp': logp, 'psa': psa, 'ro5Violations': ro5Violations, 'smiles': smiles, 'chemblURI': chemblURI, 'fullMWT': fullMWT, 'molform': molform, 'mwFreebase': mwFreebase, 'rtb': rtb, 'inchiKey': inchiKey, 'drugbankURI' drugbankURI, 'drugbankProvenance': drugbankProvenance, 'chemspiderProvenance' chemspiderProvenance, 'chemblProvenance': chemblProvenance};
+                Object.keys(headers).forEach(function(key, index, keys) {
+                    tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                 });
                 result.forEach(function(result, index, results) {
                     var line = "";
-                    keys.forEach(function(key, index, keys) {
+                    Object.keys(headers).forEach(function(key, index, keys) {
                         // Change null values to empty string
                         var value = result[key] !== null ? result[key] : '';
                         line += index < keys.length - 1 ? value + '\t' : value;
