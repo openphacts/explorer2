@@ -136,8 +136,8 @@ onmessage = function(e) {
                 requestURL = ldaBaseURL + '/compound/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
                 headers = {
                     'inchiKey': 'InChiKey',
-                    //'targetTitle': 'Target title',
-                    'targets': 'Target',
+                    'targetTitle': 'Target title',
+		    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
