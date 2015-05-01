@@ -320,6 +320,9 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             molweight = null,
             molformula = null;
         var drugbankData, chemspiderData, chemblData, conceptWikiData;
+	var chemblProvenanceURI = null;
+	var drugbankProvenanceURI = null;
+	var chemspiderProvenanceURI = null;
         var uri = item[constants.ABOUT];
 
         // check if we already have the CS URI
@@ -347,7 +350,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
         fullMWT = item.molweight != null ? item.molweight : null;
         psa = item.psa != null ? item.psa : null;
         ro5Violations = item.ro5_violations != null ? item.ro5_violations : null;
-        rtb = item.rtb !== null ? item.rtb : null;
+        rtb = item.rtb != null || item.rtb === 0 ? item.rtb : null;
         smiles = item.smiles != null ? item.smiles : null;
         if (Array.isArray(item.exactMatch)) {
         item.exactMatch.forEach(function(match, i, data) {
@@ -391,7 +394,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             ro5Violations = chemspiderData.ro5_violations != null ? chemspiderData.ro5_violations : ro5Violations;
             smiles = chemspiderData.smiles != null ? chemspiderData.smiles : smiles;
             inchiKey = chemspiderData.inchikey != null ? chemspiderData.inchikey : inchikey;
-            rtb = chemspiderData.rtb != null ? chemspiderData.rtb : rtb;
+            rtb = chemspiderData.rtb != null || chemspiderData.rtb === 0 ? chemspiderData.rtb : rtb;
             fullMWT = chemspiderData.molweight != null ? chemspiderData.molweight : molweight;
             molform = chemspiderData.molformula != null ? chemspiderData.molformula : molformula;
 

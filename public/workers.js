@@ -52,7 +52,7 @@ onmessage = function(e) {
                 'csid': 'OPS RSC identifier',
                 'compoundInchi': 'InChI',
                 'compoundSmiles': 'SMILES',
-		'targetTitle': 'Target title',
+                'targetTitle': 'Target title',
                 'targetOrganismName': 'Target organism',
                 'assayOrganism': 'Assay Organism',
                 'assayDescription': 'Assay description',
@@ -105,8 +105,8 @@ onmessage = function(e) {
                     'inchiKey': 'InChiKey',
                     //'targetTitle': 'Target title',
                     //'targets': 'Target',
-		    'targetTitle': 'Target title',
-		    'targetOrganismName': 'Target organism',
+                    'targetTitle': 'Target title',
+                    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
@@ -137,7 +137,7 @@ onmessage = function(e) {
                 headers = {
                     'inchiKey': 'InChiKey',
                     'targetTitle': 'Target title',
-		    'targetOrganismName': 'Target organism',
+                    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
@@ -221,9 +221,9 @@ onmessage = function(e) {
                         var line = "";
                         if (requestType === "compound" || requestType === "target" || requestType === "tree") {
                             keys.forEach(function(key, index, keys) {
-                                    // Change null values to empty string
-                                    var value = result[key] !== null ? result[key] : '';
-                                    line += index < keys.length - 1 ? value + '\t' : value;
+                                // Change null values to empty string
+                                var value = result[key] !== null ? result[key] : '';
+                                line += index < keys.length - 1 ? value + '\t' : value;
                             });
                         }
                         line += "\r\n";
@@ -269,7 +269,28 @@ onmessage = function(e) {
             if (err === null && body !== null) {
                 var response = JSON.parse(body.toString());
                 var result = searcher.parseCompoundBatchResponse(response.result);
-		headers = {'cwURI': cwURI, 'prefLabel': prefLabel, 'URI': URI, 'description': description, 'biotransformationItem': biotransformationItem, 'toxicity': toxicity,'proteinBinding': proteinBinding, 'csURI': csURI, 'hba': hba, 'hbd': hbd, 'inchi': inchi, 'logp': logp, 'psa': psa, 'ro5Violations': ro5Violations, 'smiles': smiles, 'chemblURI': chemblURI, 'fullMWT': fullMWT, 'molform': molform, 'mwFreebase': mwFreebase, 'rtb': rtb, 'inchiKey': inchiKey, 'drugbankURI' drugbankURI, 'drugbankProvenance': drugbankProvenance, 'chemspiderProvenance' chemspiderProvenance, 'chemblProvenance': chemblProvenance};
+                headers = {
+                    'prefLabel': 'Compound preferred label',
+                    'description': 'Description',
+                    'biotransformationItem': 'Biotransformation Item',
+                    'toxicity': 'Toxicity',
+                    'proteinBinding': 'Protein Binding',
+                    'csURI': 'OPS RSC Identifier',
+                    'hba': 'HBA',
+                    'hbd': 'HBD',
+                    'inchi': 'InChi',
+                    'logp': 'logP',
+                    'psa': 'PSA',
+                    'ro5Violations': 'Rule of 5 violations',
+                    'smiles': 'SMILES',
+                    'fullMWT': 'Molecular weight',
+                    'molform': 'Molecular formula',
+                    'mwFreebase': 'mw Freebase',
+                    'rtb': 'RTB',
+                    'inchiKey': 'InChiKey',
+                    'chemblURI': 'ChEMBL identifier',
+                    'drugbankProvenanceURI': 'DrugBank Identifier',
+                };
                 Object.keys(headers).forEach(function(key, index, keys) {
                     tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                 });
