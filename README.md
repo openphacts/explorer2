@@ -22,7 +22,7 @@ The environment variables that can be set, together with their defaults:
 
 ```
 -e RAILS_ENV=production
--e API_URL=https://beta.openphacts.org/1.4
+-e API_URL=https://beta.openphacts.org/1.5
 -e API_APP_ID=161aeb7d
 -e API_APP_KEY=cffc292726627ffc50ece1dccd15aeaf
 ```
