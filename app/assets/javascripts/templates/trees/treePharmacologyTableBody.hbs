@@ -4,9 +4,9 @@
 
 		<td class="cell-basictext">{{#link-to "compounds.draw" (query-params smiles=enzymePharma.smiles) title="Draw this compound structure using ketcher"}}{{cs_image_src enzymePharma.csURI '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=enzymePharma.csURI)}}{{enzymePharma.prefLabel}}{{/link-to}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.conceptWikiProvenance.prefLabel 'conceptwiki'}}{{/if}}</td>
-		<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{target.title}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetTitle 'chembl'}}{{/if}}{{/each}}</td>
-		<td class="cell-longtext">{{#each target in enzymePharma.targets}}{{#each component in target.targetComponents}}<li class="no-list-style">{{targetComponentLink component}}</li>{{/each}}{{/each}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetComponents 'chembl'}}{{/if}}</td>
-		<td class="cell-basictext">{{#each target in enzymePharma.targets}}{{targetOrganismLink target}}{{/each}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetOrganismName 'chembl'}}{{/if}}</td>
+		<td class="cell-basictext">{{enzymePharma.targetTitle}}{{target.title}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetTitle 'chembl'}}{{/if}}</td>
+		<td class="cell-longtext">{{#each component in enzymePharma.targetComponents}}<li class="no-list-style">{{targetComponentLink component}}</li>{{/each}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetComponents 'chembl'}}{{/if}}</td>
+		<td class="cell-basictext">{{targetOrganismLink enzymePharma.targetOrganismName enzymePharma.targetURI}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayTargetProvenance.targetOrganismName 'chembl'}}{{/if}}</td>
 		<td class="cell-basictext">{{assayOrganismLink enzymePharma}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayOrganismName 'chembl'}}{{/if}}</td>
 		<td class="cell-longtext">{{enzymePharma.assayDescription}}{{#if showProvenance}}{{provenanceLinkout enzymePharma.assayProvenance.assayDescription 'chembl'}}{{/if}}</td>
 		<!-- Activity info id from chembl just not sure of the exact source -->

@@ -17,11 +17,13 @@ App.TargetsIndexController = Ember.Controller.extend({
     webGLEnabled: Modernizr.webgl,
 
     hasPDB: function() {
+	    if (this.get('model').get('seeAlso') != null) {
         if (this.get('model').get('seeAlso').length > 0) {
             return true;
         } else {
             return false;
         }
+	    }
     }.property('model.seeAlso'),
 
     threeDeeEnabled: function() {

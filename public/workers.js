@@ -47,13 +47,13 @@ onmessage = function(e) {
                 'compoundInchikey': 'InChiKey',
                 'compoundDrugType': 'Drug type',
                 'compoundGenericName': 'Compound Generic name',
-                'targets': 'Target',
                 'compoundFullMwt': 'Molecular Weight',
                 'compoundPrefLabel': 'Compound preferred label',
                 'csid': 'OPS RSC identifier',
                 'compoundInchi': 'InChI',
                 'compoundSmiles': 'SMILES',
-                'targetOrganisms': 'Target Organism',
+                'targetTitle': 'Target title',
+                'targetOrganismName': 'Target organism',
                 'assayOrganism': 'Assay Organism',
                 'assayDescription': 'Assay description',
                 'activityActivityType': 'Acivity type',
@@ -73,14 +73,13 @@ onmessage = function(e) {
             requestURL = ldaBaseURL + '/target/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
             headers = {
                 'compoundInchikey': 'InChiKey',
-                'targetTitle': 'Target title',
-                'targets': 'Target',
                 'compoundFullMwt': 'Molecular Weight',
                 'compoundPrefLabel': 'Compound preferred label',
                 'csid': 'OPS RSC identifier',
                 'compoundInchi': 'InChI',
                 'compoundSmiles': 'SMILES',
-                'targetOrganisms': 'Target Organism',
+                'targetTitle': 'Target title',
+                'targetOrganismName': 'Target organism',
                 'assayOrganism': 'Assay Organism',
                 'assayDescription': 'Assay description',
                 'activityActivityType': 'Activity type',
@@ -105,7 +104,9 @@ onmessage = function(e) {
                 headers = {
                     'inchiKey': 'InChiKey',
                     //'targetTitle': 'Target title',
-                    'targets': 'Target',
+                    //'targets': 'Target',
+                    'targetTitle': 'Target title',
+                    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
@@ -135,8 +136,8 @@ onmessage = function(e) {
                 requestURL = ldaBaseURL + '/compound/tree/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
                 headers = {
                     'inchiKey': 'InChiKey',
-                    //'targetTitle': 'Target title',
-                    'targets': 'Target',
+                    'targetTitle': 'Target title',
+                    'targetOrganismName': 'Target organism',
                     'fullMWT': 'Molecular Weight',
                     'prefLabel': 'Compound preferred label',
                     //'csid': 'OPS RSC identifier',
@@ -178,8 +179,8 @@ onmessage = function(e) {
             nets({
                 url: requestURL,
                 method: "GET",
-                // 30 second timeout just in case
-                timeout: 30000,
+                // 300 second timeout just in case
+                timeout: 300000,
                 headers: {
                     "Accept": "application/json"
                 }
@@ -220,35 +221,9 @@ onmessage = function(e) {
                         var line = "";
                         if (requestType === "compound" || requestType === "target" || requestType === "tree") {
                             keys.forEach(function(key, index, keys) {
-                                // targets is an array
-                                if (key === "targets") {
-                                    var allTargetTitles = [];
-                                    var targetTitles = "";
-                                    result[key].forEach(function(target, index, all) {
-                                        if (target.title) {
-                                            allTargetTitles.push(target.title);
-                                        }
-                                    });
-                                    targetTitles = allTargetTitles.join(', ');
-                                    line += index < keys.length - 1 ? targetTitles + '\t' : targetTitles;
-                                } else if (key === "targetOrganisms") {
-                                    if (result[key] != null) {
-                                        var value = "";
-                                        result[key].forEach(function(organism, index, organisms) {
-                                            value += organism.organism != null && organism.organism !== "" ? organism.organism + ", " : "";
-                                            //value += organism.organism != null && organism.organism !== "" && organism.item != null && organism.item !== "" ? ", " : "";
-                                            //value += organism.item != null && organism.item !== "" ? organism.item : "";
-                                        });
-                                        //value += "]";
-                                        // remove the last space and comma
-                                        value = value.trim().slice(0, -1);
-                                        line += index < keys.length - 1 ? value + '\t' : value;
-                                    }
-                                } else {
-                                    // Change null values to empty string
-                                    var value = result[key] !== null ? result[key] : '';
-                                    line += index < keys.length - 1 ? value + '\t' : value;
-                                }
+                                // Change null values to empty string
+                                var value = result[key] !== null ? result[key] : '';
+                                line += index < keys.length - 1 ? value + '\t' : value;
                             });
                         }
                         line += "\r\n";
@@ -294,13 +269,34 @@ onmessage = function(e) {
             if (err === null && body !== null) {
                 var response = JSON.parse(body.toString());
                 var result = searcher.parseCompoundBatchResponse(response.result);
-                keys = Object.keys(result[0]);
-                keys.forEach(function(key, index, keys) {
-                    tsvFile += index < keys.length - 1 ? key + '\t' : key + '\r\n';
+                headers = {
+                    'prefLabel': 'Compound preferred label',
+                    'description': 'Description',
+                    'biotransformationItem': 'Biotransformation Item',
+                    'toxicity': 'Toxicity',
+                    'proteinBinding': 'Protein Binding',
+                    'csURI': 'OPS RSC Identifier',
+                    'hba': 'HBA',
+                    'hbd': 'HBD',
+                    'inchi': 'InChi',
+                    'logp': 'logP',
+                    'psa': 'PSA',
+                    'ro5Violations': 'Rule of 5 violations',
+                    'smiles': 'SMILES',
+                    'fullMWT': 'Molecular weight',
+                    'molform': 'Molecular formula',
+                    'mwFreebase': 'mw Freebase',
+                    'rtb': 'RTB',
+                    'inchiKey': 'InChiKey',
+                    'chemblURI': 'ChEMBL identifier',
+                    'drugbankProvenanceURI': 'DrugBank Identifier',
+                };
+                Object.keys(headers).forEach(function(key, index, keys) {
+                    tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                 });
                 result.forEach(function(result, index, results) {
                     var line = "";
-                    keys.forEach(function(key, index, keys) {
+                    Object.keys(headers).forEach(function(key, index, keys) {
                         // Change null values to empty string
                         var value = result[key] !== null ? result[key] : '';
                         line += index < keys.length - 1 ? value + '\t' : value;

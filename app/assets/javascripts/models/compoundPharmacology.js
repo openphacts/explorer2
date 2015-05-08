@@ -4,6 +4,10 @@ App.CompoundPharmacology = DS.Model.extend({
     compoundDrugType: DS.attr('string'),
     compoundGenericName: DS.attr('string'),
     targets: DS.attr(),
+    targetTitle: DS.attr('string'),
+    targetOrganismName: DS.attr('string'),
+    targetURI: DS.attr('string'),
+    targetComponents: DS.attr(),
     compoundInchikeySrc: DS.attr('string'),
     compoundDrugTypeSrc: DS.attr('string'),
     compoundGenericNameSrc: DS.attr('string'),
@@ -53,7 +57,7 @@ App.CompoundPharmacology = DS.Model.extend({
     chemblProvenance: DS.attr(),
 
     toString: function() {
-	    //TODO should be this.get('fffff')
+        //TODO should be this.get('fffff')
         return this.compoundInchiKey + this.compoundDrugType + this.compoundGenericName + this.targets + this.compoundInchikeySrc + this.compoundDrugTypeSrc + this.compoundGenericNameSrc + this.targetTitleSrc + this.chemblActivityUri + this.chemblCompoundUri + this.compoundFullMwt + this.cwCompoundUri + this.compoundPrefLabel + this.csCompoundUri + this.csid + this.compoundInchi + this.compoundSmiles + this.chemblAssayUri + this.targetOrganisms + this.assayOrganism + this.assayDescription + this.activityRelation + this.activityStandardUnits + this.activityStandardValue + this.activityActivityType + this.compoundFullMwtSrc + this.compoundPrefLabelSrc + this.compoundInchiSrc + this.compoundSmilesSrc + this.targetOrganismSrc + this.assayOrganismSrc;
     }
 

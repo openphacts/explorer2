@@ -28,15 +28,15 @@ Ember.Handlebars.registerBoundHelper('targetComponentLink', function(component) 
     return new Handlebars.SafeString(aLink);
   }
 });
-Ember.Handlebars.registerBoundHelper('targetOrganismLink', function(target) {
-  if (target.targetOrganismNames != null && target.uri != null) {
-	var aLink = '<a href="' + target.uri +'" target="_blank">' + target.targetOrganismNames +'</a>'
+Ember.Handlebars.registerBoundHelper('targetOrganismLink', function(targetOrganismName, targetURI) {
+  if (targetOrganismName != null && targetURI != null) {
+	var aLink = '<a href="' + targetURI +'" target="_blank">' + targetOrganismName +'</a>'
     return new Handlebars.SafeString(aLink);
-  } else if (target.targetOrganismNames != null){
-    return new Handlebars.SafeString(target.targetOrganismNames);
-  } else if (target.uri != null){
-    var id = target.uri.split('/').pop();
-	var aLink = '<a href="' + target.uri +'" target="_blank" title="No organism name available for this target">' + id +'</a>';
+  } else if (targetOrganismName != null){
+    return new Handlebars.SafeString(targetOrganismName);
+  } else if (targetURI != null){
+    var id = targetURI.split('/').pop();
+	var aLink = '<a href="' + targetURI +'" target="_blank" title="No organism name available for this target">' + id +'</a>';
     return new Handlebars.SafeString(aLink);
   }
 });
