@@ -1,4 +1,4 @@
-App.CompoundsIndexController = Ember.ObjectController.extend({
+App.CompoundsIndexController = Ember.Controller.extend({
 
     needs: ['application'],
 

@@ -1,4 +1,4 @@
-App.CompoundsPathwaysController = Ember.ObjectController.extend({
+App.CompoundsPathwaysController = Ember.Controller.extend({
 
     needs: ['application', 'flash'],
 
