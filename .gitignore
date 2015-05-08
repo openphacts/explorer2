@@ -16,3 +16,5 @@
 *~
 *.swp
 vendor/ruby
+config/app_settings.yml
+Gemfile.lock
