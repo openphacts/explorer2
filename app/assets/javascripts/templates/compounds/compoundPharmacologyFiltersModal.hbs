@@ -4,7 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
+				<h3 id="myModalLabel">Select filters for {{model.prefLabel}}</h3>
 			</div>
 			<div class="modal-body" style="overflow-y: visible;">
 				<div id="activity-filters">
@@ -43,11 +43,11 @@
 				</div>
 				<div>
 					<h5>Return activities with the following relation(s) only</h5>
-					<label class="checkbox-inline">&gt;{{input type="checkbox" checkedBinding="greaterThan" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&lt;{{input type="checkbox" checkedBinding="lessThan" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">={{input type="checkbox" checkedBinding="equalTo" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&ge;{{input type="checkbox" checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&le;{{input type="checkbox" checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&gt;{{input type="checkbox" checked=greaterThan classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&lt;{{input type="checkbox" checked=lessThan classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">={{input type="checkbox" checked=equalTo classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&ge;{{input type="checkbox" checked=greaterThanOrEqual classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&le;{{input type="checkbox" checked=lessThanOrEqual classNames="relation-checkbox"}}</label>
 				</div>
 				<div id="pchembl-filters">
 					<p><h4>pChembl Filter</h4></p>
