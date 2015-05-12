@@ -531,7 +531,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
                     compound_inchikey = match['inchikey'];
                     compound_smiles = match['smiles'];
                     compound_full_mwt = match.molweight;
-                    compound_ro5_violations = match.ro5_violations;
+		    compound_ro5_violations = match.ro5_violations != null ? match.ro5_violations : null;
                     cs_src = match["inDataset"];
                     var chemSpiderLink = 'http://www.chemspider.com/' + csid;
                     compound_inchi_item = chemSpiderLink;
@@ -580,7 +580,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
                 target_title = target.title;
 		target_uri = target._about;
                 target_provenance = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target._about.split('/').pop();
-		target_organism_name = target.assay_organism != null ? target.assay_organism : null;
+		target_organism_name = target.targetOrganismName != null ? target.targetOrganismName : null;
 		if (target.hasTargetComponent != null) {
 			Openphacts.arrayify(target.hasTargetComponent).forEach(function(targetComponent, i) {
 				var tc = {};

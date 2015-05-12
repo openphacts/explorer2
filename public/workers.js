@@ -93,7 +93,7 @@ onmessage = function(e) {
                 'compoundRO5Violations': 'Rule of 5 violations',
                 'chemblActivityUri': 'ChEMBL activity URI',
                 'chemblCompoundUri': 'ChEMBL compound URI',
-                'chemblTargetUri': 'ChEMBL target URI',
+                //'chemblTargetUri': 'ChEMBL target URI',
                 'cwCompoundUri': 'Concept Wiki compound URI',
                 'csCompoundUri': 'OPS RSC URI',
                 'chemblAssayUri': 'ChEMBL assay URI'
