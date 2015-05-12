@@ -920,7 +920,7 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
 
         activityType = item.activity_type;
         activityRelation = item.activity_relation != null ? item.activity_relation : null;
-        activityValue = item.activity_value;
+        activityValue = item.activity_value != null ? item.activity_value : null;
         var units = item.activity_unit;
         if (units) {
             activityUnits = units.prefLabel;
