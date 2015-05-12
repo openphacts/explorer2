@@ -79,6 +79,20 @@ App.Router.map(function() {
     });
 });
 
+App.ErrorRoute = Ember.Route.extend({
+
+setupController: function(controller, model, params) {
+console.log('error route');
+controller.set('model', model);
+console.log('model set');
+},
+
+model: function(params) {
+console.log('error model');
+}
+
+});
+
 App.ApplicationRoute = Ember.Route.extend({
 
     setupController: function(controller, model, params) {

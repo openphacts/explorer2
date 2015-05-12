@@ -1,4 +1,4 @@
-App.ErrorController = Ember.ObjectController.extend({
+App.ErrorController = Ember.Controller.extend({
 
     is404: function() {
         return this.get('model.message') === 404;

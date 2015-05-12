@@ -1,4 +1,4 @@
-App.CompoundsStructureController = Ember.ObjectController.extend({
+App.CompoundsStructureController = Ember.Controller.extend({
 
     needs: ['application', 'flash'],
 

@@ -59,9 +59,9 @@
 			{{#if seeAlso}}
 			<dt>PDB</dt>
 			{{#if showProvenance}}
-			<dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+			<dd>{{provenanceLinkout uniprotProvenance.seeAlso uniprotProvenance.source}} {{#each sa in seeAlso}} {{pdbLink sa}} {{/each}}</dd>
 			{{else}}
-			<dd>{{#each seeAlso}} {{pdbLink this}} {{/each}}</dd>
+			<dd>{{#each sa in seeAlso}} {{pdbLink sa}} {{/each}}</dd>
 			{{/if}}
 			{{/if}}
 

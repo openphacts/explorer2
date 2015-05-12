@@ -1,4 +1,4 @@
-App.TargetsIndexController = Ember.ObjectController.extend({
+App.TargetsIndexController = Ember.Controller.extend({
 
     needs: ['application'],
 

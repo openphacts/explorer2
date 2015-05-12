@@ -1,4 +1,4 @@
-App.TargetIndexController = Ember.ObjectController.extend({
+App.TargetIndexController = Ember.Controller.extend({
 
   showProvenance: false,
 

@@ -4,7 +4,7 @@
 </div>
 <ul class="breadcrumb hidden-xs">
 	<li>{{#link-to "index"}}Home{{/link-to}}</li>
-	<li>{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
+	<li>{{#link-to "compounds.index" (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</li>
 	<li class="active">Compound Pharmacology</li>
 </ul>
 
