@@ -916,10 +916,10 @@ Openphacts.TreeSearch.prototype.parseCompoundClassPharmacologyPaginated = functi
             assayTargetProvenance = {},
             assayProvenance = {};
         chemblActivityURI = item["_about"];
-        pmid = item.pmid;
+        pmid = item.pmid != null ? item.pmid : null;
 
         activityType = item.activity_type;
-        activityRelation = item.activity_relation;
+        activityRelation = item.activity_relation != null ? item.activity_relation : null;
         activityValue = item.activity_value;
         var units = item.activity_unit;
         if (units) {
@@ -948,7 +948,7 @@ if (forMolecule[constants.EXACT_MATCH] != null) {
                 inchi = match[constants.INCHI];
                 inchiKey = match[constants.INCHIKEY];
                 smiles = match[constants.SMILES];
-                ro5Violations = match[constants.RO5_VIOLATIONS] !== null ? match[constants.RO5_VIOLATIONS] : null;
+                ro5Violations = match[constants.RO5_VIOLATIONS] != null ? match[constants.RO5_VIOLATIONS] : null;
                 fullMWT = match[constants.MOLWT] ? match[constants.MOLWT] : null;
                 var chemspiderLinkOut = csURI;
                 chemspiderProvenance['source'] = 'chemspider';
