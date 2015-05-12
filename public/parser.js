@@ -763,7 +763,7 @@ Openphacts.TreeSearch.prototype.parseTargetClassPharmacologyPaginated = function
                     inchi = match[constants.INCHI];
                     inchiKey = match[constants.INCHIKEY];
                     smiles = match[constants.SMILES];
-                    ro5Violations = match[constants.RO5_VIOLATIONS] !== null ? match[constants.RO5_VIOLATIONS] : null;
+                    ro5Violations = match[constants.RO5_VIOLATIONS] != null ? match[constants.RO5_VIOLATIONS] : null;
                     fullMWT = match[constants.MOLWT] ? match[constants.MOLWT] : null;
                     var chemspiderLinkOut = csURI;
                     chemspiderProvenance['source'] = 'chemspider';
