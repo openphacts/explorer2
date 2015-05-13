@@ -1,5 +1,5 @@
 <tbody>
-	{{#each pharmaRecord in pharmacology}}
+	{{#each pharmaRecord in model.pharmacology}}
 	<tr class="record-deco">
 		<td>{{#link-to "compounds.draw" (query-params smiles=pharmaRecord.compoundSmiles) title="Draw this compound"}}{{cs_image_src pharmaRecord.csCompoundUri '128px' '128px'}}{{/link-to}}</td>
 		<td class="cell-basictext">{{#link-to "compounds.index" (query-params uri=pharmaRecord.csCompoundUri)}}{{pharmaRecord.compoundPrefLabel}}{{/link-to}}</td>
