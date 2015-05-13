@@ -5,7 +5,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 id="myModalLabel">3D view of {{prefLabel}}</h3>
+				<h3 id="myModalLabel">3D view of {{model.prefLabel}}</h3>
 			</div>
 			<div class="modal-body" class="medium-margin-bottom">
 				<div id="glmol01" {{bind-attr class=":gl-molecule showMolecule::hidden"}}></div>
@@ -20,7 +20,7 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb hidden-xs">
 	<li>{{#link-to "index"}}Home{{/link-to}}</li>
-	<li>{{prefLabel}}</li>
+	<li>{{model.prefLabel}}</li>
 	<li class="active">Target Information</li>
 </ul>
 
