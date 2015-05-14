@@ -1,7 +1,7 @@
 <div class="goto-button" id="top"><button class="btn btn-default btn-sm" {{action "goToTop"}} title="Click to return to the top of the table">Go to top</button></div>
 <ul class="breadcrumb hidden-xs">
 	<li>{{#link-to "index"}}Home{{/link-to}}</li>
-	<li>{{#link-to "pathways.index" (query-params uri=URI)}}{{title}}{{/link-to}}</li>
+	<li>{{#link-to "pathways.index" (query-params uri=model.URI)}}{{model.title}}{{/link-to}}</li>
 	<li class="active">Compounds</li>
 </ul>
 <div class="huge-margin-bottom">
