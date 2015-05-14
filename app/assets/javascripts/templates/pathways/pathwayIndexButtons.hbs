@@ -8,7 +8,7 @@
 				<input type="radio" name="options" id="option2">Hide provenance
 			</label>
 		</span>
-		{{#if hasCompounds}}{{#link-to "pathways.compounds" (query-params uri=URI) class="btn btn-default small-margin-bottom"}}Compounds<span class="badge small-margin-left">{{this.compoundRecords}}</span>{{/link-to}}{{/if}}
+		{{#if model.hasCompounds}}{{#link-to "pathways.compounds" (query-params uri=model.URI) class="btn btn-default small-margin-bottom"}}Compounds<span class="badge small-margin-left">{{model.compoundRecords}}</span>{{/link-to}}{{/if}}
 	</div>
 	<!-- Show as dropdown on smaller screens -->
 	<div class="hidden-md hidden-lg">
@@ -20,7 +20,7 @@
 				<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
-				{{#if hasCompounds}}<li>{{#link-to "pathways.compounds" (query-params uri=this.URI)}}Compounds<span class="badge small-margin-left">{{this.compoundRecords}}</span>{{/link-to}}</li>{{/if}}
+				{{#if model.hasCompounds}}<li>{{#link-to "pathways.compounds" (query-params uri=model.URI)}}Compounds<span class="badge small-margin-left">{{model.compoundRecords}}</span>{{/link-to}}</li>{{/if}}
 			</ul>
 		</div>
 	</div>
