@@ -1,7 +1,7 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb hidden-xs">
 	<li>{{#link-to "index"}}Home{{/link-to}}</li>
-	<li>{{name}}</li>
+	<li>{{model.name}}</li>
 	<li class="active">Disease Information</li>
 </ul>
 
@@ -10,12 +10,12 @@
 <div class="container">
 	<div class="large-top-spacing">
 		<div class="row">
-			<h1>{{name}}</h1>
-			{{#if hasDiseaseClasses}}
+			<h1>{{model.name}}</h1>
+			{{#if model.hasDiseaseClasses}}
 			<h3>Disease Classes</h3>
 			<ul class="list-inline">
-				{{#each diseaseClass}}
-				<li>{{diseaseClassLink this}}</li>
+				{{#each dc in model.diseaseClass}}
+				<li>{{diseaseClassLink dc}}</li>
 				{{/each}}
 			</ul>
 			{{/if}}
