@@ -1,7 +1,7 @@
 <!-- breadcrumb	-->
 <ul class="breadcrumb hidden-xs">
 	<li>{{#link-to "index"}}Home{{/link-to}}</li>
-	<li>{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</li>
+	<li>{{#link-to "targets.index" (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</li>
 	<li class="active">Diseases</li>
 </ul>
 
@@ -12,9 +12,9 @@
 		<div class="row">
 			<div class="large-padding-top">
 				{{#if showProvenance}}
-				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=URI)}}{{prefLabel}}{{/link-to}} {{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}</h3>
+				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}} {{provenanceLinkout model.conceptwikiProvenance.prefLabel model.conceptwikiProvenance.source}}</h3>
 				{{else}}
-				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=URI)}}{{prefLabel}}{{/link-to}}</h3>
+				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</h3>
 				{{/if}}
 			</div>
 
@@ -25,14 +25,14 @@
 					<tr><th>Name</th><th>Disease classes</th></tr>
 				</thead>
 				<tbody>
-					{{#each diseases}}
+					{{#each disease in model.diseases}}
 					<tr class="record-deco">
-						<td class="cell-basictext small-padding-left small-padding-right">{{#link-to 'diseases.index' (query-params uri=URI)}}{{name}}{{/link-to}}</td>
+						<td class="cell-basictext small-padding-left small-padding-right">{{#link-to 'diseases.index' (query-params uri=disease.URI)}}{{disease.name}}{{/link-to}}</td>
 						<td class="cell-basictext small-padding-left small-padding-right">
-							{{#if hasDiseaseClasses}}
+							{{#if disease.hasDiseaseClasses}}
 							<ul class="list-inline">
-								{{#each diseaseClass}}
-								<li>{{diseaseClassLink this}}</li>
+								{{#each dc in disease.diseaseClass}}
+								<li>{{diseaseClassLink dc}}</li>
 								{{/each}}
 							</ul>
 							{{/if}}
