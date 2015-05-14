@@ -16,6 +16,11 @@ App.TargetsIndexController = Ember.Controller.extend({
 
     webGLEnabled: Modernizr.webgl,
 
+    favourite: function() {
+        return this.get('model').get('favourite');
+    }.property('model.favourite'),
+
+
     hasPDB: function() {
 	    if (this.get('model').get('seeAlso') != null) {
         if (this.get('model').get('seeAlso').length > 0) {
