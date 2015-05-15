@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<div class="input-group small-margin-bottom">
 				<div class="input-group-addon">Search type</div>
-				{{view Ember.Select
+				{{view "select"
 				classNames="form-control"
 				content=searchTypes
 				value=structureSearchType
@@ -19,7 +19,7 @@
 		<div class="form-group">
 			<div class="input-group small-margin-bottom">
 				<div class="input-group-addon">Match type</div>
-				{{view Ember.Select
+				{{view "select"
 				classNames="form-control"
 				content=matchTypes
 				value=selectedMatchType
@@ -33,7 +33,7 @@
 		<div class="form-group">
 			<div class="input-group small-margin-bottom">
 				<div class="input-group-addon">Similarity type</div>
-				{{view Ember.Select
+				{{view "select"
 				classNames="form-control"
 				content=thresholdTypes
 				value=selectedThresholdType
