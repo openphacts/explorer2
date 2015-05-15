@@ -5,5 +5,5 @@
 
 <!--description-->
 <div class="summary-descriptive-text large-top-spacing big-padding-right">
-	<p>{{model.description}} {{#if showProvenance}}{{provenanceLinkout model.wikipathwaysProvenance.description model.wikipathwaysProvenance.source}}{{/if}}</p>
+	<p>{{model.description}} {{#if model.description}}{{#if showProvenance}}{{provenanceLinkout model.wikipathwaysProvenance.description model.wikipathwaysProvenance.source}}{{/if}}{{/if}}</p>
 </div>
