@@ -1,6 +1,6 @@
-// Disease Routes
+import Ember from "ember";
 
-App.DiseasesIndexRoute = Ember.Route.extend({
+export defaule Ember.Route.extend({
 
     setupController: function(controller, model, params) {
         console.log('disease index controller');
