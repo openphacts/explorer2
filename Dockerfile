@@ -26,7 +26,7 @@ WORKDIR /explorer2
 RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
-ENV API_URL https://beta.openphacts.org/1.4
+ENV API_URL https://beta.openphacts.org/1.5
 # Get your own key at https://dev.openphacts.org/admin/access_details
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
