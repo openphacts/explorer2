@@ -257,6 +257,7 @@ Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
   'http://www.ebi.ac.uk/chembl' : 'chemblValue',
   'http://www4.wiwiss.fu-berlin.de/drugbank': 'drugbankValue',
   'http://linkedlifedata.com/resource/drugbank': 'drugbankValue',
+  'http://www.openphacts.org/bio2rdf/drugbank': 'drugbankValue',
   'http://www.chemspider.com': 'chemspiderValue',
   'http://www.chemspider.com/': 'chemspiderValue',
   'http://ops.rsc-us.org': 'chemspiderValue',
