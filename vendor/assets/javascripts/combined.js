@@ -257,7 +257,7 @@ Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
   'http://www.ebi.ac.uk/chembl' : 'chemblValue',
   'http://www4.wiwiss.fu-berlin.de/drugbank': 'drugbankValue',
   'http://linkedlifedata.com/resource/drugbank': 'drugbankValue',
-  'http://www.openphacts.org/bio2rdf/drugbank': 'drugbankValue',
+  'http://www.openphacts.org/bio2rdf/drugbank' : 'drugbankValue',
   'http://www.chemspider.com': 'chemspiderValue',
   'http://www.chemspider.com/': 'chemspiderValue',
   'http://ops.rsc-us.org': 'chemspiderValue',
@@ -2277,7 +2277,7 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
                 target_title = target.title;
 		target_uri = target._about;
                 target_provenance = 'https://www.ebi.ac.uk/chembl/target/inspect/' + target._about.split('/').pop();
-		target_organism_name = target.assay_organism != null ? target.assay_organism : null;
+		target_organism_name = target.targetOrganismName != null ? target.targetOrganismName : null;
 		if (target.hasTargetComponent != null) {
 			Openphacts.arrayify(target.hasTargetComponent).forEach(function(targetComponent, i) {
 				var tc = {};
@@ -2316,7 +2316,6 @@ Openphacts.TargetSearch.prototype.parseTargetPharmacologyResponse = function(res
             'compoundInchikey': compound_inchikey,
             //compoundDrugType: compound_drug_type,
             //compoundGenericName: compound_generic_name,
-            'targetTitle': target_title,
             //targetConcatenatedUris: target_concatenated_uris,
 
             'compoundInchikeySrc': cs_src,
