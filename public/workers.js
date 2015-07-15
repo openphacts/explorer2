@@ -43,6 +43,33 @@ onmessage = function(e) {
         var requestURL;
         if (requestType === "compound") {
             requestURL = ldaBaseURL + '/compound/pharmacology/pages?uri=' + encodeURIComponent(params.uri) + '&app_id=' + appID + '&app_key=' + appKey + '&_page=' + i + '&_pageSize=250';
+pchembl_value_type: pChemblValueType,
+                    pchembl_value: currentPchemblValue,
+                    activity_relation: activityRelation,
+                    activity_value_type: activityValueType,
+                    activity_value: currentActivityValue,
+                    activity_type: activity,
+                    activity_unit: unit,
+                    assay_organism: assayOrganism,
+                    target_organism: targetOrganism
+case '>':
+                        activityValueType = "minEx-activity_value";
+                        break;
+                    case '<':
+                        activityValueType = "maxEx-activity_value";
+                        break;
+                    case '=':
+                        activityValueType = "activity_value";
+                        break;
+                    case '<=':
+                        activityValueType = "max-activity_value";
+                        break;
+                    case '>=':
+                        activityValueType = "min-activity_value";
+                        break;
+
+	    searcher.compoundPharmacology(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, unit, params.activity_relation, params.pchembl_value, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, null, 1, 50, null, null, pharmaCallback);
+ 
             headers = {
                 'compoundInchikey': 'InChiKey',
                 'compoundDrugType': 'Drug type',
