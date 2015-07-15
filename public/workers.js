@@ -41,110 +41,180 @@ onmessage = function(e) {
     }
 
     var failed = false;
-    if (requestType === "compound" || requestType === "target" || requestType === "tree") {
-        if (requestType === "compound") {
+    if (requestType === "compound") {
+        headers = {
+            'compoundInchikey': 'InChiKey',
+            'compoundDrugType': 'Drug type',
+            'compoundGenericName': 'Compound Generic name',
+            'compoundFullMwt': 'Molecular Weight',
+            'compoundPrefLabel': 'Compound preferred label',
+            'csid': 'OPS RSC identifier',
+            'compoundInchi': 'InChI',
+            'compoundSmiles': 'SMILES',
+            'targetTitle': 'Target title',
+            'targetOrganismName': 'Target organism',
+            'assayOrganism': 'Assay Organism',
+            'assayDescription': 'Assay description',
+            'activityActivityType': 'Acivity type',
+            'activityRelation': 'Activity relation',
+            'activityValue': 'Activity value',
+            'activityStandardUnits': 'Activity units',
+            'pChembl': 'pChembl',
+            'activityPubmedId': 'Pubmed ID',
+            'compoundDrugTypeSrc': 'Drugbank URI',
+            'chemblActivityUri': 'ChEMBL activity URI',
+            'chemblCompoundUri': 'ChEMBL compound URI',
+            'cwCompoundUri': 'Concept Wiki compound URI',
+            'csCompoundUri': 'OPS RSC URI',
+            'chemblAssayUri': 'ChEMBL assay URI'
+        };
+        var compoundCallback = function(success, status, response) {
+            if (success && response) {
+                var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
+                if (i === 1) {
+                    keys = Object.keys(headers);
+                    keys.forEach(function(key, index, keys) {
+                        tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
+                    });
+                }
+                pharmaResults.forEach(function(result, index, results) {
+                    var line = "";
+                    keys.forEach(function(key, index, keys) {
+                        // Change null values to empty string
+                        var value = result[key] !== null ? result[key] : '';
+                        line += index < keys.length - 1 ? value + '\t' : value;
+                    });
+                    line += "\r\n";
+                    tsvFile += line;
+                });
+                if (i < numberOfPages) {
+                    var percent = 100 / numberOfPages * i;
+                    i++;
+                    postMessage({
+                        "status": "processing",
+                        "percent": percent
+                    });
+                } else {
+                    // finished so do something
+                    postMessage({
+                        "status": "complete",
+                        "percent": "100",
+                        "tsvFile": tsvFile
+                    });
+                }
+            } else {
+                failed = true;
+                postMessage({
+                    "status": "failed"
+                });
+            }
+        };
+        searcher.compoundPharmacology(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_unit, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, i, 250, null, null, compoundCallback);
+    } else if (requestType === "target") {
+        headers = {
+            'compoundInchikey': 'InChiKey',
+            'compoundFullMwt': 'Molecular Weight',
+            'compoundPrefLabel': 'Compound preferred label',
+            'csid': 'OPS RSC identifier',
+            'compoundInchi': 'InChI',
+            'compoundSmiles': 'SMILES',
+            'targetTitle': 'Target title',
+            'targetOrganismName': 'Target organism',
+            'assayOrganism': 'Assay Organism',
+            'assayDescription': 'Assay description',
+            'activityActivityType': 'Activity type',
+            'activityRelation': 'Activity relation',
+            'activityStandardValue': 'Activity value',
+            'activityStandardUnits': 'Activity units',
+            'activityComment': 'Activity comment',
+            'pChembl': 'pChembl',
+            'activityPubmedId': 'Pubmed ID',
+            'chemblDOIs': 'Document DOIs',
+            'compoundRO5Violations': 'Rule of 5 violations',
+            'chemblActivityUri': 'ChEMBL activity URI',
+            'chemblCompoundUri': 'ChEMBL compound URI',
+            //'chemblTargetUri': 'ChEMBL target URI',
+            'cwCompoundUri': 'Concept Wiki compound URI',
+            'csCompoundUri': 'OPS RSC URI',
+            'chemblAssayUri': 'ChEMBL assay URI'
+        };
+        var targetCallback = function(success, status, response) {
+            if (success && response) {
+                var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
+                if (i === 1) {
+                    keys = Object.keys(headers);
+                    keys.forEach(function(key, index, keys) {
+                        tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
+                    });
+                }
+                pharmaResults.forEach(function(result, index, results) {
+                    var line = "";
+                    keys.forEach(function(key, index, keys) {
+                        // Change null values to empty string
+                        var value = result[key] !== null ? result[key] : '';
+                        line += index < keys.length - 1 ? value + '\t' : value;
+                    });
+                    line += "\r\n";
+                    tsvFile += line;
+                });
+                if (i < numberOfPages) {
+                    var percent = 100 / numberOfPages * i;
+                    i++;
+                    postMessage({
+                        "status": "processing",
+                        "percent": percent
+                    });
+                } else {
+                    // finished so do something
+                    postMessage({
+                        "status": "complete",
+                        "percent": "100",
+                        "tsvFile": tsvFile
+                    });
+                }
+            } else {
+                failed = true;
+                postMessage({
+                    "status": "failed"
+                });
+            }
+        };
+        searcher.targetPharmacology(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_unit, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, i, 250, null, null, targetCallback);
+    } else if (requestType === "tree") {
+        if (treeType === "tree") {
             headers = {
-                'compoundInchikey': 'InChiKey',
-                'compoundDrugType': 'Drug type',
-                'compoundGenericName': 'Compound Generic name',
-                'compoundFullMwt': 'Molecular Weight',
-                'compoundPrefLabel': 'Compound preferred label',
-                'csid': 'OPS RSC identifier',
-                'compoundInchi': 'InChI',
-                'compoundSmiles': 'SMILES',
+                'inchiKey': 'InChiKey',
+                //'targetTitle': 'Target title',
+                //'targets': 'Target',
                 'targetTitle': 'Target title',
                 'targetOrganismName': 'Target organism',
-                'assayOrganism': 'Assay Organism',
+                'fullMWT': 'Molecular Weight',
+                'prefLabel': 'Compound preferred label',
+                //'csid': 'OPS RSC identifier',
+                'inchi': 'InChI',
+                'smiles': 'SMILES',
+                //'targetOrganisms': 'Target Organism',
+                'assayOrganismName': 'Assay Organism',
                 'assayDescription': 'Assay description',
-                'activityActivityType': 'Acivity type',
+                'activityType': 'Activity type',
                 'activityRelation': 'Activity relation',
                 'activityValue': 'Activity value',
-                'activityStandardUnits': 'Activity units',
-                'pChembl': 'pChembl',
-                'activityPubmedId': 'Pubmed ID',
-                'compoundDrugTypeSrc': 'Drugbank URI',
-                'chemblActivityUri': 'ChEMBL activity URI',
-                'chemblCompoundUri': 'ChEMBL compound URI',
-                'cwCompoundUri': 'Concept Wiki compound URI',
-                'csCompoundUri': 'OPS RSC URI',
-                'chemblAssayUri': 'ChEMBL assay URI'
-            };
-
-            var compoundCallback = function(success, status, response) {
-                if (success && response) {
-                    var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
-                    if (i === 1) {
-                        keys = Object.keys(headers);
-                        keys.forEach(function(key, index, keys) {
-                            tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
-                        });
-                    }
-                    pharmaResults.forEach(function(result, index, results) {
-                        var line = "";
-                            keys.forEach(function(key, index, keys) {
-                                // Change null values to empty string
-                                var value = result[key] !== null ? result[key] : '';
-                                line += index < keys.length - 1 ? value + '\t' : value;
-                            });
-                        line += "\r\n";
-                        tsvFile += line;
-                    });
-                    if (i < numberOfPages) {
-                        var percent = 100 / numberOfPages * i;
-                        i++;
-                        postMessage({
-                            "status": "processing",
-                            "percent": percent
-                        });
-                    } else {
-                        // finished so do something
-                        postMessage({
-                            "status": "complete",
-                            "percent": "100",
-                            "tsvFile": tsvFile
-                        });
-                    }
-                } else {
-                    failed = true;
-                    postMessage({
-                        "status": "failed"
-                    });
-
-                }
-            };
-            searcher.compoundPharmacology(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_unit, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, i, 250, null, null, compoundCallback);
-
-        } else if (requestType === "target") {
-            headers = {
-                'compoundInchikey': 'InChiKey',
-                'compoundFullMwt': 'Molecular Weight',
-                'compoundPrefLabel': 'Compound preferred label',
-                'csid': 'OPS RSC identifier',
-                'compoundInchi': 'InChI',
-                'compoundSmiles': 'SMILES',
-                'targetTitle': 'Target title',
-                'targetOrganismName': 'Target organism',
-                'assayOrganism': 'Assay Organism',
-                'assayDescription': 'Assay description',
-                'activityActivityType': 'Activity type',
-                'activityRelation': 'Activity relation',
-                'activityStandardValue': 'Activity value',
-                'activityStandardUnits': 'Activity units',
+                'activityUnits': 'Activity units',
                 'activityComment': 'Activity comment',
                 'pChembl': 'pChembl',
-                'activityPubmedId': 'Pubmed ID',
+                'pmid': 'Pubmed ID',
                 'chemblDOIs': 'Document DOIs',
-                'compoundRO5Violations': 'Rule of 5 violations',
-                'chemblActivityUri': 'ChEMBL activity URI',
-                'chemblCompoundUri': 'ChEMBL compound URI',
+                'ro5Violations': 'Rule of 5 violations',
+                'chemblActivityURI': 'ChEMBL activity URI',
+                'chemblURI': 'ChEMBL compound URI',
                 //'chemblTargetUri': 'ChEMBL target URI',
-                'cwCompoundUri': 'Concept Wiki compound URI',
-                'csCompoundUri': 'OPS RSC URI',
-                'chemblAssayUri': 'ChEMBL assay URI'
+                'cwURI': 'Concept Wiki compound URI',
+                'csURI': 'OPS RSC URI',
+                'assayURI': 'ChEMBL assay URI'
             };
-            var targetCallback = function(success, status, response) {
+            var treeCallback = function(success, status, response) {
                 if (success && response) {
-                    var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
+                    var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
                     if (i === 1) {
                         keys = Object.keys(headers);
                         keys.forEach(function(key, index, keys) {
@@ -153,11 +223,11 @@ onmessage = function(e) {
                     }
                     pharmaResults.forEach(function(result, index, results) {
                         var line = "";
-                            keys.forEach(function(key, index, keys) {
-                                // Change null values to empty string
-                                var value = result[key] !== null ? result[key] : '';
-                                line += index < keys.length - 1 ? value + '\t' : value;
-                            });
+                        keys.forEach(function(key, index, keys) {
+                            // Change null values to empty string
+                            var value = result[key] !== null ? result[key] : '';
+                            line += index < keys.length - 1 ? value + '\t' : value;
+                        });
                         line += "\r\n";
                         tsvFile += line;
                     });
@@ -181,197 +251,107 @@ onmessage = function(e) {
                     postMessage({
                         "status": "failed"
                     });
-
                 }
-            };
-            searcher.targetPharmacology(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_unit, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, i, 250, null, null, targetCallback);
-
-        } else if (requestType === "tree") {
-            if (treeType === "tree") {
-                headers = {
-                    'inchiKey': 'InChiKey',
-                    //'targetTitle': 'Target title',
-                    //'targets': 'Target',
-                    'targetTitle': 'Target title',
-                    'targetOrganismName': 'Target organism',
-                    'fullMWT': 'Molecular Weight',
-                    'prefLabel': 'Compound preferred label',
-                    //'csid': 'OPS RSC identifier',
-                    'inchi': 'InChI',
-                    'smiles': 'SMILES',
-                    //'targetOrganisms': 'Target Organism',
-                    'assayOrganismName': 'Assay Organism',
-                    'assayDescription': 'Assay description',
-                    'activityType': 'Activity type',
-                    'activityRelation': 'Activity relation',
-                    'activityValue': 'Activity value',
-                    'activityUnits': 'Activity units',
-                    'activityComment': 'Activity comment',
-                    'pChembl': 'pChembl',
-                    'pmid': 'Pubmed ID',
-                    'chemblDOIs': 'Document DOIs',
-                    'ro5Violations': 'Rule of 5 violations',
-                    'chemblActivityURI': 'ChEMBL activity URI',
-                    'chemblURI': 'ChEMBL compound URI',
-                    //'chemblTargetUri': 'ChEMBL target URI',
-                    'cwURI': 'Concept Wiki compound URI',
-                    'csURI': 'OPS RSC URI',
-                    'assayURI': 'ChEMBL assay URI'
-                };
-                var treeCallback = function(success, status, response) {
-                    if (success && response) {
-                        var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
-                        if (i === 1) {
-                            keys = Object.keys(headers);
-                            keys.forEach(function(key, index, keys) {
-                                tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
-                            });
-                        }
-                        pharmaResults.forEach(function(result, index, results) {
-                            var line = "";
-                                keys.forEach(function(key, index, keys) {
-                                    // Change null values to empty string
-                                    var value = result[key] !== null ? result[key] : '';
-                                    line += index < keys.length - 1 ? value + '\t' : value;
-                                });
-                            line += "\r\n";
-                            tsvFile += line;
-                        });
-                        if (i < numberOfPages) {
-                            var percent = 100 / numberOfPages * i;
-                            i++;
-                            postMessage({
-                                "status": "processing",
-                                "percent": percent
-                            });
-                        } else {
-                            // finished so do something
-                            postMessage({
-                                "status": "complete",
-                                "percent": "100",
-                                "tsvFile": tsvFile
-                            });
-                        }
-                    } else {
-                        failed = true;
-                        postMessage({
-                            "status": "failed"
-                        });
-
-                    }
-                }
-                searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, treeCallback);
-            } else {
-                headers = {
-                    'inchiKey': 'InChiKey',
-                    'targetTitle': 'Target title',
-                    'targetOrganismName': 'Target organism',
-                    'fullMWT': 'Molecular Weight',
-                    'prefLabel': 'Compound preferred label',
-                    //'csid': 'OPS RSC identifier',
-                    'inchi': 'InChI',
-                    'smiles': 'SMILES',
-                    //'targetOrganisms': 'Target Organism',
-                    'assayOrganismName': 'Assay Organism',
-                    'assayDescription': 'Assay description',
-                    'activityType': 'Activity type',
-                    'activityRelation': 'Activity relation',
-                    'activityValue': 'Activity value',
-                    'activityUnits': 'Activity units',
-                    'activityComment': 'Activity comment',
-                    'pChembl': 'pChembl',
-                    'pmid': 'Pubmed ID',
-                    'chemblDOIs': 'Document DOIs',
-                    'ro5Violations': 'Rule of 5 violations',
-                    'chemblActivityURI': 'ChEMBL activity URI',
-                    //'chemblURI': 'ChEMBL compound URI',
-                    //'chemblTargetUri': 'ChEMBL target URI',
-                    'cwURI': 'Concept Wiki compound URI',
-                    //'csURI': 'OPS RSC URI',
-                    'assayURI': 'ChEMBL assay URI'
-                };
-                var treeCallback = function(success, status, response) {
-                    if (success && response) {
-                        var pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
-                        if (i === 1) {
-                            keys = Object.keys(headers);
-                            keys.forEach(function(key, index, keys) {
-                                tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
-                            });
-                        }
-                        pharmaResults.forEach(function(result, index, results) {
-                            var line = "";
-                                keys.forEach(function(key, index, keys) {
-                                    // Change null values to empty string
-                                    var value = result[key] !== null ? result[key] : '';
-                                    line += index < keys.length - 1 ? value + '\t' : value;
-                                });
-                            line += "\r\n";
-                            tsvFile += line;
-                        });
-                        if (i < numberOfPages) {
-                            var percent = 100 / numberOfPages * i;
-                            i++;
-                            postMessage({
-                                "status": "processing",
-                                "percent": percent
-                            });
-                        } else {
-                            // finished so do something
-                            postMessage({
-                                "status": "complete",
-                                "percent": "100",
-                                "tsvFile": tsvFile
-                            });
-                        }
-                    } else {
-                        failed = true;
-                        postMessage({
-                            "status": "failed"
-                        });
-
-                    }
-                }
-                searcher.getCompoundClassPharmacologyPaginated(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_unit, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, null, i, 250, null, treeCallback);
             }
+            searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, treeCallback);
+        } else {
+            headers = {
+                'inchiKey': 'InChiKey',
+                'targetTitle': 'Target title',
+                'targetOrganismName': 'Target organism',
+                'fullMWT': 'Molecular Weight',
+                'prefLabel': 'Compound preferred label',
+                //'csid': 'OPS RSC identifier',
+                'inchi': 'InChI',
+                'smiles': 'SMILES',
+                //'targetOrganisms': 'Target Organism',
+                'assayOrganismName': 'Assay Organism',
+                'assayDescription': 'Assay description',
+                'activityType': 'Activity type',
+                'activityRelation': 'Activity relation',
+                'activityValue': 'Activity value',
+                'activityUnits': 'Activity units',
+                'activityComment': 'Activity comment',
+                'pChembl': 'pChembl',
+                'pmid': 'Pubmed ID',
+                'chemblDOIs': 'Document DOIs',
+                'ro5Violations': 'Rule of 5 violations',
+                'chemblActivityURI': 'ChEMBL activity URI',
+                //'chemblURI': 'ChEMBL compound URI',
+                //'chemblTargetUri': 'ChEMBL target URI',
+                'cwURI': 'Concept Wiki compound URI',
+                //'csURI': 'OPS RSC URI',
+                'assayURI': 'ChEMBL assay URI'
+            };
+            var treeCallback = function(success, status, response) {
+                if (success && response) {
+                    var pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
+                    if (i === 1) {
+                        keys = Object.keys(headers);
+                        keys.forEach(function(key, index, keys) {
+                            tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
+                        });
+                    }
+                    pharmaResults.forEach(function(result, index, results) {
+                        var line = "";
+                        keys.forEach(function(key, index, keys) {
+                            // Change null values to empty string
+                            var value = result[key] !== null ? result[key] : '';
+                            line += index < keys.length - 1 ? value + '\t' : value;
+                        });
+                        line += "\r\n";
+                        tsvFile += line;
+                    });
+                    if (i < numberOfPages) {
+                        var percent = 100 / numberOfPages * i;
+                        i++;
+                        postMessage({
+                            "status": "processing",
+                            "percent": percent
+                        });
+                    } else {
+                        // finished so do something
+                        postMessage({
+                            "status": "complete",
+                            "percent": "100",
+                            "tsvFile": tsvFile
+                        });
+                    }
+                } else {
+                    failed = true;
+                    postMessage({
+                        "status": "failed"
+                    });
+                }
+            }
+            searcher.getCompoundClassPharmacologyPaginated(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_unit, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_relation, params.pChemblValueType === "pchembl" ? params.pchembl_value : null, params.pChemblValueType === "min-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "minEx-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "max-pChembl" ? params.pchembl_value : null, params.pChemblValueType === "maxEx-pChembl" ? params.pchembl_value : null, null, null, i, 250, null, treeCallback);
         }
     } else if (requestType === "structure") {
-        var allURIs = uris.join('|');
-        requestURL = ldaBaseURL + '/compound/batch?uri_list=' + encodeURIComponent(allURIs) + '&app_id=' + appID + '&app_key=' + appKey;
-        nets({
-            url: requestURL,
-            method: "GET",
-            // 30 second timeout just in case
-            timeout: 30000,
-            headers: {
-                "Accept": "application/json"
-            }
-        }, function(err, resp, body) {
-            if (err === null && body !== null) {
-                var response = JSON.parse(body.toString());
-                var result = searcher.parseCompoundBatchResponse(response.result);
-                headers = {
-                    'prefLabel': 'Compound preferred label',
-                    'description': 'Description',
-                    'biotransformationItem': 'Biotransformation Item',
-                    'toxicity': 'Toxicity',
-                    'proteinBinding': 'Protein Binding',
-                    'csURI': 'OPS RSC Identifier',
-                    'hba': 'HBA',
-                    'hbd': 'HBD',
-                    'inchi': 'InChi',
-                    'logp': 'logP',
-                    'psa': 'PSA',
-                    'ro5Violations': 'Rule of 5 violations',
-                    'smiles': 'SMILES',
-                    'fullMWT': 'Molecular weight',
-                    'molform': 'Molecular formula',
-                    'mwFreebase': 'mw Freebase',
-                    'rtb': 'RTB',
-                    'inchiKey': 'InChiKey',
-                    'chemblURI': 'ChEMBL identifier',
-                    'drugbankProvenanceURI': 'DrugBank Identifier',
-                };
+        headers = {
+            'prefLabel': 'Compound preferred label',
+            'description': 'Description',
+            'biotransformationItem': 'Biotransformation Item',
+            'toxicity': 'Toxicity',
+            'proteinBinding': 'Protein Binding',
+            'csURI': 'OPS RSC Identifier',
+            'hba': 'HBA',
+            'hbd': 'HBD',
+            'inchi': 'InChi',
+            'logp': 'logP',
+            'psa': 'PSA',
+            'ro5Violations': 'Rule of 5 violations',
+            'smiles': 'SMILES',
+            'fullMWT': 'Molecular weight',
+            'molform': 'Molecular formula',
+            'mwFreebase': 'mw Freebase',
+            'rtb': 'RTB',
+            'inchiKey': 'InChiKey',
+            'chemblURI': 'ChEMBL identifier',
+            'drugbankProvenanceURI': 'DrugBank Identifier',
+        };
+        var compoundBatchCallback = function(success, status, response) {
+            if (success && response) {
+                var pharmaResults = searcher.parseCompoundBatchResponse(response);
                 Object.keys(headers).forEach(function(key, index, keys) {
                     tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                 });
@@ -390,13 +370,13 @@ onmessage = function(e) {
                     "percent": "100",
                     "tsvFile": tsvFile
                 });
-
             } else {
                 failed = true;
                 postMessage({
                     "status": "failed"
                 });
             }
-        });
+        };
+        searcher.fetchCompoundBatch(uris, null, compoundBatchCallback);
     }
 }
