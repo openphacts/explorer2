@@ -3,7 +3,7 @@ App.CompoundAdapter = DS.Adapter.extend({
         var compoundResult;
         // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
-            var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
             // get the compound details  
             var callback = function(success, status, response) {
                 if (success) {
@@ -26,7 +26,7 @@ App.CompoundAdapter = DS.Adapter.extend({
 App.TargetAdapter = DS.Adapter.extend({
     find: function(store, type, id) {
         return new Ember.RSVP.Promise(function(resolve, reject) {
-            var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var callback = function(success, status, response) {
                 if (success) {
                     var targetResult = searcher.parseTargetResponse(response);
@@ -49,7 +49,7 @@ App.PathwayAdapter = DS.Adapter.extend({
         console.log('pathway adapter find');
         var identifier = id;
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
-            var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+            var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
             var pathwayInfoCallback = function(success, status, response) {
                 if (success && response) {
                     // we have the pathway so now  find all the compounds and add ids for lazy loading
@@ -85,7 +85,7 @@ App.DiseaseAdapter = DS.Adapter.extend({
         console.log('disease adapter find');
         var identifier = id;
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
-            var searcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
             var diseaseInfoCallback = function(success, status, response) {
                 if (success && response) {
                     // we have the disease so now  find all the targets and add ids for lazy loading

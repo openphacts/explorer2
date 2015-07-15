@@ -210,7 +210,7 @@ App.ApplicationController = Ember.Controller.extend({
         // (Mozilla has never prefixed these objects, so we don't need window.mozIDB*)
         var me = this;
         if (!!window.indexedDB) {
-            var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+            var mapSearch = new MapSearch(ldaBaseUrl, appID, appKey);
             var callback = function(success, status, response) {
                 if (success) {
                     var compoundResult = {};
@@ -327,7 +327,7 @@ App.ApplicationController = Ember.Controller.extend({
     findFavourite: function(URI, type, model) {
         console.log('finding a favourite ' + type + ' : ' + URI);
         var me = this;
-        var mapSearch = new Openphacts.MapSearch(ldaBaseUrl, appID, appKey);
+        var mapSearch = new MapSearch(ldaBaseUrl, appID, appKey);
         //get the database and add/change contents for this uri
         window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
         // DON'T use "var indexedDB = ..." if you're not in a function.

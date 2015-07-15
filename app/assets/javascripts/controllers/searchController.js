@@ -77,7 +77,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     doSearch: function() {
         var me = this;
-        var searcher = new Openphacts.ConceptWikiSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new ConceptWikiSearch(ldaBaseUrl, appID, appKey);
         var cwCompoundCallback = function(success, status, response) {
             Ember.run(function() {
                 me.get('controllers.application').set('fetching', false)
@@ -99,8 +99,8 @@ App.SearchController = Ember.ArrayController.extend({
                                 me.set('totalCompounds', me.get('totalCompounds') + 1)
                             });
                             //how many pathways & pharmacology for this compound
-                            var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                            var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+                            var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
+                            var compoundSearcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
 
                             var pathwaysCountCallback = function(success, status, response) {
                                 if (success && response) {
@@ -151,8 +151,8 @@ App.SearchController = Ember.ArrayController.extend({
                                 me.set('totalTargets', me.get('totalTargets') + 1)
                             });
                             //how many pathways & pharmacology for this target
-                            var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                            var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+                            var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
+                            var targetSearcher = new TargetSearch(ldaBaseUrl, appID, appKey);
 
                             var pathwaysCountCallback = function(success, status, response) {
                                 if (success && response) {
@@ -201,8 +201,8 @@ App.SearchController = Ember.ArrayController.extend({
                                 me.addSearchResult(target);
                             }
                             //how many pathways & pharmacology for this target
-                            var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                            var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+                            var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
+                            var targetSearcher = new TargetSearch(ldaBaseUrl, appID, appKey);
 
                             var pathwaysCountCallback = function(success, status, response) {
                                 if (success && response) {
@@ -232,7 +232,7 @@ App.SearchController = Ember.ArrayController.extend({
                 // an error in the response, ignore for now
             }
         };
-        var structureSearcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+        var structureSearcher = new StructureSearch(ldaBaseUrl, appID, appKey);
         var structureCallback = function(success, status, response) {
                 if (success) {
                     Ember.run(function() {
@@ -247,8 +247,8 @@ App.SearchController = Ember.ArrayController.extend({
                                 me.set('totalCompounds', me.get('totalCompounds') + 1)
                             });
                             //how many pathways & pharmacology for this compound
-                            var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-                            var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+                            var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
+                            var compoundSearcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
 
                             var pathwaysCountCallback = function(success, status, response) {
                                 if (success && response) {

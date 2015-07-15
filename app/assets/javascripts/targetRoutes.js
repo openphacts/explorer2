@@ -6,8 +6,8 @@ App.TargetsIndexRoute = Ember.Route.extend({
         console.log('target index controller');
         controller.set('model', model);
         var target = model;
-        var diseaseSearcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
-	var targetSearcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+        var diseaseSearcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
+	var targetSearcher = new TargetSearch(ldaBaseUrl, appID, appKey);
         var diseaseCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = diseaseSearcher.parseDiseasesByTargetCountResponse(response);
@@ -24,7 +24,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
 		});
 	    }
 	}
-	var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+	var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
         //how many pathways for this compound
         var pathwaysCountCallback = function(success, status, response) {
             if (success && response) {
@@ -177,7 +177,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
             sortBy = '?' + me.get('currentHeader');
         }
         var thisTarget = model;
-        var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 var pharmaResults = searcher.parseTargetPharmacologyResponse(response);
@@ -218,7 +218,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
                 me.set('activityTypes', activityTypes);
             }
         };
-        var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+        var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
         activitySearcher.getTypes(null, null, null, null, null, activityTypesCallback);
 
         // fetch all activity units for default in filter select
@@ -259,7 +259,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
         controller.set('totalCount', null);
         var me = controller;
         var thisTarget = model;
-        var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
         //how many pathways for this compound
         var countCallback = function(success, status, response) {
             me.get('controllers.application').set('fetching', false);
@@ -331,7 +331,7 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
         controller.set('totalCount', null);
         var me = controller;
         var thisTarget = model;
-        var searcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
         //how many pathways for this compound
         var countCallback = function(success, status, response) {
             me.get('controllers.application').set('fetching', false);
