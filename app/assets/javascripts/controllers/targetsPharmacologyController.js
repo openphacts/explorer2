@@ -294,7 +294,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
                 this.set('currentHeader', header);
             }
             var me = this;
-            var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;
@@ -416,7 +416,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
                 }
                 var me = this;
                 var thisTarget = this.get('content');
-                var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+                var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
                 var pharmaCallback = function(success, status, response) {
                     if (success && response) {
                         me.page++;
@@ -530,7 +530,7 @@ App.TargetsPharmacologyController = Ember.ObjectController.extend({
             var thisTarget = this.get('content');
             thisTarget.get('pharmacology').clear();
             this.get('controllers.application').set('fetching', true);
-            var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;

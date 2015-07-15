@@ -5,7 +5,7 @@ App.TreesIndexRoute = Ember.Route.extend({
         console.log('enzymes index route setup controller');
         controller.set('content', model);
         var me = controller;
-        var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
         var callback = function(success, status, response) {
             Ember.run(function() {me.get('controllers.application').set('fetching', false);});
             if (success && response) {
@@ -85,7 +85,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         console.log('tree pharma controller setup');
         var me = controller;
         controller.set('content', model);
-        var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 me.set('page', 1);
@@ -154,7 +154,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                 me.get('controllers.application').set('fetching', false);
             }
         };
-        var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+        var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
         var activityTypesCallback = function(success, status, response) {
             if (success && response) {
                 var activityTypes = activitySearcher.parseTypes(response);

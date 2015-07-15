@@ -70,7 +70,7 @@ App.TreeNodeView = Ember.View.extend({
                 uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
                 if (this.get('content').get('hasChildren')) {
                     var contentIndex = controller.get('content').indexOf(this.get('content'));
-                    var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+                    var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
                     var callback = function(success, status, response) {
                         if (success && response) {
                             me.set('fetchingData', false);

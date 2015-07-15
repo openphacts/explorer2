@@ -14,7 +14,7 @@ App.CompoundsDrawController = Ember.ObjectController.extend({
             var me = this;
             this.get('controllers.application').set('fetching', true);
             var smiles = document.getElementById('ketcher-iframe').contentWindow.ketcher.getSmiles();
-            var structureSearcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+            var structureSearcher = new StructureSearch(ldaBaseUrl, appID, appKey);
             var structureCallback = function(success, status, response) {
                 if (success) {
                     me.get('controllers.application').set('fetching', false);

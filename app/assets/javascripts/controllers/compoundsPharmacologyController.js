@@ -46,7 +46,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
 
     //   activityTypesSelected: function() {
     // var me = this;
-    // var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+    // var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
     // if (this.get('selectedActivity') != null) {
     //     // fetch the units for activity
     //   var callback=function(success, status, response){
@@ -321,7 +321,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
                 this.set('currentHeader', header);
             }
             var me = this;
-            var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;
@@ -344,7 +344,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
         navigateTo: function(target) {
             var me = this;
             console.log(target.about);
-            var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var this_target = App.Target.createRecord();
             var callback = function(success, status, response) {
                 if (success) {
@@ -637,7 +637,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
                 }
                 var me = this;
                 var thisCompound = this.get('content');
-                var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+                var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
                 me.get('controllers.application').set('fetching', true);
                 var pharmaCallback = function(success, status, response) {
                     if (success && response) {
@@ -753,7 +753,7 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             var thisCompound = this.get('content');
             thisCompound.get('pharmacology').clear();
             me.get('controllers.application').set('fetching', true);
-            var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;

@@ -313,7 +313,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                         enable_scroll();
                     }
                 };
-                var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+                var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
                 if (this.get('treeType') === 'chebi') {
                     searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page + 1, 50, sortBy, pharmaCallback);
                 } else {
@@ -446,7 +446,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                     enable_scroll();
                 }
             };
-            var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
             if (this.get('treeType') === 'chebi') {
                 searcher.getCompoundClassPharmacologyPaginated(this.get('uri'), assayOrganism, targetOrganism, activity, currentActivityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, this.page, 50, sortBy, pharmaCallback);
             } else {
@@ -552,7 +552,7 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             me.set('page', 1);
             me.clear();
             this.get('controllers.application').set('fetching', true);
-            var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;

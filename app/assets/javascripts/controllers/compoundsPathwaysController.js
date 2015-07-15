@@ -30,7 +30,7 @@ App.CompoundsPathwaysController = Ember.ObjectController.extend({
                 var me = this;
                 me.get('controllers.application').set('fetching', true);
 		var thisCompound = this.get('content');
-                var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+                var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
                 var pathwaysByCompoundCallback = function(success, status, response) {
                     if (success && response) {
                         me.page++;
