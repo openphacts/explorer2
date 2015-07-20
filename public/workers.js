@@ -355,7 +355,7 @@ onmessage = function(e) {
                 Object.keys(headers).forEach(function(key, index, keys) {
                     tsvFile += index < keys.length - 1 ? headers[key] + '\t' : headers[key] + '\r\n';
                 });
-                result.forEach(function(result, index, results) {
+                pharmaResults.forEach(function(result, index, results) {
                     var line = "";
                     Object.keys(headers).forEach(function(key, index, keys) {
                         // Change null values to empty string
