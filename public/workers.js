@@ -253,7 +253,7 @@ onmessage = function(e) {
                     });
                 }
             }
-            searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, treeCallback);
+            searcher.getTargetClassPharmacologyPaginated(params.uri, params.assay_organism, params.target_organism, params.activity_type, params.activity_value_type === "activity_value" ? activity_value : null, params.activity_unit, params.activity_value_type === "min-activity_value" ? activity_value : null, params.activity_value_type === "minEx-activity_value" ? activity_value : null, params.activity_value_type === "max-activity_value" ? activity_value : null, params.activity_value_type === "maxEx-activity_value" ? activity_value : null, params.activity_relation, params.pchembl_value_type === "pchembl" ? params.pchembl_value : null, params.pchembl_value_type === "min-pChembl" ? params.pchembl_value : null, params.pchembl_value_type === "minEx-pChembl" ? params.pchembl_value : null, params.pchembl_value_type === "max-pChembl" ? params.pchembl_value : null, params.pchembl_value_type === "maxEx-pChembl" ? params.pchembl_value : null, null, null, i, 250, null, treeCallback);
         } else {
             headers = {
                 'inchiKey': 'InChiKey',
