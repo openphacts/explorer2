@@ -556,8 +556,13 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;
-                    var pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
-                    $.each(pharmaResults, function(index, pharma) {
+                    var pharmaResults = null;
+		if (me.get('treeType') === 'chebi') {
+    pharmaResults = searcher.parseCompoundClassPharmacologyPaginated(response);
+		} else {	
+		    pharmaResults = searcher.parseTargetClassPharmacologyPaginated(response);
+		}
+                    pharmaResults.forEach(function(pharma, index) {
                         var pharmaRecord = me.store.createRecord('treePharmacology', pharma);
                         me.pushObject(pharmaRecord);
                     });
@@ -574,11 +579,21 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                 $('#enzymePharmaFilterModalView').modal('toggle');
                 $('#enzymePharmaFilterModalView').button('toggle');
                 if (success && response) {
-                    var count = searcher.parseTargetClassPharmacologyCount(response);
+			var count = null;
+			if (me.get('treeType') === 'chebi') {
+                    		count = searcher.parseCompoundClassPharmacologyCount(response);
+			} else {
+				count = searcher.parseTargetClassPharmacologyCount(response);
+			}
                     me.set('totalCount', count);
                     if (count > 0) {
                         //		    searcher.targetPharmacology(thisTarget.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, me.get('page') + 1, 50, sortBy, lens, pharmaCallback);
-                        searcher.getTargetClassPharmacologyPaginated(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
+			if (me.get('treeType') === 'chebi') {
+    searcher.getCompoundClassPharmacologyPaginated(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
+	
+			} else {
+    			    searcher.getTargetClassPharmacologyPaginated(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, unit, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, me.page, 50, sortBy, pharmaCallback);
+			}
                     } else {
                         me.get('controllers.application').set('fetching', false);
                         me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
@@ -588,8 +603,12 @@ App.TreesPharmacologyController = Ember.ArrayController.extend({
                     }
                 }
             };
+	    if (this.get('treeType') === 'chebi') {
+searcher.getCompoundClassPharmacologyCount(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
+	  
+	    } else {
             searcher.getTargetClassPharmacologyCount(me.get('uri'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, lens, countCallback);
-
+	    }
         },
         resetFilters: function() {
             this.set('selectedActivity', null);
