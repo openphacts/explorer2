@@ -370,7 +370,15 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
-            var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+            var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
+
+	    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
             var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
             var activityRelation = null;
             var minActivityValue = null;
@@ -548,7 +556,15 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
                 var lens = null;
                 var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
                 var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
-                var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+                var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
+
+		var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
                 var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
                 var activityRelation = null;
                 var minActivityValue = null;
@@ -669,6 +685,16 @@ App.CompoundsPharmacologyController = Ember.ObjectController.extend({
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+	    // In the 1.5 API the activity unit response does not contain the actual term used in the pharma filter so we have
+	    // to do this horror.
+	    // TODO check if this is needed for the next release 
+	    var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
             var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
             var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
             var activityRelation = null;
