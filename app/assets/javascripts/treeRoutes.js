@@ -148,6 +148,8 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                     searcher.getCompoundClassPharmacologyCount(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, compoundCountCallback);
                 } else {
                     controller.set('totalCount', count);
+		    // probably not compound class but this not guaranteed since it could just be a compound class with 0 count - there is no API call to check what something belongs to
+		    controller.set('treeType', null);
                     searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
                 }
             } else {
@@ -200,6 +202,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         if (isExiting) {
             // isExiting would be false if only the route's model was changing
             controller.set('showProvenance', false);
+	    //TODO reset the filters
         }
     }
 
