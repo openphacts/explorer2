@@ -129,9 +129,9 @@ App.ApplicationRoute = Ember.Route.extend({
 //});
 App.ErrorRoute = Ember.Route.extend({
 
-    setupController: function(controller, model, params) {
-        controller.set('model', model);
-    }
+//    setupController: function(controller, model, params) {
+//        controller.set('model', model);
+//    }
 
 });
 
