@@ -17,7 +17,7 @@ App.TreeNodeView = Ember.View.extend({
         return (this.get('content').get('hasChildren') === false);
     }.property('content.hasChildren'),
 
-    opened: function() {
+    isOpened: function() {
         return (this.get('content').get('opened') === true);
     }.property('content.opened'),
 
@@ -66,8 +66,8 @@ App.TreeNodeView = Ember.View.extend({
                 var name, uri;
                 var me = this;
                 var parent = this.get('content');
-                name = this.get('content').name ? this.get('content').name : this.get('content').get('name');
-                uri = this.get('content').uri ? this.get('content').uri : this.get('content').get('uri');
+                name = this.get('content').get('name');
+                uri = this.get('content').get('uri');
                 if (this.get('content').get('hasChildren')) {
                     var contentIndex = controller.get('content').indexOf(this.get('content'));
                     var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
@@ -75,7 +75,7 @@ App.TreeNodeView = Ember.View.extend({
                         if (success && response) {
                             me.set('fetchingData', false);
                             me.set('opened', true);
-                            me.get('content').set('opened', true);
+			    parent.set('opened', true);
                             var members = searcher.parseChildNodes(response);
                             var membersWithSingleName = [];
                             var allMembers = [];
@@ -125,7 +125,7 @@ App.TreeNodeView = Ember.View.extend({
     },
     iterateOverChildren: function(child, hidden) {
         var me = this;
-        $.each(child.get('children').get('content'), function(index, innerChild) {
+        child.get('children').forEach(function(innerChild, index) {
             if (innerChild.get('parent').get('opened') == hidden) {
                 innerChild.set('hidden', hidden);
                 me.iterateOverChildren(innerChild, hidden);
