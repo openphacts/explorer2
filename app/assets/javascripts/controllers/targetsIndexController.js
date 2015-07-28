@@ -30,6 +30,11 @@ App.TargetsIndexController = Ember.Controller.extend({
         return Modernizr.webgl == true && Modernizr.canvas == true;
     }.property('webGLEnabled'),
 
+    favourite: function() {
+        return this.get('model').get('favourite');
+    }.property('model.favourite'),
+
+
     showProvenance: false,
 
     actions: {
