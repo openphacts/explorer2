@@ -47,10 +47,12 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
         }
     };
     // only fetch compounds for this pathway if there are none, since it is not a paginated call
-    if (thisPathway.get('compounds.length') <= 0) {
+    //TODO ther emight be one compound when navigating here if we came from compound pathways. Could
+    //add them in the store when fetching that compound initially. Lots of network calls!
+    //if (thisPathway.get('compounds.length') <= 0) {
         me.set('fetching', true);
         searcher.getCompounds(thisPathway.get('URI'), null, compoundCallback);
-    }
+    //}
   },
 
   model: function(params) {

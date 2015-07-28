@@ -483,17 +483,18 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
                 }
             }
             //searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countCallback);
-
+//TODO similar issue to pathway compounds when we might already have 1 relationship specified. It's an
+//asynch nightmare
         //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
-        if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
+        //if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
             searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countCallback);
-        } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
-            //could still be count for a different compound
-            searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countCallback);
-        } else {
-            //reset the totalCount just to be sure
-            searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countOnlyCallback);
-        }
+        //} else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
+        //    //could still be count for a different compound
+        //    searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countCallback);
+        //} else {
+        //    //reset the totalCount just to be sure
+        //    searcher.countPathwaysByCompound(thisCompound.get('URI'), null, null, countOnlyCallback);
+        //}
 
 
     },
