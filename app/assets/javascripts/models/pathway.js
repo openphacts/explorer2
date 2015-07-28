@@ -1,5 +1,5 @@
 App.Pathway = DS.Model.extend({
-    compound: DS.belongsTo('searchResult'),
+    //compound: DS.belongsTo('searchResult'),
     title: DS.attr('string'),
     identifier: DS.attr('string'),
     description: DS.attr('string'),
