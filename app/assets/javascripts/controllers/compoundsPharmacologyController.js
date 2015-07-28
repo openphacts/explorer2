@@ -46,7 +46,7 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
 
     //   activityTypesSelected: function() {
     // var me = this;
-    // var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+    // var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
     // if (this.get('selectedActivity') != null) {
     //     // fetch the units for activity
     //   var callback=function(success, status, response){
@@ -234,8 +234,8 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
             var maxExActivityValue = null;
             var activityValue = null;
             var minExActivityValue = null;
-            // only set activity filter if all filter boxes have been selected
-            if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+            // only set activity filter if we have a condition and a value
+            if (condition != null && currentActivityValue != null) {
                 switch (condition) {
                     case '>':
                         minExActivityValue = currentActivityValue;
@@ -321,7 +321,7 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
                 this.set('currentHeader', header);
             }
             var me = this;
-            var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;
@@ -344,7 +344,7 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
         navigateTo: function(target) {
             var me = this;
             console.log(target.about);
-            var searcher = new Openphacts.TargetSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var this_target = App.Target.createRecord();
             var callback = function(success, status, response) {
                 if (success) {
@@ -370,7 +370,15 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
-            var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+            var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
+
+	    var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
             var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
             var activityRelation = null;
             var minActivityValue = null;
@@ -548,7 +556,15 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
                 var lens = null;
                 var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
                 var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
-                var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
+                var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
+
+		var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
                 var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
                 var activityRelation = null;
                 var minActivityValue = null;
@@ -556,8 +572,8 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
                 var maxExActivityValue = null;
                 var activityValue = null;
                 var minExActivityValue = null;
-                // only set activity filter if all filter boxes have been selected
-                if (unit != null && activity != null && condition != null && currentActivityValue != null) {
+                // only set activity filter if we have condition and value
+                if (condition != null && currentActivityValue != null) {
                     switch (condition) {
                         case '>':
                             minExActivityValue = currentActivityValue;
@@ -637,7 +653,7 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
                 }
                 var me = this;
                 var thisCompound = this.get('content');
-                var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+                var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
                 me.get('controllers.application').set('fetching', true);
                 var pharmaCallback = function(success, status, response) {
                     if (success && response) {
@@ -669,6 +685,16 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
             var lens = null;
             var activity = this.get('selectedActivity') != null ? this.get('selectedActivity').label : null;
             var unit = this.get('selectedUnit') != null ? this.get('selectedUnit').label : null;
+	    // In the 1.5 API the activity unit response does not contain the actual term used in the pharma filter so we have
+	    // to do this horror.
+	    // TODO check if this is needed for the next release 
+	    var actualUnit = null;
+	    this.get('activityUnits').forEach(function(activityUnit, index) {
+		    if (activityUnit.label === unit) {
+			    actualUnit = activityUnit.uri.split('/').pop().split('#').pop().replace(/\W+/g, '-').replace(/([a-z\d])([A-Z])/g, '$1_$2').toLowerCase();
+		    }
+	    });
+	    unit = actualUnit;
             var condition = this.get('selectedCondition') != null ? this.get('selectedCondition') : null;
             var currentActivityValue = this.get('activityValue') != null ? this.get('activityValue') : null;
             var activityRelation = null;
@@ -753,7 +779,7 @@ App.CompoundsPharmacologyController = Ember.Controller.extend({
             var thisCompound = this.get('content');
             thisCompound.get('pharmacology').clear();
             me.get('controllers.application').set('fetching', true);
-            var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+            var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
             var pharmaCallback = function(success, status, response) {
                 if (success && response) {
                     me.page++;

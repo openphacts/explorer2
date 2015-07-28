@@ -1,29 +1,29 @@
 <div class="col-xs-12 col-sm-3 col-sm-pull-9">
 	<!--box properties-->
 	<div id="boxes">
-		{{#if molecularWeight}}
+		{{#if model.molecularWeight}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small>Molecular Weight</small></p>
-				<p class="lead">{{molecularWeight}} {{#if showProvenance}}{{provenanceLinkout uniprotProvenance.molecularWeight uniprotProvenance.source}}{{/if}}</p>
+				<p class="lead">{{model.molecularWeight}} {{#if showProvenance}}{{provenanceLinkout model.uniprotProvenance.molecularWeight model.uniprotProvenance.source}}{{/if}}</p>
 			</div>
 		</div>
 		{{/if}}
 
-		{{#if numberOfResidues}}
+		{{#if model.numberOfResidues}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small># of Residues</small></p>
-				<p class="lead">{{numberOfResidues}} {{#if showProvenance}}{{provenanceLinkout drugbankProvenance.numberOfResidues drugbankProvenance.source}}{{/if}}</p>
+				<p class="lead">{{model.numberOfResidues}} {{#if showProvenance}}{{provenanceLinkout model.drugbankProvenance.numberOfResidues model.drugbankProvenance.source}}{{/if}}</p>
 			</div>
 		</div>
 		{{/if}}
 
-		{{#if theoreticalPi}}
+		{{#if model.theoreticalPi}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small>Theoretical Pi</small></p>
-				<p class="lead">{{theoreticalPi}} {{#if showProvenance}}{{provenanceLinkout drugbankProvenance.theoreticalPi drugbankProvenance.source}}{{/if}}</p>
+				<p class="lead">{{model.theoreticalPi}} {{#if showProvenance}}{{provenanceLinkout model.drugbankProvenance.theoreticalPi model.drugbankProvenance.source}}{{/if}}</p>
 			</div>
 		</div>
 		{{/if}}

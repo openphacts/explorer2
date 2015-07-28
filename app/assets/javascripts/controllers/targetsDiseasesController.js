@@ -23,7 +23,7 @@ App.TargetsDiseasesController = Ember.Controller.extend({
             if (this.currentCount < this.totalCount) {
                 var me = this;
                 var thisTarget = this.get('content');
-                var searcher = new Openphacts.DiseaseSearch(ldaBaseUrl, appID, appKey);
+                var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
                 var diseasesByTargetCallback = function(success, status, response) {
                     if (success && response) {
                         me.page++;

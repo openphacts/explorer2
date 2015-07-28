@@ -30,7 +30,7 @@ haveRecords: function() {
     if (this.currentCount < this.totalCount) {
     var me = this;
     var thisTarget = this.get('content');
-    var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
     var pathwaysByTargetCallback=function(success, status, response){
       if (success && response) {
         me.page++;

@@ -11,8 +11,8 @@ App.CompoundsIndexRoute = Ember.Route.extend({
         var molfile = this.controllerFor('application').get('molfile');
         //set the favourite status for this compound
         this.controllerFor('application').findFavourite(compound.get('URI'), 'compounds', compound);
-        var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
-        var compoundSearcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+        var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
+        var compoundSearcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
         var pathwaysCountCallback = function(success, status, response) {
             if (success && response) {
                 var count = pathwaysSearcher.parseCountPathwaysByCompoundResponse(response);
@@ -202,7 +202,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
             sortBy = '?' + me.get('currentHeader');
         }
         var thisCompound = model;
-        var searcher = new Openphacts.CompoundSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new CompoundSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 var pharmaResults = searcher.parseCompoundPharmacologyResponse(response);
@@ -260,7 +260,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
                 me.set('activityTypes', activityTypes);
             }
         };
-        var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+        var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
         activitySearcher.getTypes(null, null, null, null, null, activityTypesCallback);
 
         // fetch all activity units for default in filter select
@@ -309,7 +309,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
         //controller.set('smilesValue', thisCompound.get('smiles'));
         me.set('filteredCompounds', []);
         var structureSearchType = controller.get('structureSearchType');
-        var searcher = new Openphacts.StructureSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new StructureSearch(ldaBaseUrl, appID, appKey);
         var callback = function(success, status, response) {
             me.get('controllers.application').set('fetching', false);
             if (success && response) {
@@ -439,7 +439,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
         controller.set('totalCount', null);
         var me = controller;
         var thisCompound = model;
-        var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+        var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
         //how many pathways for this compound
         var countCallback = function(success, status, response) {
             if (success && response) {

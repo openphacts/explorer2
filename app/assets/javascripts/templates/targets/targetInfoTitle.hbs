@@ -1,14 +1,14 @@
 <div class="col-xs-12 col-sm-12">
-	<div class="centre col-xs-12 col-sm-3">{{target_image_src seeAlso}}</div>
+	<div class="centre col-xs-12 col-sm-3">{{target_image_src model.seeAlso}}</div>
 	<!--title and formula-->
 	<div class="col-xs-12 col-sm-9">
 		{{#if showProvenance}}
 		<h1 class="break-word">
-			{{prefLabelHelper prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{provenanceLinkout conceptwikiProvenance.prefLabel conceptwikiProvenance.source}}
+			{{prefLabelHelper model.prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>{{provenanceLinkout model.conceptwikiProvenance.prefLabel model.conceptwikiProvenance.source}}
 		</h1>
 		{{else}}
 		<h1 class="break-word">
-			{{prefLabelHelper prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>
+			{{prefLabelHelper model.prefLabel}}<i title="Click to add to favourites" {{action 'changeFavouriteStatus'}}{{bind-attr class=":middle :fa favourite:fa-star:fa-star-o"}}></i>
 		</h1>
 		{{/if}}
 	</div>

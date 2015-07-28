@@ -4,7 +4,7 @@ App.PathwaysIndexRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('model', model);
-    var pathwaysSearcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    var pathwaysSearcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
     var compoundCallback=function(success, status, response){
         if (success && response) {
           var compoundResults = pathwaysSearcher.parseGetCompoundsResponse(response);
@@ -33,7 +33,7 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
     controller.set('model', model);
     var me = controller;
     var thisPathway = model;
-    var searcher = new Openphacts.PathwaySearch(ldaBaseUrl, appID, appKey);
+    var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
     var compoundCallback=function(success, status, response){
         me.set('fetching', false);
         if (success && response) {

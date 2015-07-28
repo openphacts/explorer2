@@ -5,7 +5,7 @@ App.TreesIndexRoute = Ember.Route.extend({
         console.log('enzymes index route setup controller');
         controller.set('content', model);
         var me = controller;
-        var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
         var callback = function(success, status, response) {
             Ember.run(function() {me.get('controllers.application').set('fetching', false);});
             if (success && response) {
@@ -85,7 +85,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         console.log('tree pharma controller setup');
         var me = controller;
         controller.set('content', model);
-        var searcher = new Openphacts.TreeSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new TreeSearch(ldaBaseUrl, appID, appKey);
         var pharmaCallback = function(success, status, response) {
             if (success && response) {
                 me.set('page', 1);
@@ -148,13 +148,15 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
                     searcher.getCompoundClassPharmacologyCount(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, compoundCountCallback);
                 } else {
                     controller.set('totalCount', count);
+		    // probably not compound class but this not guaranteed since it could just be a compound class with 0 count - there is no API call to check what something belongs to
+		    controller.set('treeType', null);
                     searcher.getTargetClassPharmacologyPaginated(params.queryParams.uri, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, 50, null, pharmaCallback);
                 }
             } else {
                 me.get('controllers.application').set('fetching', false);
             }
         };
-        var activitySearcher = new Openphacts.ActivitySearch(ldaBaseUrl, appID, appKey);
+        var activitySearcher = new ActivitySearch(ldaBaseUrl, appID, appKey);
         var activityTypesCallback = function(success, status, response) {
             if (success && response) {
                 var activityTypes = activitySearcher.parseTypes(response);
@@ -200,6 +202,7 @@ App.TreesPharmacologyRoute = Ember.Route.extend({
         if (isExiting) {
             // isExiting would be false if only the route's model was changing
             controller.set('showProvenance', false);
+	    //TODO reset the filters
         }
     }
 
