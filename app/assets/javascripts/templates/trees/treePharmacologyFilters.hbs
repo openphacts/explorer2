@@ -9,21 +9,21 @@
 			<div class="modal-body">
 				<div id="activity-filters">
 					<p><h4>Activity Filter</h4></p>
-					{{view Ember.Select
+					{{view 'select'
 					content=activityTypes
 					optionLabelPath="content.label"
 					prompt="Select an activity"
 					value=selectedActivity
 					selection=selectedActivity
 					}}
-					{{view Ember.Select
+					{{view 'select'
 					content=conditions
 					prompt="Select an operator"
 					value=selectedCondition
 					selection=selectedCondition
 					}}
 					{{input type="text" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
-					{{view Ember.Select
+					{{view 'select'
 					content=activityUnits
 					optionLabelPath="content.label"
 					prompt="Select a unit"
@@ -34,19 +34,19 @@
 				<div>
 					<h5>Return activities with the following relation(s) only</h5>
 					<p class="small-padding-right activity-relation-operator">&gt;</p>
-					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</p>
+					<p class="inline big-margin-right">{{input type="checkbox" checked=greaterThan classNames="relation-checkbox"}}</p>
 					<p class="small-padding-right activity-relation-operator">&lt;</p>
-					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</p>
+					<p class="inline big-margin-right">{{input type="checkbox" checked=lessThan classNames="relation-checkbox"}}</p>
 					<p class="small-padding-right activity-relation-operator">=</p>
-					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</p>
+					<p class="inline big-margin-right">{{input type="checkbox" checked=equalTo classNames="relation-checkbox"}}</p>
 					<p class="small-padding-right activity-relation-operator">&ge;</p>
-					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</p>
+					<p class="inline big-margin-right">{{input type="checkbox" checked=greaterThanOrEqual classNames="relation-checkbox"}}</p>
 					<p class="small-padding-right activity-relation-operator">&le;</p>
-					<p class="inline big-margin-right">{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</p>
+					<p class="inline big-margin-right">{{input type="checkbox" checked=lessThanOrEqual classNames="relation-checkbox"}}</p>
 				</div>
 				<div id="pchembl-filters">
 					<p><h4>pChembl Filter</h4></p>
-					{{view Ember.Select
+					{{view 'select'
 					content=pchemblConditions
 					prompt="Select an operator"
 					value=selectedPchemblCondition
