@@ -1,36 +1,36 @@
 <div class="dl-horizontal">
 	<dl class="dl-text-left">
 		<!--identifier ID-->
-		{{#if identifier}}
+		{{#if model.identifier}}
 		<dt>Identifier</dt>
-		<dd>{{pathwayShortLink identifier}}</dd>
+		<dd>{{pathwayShortLink model.identifier}}</dd>
 		{{/if}}
 
 		<!--organism-->
-		{{#if organism}}
+		{{#if model.organism}}
 		<dt>Organism</dt>
-		<dd>{{organismLink organism organismLabel}}</dd>
+		<dd>{{organismLink model.organism model.organismLabel}}</dd>
 		{{/if}}
 
-		{{#if pathwayOntologies}}
+		{{#if model.pathwayOntologies}}
 		<dt>Ontologies</dt>
 		<dd>
-		{{#each ontology in pathwayOntologies}}
+		{{#each ontology in model.pathwayOntologies}}
 		<p>{{ontologyLink ontology}}</p>
 		{{/each}}
 		</dd>
 		{{/if}}
 
 		<!--genes-->
-		{{#if geneProductLabel}}
+		{{#if model.geneProductLabel}}
 		<dt>Gene product</dt>
-		<dd>{{geneProductLabel}}  ({{geneProductURI}}) <p>{{about}}</p></dd>
+		<dd>{{model.geneProductLabel}}  ({{model.geneProductURI}}) <p>{{model.about}}</p></dd>
 		{{/if}}
 
-		{{#if parts}}
+		{{#if model.parts}}
 		<dt>Parts</dt>
 		<dd>
-		{{#each part in parts}}
+		{{#each part in model.parts}}
 		<p>{{vocabPart part.type}} {{#if showProvenance}}({{pathwayShortLink part.about}}) {{provenanceLinkout part.about wikipathwaysProvenance.source}}{{else}}({{pathwayShortLink part.about}}){{/if}}</p>
 		{{/each}}
 		</dd>
