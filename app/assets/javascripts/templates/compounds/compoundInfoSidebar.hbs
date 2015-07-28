@@ -1,88 +1,88 @@
 <div class="col-xs-12 col-sm-3 col-sm-pull-9">
 	<!--box properties-->
 	<div id="boxes">
-		{{#if logp}}
+		{{#if model.logp}}
 		<div class="summary-box no-top-margin">
 			<div class="inner-property-content">
 				<p><small>AlogP</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="logp-provenance">{{logp}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="logp-provenance">{{model.logp}} {{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{logp}}</p>
+				<p class="lead">{{model.logp}}</p>
 				{{/if}}
 
 			</div>
 		</div>
 		{{/if}}
 
-		{{#if hba}}
+		{{#if model.hba}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small># H-Bond Acceptors</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="hba-provenance">{{hba}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="hba-provenance">{{model.hba}} {{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{hba}}</p>
+				<p class="lead">{{model.hba}}</p>
 				{{/if}}
 			</div>
 		</div>
 		{{/if}}
-		{{#if hbd}}
+		{{#if model.hbd}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small># H-Bond Donors</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="hbd-provenance">{{hbd}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="hbd-provenance">{{model.hbd}} {{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{hbd}}</p>
+				<p class="lead">{{model.hbd}}</p>
 				{{/if}}
 			</div>
 		</div>
 		{{/if}}
-		{{#if fullMWT}}
+		{{#if model.fullMWT}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small>Mol Weight</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="mwt-provenance">{{fullMWT}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="mwt-provenance">{{model.fullMWT}} {{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{fullMWT}}</p>
+				<p class="lead">{{model.fullMWT}}</p>
 				{{/if}}
 			</div>
 		</div>
 		{{/if}}
-		{{#if mwFreebase}}
+		{{#if model.mwFreebase}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small>Mol Weight Freebase</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="freebase-provenance">{{mwFreebase}} {{provenanceLinkout chemblURI 'chembl'}}</p>
+				<p class="lead" id="freebase-provenance">{{model.mwFreebase}} {{provenanceLinkout model.chemblURI 'chembl'}}</p>
 				{{else}}
-				<p class="lead">{{mwFreebase}}</p>
+				<p class="lead">{{model.mwFreebase}}</p>
 				{{/if}}
 			</div>
 		</div>
 		{{/if}}
-		{{#if psa}}
+		{{#if model.psa}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small>Polar Surface Area</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="psa-provenance">{{psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="psa-provenance">{{model.psa}} <span class="smaller-font">&#x212b; <sup>2</sup></span>{{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
+				<p class="lead">{{model.psa}} <span class="smaller-font">&#x212b;<sup>2</sup></span></p>
 				{{/if}}
 			</div>
 		</div>
 		{{/if}}
-		{{#if rtb}}
+		{{#if model.rtb}}
 		<div class="summary-box">
 			<div class="inner-property-content">
 				<p><small># Rotatable Bonds</small></p>
 				{{#if showProvenance}}
-				<p class="lead" id="rtb-provenance">{{rtb}} {{provenanceLinkout csURI 'chemspider'}}</p>
+				<p class="lead" id="rtb-provenance">{{model.rtb}} {{provenanceLinkout model.csURI 'chemspider'}}</p>
 				{{else}}
-				<p class="lead">{{rtb}}</p>
+				<p class="lead">{{model.rtb}}</p>
 				{{/if}}
 			</div>
 		</div>

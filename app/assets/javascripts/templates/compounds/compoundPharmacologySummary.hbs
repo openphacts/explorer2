@@ -1,11 +1,11 @@
 <div id="summary-anchor">
 	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
-		<div id="compound-image" {{bind-attr class=":hidden-xs :left :small-padding infoHide:hide:"}}>{{cs_image_src csURI '128px' '128px'}}</div>
-		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=URI)}}{{prefLabelHelper prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
+		<div id="compound-image" {{bind-attr class=":hidden-xs :left :small-padding infoHide:hide:"}}>{{cs_image_src model.csURI '128px' '128px'}}</div>
+		<h3 class="medium-padding-left">{{#link-to "compounds.index" (query-params uri=model.URI)}}{{prefLabelHelper model.prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
 		<div class="hidden-xs hidden-sm">
 			<a href="#compoundPharmaFilterModalView" class="small-margin-bottom btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
-			<button class="btn btn-default small-margin-bottom" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
+			<button class="btn btn-default small-margin-bottom" {{action "tsvDownload" model}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button>
 			<span class="button-group" data-toggle="buttons">
 				<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
 					<input type="radio" name="options" id="option1" checked>Show provenance
@@ -26,7 +26,7 @@
 					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 					<li class="divider"></li>
 					<li><a href="#compoundPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li>
-					<li><a href="#" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></li>
+					<li><a href="#" {{action "tsvDownload" model}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</a></li>
 				</ul>
 			</div>
 		</div>

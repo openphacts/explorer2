@@ -1,4 +1,4 @@
-App.TargetsPharmacologyController = Ember.ObjectController.extend({
+App.TargetsPharmacologyController = Ember.Controller.extend({
 
     needs: ['application', 'flash'],
 

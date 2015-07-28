@@ -1,3 +1,3 @@
-App.CompoundsController = Ember.ObjectController.extend({
+App.CompoundsController = Ember.Controller.extend({
 	
 });

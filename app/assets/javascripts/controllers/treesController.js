@@ -1,3 +1,3 @@
-App.TreesController = Ember.ObjectController.extend({
+App.TreesController = Ember.Controller.extend({
 
 });

@@ -1,4 +1,4 @@
-App.DiseasesIndexController = Ember.ObjectController.extend({
+App.DiseasesIndexController = Ember.Controller.extend({
 
     needs: ['application'],
 

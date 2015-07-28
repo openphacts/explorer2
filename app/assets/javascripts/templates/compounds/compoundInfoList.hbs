@@ -3,9 +3,9 @@
 	{{#if description}}
 	<div class="summary-descriptive-text">
 		{{#if showProvenance}}
-		<p id="description-provenance">{{description}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+		<p id="description-provenance">{{model.description}}</p>{{provenanceLinkout model.drugbankURI 'drugbank'}}
 		{{else}}
-		<p>{{description}}</p>
+		<p>{{model.description}}</p>
 		{{/if}}
 	</div>
 
@@ -14,9 +14,9 @@
 	{{#if biotransformation}}
 	<div class="summary-descriptive-text small-top-spacing medium-padding-bottom">
 		{{#if showProvenance}}
-		<p id="biotrans-provenance">{{biotransformation}}</p>{{provenanceLinkout drugbankURI 'drugbank'}}
+		<p id="biotrans-provenance">{{model.biotransformation}}</p>{{provenanceLinkout model.drugbankURI 'drugbank'}}
 		{{else}}
-		<p>{{biotransformationItem}}</p>
+		<p>{{model.biotransformationItem}}</p>
 		{{/if}}
 	</div>
 
@@ -24,63 +24,63 @@
 	<div class="dl-horizontal">
 		<dl class="dl-text-left">
 			<!-- Molecular formula -->
-			{{#if molform}}
+			{{#if model.molform}}
 			<dt class="medium-padding-top">Molecular Formula</dt>
-			<dd class="medium-padding-top">{{formatMolecularFormula molform}}{{#if showProvenance}}{{provenanceLinkout csURI 'chemspider'}}{{/if}}</dd>
+			<dd class="medium-padding-top">{{formatMolecularFormula model.molform}}{{#if showProvenance}}{{provenanceLinkout model.csURI 'chemspider'}}{{/if}}</dd>
 			{{/if}}
 			<!--Chemspider ID-->
-			{{#if csURI}}
+			{{#if model.csURI}}
 			<dt>OPS RSC ID</dt>
-			<dd class="medium-padding-top">{{linkableChemspiderID csURI}}</dd>
+			<dd class="medium-padding-top">{{linkableChemspiderID model.csURI}}</dd>
 			{{/if}}
 
 			<!--SMILES-->
-			{{#if smiles}}
+			{{#if model.smiles}}
 			<dt class="medium-padding-top">SMILES</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{smiles}}{{/link-to}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+			<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}} {{provenanceLinkout model.csURI 'chemspider'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{smiles}}{{/link-to}}</dd>
+			<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}}</dd>
 			{{/if}}
 			{{/if}}
 
 			<!--InCHL-->
-			{{#if inchi}}
+			{{#if model.inchi}}
 			<dt class="medium-padding-top">Standard  InChI</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="inchi-provenance">{{inchi}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+			<dd class="medium-padding-top" id="inchi-provenance">{{model.inchi}} {{provenanceLinkout model.csURI 'chemspider'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{inchi}}</dd>
+			<dd class="medium-padding-top">{{model.inchi}}</dd>
 			{{/if}}
 			{{/if}}
 
 			<!--InCHLKey-->
-			{{#if inchiKey}}
+			{{#if model.inchiKey}}
 			<dt class="medium-padding-top">Standard InChIKey</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="inchikey-provenance">{{inchiKey}} {{provenanceLinkout csURI 'chemspider'}}</dd>
+			<dd class="medium-padding-top" id="inchikey-provenance">{{model.inchiKey}} {{provenanceLinkout model.csURI 'chemspider'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{inchiKey}}</dd>
+			<dd class="medium-padding-top">{{model.inchiKey}}</dd>
 			{{/if}}
 			{{/if}}
 
 			<!--Protein Binding-->
-			{{#if proteinBinding}}
+			{{#if model.proteinBinding}}
 			<dt class="medium-padding-top">Protein Binding</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="protein-binding-provenance">{{proteinBinding}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+			<dd class="medium-padding-top" id="protein-binding-provenance">{{model.proteinBinding}} {{provenanceLinkout model.drugbankURI 'drugbank'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{proteinBinding}}</dd>
+			<dd class="medium-padding-top">{{model.proteinBinding}}</dd>
 			{{/if}}
 			{{/if}}
 
 			<!--Toxicity-->
-			{{#if toxicity}}
+			{{#if model.toxicity}}
 			<dt class="medium-padding-top">Toxicity</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml toxicity}} {{provenanceLinkout drugbankURI 'drugbank'}}</dd>
+			<dd class="medium-padding-top" id="toxicity-provenance">{{renderHtml model.toxicity}} {{provenanceLinkout model.drugbankURI 'drugbank'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{renderHtml toxicity}}</dd>
+			<dd class="medium-padding-top">{{renderHtml model.toxicity}}</dd>
 			{{/if}}
 			{{/if}}
 		</dl>

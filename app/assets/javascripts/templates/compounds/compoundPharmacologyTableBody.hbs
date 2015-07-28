@@ -1,5 +1,5 @@
 <tbody>
-	{{#each pharmaRecord in pharmacology}}
+	{{#each pharmaRecord in model.pharmacology}}
 	<tr class="record-deco">
 		<td style="vertical-align:middle;" height="70">
 		<p>{{#link-to "targets.index" (query-params uri=pharmaRecord.targetURI)}}{{pharmaRecord.targetTitle}}{{/link-to}} {{#if showProvenance}}{{provenanceLinkout pharmaRecord.targetProvenance pharmaRecord.chemblProvenance.source}}{{/if}}</p>

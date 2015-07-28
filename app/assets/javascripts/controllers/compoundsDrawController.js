@@ -1,4 +1,4 @@
-App.CompoundsDrawController = Ember.ObjectController.extend({
+App.CompoundsDrawController = Ember.Controller.extend({
 
     needs: ['application', 'flash'],
 

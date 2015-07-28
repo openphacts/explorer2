@@ -1,4 +1,4 @@
-App.TargetsIndexController = Ember.ObjectController.extend({
+App.TargetsIndexController = Ember.Controller.extend({
 
     needs: ['application'],
 
@@ -29,6 +29,11 @@ App.TargetsIndexController = Ember.ObjectController.extend({
     threeDeeEnabled: function() {
         return Modernizr.webgl == true && Modernizr.canvas == true;
     }.property('webGLEnabled'),
+
+    favourite: function() {
+        return this.get('model').get('favourite');
+    }.property('model.favourite'),
+
 
     showProvenance: false,
 

@@ -4,14 +4,14 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Select filters for {{this.prefLabel}}</h3>
+				<h3 id="myModalLabel">Select filters for {{model.prefLabel}}</h3>
 			</div>
 			<div class="modal-body" style="overflow-y: visible;">
 				<div id="activity-filters">
 					<p><h4>Activity Filter</h4></p>
 					<div class="row">
 						<div class="col-sm-2">
-							{{view Ember.Select
+							{{view "select"
 							content=activityTypes
 							optionLabelPath="content.label"
 							prompt="Select an activity"
@@ -20,7 +20,7 @@
 							}}
 						</div>
 						<div class="col-sm-2">
-							{{view Ember.Select
+							{{view "select"
 							content=conditions
 							prompt="Select an operator"
 							value=selectedCondition
@@ -31,7 +31,7 @@
 							{{input type="text" class="form-control" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
 						</div>
 						<div class="col-sm-2">
-							{{view Ember.Select
+							{{view "select"
 							content=activityUnits
 							optionLabelPath="content.label"
 							prompt="Select a unit"
@@ -43,17 +43,17 @@
 				</div>
 				<div>
 					<h5>Return activities with the following relation(s) only</h5>
-					<label class="checkbox-inline">&gt;{{view Ember.Checkbox checkedBinding="greaterThan" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&lt;{{view Ember.Checkbox checkedBinding="lessThan" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">={{view Ember.Checkbox checkedBinding="equalTo" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&ge;{{view Ember.Checkbox checkedBinding="greaterThanOrEqual" classNames="relation-checkbox"}}</label>
-					<label class="checkbox-inline">&le;{{view Ember.Checkbox checkedBinding="lessThanOrEqual" classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&gt;{{input type="checkbox" checked=greaterThan classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&lt;{{input type="checkbox" checked=lessThan classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">={{input type="checkbox" checked=equalTo classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&ge;{{input type="checkbox" checked=greaterThanOrEqual classNames="relation-checkbox"}}</label>
+					<label class="checkbox-inline">&le;{{input type="checkbox" checked=lessThanOrEqual classNames="relation-checkbox"}}</label>
 				</div>
 				<div id="pchembl-filters">
 					<p><h4>pChembl Filter</h4></p>
 					<div class="row form-group">
 						<div class="col-sm-2">
-							{{view Ember.Select
+							{{view "select"
 							content=pchemblConditions
 							prompt="Select an operator"
 							value=selectedPchemblCondition

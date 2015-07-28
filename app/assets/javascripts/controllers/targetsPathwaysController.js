@@ -1,4 +1,4 @@
-App.TargetsPathwaysController = Ember.ObjectController.extend({
+App.TargetsPathwaysController = Ember.Controller.extend({
 
   needs: ['application'],
 

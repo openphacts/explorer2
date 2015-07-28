@@ -1,4 +1,4 @@
-App.PathwaysIndexController = Ember.ObjectController.extend({
+App.PathwaysIndexController = Ember.Controller.extend({
 
     needs: ['application'],
 

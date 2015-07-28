@@ -28,7 +28,7 @@ App.Target = App.SearchResult.extend({
     uniprotProvenance: DS.attr(),
     conceptwikiProvenance: DS.attr(),
 
-    diseases: DS.hasMany('disease', { async: true }),
+    diseases: DS.hasMany('disease'),
     diseaseRecords: DS.attr('number'),
 
     diseaseInfoAvailable: function() {
