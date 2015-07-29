@@ -1,4 +1,4 @@
-App.CompoundAdapter = DS.Adapter.extend({
+App.CompoundAdapter = DS.RESTAdapter.extend({
     findRecord: function(store, type, id) {
         var compoundResult;
         // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status

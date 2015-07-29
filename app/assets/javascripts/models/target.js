@@ -40,7 +40,7 @@ App.Target = App.SearchResult.extend({
     }.property('diseaseRecords'),
 
 
-    pathways: DS.hasMany('pathway', { async: true }),
+    pathways: DS.hasMany('pathway'),
     pathwayRecords: DS.attr('number'),
 
     pathwayInfoAvailable: function() {

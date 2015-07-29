@@ -24,7 +24,7 @@ App.Compound = App.SearchResult.extend({
     rtb: DS.attr('number'),
     pharmacology: DS.hasMany('CompoundPharmacology'),
     pharmacologyRecords: DS.attr('number'),
-    pathways: DS.hasMany('pathway', { async: true }),
+    pathways: DS.hasMany('pathway'),
     pathwayRecords: DS.attr('number'),
     structure: DS.hasMany('compound', {inverse: null}),
     structureRecords: DS.attr('number'),
