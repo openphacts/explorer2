@@ -31,7 +31,7 @@ App.TargetsDiseasesController = Ember.Controller.extend({
                         $.each(diseaseResults, function(index, disease) {
                             diseaseID = disease.identifier.split('/').pop();
                             //have to find the pathway record and add it, just adding the ID does not work
-                            me.get('store').find('disease', diseaseID).then(function(disease) {
+                            me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                                 thisTarget.get('diseases').pushObject(disease);
                             });
                         });

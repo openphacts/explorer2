@@ -49,7 +49,7 @@ App.FavouritesRoute = Ember.Route.extend({
                         var cursor = event.target.result;
                         if (cursor) {
                             if (cursor.value.favourite === true) {
-                                me.store.find(types[type], cursor.value.uri).then(function(compound) {
+                                me.store.findRecord(types[type], cursor.value.uri).then(function(compound) {
                                     me.get('model').pushObject(compound);
                                 });;
 

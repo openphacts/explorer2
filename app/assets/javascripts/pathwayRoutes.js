@@ -17,7 +17,7 @@ App.PathwaysIndexRoute = Ember.Route.extend({
   model: function(params) {
     console.log('pathway model');
     var uri = params.uri;
-    return this.get('store').find('pathway', uri);
+    return this.get('store').findRecord('pathway', uri);
   },
 
   beforeModel: function() {
@@ -40,7 +40,7 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
           var compoundResults = searcher.parseGetCompoundsResponse(response);
           me.set('totalCount', compoundResults.metabolites.length);
           $.each(compoundResults.metabolites, function(index, uri) {
-            me.store.find('compound', uri).then(function(compound) {
+            me.store.findRecord('compound', uri).then(function(compound) {
 	          thisPathway.get('compounds').pushObject(compound);
             });
           });
@@ -58,7 +58,7 @@ App.PathwaysCompoundsRoute = Ember.Route.extend({
   model: function(params) {
     console.log('pathway compounds index');
     var uri = params.uri;
-    return this.get('store').find('pathway', uri);
+    return this.get('store').findRecord('pathway', uri);
   },
 
   beforeModel: function() {

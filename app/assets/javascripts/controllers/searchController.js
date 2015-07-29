@@ -88,7 +88,7 @@ App.SearchController = Ember.ArrayController.extend({
                     //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
                     //the promise is generated inside the store adapter for compound, see store.js
                     Ember.run(function() {
-                        me.store.find('compound', result.uri).then(function(compound) {
+                        me.store.findRecord('compound', result.uri).then(function(compound) {
                             if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 compound.set('exactMatch', true);
                                 me.addExactMatch(compound);
@@ -138,7 +138,7 @@ App.SearchController = Ember.ArrayController.extend({
                 $.each(results, function(index, result) {
                     //find the target then add to the search results when the 'promise' returns
                     Ember.run(function() {
-                        me.store.find('target', result.uri).then(function(target) {
+                        me.store.findRecord('target', result.uri).then(function(target) {
                             if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 Ember.run(function() {
                                     target.set('exactMatch', true)
@@ -191,7 +191,7 @@ App.SearchController = Ember.ArrayController.extend({
                 $.each(results, function(index, result) {
                     //find the target then add to the search results when the 'promise' returns
                     Ember.run(function() {
-                        me.store.find('target', result.uri).then(function(target) {
+                        me.store.findRecord('target', result.uri).then(function(target) {
                             if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 Ember.run(function() {
                                     target.set('exactMatch', true)
@@ -241,7 +241,7 @@ App.SearchController = Ember.ArrayController.extend({
                     var uri = structureSearcher.parseSmilesToURLResponse(response);
                     // got the uri from the smiles so now fetch the compound
                     Ember.run(function() {
-                        me.store.find('compound', uri).then(function(compound) {
+                        me.store.findRecord('compound', uri).then(function(compound) {
                             me.addSearchResult(compound);
                             Ember.run(function() {
                                 me.set('totalCompounds', me.get('totalCompounds') + 1)

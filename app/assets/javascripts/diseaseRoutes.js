@@ -11,7 +11,7 @@ App.DiseasesIndexRoute = Ember.Route.extend({
     model: function(params) {
         console.log('disease index model')
         var uri = params.uri
-        var disease = this.controllerFor('diseases.index').store.find('disease', uri);
+        var disease = this.controllerFor('diseases.index').store.findRecord('disease', uri);
         return disease;
     },
 

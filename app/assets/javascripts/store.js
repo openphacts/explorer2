@@ -1,5 +1,5 @@
 App.CompoundAdapter = DS.Adapter.extend({
-    find: function(store, type, id) {
+    findRecord: function(store, type, id) {
         var compoundResult;
         // return a promise inside of which is the callback which either resolves with the retrieved compound data or rejects with the status
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
@@ -24,7 +24,7 @@ App.CompoundAdapter = DS.Adapter.extend({
     }
 });
 App.TargetAdapter = DS.Adapter.extend({
-    find: function(store, type, id) {
+    findRecord: function(store, type, id) {
         return new Ember.RSVP.Promise(function(resolve, reject) {
             var searcher = new TargetSearch(ldaBaseUrl, appID, appKey);
             var callback = function(success, status, response) {
@@ -45,7 +45,7 @@ App.TargetAdapter = DS.Adapter.extend({
     }
 });
 App.PathwayAdapter = DS.Adapter.extend({
-    find: function(store, type, id) {
+    findRecord: function(store, type, id) {
         console.log('pathway adapter find');
         var identifier = id;
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
@@ -71,7 +71,7 @@ App.PathwayAdapter = DS.Adapter.extend({
     }
 });
 App.TreeAdapter = DS.Adapter.extend({
-    find: function(store, type, id) {
+    findRecord: function(store, type, id) {
         console.log('enzyme adapter find');
         var enzymeResponse = {};
         enzymeResponse['id'] = id;
@@ -81,7 +81,7 @@ App.TreeAdapter = DS.Adapter.extend({
     }
 });
 App.DiseaseAdapter = DS.Adapter.extend({
-    find: function(store, type, id) {
+    findRecord: function(store, type, id) {
         console.log('disease adapter find');
         var identifier = id;
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {

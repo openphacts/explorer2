@@ -43,7 +43,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
     model: function(params) {
         console.log('target index model')
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -234,7 +234,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
     model: function(params) {
         console.log('target pharma index route');
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -292,7 +292,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
                     $.each(pathwayResults, function(index, pathwayResult) {
                         pathwayID = pathwayResult.identifier;
                         //have to find the pathway record and add it, just adding the ID does not work
-                        me.get('store').find('pathway', pathwayID).then(function(pathway) {
+                        me.get('store').findRecord('pathway', pathwayID).then(function(pathway) {
                             thisTarget.get('pathways').pushObject(pathway);
                         });
                     });
@@ -316,7 +316,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
     },
     model: function(params) {
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -364,7 +364,7 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
                     $.each(diseaseResults, function(index, diseaseResult) {
                         diseaseID = diseaseResult.URI;
                         //have to find the disease record and add it, just adding the ID does not work
-                        me.get('store').find('disease', diseaseID).then(function(disease) {
+                        me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                             thisTarget.get('diseases').pushObject(disease);
                         });
                     });
@@ -388,7 +388,7 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
     },
     model: function(params) {
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
