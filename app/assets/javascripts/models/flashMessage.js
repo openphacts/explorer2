@@ -7,7 +7,7 @@ App.FlashMessage = DS.Model.extend({
     isSuccess: function() {
         return this.get("type") === "success";
     }.property("type"),
-    isError: function() {
+    isProblem: function() {
         return this.get("type") === "error";
     }.property("type")
 });

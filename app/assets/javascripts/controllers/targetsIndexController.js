@@ -1,6 +1,6 @@
 App.TargetsIndexController = Ember.Controller.extend({
 
-    needs: ['application'],
+    needs: ['application', 'flash'],
 
     queryParams: ['uri'],
 
@@ -188,7 +188,12 @@ App.TargetsIndexController = Ember.Controller.extend({
                         me.get('molViewer').loadMolecule();
                         me.set('showMolecule', true);
                         me.get('threeDeeTarget').modal('show');
-                    });
+                    }).fail(function(){
+			    me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
+				    type: 'error',
+			            message: 'Could not retrieve the PDB file for 3D display. It is probably not available for this target.'
+			    }));
+		    });
                 } else {
                     //already loaded, just show it
                     me.get('threeDeeTarget').modal('show');

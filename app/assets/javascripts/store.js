@@ -137,3 +137,4 @@ App.DiseaseAdapter = App.ExplorerAdapter.extend({
 App.TargetPharmacologyAdapter = App.ExplorerAdapter.extend({});
 App.CompoundPharmacologyAdapter = App.ExplorerAdapter.extend({});
 App.TreePharmacologyAdapter = App.ExplorerAdapter.extend({});
+App.FlashMessageAdapter = App.ExplorerAdapter.extend({});
