@@ -29,13 +29,13 @@
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
 				{{#if hasPharmacology}}
-				<li>{{#link-to "compounds.pharmacology" (query-params uri=this.URI)}}Pharmacology<span class="badge small-margin-left">{{model.pharmacologyRecords}}</span>{{/link-to}}</li>
+				<li>{{#link-to "compounds.pharmacology" (query-params uri=model.URI)}}Pharmacology<span class="badge small-margin-left">{{model.pharmacologyRecords}}</span>{{/link-to}}</li>
 				{{/if}}
 				{{#if hasPathways}}
-				<li>{{#link-to "compounds.pathways" (query-params uri=this.URI)}}Pathways<span class="badge small-margin-left">{{model.pathwayRecords}}</span>{{/link-to}}</li>
+				<li>{{#link-to "compounds.pathways" (query-params uri=model.URI)}}Pathways<span class="badge small-margin-left">{{model.pathwayRecords}}</span>{{/link-to}}</li>
 				{{/if}}
-				<li>{{#link-to "compounds.structure" (query-params smiles=this.smiles type="exact")}}Search by structure{{/link-to}}</li>
-				<li>{{#link-to "compounds.draw" (query-params smiles=this.smiles)}}Draw Molecule{{/link-to}}</li>
+				<li>{{#link-to "compounds.structure" (query-params smiles=model.smiles type="exact")}}Search by structure{{/link-to}}</li>
+				<li>{{#link-to "compounds.draw" (query-params smiles=model.smiles)}}Draw Molecule{{/link-to}}</li>
 			</ul>
 		</div>
 	</div>
