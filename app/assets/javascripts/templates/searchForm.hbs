@@ -1,0 +1,9 @@
+<form class="hidden-md hidden-lg" role="search">
+	<div class="input-group" id="search-form" title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
+		{{input type="text" placeholder="Enter search terms" value=searchQuery action="query" id="search_box" class="form-control" autocomplete="off"}}
+		<span class="input-group-btn">
+			<button id="search-button" type="submit" class="btn btn-default" {{action 'query'}}>Search</button>
+		</span>
+	</div>
+</form>
+
