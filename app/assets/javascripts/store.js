@@ -70,7 +70,6 @@ App.TargetAdapter = App.ExplorerAdapter.extend({
 App.PathwayAdapter = App.ExplorerAdapter.extend({
     findRecord: function(store, type, id) {
 	    var pathwayResult = {};
-        console.log('pathway adapter find');
         var identifier = id;
         var promise = new Ember.RSVP.Promise(function(resolve, reject) {
             var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
