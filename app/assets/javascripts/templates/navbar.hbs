@@ -1,5 +1,12 @@
 <div class="hidden-sm hidden-md hidden-lg small-margin">
-	{{partial "searchForm"}}
+<form role="search">
+	<div class="input-group" id="search-form" title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
+		{{input id="search_box_responsive"type="text" placeholder="Enter search terms" value=searchQuery action="query" class="form-control" autocomplete="off"}}
+		<span class="input-group-btn">
+			<button id="search-button" type="submit" class="btn btn-default" {{action 'query'}}>Search</button>
+		</span>
+	</div>
+</form>
 </div>
 <nav class="navbar navbar-static-top navbar-inverse" role="navigation" style="z-index: 1;">
 <div class="container-fluid">
@@ -14,7 +21,14 @@
 	</div>
 	<div class="collapse navbar-collapse" id="explorer-navbar-collapse">
 		<div class="hidden-xs">
-			{{partial "searchForm"}}
+	<form class="navbar-form navbar-left" role="search">
+		<div class="input-group" id="search-form" title="Search for compounds or targets using free text eg Asprin, PDE5 or a SMILES eg CC(=O)OC1=CC=CC=C1C(=O)O. Some auto-complete suggestions may be provided but you do not have to select these. To ignore them just click the button to search using the text you entered in the box. To remove the suggestions click Escape (ESC). You can also just hit enter when you have finished typing in but this will probably select the first auto-complete suggestion provided.">
+			{{input id="search_box" type="text" placeholder="Enter search terms" value=searchQuery action="query" class="form-control" autocomplete="off"}}
+			<span class="input-group-btn">
+				<button id="search-button" type="submit" class="btn btn-default" {{action 'query'}}>Search</button>
+			</span>
+		</div>
+	</form>
 		</div>	
 		<ul class="hidden-sm nav navbar-nav navbar-right">
 			<li id="structure-search-link" title="Search for a compound with a specific structure using a SMILES. Choose from an exact, sub-structure or similarity search.">{{#link-to "compounds.structure"}}Search for structure{{/link-to}}</li>
