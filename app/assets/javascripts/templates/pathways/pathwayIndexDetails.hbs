@@ -15,7 +15,7 @@
 		{{#if model.pathwayOntologies}}
 		<dt>Ontologies</dt>
 		<dd>
-		{{#each ontology in model.pathwayOntologies}}
+		{{#each model.pathwayOntologies as |ontology|}}
 		<p>{{ontologyLink ontology}}</p>
 		{{/each}}
 		</dd>
@@ -30,7 +30,7 @@
 		{{#if model.parts}}
 		<dt>Parts</dt>
 		<dd>
-		{{#each part in model.parts}}
+		{{#each model.parts as |part|}}
 		<p>{{vocabPart part.type}} {{#if showProvenance}}({{pathwayShortLink part.about}}) {{provenanceLinkout part.about wikipathwaysProvenance.source}}{{else}}({{pathwayShortLink part.about}}){{/if}}</p>
 		{{/each}}
 		</dd>

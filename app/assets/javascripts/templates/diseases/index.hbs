@@ -14,7 +14,7 @@
 			{{#if model.hasDiseaseClasses}}
 			<h3>Disease Classes</h3>
 			<ul class="list-inline">
-				{{#each diseaseClass in model.diseaseClass}}
+				{{#each model.diseaseClass as |diseaseClass|}}
 				<li>{{diseaseClassLink diseaseClass}}</li>
 				{{/each}}
 			</ul>

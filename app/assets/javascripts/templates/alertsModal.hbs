@@ -14,7 +14,7 @@
 							<tr><th class="centre" style="width: 10%">Date</th><th class="centre" style="width: 30%;">Label</th><th class="centre" style="width:30%;">Percentage</th><th class="centre" style="width:15%;">Status</th><th class="centre" style="width:10%;"></th><th style="width: 5%;"></th></tr>
 						</thead>
 						<tbody>
-						{{#each job in jobsList}}
+						{{#each jobsList as |job|}}
 						{{#if job.complete}}
 						<tr class="record-deco">
 							<td class="small-padding">{{getDateForJob job}}</td>

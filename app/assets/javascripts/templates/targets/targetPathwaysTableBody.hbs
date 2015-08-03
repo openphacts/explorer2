@@ -1,5 +1,5 @@
 <tbody>
-	{{#each  pathway in pathways}}
+	{{#each  pathways as |pathway|}}
 	<tr class="record-deco">
 		<td class="cell-basictext">{{#link-to "pathways.index" (query-params uri=pathway.identifier)}}{{pathway.title}}{{/link-to}}</td>
 		<td class="cell-basictext">{{textLink pathway.identifier}}</td>

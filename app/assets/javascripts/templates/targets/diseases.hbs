@@ -25,13 +25,13 @@
 					<tr><th>Name</th><th>Disease classes</th></tr>
 				</thead>
 				<tbody>
-					{{#each disease in model.diseases}}
+					{{#each model.diseases as |disease|}}
 					<tr class="record-deco">
 						<td class="cell-basictext small-padding-left small-padding-right">{{#link-to 'diseases.index' (query-params uri=disease.URI)}}{{disease.name}}{{/link-to}}</td>
 						<td class="cell-basictext small-padding-left small-padding-right">
 							{{#if disease.hasDiseaseClasses}}
 							<ul class="list-inline">
-								{{#each diseaseClass in disease.diseaseClass}}
+								{{#each disease.diseaseClass as |diseaseClass|}}
 								<li>{{diseaseClassLink diseaseClass}}</li>
 								{{/each}}
 							</ul>

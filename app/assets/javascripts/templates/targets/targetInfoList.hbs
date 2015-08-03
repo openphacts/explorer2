@@ -59,9 +59,9 @@
 			{{#if model.seeAlso}}
 			<dt>PDB</dt>
 			{{#if showProvenance}}
-			<dd>{{provenanceLinkout model.uniprotProvenance.seeAlso model.uniprotProvenance.source}} {{#each sa in model.seeAlso}} {{pdbLink sa}} {{/each}}</dd>
+			<dd>{{provenanceLinkout model.uniprotProvenance.seeAlso model.uniprotProvenance.source}} {{#each model.seeAlso as |sa|}} {{pdbLink sa}} {{/each}}</dd>
 			{{else}}
-			<dd>{{#each sa in model.seeAlso}} {{pdbLink sa}} {{/each}}</dd>
+			<dd>{{#each model.seeAlso as |sa|}} {{pdbLink sa}} {{/each}}</dd>
 			{{/if}}
 			{{/if}}
 
