@@ -138,3 +138,4 @@ App.CompoundPharmacologyAdapter = App.ExplorerAdapter.extend({});
 App.TreePharmacologyAdapter = App.ExplorerAdapter.extend({});
 App.FlashMessageAdapter = App.ExplorerAdapter.extend({});
 App.JobAdapter = App.ExplorerAdapter.extend({});
+App.CompoundDrawAdapter = App.ExplorerAdapter.extend({});

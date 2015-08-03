@@ -80,10 +80,12 @@ App.CompoundsDrawRoute = Ember.Route.extend({
         console.log('compound ketcher model')
         var smiles = params.smiles;
         var structureInfo = {
-            'smiles': smiles
+            'structure': {
+		'smiles': smiles
+	    }
         };
-        var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
-        return structure;
+        //var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
+        return structureInfo;
     },
 
     beforeModel: function() {
