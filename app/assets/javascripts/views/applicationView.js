@@ -9,7 +9,23 @@ App.ApplicationView = Ember.View.extend({
         });
         var engine = new Bloodhound({
             name: 'animals',
-            remote: typeaheadUrl + '?query=%QUERY',
+            remote: {
+		        url: typeaheadUrl + '?q=%QUERY',
+	                filter: function(data) {
+				var response = [];
+				data.hits.forEach(function(hit) {
+					//TODO decide which label metadata is of relevance - label, altLabel, Synonym, title etc
+					var label;
+				       if (hit.label != null) {
+					       label = hit.label[0];
+				       } else if (hit.title != null) {
+                                           label = hit.title[0];
+				       }       
+                                    label != null ? response.push({value: label}) : '';
+				});
+				return response;
+			}
+	    },
             datumTokenizer: function(d) {
                 return Bloodhound.tokenizers.whitespace(d.val);
             },
