@@ -3476,65 +3476,25 @@ ConceptWikiSearch = function(baseURL, appID, appKey) {
 }
 
 /**
- * Performs a free text search to resolve the identity of an entity as specified by the given type
- * in a certain branch.
- * @param {string} query - Query of at least three characters.
- * @param {string} limit - The maximum number of search results.
- * @param {string} branch - The branch of ConceptWiki to search in: 1 = Community, 2 = UMLS, 3 = SwissProt,
- *                          4 = ChemSpider, 5 = Computer Inferred, 6 = Pathway Ontology, 7 = WikiPathways.
- * @param {string} type - The type of entity for which is search: 07a84994-e464-4bbf-812a-a4b96fa3d197 for
- *                        'Chemical Viewed Structurally', eda73945-b112-407e-811a-88448966834f for
- *                        'Disease or Syndrome', or eeaec894-d856-4106-9fa1-662b1dc6c6f1 for
- *                        'Amino Acid, Peptide, or Protein'
- * @param {requestCallback} callback - Function that will be called with the result.
- * @method
- */
-ConceptWikiSearch.prototype.byTag = function(query, limit, branch, type, callback) {
-	params={};
-	params['_format'] = "json";
-	params['app_key'] = this.appKey;
-	params['app_id'] = this.appID;
-	params['q'] = query;
-	limit ? params['limit'] = limit : '';
-	branch ? params['branch'] = branch : '';
-	params['uuid'] = type;
-	nets({
-        url: this.baseURL + '/search/byTag?' + Utils.encodeParams(params),
-        method: "GET",
-        // 30 second timeout just in case
-        timeout: 30000,
-        headers: {
-            "Accept": "application/json"
-        }
-    }, function(err, resp, body) {
-        if (resp.statusCode === 200) {
-            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()).result);
-        } else {
-            callback.call(this, false, resp.statusCode);
-        }
-    });
-
-}
-
-/**
  * Performs a free text search to resolve the identity of an entity in a certain branch.
  * @param {string} query - Query of at least three characters.
  * @param {string} limit - The maximum number of search results.
- * @param {string} branch - The branch of ConceptWiki to search in: 1 = Community, 2 = UMLS, 3 = SwissProt,
- *                          4 = ChemSpider, 5 = Computer Inferred, 6 = Pathway Ontology, 7 = WikiPathways.
+ * @param {string} branch - The branch to search in: chebi, uniprot, drugbank, chembl or ocrs.
+ * @param {string} type - Restrict search by compound, target or targetComponent.
  * @param {requestCallback} callback - Function that will be called with the result.
  * @method
  */
-ConceptWikiSearch.prototype.freeText = function(query, limit, branch, callback) {
+ConceptWikiSearch.prototype.freeText = function(query, limit, branch, type, callback) {
     params={};
     params['_format'] = "json";
     params['app_key'] = this.appKey;
     params['app_id'] = this.appID;
     params['q'] = query;
-    limit ? params['limit'] = limit : '';
-    branch ? params['branch'] = branch : '';
+    limit ? params['l'] = limit : '';
+    branch ? params['b'] = branch : '';
+    type != null ? params['t'] = type : '';
     nets({
-        url: this.baseURL + '/search/freetext?' + Utils.encodeParams(params),
+        url: this.baseURL + '/search?' + Utils.encodeParams(params),
         method: "GET",
         // 30 second timeout just in case
         timeout: 30000,
@@ -3543,7 +3503,7 @@ ConceptWikiSearch.prototype.freeText = function(query, limit, branch, callback) 
         }
     }, function(err, resp, body) {
         if (resp.statusCode === 200) {
-            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()).result);
+            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()));
         } else {
             callback.call(this, false, resp.statusCode);
         }
@@ -3552,17 +3512,16 @@ ConceptWikiSearch.prototype.freeText = function(query, limit, branch, callback) 
 
 }
 
-ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callback) {
+ConceptWikiSearch.prototype.findCompounds = function(query, limit, callback) {
 	params = {};
-	params['uuid'] = '07a84994-e464-4bbf-812a-a4b96fa3d197';
 	params['_format'] = "json";
     params['app_key'] = this.appKey;
     params['app_id'] = this.appID;
     params['q'] = query;
-    limit ? params['limit'] = limit : '';
-    branch ? params['branch'] = branch : '';
+    params['t'] = 'compound';
+    limit != null ? params['l'] = limit : '';
     nets({
-        url: this.baseURL + '/search/byTag?' + Utils.encodeParams(params),
+        url: this.baseURL + '/search?' + Utils.encodeParams(params),
         method: "GET",
         // 30 second timeout just in case
         timeout: 30000,
@@ -3571,26 +3530,23 @@ ConceptWikiSearch.prototype.findCompounds = function(query, limit, branch, callb
         }
     }, function(err, resp, body) {
         if (resp.statusCode === 200) {
-            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()).result);
+            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()));
         } else {
             callback.call(this, false, resp.statusCode);
         }
     });
-
-	
 }
 
-ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callback) {
+ConceptWikiSearch.prototype.findTargets = function(query, limit, callback) {
 	params = {};
-	params['uuid'] = 'eeaec894-d856-4106-9fa1-662b1dc6c6f1';
 	params['_format'] = "json";
     params['app_key'] = this.appKey;
     params['app_id'] = this.appID;
     params['q'] = query;
-    limit ? params['limit'] = limit : '';
-    branch ? params['branch'] = branch : '';
+    limit ? params['l'] = limit : '';
+    params['t'] = 'target';
     nets({
-        url: this.baseURL + '/search/byTag?' + Utils.encodeParams(params),
+        url: this.baseURL + '/search?' + Utils.encodeParams(params),
         method: "GET",
         // 30 second timeout just in case
         timeout: 30000,
@@ -3599,68 +3555,28 @@ ConceptWikiSearch.prototype.findTargets = function(query, limit, branch, callbac
         }
     }, function(err, resp, body) {
         if (resp.statusCode === 200) {
-            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()).result);
+            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()));
         } else {
             callback.call(this, false, resp.statusCode);
         }
     });
-
-}
-
-ConceptWikiSearch.prototype.findConcept = function(uuid, branch, callback) {
-	params = {};
-	params['uuid'] = uuid;
-	branch != null ? params['branch'] = branch : '';
-	params['_format'] = "json";
-    params['app_key'] = this.appKey;
-    params['app_id'] = this.appID;
-    nets({
-        url: this.baseURL + '/getConceptDescription?' + Utils.encodeParams(params),
-        method: "GET",
-        // 30 second timeout just in case
-        timeout: 30000,
-        headers: {
-            "Accept": "application/json"
-        }
-    }, function(err, resp, body) {
-        if (resp.statusCode === 200) {
-            callback.call(this, true, resp.statusCode, JSON.parse(body.toString()).result);
-        } else {
-            callback.call(this, false, resp.statusCode);
-        }
-    });
-
 }
 
 ConceptWikiSearch.prototype.parseResponse = function(response) {
 	var uris = [];
-	//response can be either array or singleton.
-    if (response.primaryTopic.result) {
-		    Utils.arrayify(response.primaryTopic.result).forEach(function(match, i) {
+        response.hits.forEach(function(hit, i) {
+		var label;
+		hit["label"] != null ? label = hit["label"][0] : '';
+		if (label != null) {
+                    hit["altLabel"] ? label = hit["altLabel"][0] : '';
+		}
 			    uris.push({
-				   'uri': match["_about"],
-				   'prefLabel': match["prefLabel"],
-				   'match': match["match"]
+				   'uri': hit["@id"],
+				   'prefLabel': label,
+				   'type': hit["@ops_type"]
 			    });
 		    });
-    }
 	return uris;
-}
-
-ConceptWikiSearch.prototype.parseFindConceptResponse = function(response) {
-	var prefLabel = response.primaryTopic.prefLabel_en;
-	var definition = response.primaryTopic.definition != null ? response.primaryTopic.definition : null;
-	var altLabels = [];
-	if (response.primaryTopic.altLabel_en) {
-		response.primaryTopic.altLabel_en.forEach(function(altLabel, index) {
-			altLabels.push(altLabel);
-		});
-	}
-	return {
-		prefLabel: prefLabel,
-		definition: definition,
-		altLabels: altLabels
-	};
 }
 
 },{"./Constants":17,"./Utils":27,"nets":6}],17:[function(require,module,exports){
@@ -7420,7 +7336,7 @@ Version = function Version() {
  */
 Version.prototype.information = function() {
 	return {
-               "version": "6.0.0", 
+               "version": "6.0.2", 
                "author": "Ian Dunlop",
 	       "ORCID": "http://orcid.org/0000-0001-7066-3350",
                "title": "OPS.js",

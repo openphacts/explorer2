@@ -77,7 +77,7 @@ App.SearchController = Ember.ArrayController.extend({
 
     doSearch: function() {
         var me = this;
-        var searcher = new ConceptWikiSearch(ldaBaseUrl, appID, appKey);
+        var searcher = new ConceptWikiSearch(OPSSearchURL, appID, appKey);
         var cwCompoundCallback = function(success, status, response) {
             Ember.run(function() {
                 me.get('controllers.application').set('fetching', false)
@@ -282,9 +282,9 @@ App.SearchController = Ember.ArrayController.extend({
         me.set('totalTargets', 0);
         me.get('controllers.application').set('fetching', true);
         //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
+        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), null, 'target', cwTargetCallback);
         //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '4', cwCompoundCallback);
+        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), null, 'compound', cwCompoundCallback);
         //smiles for compounds
         structureSearcher.smilesToURL(me.getCurrentQuery(), structureCallback);
 
