@@ -6,6 +6,17 @@ App.DiseasesIndexRoute = Ember.Route.extend({
         console.log('disease index controller');
         controller.set('model', model);
         var disease = model;
+
+        var diseaseSearcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
+        var diseaseCountCallback = function(success, status, response) {
+            if (success && response) {
+                var count = diseaseSearcher.parseTargetsByDiseaseCountResponse(response);
+                Ember.run(function() {
+                    disease.set('targetRecords', count);
+                });
+            }
+        };
+diseaseSearcher.targetsByDiseaseCount(disease.get('id'), null, diseaseCountCallback);
     },
 
     model: function(params) {
