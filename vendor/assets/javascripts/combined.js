@@ -4306,14 +4306,19 @@ DiseaseSearch.prototype.parseDiseasesByTargetResponse = function(response) {
         URI = item[constants.ABOUT];
         gene = {};
         gene["URI"] = item.forGene[constants.ABOUT];
-        gene["encodes"] = item.forGene.encodes[constants.ABOUT];
-        if (item.forGene.encodes.exactMatch != null) {
-            gene["encodesProvenance"] = item.forGene.encodes.exactMatch[constants.ABOUT] != null ? item.forGene.encodes.exactMatch[constants.ABOUT] : null;
-            gene["encodesLabel"] = item.forGene.encodes.exactMatch.prefLabel != null ? item.forGene.encodes.exactMatch.prefLabel : null;
+	gene["encodes"] = [];
+	Utils.arrayify(item.forGene.encodes).forEach(function(encode, i) {
+               var about = encode[constants.ABOUT];
+	    	if (encode.exactMatch != null) {
+               var provenance = encode.exactMatch[constants.ABOUT] != null ? item.forGene.encodes.exactMatch[constants.ABOUT] : null;
+               var label = encode.exactMatch.prefLabel != null ? item.forGene.encodes.exactMatch.prefLabel : null;
+	       gene["encodes"].push({"uri": about, "provenance": provenance, "label": label});
         } else {
-            gene["encodesProvenance"] = null;
-            gene["encodesLabel"] = null;
+		gene["encodes"].push({"uri": about});
+               gene["provenance"] = null;
+               gene["label"] = null;
         }
+	});
         diseases.push({
             "name": name,
             "URI": URI,
@@ -4777,7 +4782,7 @@ module.exports = Openphacts;
  * @typedef {Array.<Object>} DiseasesByTargetResponse
  * @property {string} URI - URI
  * @property {string} name - name
- * @property {Array.<object>} gene - containing URI for the gene, link to the gene it encodes, encodesLabel and encodesProvenance link to where the label came from
+ * @property {Array.<object>} gene - containing URI for the gene and an array of encoded genes with link to the gene it encodes, label and provenance link to where the label came from
  */
 /** 
  * Contains list of targets for a particular disease fetched with {@link DiseaseSearch#targetsByDisease}
@@ -5259,9 +5264,9 @@ PathwaySearch.prototype.parseByCompoundResponse = function(response) {
         parts = item.hasPart;
         about = parts[constants.ABOUT];
         type = parts.type;
-        geneProductLabel = parts.exactMatch.prefLabel;
+        geneProductLabel = parts.exactMatch != null ? parts.exactMatch.prefLabel : null;
         geneProductURI = parts[constants.ABOUT];
-        geneProductCWURI = parts.exactMatch[constants.ABOUT];
+        geneProductCWURI = parts.exactMatch != null ? parts.exactMatch[constants.ABOUT] : null;
         organism = item.pathway_organism[constants.ABOUT];
         organismLabel = item.pathway_organism.label;
         description = item.description ? item.description : null;
@@ -7420,7 +7425,7 @@ Version = function Version() {
  */
 Version.prototype.information = function() {
 	return {
-               "version": "6.0.0", 
+               "version": "6.1.3", 
                "author": "Ian Dunlop",
 	       "ORCID": "http://orcid.org/0000-0001-7066-3350",
                "title": "OPS.js",
@@ -7429,7 +7434,7 @@ Version.prototype.information = function() {
                "organization": "School of Computer Science",
                "address": "University of Manchester, UK",
                "year": "2015",
-               "month": "July",
+               "month": "August",
                "url": "http://github.com/openphacts/ops.js",
                "LDA-version": "1.5"
            }; 

@@ -1,7 +1,7 @@
 <div id="summary-anchor">
 	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
-		<div id="target-image" {{bind-attr class=":hidden-xs :left :medium-padding infoHide:hide:"}}>{{target_image_src seeAlso}}</div>
-		<h3 class="medium-padding-left">{{#link-to "targets.index" (query-params uri=URI)}}{{prefLabelHelper prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
+		<div id="target-image" {{bind-attr class=":hidden-xs :left :medium-padding infoHide:hide:"}}>{{target_image_src model.seeAlso}}</div>
+		<h3 class="medium-padding-left">{{#link-to "targets.index" (query-params uri=model.URI)}}{{prefLabelHelper model.prefLabel}}{{/link-to}}{{#if notEmpty}} ({{currentCount}} of {{totalCount}} results loaded){{/if}}</h3>
 		<!-- Options -->
 		<span class="hidden-xs hidden-sm medium-padding-left text-bottom">
 			<a href="#targetPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a>
@@ -28,8 +28,8 @@
 					<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
 					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 					<li class="divider"></li>
-					<li><a href="#targetPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li>
-					<li><a href="#" {{action "tsvDownload" this}} title="Click to create TSV formatted target pharmacology results">Create TSV</a></li>
+					{{!-- <li><a href="#targetPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li> --}}
+					{{!-- <li><a href="#" {{action "tsvDownload" model}} title="Click to create TSV formatted target pharmacology results">Create TSV</a></li> --}}
 				</ul>
 			</div>
 		</div>

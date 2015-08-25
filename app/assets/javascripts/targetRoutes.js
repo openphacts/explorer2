@@ -30,7 +30,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
             if (success && response) {
                 var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
                 Ember.run(function() {
-			target.set('pathwaysRecords', count);
+			target.set('pathwayRecords', count);
 		});
 	    }
 	}
