@@ -45,11 +45,13 @@
 		<ul class="list-inline">
 			<li><em class="muted">Target</em></li>
 			{{#if result.hasPathways}}
-			<li>{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}<span class="badge">{{result.pathwayRecords}}</span></li>
+			<li>{{#link-to "targets.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}
+			<span class="badge">{{result.pathwayRecords}}</span></li>
 			{{/if}}
 			{{#if result.hasPharmacology}}
 			<li>
-			{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}<span class="badge">{{result.pharmacologyRecords}}</span></li>
+			{{#link-to "targets.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}
+			<span class="badge">{{result.pharmacologyRecords}}</span></li>
 			{{/if}}
 		</ul>
 	</div>
