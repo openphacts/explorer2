@@ -1,1 +1,15 @@
-Disease targets
+Targets for {{#link-to 'diseases.index' (query-params uri=model.URI)}}{{model.name}}{{/link-to}} ({{model.targets.length}} of {{model.targetRecords}})
+{{#if model.hasTargets}}
+<div class="table-responsive">
+<table class="mytable">
+	<thead class="headingstyle">
+		<tr><th>Target</th></tr>
+	</thead>
+	<tbody class="record-deco">
+	{{#each target in model.targets}}
+		<tr class="cell-basictext"><td>{{#link-to 'targets.index' (query-params uri=model.URI)}}{{target.prefLabel}}{{/link-to}}</td></tr>
+	{{/each}}
+	</tbody>
+</table>
+</div>
+{{/if}}

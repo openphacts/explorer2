@@ -38,7 +38,7 @@ diseaseSearcher.targetsByDiseaseCount(disease.get('id'), null, diseaseCountCallb
     }
 });
 
-App.DiseasesTargetsIndexRoute = Ember.Route.extend({
+App.DiseasesTargetsRoute = Ember.Route.extend({
 
 	setupController: function(controller, model, params) {
 		console.log('disease targets index controller');
