@@ -16,6 +16,7 @@
 				{{else}}
 				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</h3>
 				{{/if}}
+				({{model.diseases.length}} of {{model.diseaseRecords}})
 			</div>
 
 

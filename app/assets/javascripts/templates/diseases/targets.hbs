@@ -1,3 +1,10 @@
+<!-- breadcrumb	-->
+<ul class="breadcrumb hidden-xs">
+	<li>{{#link-to "index"}}Home{{/link-to}}</li>
+	<li>{{#link-to "diseases.index" (query-params uri=model.URI)}}{{model.name}}{{/link-to}}</li>
+	<li class="active">Targets</li>
+</ul>
+
 <div class="container">
     <div class="large-top-spacing">
         <div class="row">
@@ -14,7 +21,7 @@
                     <tbody class="record-deco">
                         {{#each target in model.targets}}
                         <tr class="cell-basictext">
-                            <td>{{#link-to 'targets.index' (query-params uri=model.URI)}}{{target.prefLabel}}{{/link-to}}</td>
+                            <td>{{#link-to 'targets.index' (query-params uri=target.URI)}}{{target.prefLabel}}{{/link-to}}</td>
                         </tr>
                         {{/each}}
                     </tbody>

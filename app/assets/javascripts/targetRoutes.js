@@ -332,12 +332,13 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
         var me = controller;
         var thisTarget = model;
         var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
-        //how many pathways for this compound
+        //how many diseases for this target
         var countCallback = function(success, status, response) {
             me.get('controllers.application').set('fetching', false);
             if (success && response) {
                 var count = searcher.parseDiseasesByTargetCountResponse(response);
                 controller.set('totalCount', count);
+		model.set('diseaseRecords', count);
                 if (count > 0) {
                     searcher.diseasesByTarget(thisTarget.get('URI'), 1, 50, null, null, diseasesByTargetCallback);
                 }
@@ -348,6 +349,7 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
             if (success && response) {
                 var count = searcher.parseDiseasesByTargetCountResponse(response);
                 controller.set('totalCount', count);
+		model.set('diseaseRecords', count);
                 //set page just in case it is for a different compound previously loaded
                 if (me.get('currentCount') % 50 > 0) {
                     me.set('page', Math.floor(me.get('currentCount') / 50) + 1);
