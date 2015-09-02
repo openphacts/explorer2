@@ -78,6 +78,7 @@ App.SearchController = Ember.ArrayController.extend({
     doSearch: function() {
         var me = this;
         var searcher = new ConceptWikiSearch(ldaBaseUrl, appID, appKey);
+	var diseaseSearcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
         var cwCompoundCallback = function(success, status, response) {
             Ember.run(function() {
                 me.get('controllers.application').set('fetching', false)
@@ -172,9 +173,20 @@ App.SearchController = Ember.ArrayController.extend({
                                 }
                             };
 
+			    var diseaseCountCallback = function(success, status, response) {
+				    if (success && response) {
+					    var count = diseaseSearcher.parseDiseasesByTargetCountResponse(response);
+					    Ember.run(function() {
+						    target.set('diseaseRecords', count);
+					    });
+				    }
+
+			    }
+
                             var targetURI = target.get('URI');
                             targetSearcher.targetPharmacologyCount(targetURI, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, pharmaCountCallback);
                             pathwaysSearcher.countPathwaysByTarget(targetURI, null, null, pathwaysCountCallback);
+			    diseaseSearcher.diseasesByTargetCount(targetURI, null, diseaseCountCallback);
                         })
                     });
                 });
