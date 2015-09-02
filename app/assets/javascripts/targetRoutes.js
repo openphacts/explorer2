@@ -344,20 +344,20 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
                 }
             }
         };
-        var countOnlyCallback = function(success, status, response) {
-            me.get('controllers.application').set('fetching', false);
-            if (success && response) {
-                var count = searcher.parseDiseasesByTargetCountResponse(response);
-                controller.set('totalCount', count);
-		model.set('diseaseRecords', count);
-                //set page just in case it is for a different compound previously loaded
-                if (me.get('currentCount') % 50 > 0) {
-                    me.set('page', Math.floor(me.get('currentCount') / 50) + 1);
-                } else {
-                    me.set('page', me.get('currentCount') / 50);
-                }
-            }
-        };
+//        var countOnlyCallback = function(success, status, response) {
+//            me.get('controllers.application').set('fetching', false);
+//           if (success && response) {
+//                var count = searcher.parseDiseasesByTargetCountResponse(response);
+//                controller.set('totalCount', count);
+//		model.set('diseaseRecords', count);
+//                //set page just in case it is for a different compound previously loaded
+//                if (me.get('currentCount') % 50 > 0) {
+//                    me.set('page', Math.floor(me.get('currentCount') / 50) + 1);
+//                } else {
+//                    me.set('page', me.get('currentCount') / 50);
+//                }
+//            }
+//        };
 
         //load the diseases for this compound
         var diseasesByTargetCallback = function(success, status, response) {
@@ -374,18 +374,18 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
             }
             //searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
             //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
-        if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
+//        if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
             me.get('controllers.application').set('fetching', true);
             searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
-        } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
-            //could still be count for a different compound
-            me.get('controllers.application').set('fetching', true);
-            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
-        } else {
-            //reset the totalCount just to be sure
-            me.get('controllers.application').set('fetching', true);
-            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countOnlyCallback);
-        }
+//        } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
+//            //could still be count for a different compound
+//            me.get('controllers.application').set('fetching', true);
+//            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
+//        } else {
+//            //reset the totalCount just to be sure
+//            me.get('controllers.application').set('fetching', true);
+//            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countOnlyCallback);
+//       }
 
     },
     model: function(params) {
