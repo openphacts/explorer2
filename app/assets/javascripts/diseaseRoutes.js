@@ -64,7 +64,7 @@ if (success && response) {
  });
 }
 }
-diseaseSearcher.targetsByDisease(disease.get('id'), 1, 50, null, null, diseaseTargetsCallback);
+diseaseSearcher.targetsByDisease(disease.get('id'), 1, 'all', null, null, diseaseTargetsCallback);
 		}
             }
         };
