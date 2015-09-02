@@ -1,0 +1,7 @@
+<tbody>
+	{{#each target in model.targets}}
+	<tr class="record-deco">
+		<td class="cell-basictext">{{#link-to "targets.index" (query-params uri=target.URI)}}{{target.prefLabel}}{{/link-to}}</td>
+	</tr>
+	{{/each}}
+</tbody>

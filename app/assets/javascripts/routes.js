@@ -66,6 +66,10 @@ App.Router.map(function() {
         this.route('compounds', {
             path: '/compounds'
         }, function() {});
+	this.route('targets', {
+            path: '/targets'
+        }, function() {});
+
     });
     this.resource('diseases', {
         path: '/diseases'

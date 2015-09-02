@@ -9,6 +9,7 @@
 			</label>
 		</span>
 		{{#if model.hasCompounds}}{{#link-to "pathways.compounds" (query-params uri=model.URI) class="btn btn-default small-margin-bottom"}}Compounds<span class="badge small-margin-left">{{model.compoundRecords}}</span>{{/link-to}}{{/if}}
+{{#if model.hasTargets}}{{#link-to "pathways.targets" (query-params uri=model.URI) class="btn btn-default small-margin-bottom"}}Targets<span class="badge small-margin-left">{{model.targetRecords}}</span>{{/link-to}}{{/if}}
 	</div>
 	<!-- Show as dropdown on smaller screens -->
 	<div class="hidden-md hidden-lg">
@@ -21,6 +22,7 @@
 				<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 				<li class="divider"></li>
 				{{#if model.hasCompounds}}<li>{{#link-to "pathways.compounds" (query-params uri=model.URI)}}Compounds<span class="badge small-margin-left">{{model.compoundRecords}}</span>{{/link-to}}</li>{{/if}}
+				{{#if model.hasTargets}}<li>{{#link-to "pathways.targets" (query-params uri=model.URI) class="btn btn-default small-margin-bottom"}}Targets<span class="badge small-margin-left">{{model.targetRecords}}</span>{{/link-to}}</li>{{/if}}
 			</ul>
 		</div>
 	</div>
