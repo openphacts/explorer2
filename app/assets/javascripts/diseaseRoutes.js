@@ -61,8 +61,10 @@ App.DiseasesTargetsRoute = Ember.Route.extend({
                             targets.forEach(function(targetInfo, index) {
                                 me.get('store').findRecord('target', targetInfo.URI).then(function(target) {
                                     disease.get('targets').pushObject(target);
-                                });
-                            });
+                                }, function(reason) {
+				    me.set('failures', me.get('failures') + 1);
+				});
+			    });
                             me.set('page', me.get('page') + 1);
                         }
                     }

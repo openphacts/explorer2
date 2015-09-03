@@ -9,8 +9,8 @@
     <div class="large-top-spacing">
         <div class="row">
             <h3>Targets for {{#link-to 'diseases.index' (query-params uri=model.URI)}}{{model.name}}{{/link-to}}</h3>
-            ({{model.targets.length}} of {{model.targetRecords}})
-	    {{#if model.hasTargets}}
+	    {{#if haveRecords}}
+	    Showing {{model.targets.length}} of {{model.targetRecords}} records {{#if failuresExist}}({{failures}} could not be loaded){{/if}}
             <div class="table-responsive">
                 <table class="mytable">
                     <thead class="headingstyle">
