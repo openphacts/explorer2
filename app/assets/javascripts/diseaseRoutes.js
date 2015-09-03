@@ -54,6 +54,7 @@ App.DiseasesTargetsRoute = Ember.Route.extend({
                     disease.set('targetRecords', count);
                 });
 		if (count > 0) {
+			me.set('totalCount', count);
 var diseaseTargetsCallback = function(success, status, response) {
 if (success && response) {
  var targets = diseaseSearcher.parseTargetsByDiseaseResponse(response);
@@ -62,9 +63,10 @@ if (success && response) {
 	          disease.get('targets').pushObject(target);
        });
  });
+ me.set('page', me.get('page') + 1);
 }
 }
-diseaseSearcher.targetsByDisease(disease.get('id'), 1, 'all', null, null, diseaseTargetsCallback);
+diseaseSearcher.targetsByDisease(disease.get('id'), 1, 50, null, null, diseaseTargetsCallback);
 		}
             }
         };
