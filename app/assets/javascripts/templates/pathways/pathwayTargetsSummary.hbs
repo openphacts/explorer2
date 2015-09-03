@@ -1,6 +1,2 @@
-<div id="summary-anchor">
-	<div id="summary" {{bind-attr class=":compound_summary fixSummaryBox:fix-summary-box:free-summary-box"}}>
-		<div id="pathway-image" {{bind-attr class=":col-md-2 :small-padding-top :big-padding-bottom infoHide:hide:"}}></div>
-		<h3 class="medium-padding-left">{{#link-to "pathways.index" (query-params uri=model.URI)}}{{model.title}}{{/link-to}} ({{model.targets.length}} of {{totalCount}} results loaded)</h3>
-	</div>
-</div>
+<h3>Targets for {{#link-to "pathways.index" (query-params uri=model.URI)}}{{model.title}}{{/link-to}}</h3>
+({{model.targets.length}} of {{totalCount}} loaded)
