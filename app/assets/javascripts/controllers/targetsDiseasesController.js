@@ -22,6 +22,12 @@ App.TargetsDiseasesController = Ember.Controller.extend({
         return this.get('model.diseases.length');
     }.property('model.diseases.length'),
 
+    loadInProgress: function() {
+	    return this.get('currentLoad') > 0;
+    }.property('currentLoad'),
+
+    currentLoad: 0,
+
     totalCount: null,
 
     actions: {
@@ -42,10 +48,13 @@ me.get('controllers.application').set('fetching', false)
                             diseaseID = disease.URI;
                             me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                                 thisTarget.get('diseases').pushObject(disease);
+				me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
                             }, function(reason) {
 				    me.set('failures', me.get('failures') + 1);
+				    me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
 				});
                         });
+			me.set('currentLoad', 0);
                         enable_scroll();
                     } else {
 			    me.get('controllers.application').set('fetching', false)

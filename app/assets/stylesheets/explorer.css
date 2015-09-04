@@ -560,3 +560,10 @@ div.page-error-message {
 div.page-error-message h1 {
     color: red;
 }
+//.progress-holder {
+//  position: fixed;
+//  top: 30%;
+//  margin-left: 5%;
+//  z-index: 2000;
+//  font-size: xx-large;
+//}

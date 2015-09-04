@@ -357,8 +357,10 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
                         //have to find the disease record and add it, just adding the ID does not work
                         me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                             thisTarget.get('diseases').pushObject(disease);
+			    me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
                         }, function(reason) {
 				    me.set('failures', me.get('failures') + 1);
+				    me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
 				});
                     });
                 }
