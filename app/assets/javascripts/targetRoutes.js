@@ -329,39 +329,44 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
     setupController: function(controller, model, params) {
         controller.set('content', model);
         controller.set('totalCount', null);
+	if (controller.get('page') === 0) {
         var me = controller;
         var thisTarget = model;
         var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
         //how many diseases for this target
         var countCallback = function(success, status, response) {
-            me.get('controllers.application').set('fetching', false);
             if (success && response) {
                 var count = searcher.parseDiseasesByTargetCountResponse(response);
                 controller.set('totalCount', count);
 		model.set('diseaseRecords', count);
                 if (count > 0) {
-                    searcher.diseasesByTarget(thisTarget.get('URI'), 1, 'all', null, null, diseasesByTargetCallback);
+                    searcher.diseasesByTarget(thisTarget.get('URI'), me.get('page') + 1, 50, null, null, diseasesByTargetCallback);
                 }
-            }
+            } else {
+            me.get('controllers.application').set('fetching', true);
+	    }
         };
-
         //load the diseases for this target
         var diseasesByTargetCallback = function(success, status, response) {
+            me.get('controllers.application').set('fetching', false);
                 if (success && response) {
+			me.set('page', me.get('page') + 1);
                     var diseaseResults = searcher.parseDiseasesByTargetResponse(response);
-                    $.each(diseaseResults, function(index, diseaseResult) {
+                    diseaseResults.forEach(function(diseaseResult, index) {
                         diseaseID = diseaseResult.URI;
                         //have to find the disease record and add it, just adding the ID does not work
                         me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                             thisTarget.get('diseases').pushObject(disease);
-                        });
+                        }, function(reason) {
+				    me.set('failures', me.get('failures') + 1);
+				});
                     });
                 }
             }
             me.get('controllers.application').set('fetching', true);
             searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
-
-    },
+	}
+	},
     model: function(params) {
         var uri = params.uri;
         return this.get('store').findRecord('target', uri);

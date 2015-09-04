@@ -16,11 +16,9 @@
 				{{else}}
 				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</h3>
 				{{/if}}
-				({{model.diseases.length}} of {{model.diseaseRecords}})
 			</div>
-
-
-			{{#if notEmpty}}
+	    {{#if haveRecords}}
+	    Showing {{model.diseases.length}} of {{model.diseaseRecords}} records {{#if failuresExist}}({{failures}} could not be loaded){{/if}}
 			<table class="mytable">
 				<thead class="headingstyle">
 					<tr><th class="centre">Name</th><th class="centre">Disease classes</th></tr>

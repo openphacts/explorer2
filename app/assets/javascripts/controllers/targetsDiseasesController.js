@@ -6,7 +6,17 @@ App.TargetsDiseasesController = Ember.Controller.extend({
 
     uri: '',
 
-    page: null,
+    page: 0,
+
+    failures: 0,
+
+    failuresExist: function() {
+        return this.get('failures') > 0;
+    }.property('failures'),
+
+    haveRecords: function() {
+	    return this.get('content.diseases.length') > 0;
+    }.property('content.diseases'),
 
     currentCount: function() {
         return this.get('model.diseases.length');
@@ -14,36 +24,41 @@ App.TargetsDiseasesController = Ember.Controller.extend({
 
     totalCount: null,
 
-    notEmpty: function() {
-        return this.get('totalCount') > 0;
-    }.property('totalCount'),
-
     actions: {
         fetchMore: function() {
-            if (this.currentCount < this.totalCount) {
-                var me = this;
+            if (this.get('content').get('diseases').get('length') + this.get('failures') < this.get('totalCount')) {
+                if (this.get('content').get('diseases').get('length') < this.get('totalCount') && this.get('totalCount') > 0 && this.get('controllers.application').get('fetching') === false) {
+                    this.get('controllers.application').set('fetching', true)
+			var me = this;
                 var thisTarget = this.get('content');
                 var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
                 var diseasesByTargetCallback = function(success, status, response) {
                     if (success && response) {
-                        me.page++;
+me.get('controllers.application').set('fetching', false)
+	
+                        me.set('page', me.get('page') + 1);
                         var diseaseResults = searcher.parseDiseasesByTargetResponse(response);
-                        $.each(diseaseResults, function(index, disease) {
-                            diseaseID = disease.identifier.split('/').pop();
-                            //have to find the pathway record and add it, just adding the ID does not work
+                        diseaseResults.forEach(function(disease, index) {
+                            diseaseID = disease.URI;
                             me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                                 thisTarget.get('diseases').pushObject(disease);
-                            });
+                            }, function(reason) {
+				    me.set('failures', me.get('failures') + 1);
+				});
                         });
-                        pageScrolling = false;
                         enable_scroll();
-                    }
+                    } else {
+			    me.get('controllers.application').set('fetching', false)
+	enable_scroll();
+		    }
                 };
-                searcher.diseasesByTarget(thisTarget.URI, null, null, 1, 50, null, diseasesByTargetCallback);
-            }
-            pageScrolling = false;
+                searcher.diseasesByTarget(thisTarget.get('URI'), me.get('page') + 1, 50, null, null, diseasesByTargetCallback);
+            } else {
             enable_scroll();
-        }
+	    }
+        } else {
+            enable_scroll();
+	}
     }
-
+    }
 });
