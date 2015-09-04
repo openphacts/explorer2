@@ -46,6 +46,7 @@ App.DiseasesTargetsRoute = Ember.Route.extend({
         controller.set('totalCount', null);
         var me = controller;
         var disease = model;
+	if (me.get('page') === 0) {
         var diseaseSearcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
         var diseaseTargetsCountCallback = function(success, status, response) {
             if (success && response) {
@@ -73,6 +74,7 @@ App.DiseasesTargetsRoute = Ember.Route.extend({
             }
         };
         diseaseSearcher.targetsByDiseaseCount(disease.get('id'), null, diseaseTargetsCountCallback);
+	}
     },
 
     model: function(params) {
@@ -90,6 +92,15 @@ App.DiseasesTargetsRoute = Ember.Route.extend({
     actions: {
         queryParamsDidChange: function() {
             this.refresh();
+        }
+    },
+
+    //if we leave the route then set the params to the defaults
+    resetController: function(controller, isExiting, transition) {
+        if (isExiting) {
+            // isExiting would be false if only the route's model was changing
+            //controller.set('failures', 0);
+	    //controller.set('targetRecords', null);
         }
     }
 

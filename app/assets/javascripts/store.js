@@ -120,11 +120,11 @@ App.DiseaseAdapter = App.ExplorerAdapter.extend({
 		    diseaseResult.disease.id = identifier;
                     diseaseResult.disease.targets = [];
                     Ember.run(function() {
-                        resolve(diseaseResult)
+                        resolve(diseaseResult);
                     });
                 } else {
                     Ember.run(function() {
-                        reject({"message": status})
+                        reject({"message": status});
                     });
                 }
             };
