@@ -340,6 +340,8 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
                 controller.set('totalCount', count);
 		model.set('diseaseRecords', count);
                 if (count > 0) {
+		    // set the count for the progress bar for the first set of results
+		    count > 50 ? me.set('totalForCurrentLoad', 50) : me.set('totalForCurrentLoad', count);
                     searcher.diseasesByTarget(thisTarget.get('URI'), me.get('page') + 1, 50, null, null, diseasesByTargetCallback);
                 }
             } else {

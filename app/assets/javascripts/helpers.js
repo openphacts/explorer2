@@ -1,5 +1,6 @@
-Ember.Handlebars.registerBoundHelper('loadingProgressBar', function(progressPercent) {
-	var actualProgressPercent = 2 * progressPercent;
+Ember.Handlebars.registerBoundHelper('loadingProgressBar', function(progressPercent, totalForCurrentLoad) {
+	var actualProgressPercent = progressPercent / totalForCurrentLoad * 100;
+	//var actualProgressPercent = 2 * progressPercent;
 	return new Handlebars.SafeString('<div class="progress-bar active no-margin" role="progressbar" title="' + actualProgressPercent +'%" aria-valuenow="' + actualProgressPercent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + actualProgressPercent + '%"><span class="sr-only">' + actualProgressPercent + '% Complete</span></div>');
 });
 Ember.Handlebars.registerBoundHelper('prefLabelHelper', function(prefLabel) {
