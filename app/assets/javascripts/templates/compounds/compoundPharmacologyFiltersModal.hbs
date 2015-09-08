@@ -4,13 +4,13 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h3 id="myModalLabel">Select filters for {{model.prefLabel}}</h3>
+				<h3 id="myModalLabel">Select filters<span class="hidden-xs"> for <em>{{model.prefLabel}}</em></span></h3>
 			</div>
 			<div class="modal-body" style="overflow-y: visible;">
 				<div id="activity-filters">
 					<p><h4>Activity Filter</h4></p>
 					<div class="row">
-						<div class="col-sm-2">
+						<div class="col-sm-2 small-padding-bottom">
 							{{view "select"
 							content=activityTypes
 							optionLabelPath="content.label"
@@ -19,7 +19,7 @@
 							selection=selectedActivity
 							}}
 						</div>
-						<div class="col-sm-2">
+						<div class="col-sm-2 small-padding-bottom">
 							{{view "select"
 							content=conditions
 							prompt="Select an operator"
@@ -27,7 +27,7 @@
 							selection=selectedCondition
 							}}
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-4 small-padding-bottom">
 							{{input type="text" class="form-control" placeholder="Enter an activity value" value=activityValue id="activityValueInput"}}
 						</div>
 						<div class="col-sm-2">
@@ -52,7 +52,7 @@
 				<div id="pchembl-filters">
 					<p><h4>pChembl Filter</h4></p>
 					<div class="row form-group">
-						<div class="col-sm-2">
+						<div class="col-sm-2 small-padding-bottom">
 							{{view "select"
 							content=pchemblConditions
 							prompt="Select an operator"
@@ -67,11 +67,11 @@
 				</div>
 				<div>
 					<p><h4>Organism filters</h4></p>
-					<div class="row">
-						<h5 class="inline col-md-1">Assay:</h5> {{input type="text" class="form-control"placeholder="Assay organism name" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box" autocomplete="off"}}
+					<div>
+						<h5>Assay:</h5> {{input type="text" class="form-control"placeholder="Assay organism name" value=assayOrganismQuery action="fetchOrganism" id="assay_organism_box" autocomplete="off"}}
 					</div>
-					<div class="row">
-						<h5 class="inline col-md-1">Target:</h5> {{input type="text" class="form-control" placeholder="Target organism name" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box" autocomplete="off"}}
+					<div>
+						<h5>Target:</h5> {{input type="text" class="form-control" placeholder="Target organism name" value=targetOrganismQuery action="fetchOrganism" id="target_organism_box" autocomplete="off"}}
 					</div>
 				</div>
 			</div>
