@@ -11,17 +11,29 @@
 	<div class="hidden-xs">
 		<ul class="list-inline">
 			<li><em class="muted">Compound</em></li>
-			{{#if result.hasPathways}}
+			{{#if result.pathwayInfoAvailable}}
 			<li>
+			{{#if result.hasPathways}}
 			{{#link-to "compounds.pathways" (query-params uri=result.URI)}}Pathways{{/link-to}}
 			<span class="badge">{{result.pathwayRecords}}</span>
-			</li>
+			{{else}}
+			Pathways<span class="badge no-results">{{result.pathwayRecords}}</span>
 			{{/if}}
-			{{#if result.hasPharmacology}}
+			</li>
+			{{else}}
+			<li>Pathways<span class="fa fa-spinner fa-pulse"></span></li>
+			{{/if}}
+			{{#if result.pharmacologyInfoAvailable}}
 			<li>
+			{{#if result.hasPharmacology}}
 			{{#link-to "compounds.pharmacology" (query-params uri=result.URI)}}Pharmacology{{/link-to}}
 			<span class="badge">{{result.pharmacologyRecords}}</span>
+			{{else}}
+			Pharmacology<span class="badge no-results">{{result.pharmacologyRecords}}</span>
+			{{/if}}
 			</li>
+			{{else}}
+			<li>Pharmacology<span class="fa fa-spinner fa-pulse"></span></li>
 			{{/if}}
 		</ul>
 	</div>
