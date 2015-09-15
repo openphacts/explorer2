@@ -38,6 +38,10 @@ App.Compound = App.SearchResult.extend({
     molfile: DS.attr('string'),
     favourite: DS.attr('boolean'),
 
+    hasCSURI: function() {
+      return this.get('csURI') != null;
+    }.property('csURI'),
+
     pathwayInfoAvailable: function() {
         return (this.get('pathwayRecords') !== null && this.get('pathwayRecords') >= 0);
     }.property('pathwayRecords'),
