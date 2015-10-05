@@ -1,5 +1,6 @@
 App.Compound = App.SearchResult.extend({
     URI: DS.attr('string'),
+    originalType: DS.attr('string'),
     cwURI: DS.attr('string'),
     drugbankURI: DS.attr('string'),
     description: DS.attr('string'),

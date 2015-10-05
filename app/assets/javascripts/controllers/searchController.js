@@ -89,6 +89,7 @@ App.SearchController = Ember.ArrayController.extend({
                     //the promise is generated inside the store adapter for compound, see store.js
                     Ember.run(function() {
                         me.store.find('compound', result.uri).then(function(compound) {
+			    compound.set('originalType', result.originalType);
                             if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 compound.set('exactMatch', true);
                                 me.addExactMatch(compound);
@@ -139,6 +140,7 @@ App.SearchController = Ember.ArrayController.extend({
                     //find the target then add to the search results when the 'promise' returns
                     Ember.run(function() {
                         me.store.find('target', result.uri).then(function(target) {
+			    target.set('originalType', result.originalType);
                             if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 Ember.run(function() {
                                     target.set('exactMatch', true)

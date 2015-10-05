@@ -1,3 +1,9 @@
+Ember.Handlebars.registerBoundHelper('imageForOriginalType', function(originalType) {
+	if (originalType === 'owl:Class') {
+		return new Handlebars.SafeString('<img src="/assets/chebiIcon.png" title="Chebi" height="15" width="15">');
+	}
+});
+
 Ember.Handlebars.registerBoundHelper('prefLabelHelper', function(prefLabel) {
     return new Handlebars.SafeString(prefLabel != null ? prefLabel : '<span class="text-muted">No label</span>');
 });

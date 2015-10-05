@@ -3573,7 +3573,9 @@ ConceptWikiSearch.prototype.parseResponse = function(response) {
 			    uris.push({
 				   'uri': hit["@id"],
 				   'prefLabel': label,
-				   'type': hit["@ops_type"]
+				   'type': hit["@ops_type"],
+				   // use the first type, can there be multiple?
+				   'originalType': hit["@type"][0]
 			    });
 		    });
 	return uris;
