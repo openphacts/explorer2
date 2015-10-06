@@ -1,0 +1,33 @@
+<!-- breadcrumb	-->
+<ul class="breadcrumb hidden-xs">
+	<li>{{#link-to "index"}}Home{{/link-to}}</li>
+	<li>{{#link-to "diseases.index" (query-params uri=model.URI)}}{{model.name}}{{/link-to}}</li>
+	<li class="active">Targets</li>
+</ul>
+
+<div class="container">
+    <div class="large-top-spacing">
+        <div class="row">
+            <h3>Targets for {{#link-to 'diseases.index' (query-params uri=model.URI)}}{{model.name}}{{/link-to}}</h3>
+	    {{#if haveRecords}}
+	    Showing {{model.targets.length}} of {{model.targetRecords}} records {{#if failuresExist}}({{failures}} could not be loaded){{/if}}
+            <div class="table-responsive">
+                <table class="mytable">
+                    <thead class="headingstyle">
+                        <tr>
+                            <th class="centre">Target</th>
+                        </tr>
+                    </thead>
+                    <tbody class="record-deco">
+                        {{#each target in model.targets}}
+                        <tr class="cell-basictext">
+                            <td>{{#link-to 'targets.index' (query-params uri=target.URI)}}{{target.prefLabel}}{{/link-to}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@
 		</span>
 		{{#if threeDeeEnabled}}{{#if hasPDB}}<button {{action 'drawProtein'}} {{bind-attr class=":btn :btn-default :small-margin-bottom"}} title="Visualize this target in 3D">3D</button>{{/if}}{{/if}}
 		{{#if model.hasPharmacology}}{{#link-to "targets.pharmacology" (query-params uri=model.URI) class="btn btn-default small-margin-bottom" }}Pharmacology<span class="badge small-margin-left">{{model.pharmacologyRecords}}</span>{{/link-to}}{{/if}}
-		{{#if model.hasPathways}}{{#link-to "targets.pathways" (query-params uri=model.URI) class="btn btn-default small-margin-bottom" }}Pathways<span class="badge small-margin-left">{{model.pathwaysRecords}}</span>{{/link-to}}{{/if}}
+		{{#if model.hasPathways}}{{#link-to "targets.pathways" (query-params uri=model.URI) class="btn btn-default small-margin-bottom" }}Pathways<span class="badge small-margin-left">{{model.pathwayRecords}}</span>{{/link-to}}{{/if}}
 		{{#if model.hasDiseases}}{{#link-to "targets.diseases" (query-params uri=model.URI) class="btn btn-default small-margin-bottom"}}Diseases<span class="badge small-margin-left">{{model.diseaseRecords}}</span>{{/link-to}}{{/if}}
 
 	</div>
@@ -27,7 +27,7 @@
 				<li class="divider"></li>
 				{{#if threeDeeEnabled}}{{#if model.hasPDB}}<li><a href="#" {{action 'drawProtein'}} title="Visualize this target in 3D">View in 3D</a></li>{{/if}}{{/if}}
 				<li>{{#link-to "targets.pharmacology" (query-params uri=model.URI)}}Pharmacology<span class="badge small-margin-left">{{model.pharmacologyRecords}}</span>{{/link-to}}</li>
-				{{#if model.hasPathways}}<li>{{#link-to "targets.pathways" (query-params uri=model.URI)}}Pathways<span class="badge small-margin-left">{{model.pathwaysRecords}}</span>{{/link-to}}</li>{{/if}}
+				{{#if model.hasPathways}}<li>{{#link-to "targets.pathways" (query-params uri=model.URI)}}Pathways<span class="badge small-margin-left">{{model.pathwayRecords}}</span>{{/link-to}}</li>{{/if}}
 				{{#if model.hasDiseases}}<li>{{#link-to 'targets.diseases' (query-params uri=model.URI)}}Diseases<span class="badge small-margin-left">{{model.diseaseRecords}}</span>{{/link-to}}</li>{{/if}}
 			</ul>
 		</div>

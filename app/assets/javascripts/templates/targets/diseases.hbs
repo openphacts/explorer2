@@ -4,8 +4,6 @@
 	<li>{{#link-to "targets.index" (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</li>
 	<li class="active">Diseases</li>
 </ul>
-
-
 <!-- main -->
 <div class="container">
 	<div class="large-top-spacing">
@@ -17,12 +15,18 @@
 				<h3>Diseases for {{#link-to 'targets.index' (query-params uri=model.URI)}}{{model.prefLabel}}{{/link-to}}</h3>
 				{{/if}}
 			</div>
-
-
-			{{#if notEmpty}}
+			{{#if haveRecords}}
+			Showing {{model.diseases.length}} of {{model.diseaseRecords}} records {{#if failuresExist}}({{failures}} could not be loaded){{/if}}
+			{{#if loadInProgress}}
+			<div class="progress-holder">
+				<div class="progress">
+					{{loadingProgressBar currentLoad totalForCurrentLoad}}
+				</div>
+			</div>
+			{{/if}}
 			<table class="mytable">
 				<thead class="headingstyle">
-					<tr><th>Name</th><th>Disease classes</th></tr>
+					<tr><th class="centre">Name</th><th class="centre">Disease classes</th></tr>
 				</thead>
 				<tbody>
 					{{#each disease in model.diseases}}

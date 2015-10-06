@@ -5,8 +5,9 @@
 		<!-- Options -->
 		<span class="hidden-xs hidden-sm medium-padding-left text-bottom">
 			{{!-- <a href="#targetPharmaFilterModalView" class="btn btn-default" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a> --}}
-			{{!-- <button class="btn btn-default" {{action "tsvDownload" model}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button> --}}
-			<span class="button-group" data-toggle="buttons">
+			{{!-- <button class="btn btn-default" {{action "tsvDownload" this}} title="Click to create in TSV formatted compound pharmacology results">Create TSV</button> --}}
+	
+				<span class="button-group" data-toggle="buttons">
 				<label {{action 'enableProvenance'}} class="small-margin-bottom btn btn-default">
 					<input type="radio" name="options" id="option1" checked>Show provenance
 				</label>
@@ -25,8 +26,8 @@
 					<li {{bind-attr class="showProvenance:disabled:"}}><a href="#" {{action 'enableProvenance'}}>Show provenance</a></li>
 					<li {{bind-attr class="showProvenance::disabled"}}><a href="#" {{action 'disableProvenance'}}>Hide provenance</a></li>
 					<li class="divider"></li>
-					<li><a href="#targetPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li>
-					<li><a href="#" {{action "tsvDownload" model}} title="Click to create TSV formatted target pharmacology results">Create TSV</a></li>
+					{{!-- <li><a href="#targetPharmaFilterModalView" data-toggle="modal" title="Click to select filters which can be applied to the results">Filter Results</a></li> --}}
+					{{!-- <li><a href="#" {{action "tsvDownload" model}} title="Click to create TSV formatted target pharmacology results">Create TSV</a></li> --}}
 				</ul>
 			</div>
 		</div>

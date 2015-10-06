@@ -38,7 +38,7 @@ haveRecords: function() {
         $.each(pathwayResults, function(index, pathway) {
             pathwayID = pathway.identifier.split('/').pop();
             //have to find the pathway record and add it, just adding the ID does not work
-            me.get('store').find('pathway', pathwayID).then(function(pathway) {
+            me.get('store').findRecord('pathway', pathwayID).then(function(pathway) {
               thisTarget.get('pathways').pushObject(pathway);
             });
         });

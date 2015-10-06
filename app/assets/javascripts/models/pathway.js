@@ -11,20 +11,23 @@ App.Pathway = DS.Model.extend({
     geneProductCWURI: DS.attr('string'),
     about: DS.attr('string'),
     parts: DS.attr(),
-    compounds: DS.hasMany('compound', {
-        async: true
-    }),
+    compounds: DS.hasMany('compound'),
     compoundRecords: DS.attr('number'),
     compoundInfoAvailable: function() {
         return (this.get('compoundRecords') !== null && this.get('compoundRecords') >= 0);
     }.property('compoundRecords'),
-
     hasCompounds: function() {
         return this.get('compoundRecords') > 0;
     }.property('compoundRecords'),
-    targets: DS.hasMany('target', {
-        async: true
-    }),
+    targets: DS.hasMany('target'),
+    targetRecords: DS.attr('number'),
+    targetInfoAvailable: function() {
+        return (this.get('targetRecords') !== null && this.get('targetRecords') >= 0);
+    }.property('targetRecords'),
+
+    hasTargets: function() {
+        return this.get('targetRecords') > 0;
+    }.property('targetRecords'),
     revision: DS.attr('string'),
     URI: DS.attr('string'),
     wikipathwaysProvenance: DS.attr()

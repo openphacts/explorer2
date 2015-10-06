@@ -1,0 +1,11 @@
+<tbody>
+	{{#each target in model.targets}}
+	<tr class="record-deco">
+		<td class="cell-basictext">{{#link-to "targets.index" (query-params uri=target.URI)}}{{target.prefLabel}}{{/link-to}}</td>
+		<td class="cell-basictext">{{linkableOrganism target.organism}}</td>
+		<td class="cell-basictext">{{target.molecularWeight}}</td>
+		<td class="cell-basictext">{{target.numberOfResidues}}</td>
+		<td class="cell-basictext">{{target.theoreticalPi}}</td>
+	</tr>
+	{{/each}}
+</tbody>

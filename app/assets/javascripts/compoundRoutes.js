@@ -42,7 +42,7 @@ App.CompoundsIndexRoute = Ember.Route.extend({
         console.log('compound index model')
             //var uri = this.get('queryParameters').uri;
         var uri = params.uri
-        var compound = this.controllerFor('compounds').store.find('compound', uri);
+        var compound = this.controllerFor('compounds').store.findRecord('compound', uri);
         return compound;
     },
 
@@ -80,10 +80,12 @@ App.CompoundsDrawRoute = Ember.Route.extend({
         console.log('compound ketcher model')
         var smiles = params.smiles;
         var structureInfo = {
-            'smiles': smiles
+            'structure': {
+		'smiles': smiles
+	    }
         };
-        var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
-        return structure;
+        //var structure = this.controllerFor('compounds').store.createRecord('structure', structureInfo);
+        return structureInfo;
     },
 
     beforeModel: function() {
@@ -278,7 +280,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
     model: function(params) {
         console.log('compounds pharma controller model');
         var uri = params.uri;
-        return this.get('store').find('compound', uri);
+        return this.get('store').findRecord('compound', uri);
     },
 
     beforeModel: function() {
@@ -317,7 +319,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                     results = searcher.parseExactResponse(response);
                     me.set('totalCount', results.length);
                     $.each(results, function(index, result) {
-                        me.get('store').find('compound', result).then(function(compound) {
+                        me.get('store').findRecord('compound', result).then(function(compound) {
                             me.get('model').pushObject(compound);
                             me.get('filteredCompounds').pushObject(compound);
                         });
@@ -330,7 +332,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                         var about = result.about;
                         var relVal = result.relevance;
                         relevance[about] = relVal;
-                        me.get('store').find('compound', about).then(function(compound) {
+                        me.get('store').findRecord('compound', about).then(function(compound) {
                             compound.set('relevance', relevance[about]);
                             me.get('model').pushObject(compound);
                             me.get('filteredCompounds').pushObject(compound);
@@ -344,7 +346,7 @@ App.CompoundsStructureRoute = Ember.Route.extend({
                         var about = result.about;
                         var relVal = result.relevance;
                         relevance[about] = relVal;
-                        me.get('store').find('compound', about).then(function(compound) {
+                        me.get('store').findRecord('compound', about).then(function(compound) {
                             compound.set('relevance', relevance[about]);
                             me.get('model').pushObject(compound);
                             me.get('filteredCompounds').pushObject(compound);
@@ -476,7 +478,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
                     $.each(pathwayResults, function(index, pathwayResult) {
                         pathwayID = pathwayResult.identifier;
                         //have to find the pathway record and add it, just adding the ID does not work
-                        me.get('store').find('pathway', pathwayID).then(function(pathway) {
+                        me.get('store').findRecord('pathway', pathwayID).then(function(pathway) {
                             thisCompound.get('pathways').pushObject(pathway);
                         });
                     });
@@ -500,7 +502,7 @@ App.CompoundsPathwaysRoute = Ember.Route.extend({
     },
     model: function(params) {
         var uri = params.uri;
-        return this.get('store').find('compound', uri);
+        return this.get('store').findRecord('compound', uri);
     },
 
     beforeModel: function() {

@@ -30,7 +30,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
             if (success && response) {
                 var count = pathwaysSearcher.parseCountPathwaysByTargetResponse(response);
                 Ember.run(function() {
-			target.set('pathwaysRecords', count);
+			target.set('pathwayRecords', count);
 		});
 	    }
 	}
@@ -43,7 +43,7 @@ App.TargetsIndexRoute = Ember.Route.extend({
     model: function(params) {
         console.log('target index model')
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -234,7 +234,7 @@ App.TargetsPharmacologyRoute = Ember.Route.extend({
     model: function(params) {
         console.log('target pharma index route');
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -292,7 +292,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
                     $.each(pathwayResults, function(index, pathwayResult) {
                         pathwayID = pathwayResult.identifier;
                         //have to find the pathway record and add it, just adding the ID does not work
-                        me.get('store').find('pathway', pathwayID).then(function(pathway) {
+                        me.get('store').findRecord('pathway', pathwayID).then(function(pathway) {
                             thisTarget.get('pathways').pushObject(pathway);
                         });
                     });
@@ -316,7 +316,7 @@ App.TargetsPathwaysRoute = Ember.Route.extend({
     },
     model: function(params) {
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
@@ -329,66 +329,51 @@ App.TargetsDiseasesRoute = Ember.Route.extend({
     setupController: function(controller, model, params) {
         controller.set('content', model);
         controller.set('totalCount', null);
+	if (controller.get('page') === 0) {
         var me = controller;
         var thisTarget = model;
         var searcher = new DiseaseSearch(ldaBaseUrl, appID, appKey);
-        //how many pathways for this compound
+        //how many diseases for this target
         var countCallback = function(success, status, response) {
-            me.get('controllers.application').set('fetching', false);
             if (success && response) {
                 var count = searcher.parseDiseasesByTargetCountResponse(response);
                 controller.set('totalCount', count);
+		model.set('diseaseRecords', count);
                 if (count > 0) {
-                    searcher.diseasesByTarget(thisTarget.get('URI'), 1, 50, null, null, diseasesByTargetCallback);
+		    // set the count for the progress bar for the first set of results
+		    count > 50 ? me.set('totalForCurrentLoad', 50) : me.set('totalForCurrentLoad', count);
+                    searcher.diseasesByTarget(thisTarget.get('URI'), me.get('page') + 1, 50, null, null, diseasesByTargetCallback);
                 }
-            }
+            } else {
+            me.get('controllers.application').set('fetching', true);
+	    }
         };
-        var countOnlyCallback = function(success, status, response) {
-            me.get('controllers.application').set('fetching', false);
-            if (success && response) {
-                var count = searcher.parseDiseasesByTargetCountResponse(response);
-                controller.set('totalCount', count);
-                //set page just in case it is for a different compound previously loaded
-                if (me.get('currentCount') % 50 > 0) {
-                    me.set('page', Math.floor(me.get('currentCount') / 50) + 1);
-                } else {
-                    me.set('page', me.get('currentCount') / 50);
-                }
-            }
-        };
-
-        //load the diseases for this compound
+        //load the diseases for this target
         var diseasesByTargetCallback = function(success, status, response) {
+            me.get('controllers.application').set('fetching', false);
                 if (success && response) {
+			me.set('page', me.get('page') + 1);
                     var diseaseResults = searcher.parseDiseasesByTargetResponse(response);
-                    $.each(diseaseResults, function(index, diseaseResult) {
+                    diseaseResults.forEach(function(diseaseResult, index) {
                         diseaseID = diseaseResult.URI;
                         //have to find the disease record and add it, just adding the ID does not work
-                        me.get('store').find('disease', diseaseID).then(function(disease) {
+                        me.get('store').findRecord('disease', diseaseID).then(function(disease) {
                             thisTarget.get('diseases').pushObject(disease);
-                        });
+			    me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
+                        }, function(reason) {
+				    me.set('failures', me.get('failures') + 1);
+				    me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
+				});
                     });
                 }
             }
-            //searcher.countPathwaysByTarget(thisTarget.get('URI'), null, null, countCallback);
-            //if currentCount is 0 (ie controllers content is empty) and totalCount is null then we have not loaded any pharma
-        if (controller.get('currentCount') === 0 && controller.get('totalCount') === null) {
             me.get('controllers.application').set('fetching', true);
             searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
-        } else if (controller.get('currentCount') === 0 && controller.get('totalCount') >= 0) {
-            //could still be count for a different compound
-            me.get('controllers.application').set('fetching', true);
-            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countCallback);
-        } else {
-            //reset the totalCount just to be sure
-            me.get('controllers.application').set('fetching', true);
-            searcher.diseasesByTargetCount(thisTarget.get('URI'), null, countOnlyCallback);
-        }
-
-    },
+	}
+	},
     model: function(params) {
         var uri = params.uri;
-        return this.get('store').find('target', uri);
+        return this.get('store').findRecord('target', uri);
     },
 
     beforeModel: function() {
