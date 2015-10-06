@@ -1,7 +1,14 @@
 Ember.Handlebars.registerBoundHelper('imageForOriginalType', function(originalType) {
 	if (originalType === 'owl:Class') {
-		return new Handlebars.SafeString('<img src="/assets/chebiIcon.png" title="Chebi" height="15" width="15">');
+		return new Handlebars.SafeString('<img src="/assets/chebiIcon.png" class="search-icon" title="Chebi" height="15" width="15">');
+	} else if (originalType === 'drugbank:targets' || originalType === 'drugbank:drugs') {
+		return new Handlebars.SafeString('<img src="/assets/drugbankProvIcon.png" class="search-icon "title="Drugbank" height="15" width="15">');
+	} else if (originalType === 'uniprot:Protein') {
+		return new Handlebars.SafeString('<img src="/assets/uniprotProvIcon.png" class="search-icon" title="Uniprot" height="15" width="15">');
+	} else if (originalType === 'chembl:Substance' || originalType === 'chembl:Target' || originalType === 'chembl:TargetComponent') {
+		return new Handlebars.SafeString('<img src="/assets/chemblProvIcon.png" class="search-icon" title="Chembl" height="15" width="15">');
 	}
+	//TODO OCRS
 });
 
 Ember.Handlebars.registerBoundHelper('prefLabelHelper', function(prefLabel) {
