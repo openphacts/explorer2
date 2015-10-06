@@ -564,3 +564,11 @@ div.page-error-message h1 {
     vertical-align: top;
     margin-right: 5px;
 }
+.object-flexer {
+    display: flex;
+    display: flexbox; /* For older browsers */
+    display: box; /* for even older browsers */
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}

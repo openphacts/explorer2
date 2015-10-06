@@ -210,11 +210,11 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
                     var pharmaRecord = me.store.createRecord('compoundPharmacology', pharma);
                     thisCompound.get('pharmacology').pushObject(pharmaRecord);
                 });
-                me.set('fetching', false);
+            me.get('controllers.application').set('fetching', false);
                 //controller.set('currentCount', controller.get('currentCount') + pharmaResults.length);
                 controller.set('page', 1);
             } else {
-                me.set('fetching', false);
+            me.get('controllers.application').set('fetching', false);
             }
         };
         var countCallback = function(success, status, response) {
@@ -222,7 +222,7 @@ App.CompoundsPharmacologyRoute = Ember.Route.extend({
                 var count = searcher.parseCompoundPharmacologyCountResponse(response);
                 controller.set('totalCount', count);
                 if (count > 0) {
-                    me.set('fetching', true);
+            me.get('controllers.application').set('fetching', true);
                     searcher.compoundPharmacology(thisCompound.get('URI'), assayOrganism, targetOrganism, activity, activityValue, minActivityValue, minExActivityValue, maxActivityValue, maxExActivityValue, unit, activityRelation, actualPchemblValue, minPchemblValue, minExPchemblValue, maxPchemblValue, maxExPchemblValue, targetType, 1, 50, sortBy, lens, pharmaCallback);
                 } else {
 			me.get('controllers.flash').pushObject(me.get('store').createRecord('flashMessage', {
