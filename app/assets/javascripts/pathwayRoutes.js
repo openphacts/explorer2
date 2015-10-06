@@ -77,6 +77,8 @@ App.PathwaysTargetsRoute = Ember.Route.extend({
 
   setupController: function(controller, model, params) {
     controller.set('model', model);
+    controller.set('totalCount', 0);
+    controller.set('failures', 0);
     var me = controller;
     var thisPathway = model;
     var searcher = new PathwaySearch(ldaBaseUrl, appID, appKey);
@@ -88,7 +90,12 @@ App.PathwaysTargetsRoute = Ember.Route.extend({
           targetResults.geneProducts.forEach(function(uri, index) {
             me.store.findRecord('target', uri).then(function(target) {
 	          thisPathway.get('targets').pushObject(target);
-            });
+		  me.set('currentLoad', me.get('currentLoad') + 1);
+            }, function(reason) {
+				    me.set('failures', me.get('failures') + 1);
+				    me.set('currentLoad', me.get('currentLoad') + 1);
+				    //me.get('currentLoad') === 49 ? me.set('currentLoad', 0) : me.set('currentLoad', me.get('currentLoad') + 1);
+				});
           });
         }
     };

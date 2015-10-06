@@ -1,2 +1,12 @@
 <h3>Targets for {{#link-to "pathways.index" (query-params uri=model.URI)}}{{model.title}}{{/link-to}}</h3>
-({{model.targets.length}} of {{totalCount}} loaded)
+{{#if haveRecords}}
+	Showing {{model.targets.length}} of {{totalCount}} records {{#if failuresExist}}({{failures}} could not be loaded){{/if}}
+	{{!-- TODO fix this progress bar --}}
+	{{!-- 	{{#if loadInProgress}}
+	<div class="progress-holder">
+		<div class="progress">
+			{{loadingProgressBar currentLoad totalForCurrentLoad}}
+		</div>
+	</div>
+	{{/if}} --}}
+{{/if}}

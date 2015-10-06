@@ -8,17 +8,33 @@ App.PathwaysTargetsController = Ember.Controller.extend({
 
     uri: '',
 
-    currentCount: function() {
-        return this.get('model.compounds.length');
-    }.property('model.compounds.length'),
+    failures: 0,
 
-    totalCount: function() {
-        return this.get('model.compounds.length');
-    }.property('model.compounds.length'),
+    failuresExist: function() {
+        return this.get('failures') > 0;
+    }.property('failures'),
+
+    loadInProgress: function() {
+        return this.get('currentLoad') > 0 && this.get('failures') + this.get('content.targets.length') < this.get('totalCount');
+    }.property('currentLoad'),
+
+    haveRecords: function() {
+        return this.get('totalCount') > 0;
+    }.property('totalCount'),
+
+    totalForCurrentLoad: 0,
+
+    currentLoad: 0,
+
+    currentCount: function() {
+        return this.get('model.targets.length');
+    }.property('model.targets.length'),
+
+    totalCount: 0,
 
     notEmpty: function() {
-        return this.get('model.compounds.length') > 0;
-    }.property('model.compounds.length'),
+        return this.get('model.targets.length') > 0;
+    }.property('model.targets.length'),
 
     prefLabelSortASC: function() {
         return this.get('currentHeader') === "prefLabel" && this.get('sortedHeader') === "prefLabel";
