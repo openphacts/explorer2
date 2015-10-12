@@ -17,8 +17,8 @@
     // both are picked up from the same app_settings var. root url is used by the ember router to set the base url for the js side
     // so that the urls are configured correctly by the router. The asset_path is used for image loading, see the 'getImage'
     // handlebars helper.
-    var asset_path = '<%= AppSettings.config["root_path"] -%>';
-    var root_url = '<%= AppSettings.config["root_path"] -%>';
+    var asset_path = '<%= AppSettings.config["root_path"] == "" ? "/assets" : AppSettings.config["root_path"] + "/assets"-%>';
+    var root_url = '<%= AppSettings.config["root_path"] == "" ? "/" : AppSettings.config["root_path"] -%>';
   </script>
 
     <script type="text/javascript">

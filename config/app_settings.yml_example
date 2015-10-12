@@ -1,7 +1,7 @@
 # config/application.yml
 defaults: &defaults
 
-  root_path: '/' # where the root of your app is, if it is a sub uri then change to match eg '/my_app' (without a trailing slash)
+  root_path: '' # where the root of your app is, if it is a sub uri then change to match eg '/my_app' (without a trailing slash), else leave it as ''
 
   api:
     url : "where.the.api.is.located" #eg https://beta.openphacts.org remember to include the api version if available. ie https://beta.openphacts.org/1.5
