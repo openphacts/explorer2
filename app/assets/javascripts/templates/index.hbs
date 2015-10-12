@@ -2,18 +2,18 @@
     <!-- Three columns of text below the carousel -->
     <div class="row">
         <div class="col-md-4 centre">
-            <img src="/my_app/assets/explore.png">
+		{{getImage "explore.png" null null ""}}
             <h2>Exploration</h2>
 	    <p>The Open PHACTS Explorer provides a user interface to the Open PHACTS Discovery Platform and is built to answer
  the critical pharmacology questions defined by eight major pharmaceutical companies.</p>
         </div>
         <div class="col-md-4 centre">
-       	    <img src="data.png">
+	    {{getImage "data.png" null null ""}}
             <h2>Data</h2>
 	    <p> The Open PHACTS Discovery Platform includes data from ChEMBL, ChEBI, UniProt, Gene Ontology, ChemSpider, ConceptWiki, ENZYME, SwissProt, BridgeDB, WikiPathways and DisGeNET.</p>
         </div>
         <div class="col-md-4 centre">
-		    <img src="prov.png">
+	    {{getImage "prov.png" null null ""}}
             <h2>Provenance</h2>
             <p>Provenance everywhere. Find the origin and original data source of all data within the Open PHACTS Discovery Platform. Link out to the corresponding data source for that exact item.</p>
         </div>
@@ -21,19 +21,19 @@
     <!-- START THE FEATURETTES -->
     <hr class="featurette-divider">
     <div class="featurette">
-        <img class="featurette-image img-rounded pull-right" src="chemicals.png">
+	    {{getImage "chemicals.png" null null "featurette-image img-rounded pull-right"}}
         <h2 class="featurette-heading">Integrated pharmacological and physicochemical data. <span class="muted">Explore.</span></h2>
         <p class="lead">The Explorer provides an intuitive way to query the multiple data sources integrated in the Open PHACTS Discovery Platform. During the integration process, chemistry is validated and identifiers mapped. Development of the Open PHACTS Discovery Platform is driven by scientific use-cases and is tested by a community of industrial and academic users.</p>
     </div>
     <hr class="featurette-divider">
     <div class="featurette">
-        <img class="featurette-image img-rounded pull-left" src="big-spikey-balls.png">
+	    {{getImage "big-spikey-balls.png" null null "featurette-image img-rounded pull-left"}}
         <h2 class="featurette-heading">Export to your analysis pipelines and tools.  <span class="muted">Integrate.</span></h2>
         <p class="lead">Take integrated pharmacological and physicochemical data from various data-souces and feed them into your scientific workflows, in-house tools and pipelines.</p>
     </div>
     <hr class="featurette-divider">
     <div class="featurette">
-        <img class="featurette-image pull-right" src="query.png">
+	    {{getImage "query.png" null null "featurette-image pull-right"}}
         <h2 class="featurette-heading">Built to answer critical pharmacological questions. <span class="muted">Query.</span></h2>
         <p class="lead">The Open PHACTS Discovery Platform links the large amounts of physicochemical and pharmacological data available in public databases, and provides a means of querying this via the Open PHACTS Explorer.</p>
     </div>
@@ -51,11 +51,11 @@
 </div>
 <div class="centre">
     <ul class="list-inline">
-        <li><a href="http://www.ebi.ac.uk/chembldb" title="Chembl. A manually curated chemical database of bioactive molecules with drug-like properties. Maintained by the European Bio-informatics institute"><img src="chembl_logo.png"></a></li>
-        <li><a href="http://ops.conceptwiki.org" title="ConceptWiki is an editable community owned repository of concepts used to define all concepts unambiguously."><img src="conceptwiki_logo.png" style="width: 20em;"></a></li>
-        <li><a href="http://www.chemspider.com" title="ChemSpider is a free chemical structure database providing fast text and structure search access to over 30 million structures from hundreds of data sources."><img src="chemspider_logo.png"></a></li>
-        <li><a href="http://www.uniprot.org" title="The mission of UniProt is to provide the scientific community with a comprehensive, high-quality and freely accessible resource of protein sequence and functional information."><img src="uniprot_logo.png"></a></li>
-        <li><a href="http://www.drugbank.ca" title="The DrugBank database is a unique bioinformatics and cheminformatics resource that combines detailed drug (i.e. chemical, pharmacological and pharmaceutical) data with comprehensive drug target (i.e. sequence, structure, and pathway) information."><img src="drugbank_logo.png"></a></li>
-        <li><a href="http://www.wikipathways.org" title="WikiPathways is an open, public platform dedicated to the curation of biological pathways by and for the scientific community"><img src="wikipathways_logo.png"></a></li>
+	    <li><a href="http://www.ebi.ac.uk/chembldb" title="Chembl. A manually curated chemical database of bioactive molecules with drug-like properties. Maintained by the European Bio-informatics institute">{{getImage "chembl_logo.png" null null ""}}</a></li>
+	    <li><a href="http://ops.conceptwiki.org" title="ConceptWiki is an editable community owned repository of concepts used to define all concepts unambiguously.">{{getImage "conceptwiki_logo.png" "250" null ""}}</a></li>
+	    <li><a href="http://www.chemspider.com" title="ChemSpider is a free chemical structure database providing fast text and structure search access to over 30 million structures from hundreds of data sources.">{{getImage "chemspider_logo.png" null null ""}}</a></li>
+	    <li><a href="http://www.uniprot.org" title="The mission of UniProt is to provide the scientific community with a comprehensive, high-quality and freely accessible resource of protein sequence and functional information.">{{getImage "uniprot_logo.png" null null ""}}</a></li>
+	    <li><a href="http://www.drugbank.ca" title="The DrugBank database is a unique bioinformatics and cheminformatics resource that combines detailed drug (i.e. chemical, pharmacological and pharmaceutical) data with comprehensive drug target (i.e. sequence, structure, and pathway) information.">{{getImage "drugbank_logo.png" null null ""}}</a></li>
+	    <li><a href="http://www.wikipathways.org" title="WikiPathways is an open, public platform dedicated to the curation of biological pathways by and for the scientific community">{{getImage "wikipathways_logo.png" null null ""}}</a></li>
     </ul>
 </div>

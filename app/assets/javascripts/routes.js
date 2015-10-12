@@ -9,7 +9,7 @@
 App.Router.reopen({
     //rootURL: '/'
     // sub-uri deployment
-    rootURL: '/my_app/'
+    rootURL: root_url
 });
 
 if (window.history && window.history.pushState) {

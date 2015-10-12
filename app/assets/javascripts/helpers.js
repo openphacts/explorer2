@@ -1,3 +1,10 @@
+Ember.Handlebars.registerBoundHelper('getImage', function(imageName, width, height, cssClasses) {
+        if (width == null && height == null) {
+		return new Handlebars.SafeString('<img  class="' + cssClasses + '" src="' + asset_path + '/' + imageName + '">');
+	} else {
+		return new Handlebars.SafeString('<img class="' + cssClasses + '" src="' + asset_path + '/' + imageName + '" width="' + width + '" height="' + height + '">');
+	}
+});
 Ember.Handlebars.registerBoundHelper('loadingProgressBar', function(progressPercent, totalForCurrentLoad) {
 	var actualProgressPercent = progressPercent / totalForCurrentLoad * 100;
 	//var actualProgressPercent = 2 * progressPercent;
@@ -201,7 +208,7 @@ Ember.Handlebars.registerBoundHelper('target_image_src', function(target, option
   if (options && target && target.length >= 1) {
       return new Handlebars.SafeString('<img width="128" height="128" src="http://www.rcsb.org/pdb/images/' + target[0].split('/').pop() + '_asr_r_250.jpg"&amp;w=128&amp;h=128/>');
   } else {
-      return new Handlebars.SafeString('<img width="128" height="128" src="target_placeholder.png"/>');
+      return new Handlebars.SafeString('<img width="128" height="128" src="' + asset_path + '/target_placeholder.png"/>');
   }
 });
 Ember.Handlebars.registerBoundHelper('compoundSource', function(cwCompoundUri, compoundPrefLabel) {
@@ -334,37 +341,37 @@ Ember.Handlebars.registerBoundHelper('provenanceLinkout', function(item, source)
 
 function createDrugbankLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="drugbankProvIcon.png" title="DrugBank" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/drugbankProvIcon.png" title="DrugBank" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createChemblLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/assets/chemblProvIcon.png" title="ChEMBL" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/chemblProvIcon.png" title="ChEMBL" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createChemspiderLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="chemspiderProvIcon.png" title="ChemSpider" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/chemspiderProvIcon.png" title="ChemSpider" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createConceptWikiLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="conceptWikiProvIcon.png" title="ConceptWiki" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/conceptWikiProvIcon.png" title="ConceptWiki" height="15" width="15"></a>'
 	return dbLink;
 }
 
 function createUniprotLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="uniprotProvIcon.png" title="UniProt" height="15" width="33"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/uniprotProvIcon.png" title="UniProt" height="15" width="33"></a>'
 	return dbLink;	
 }
 
 function createWikipathwaysLink(item) {
 	var dbLink;
-	dbLink = '<a href="' + item + '" target="_blank"><img src="wikipathwaysProvIcon.png" title="WikiPathways" height="15" width="15"></a>'
+	dbLink = '<a href="' + item + '" target="_blank"><img src="' + asset_path + '/wikipathwaysProvIcon.png" title="WikiPathways" height="15" width="15"></a>'
 	return dbLink;
 }
 // 'infinite' scrolling helpers, set whether page should allow fetching more assets, prevent scrolling while fetching next page
