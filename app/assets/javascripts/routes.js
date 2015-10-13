@@ -6,10 +6,15 @@
 //  location: 'history',
 //  rootURL: '/'
 //});
+App.Router.reopen({
+    //rootURL: '/'
+    // sub-uri deployment
+    rootURL: root_url
+});
+
 if (window.history && window.history.pushState) {
     App.Router.reopen({
-        location: 'history',
-        rootURL: '/'
+        location: 'history'
     });
 }
 
