@@ -68,5 +68,5 @@ Explorer2::Application.configure do
   # For sub-uri deployment - both of these must be the same or we end up with glyphicon loading issues.
   # No trailing slash required
   #config.relative_url_root = "/my_app"
-  #config.assets.prefix = "/my_app"
+  #config.assets.prefix = "/my_app/assets"
 end

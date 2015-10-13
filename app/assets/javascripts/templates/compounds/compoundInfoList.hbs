@@ -38,9 +38,9 @@
 			{{#if model.smiles}}
 			<dt class="medium-padding-top">SMILES</dt>
 			{{#if showProvenance}}
-			<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}} {{provenanceLinkout model.csURI 'chemspider'}}</dd>
+			<dd class="medium-padding-top" id="smiles-provenance">{{#link-to "compounds.draw" (query-params smiles=model.smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}} {{provenanceLinkout model.csURI 'chemspider'}}</dd>
 			{{else}}
-			<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}}</dd>
+			<dd class="medium-padding-top">{{#link-to "compounds.draw" (query-params smiles=model.smiles) class="break-word" title="Draw this structure"}}{{model.smiles}}{{/link-to}}</dd>
 			{{/if}}
 			{{/if}}
 
