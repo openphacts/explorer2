@@ -9,7 +9,7 @@ App.TreesIndexController = Ember.ArrayController.extend({
     initialTree: null,
     defaultTree: null,
     selectedTree: null,
-    treeTypes: ["enzyme", "chembl", "chebi", "go"],
+    treeTypes: ["enzyme", "chembl", "chebi", "go", "disease", "bao"],
     childTreeNodes: [],
 
     fetching: false,
