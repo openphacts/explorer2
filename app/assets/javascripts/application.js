@@ -16,7 +16,6 @@
 //= require jqXDomain
 //= require handlebars-v1.3.0
 //= require ember
-//= require ember-data
 //= require ember-template-compiler
 //= require bootstrap
 //= require typeahead.bundle
