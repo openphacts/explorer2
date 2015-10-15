@@ -62,10 +62,9 @@ In the environment file ie development.rb and/or production.rb, add/uncomment th
 `#config.assets.prefix = "/my_app/assets"`
 
 Change the paths to whatever is appropriate to your sub-uri. You must end the `config.assets.prefix` with `/assets` or the images will not be loaded correctly.  
-In `app_settings.yml` change `root_path: ''` to the appropraite sub-uri eg `root_path: '/my_app'`. It must start with a slash but end without one.  
 You can have multiple level sub-uris eg `/my_app/version1`.  
-It is recommended to clear out the cache ie `rm tmp/cache` when adding a sub-uri and before you start the server to ensure the glyphicons are loaded correctly.  
-The Ember side of the application uses the value from the `app_settings` to create the routes correctly. There is also a handlebars helper called `getImage` which should be used instead of `<img>` tags when showing an image in the html.
+It is recommended to clear out the cache ie `rm tmp/cache` when adding a sub-uri and also anything in `public/assets` (or public/assets/your-sub-uri) before you start the server to ensure the glyphicons are loaded correctly.  
+There is a handlebars helper called `getImage` which should be used instead of `<img>` tags when showing an image in the html.
 
 Autocompleter
 -------------
