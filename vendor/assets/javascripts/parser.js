@@ -26,6 +26,10 @@ Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
     'http://rdf.chemspider.com': 'chemspiderValue',
     'http://rdf.chemspider.com/': 'chemspiderValue',
     'http://ops.rsc-us.org': 'chemspiderValue',
+    'http://ops2.rsc.org/ops': 'chemspiderValue',
+    'http://ops2.rsc.org/ops/': 'chemspiderValue',
+    'http://ops2.rsc.org/': 'chemspiderValue',
+    'http://ops2.rsc.org': 'chemspiderValue',
     'http://purl.uniprot.org': 'uniprotValue',
     'http://purl.uniprot.org/': 'uniprotValue'
 };
@@ -439,7 +443,7 @@ Openphacts.CompoundSearch.prototype.parseCompoundBatchResponse = function(respon
             fullMWT = chemspiderData.molweight != null ? chemspiderData.molweight : molweight;
             molform = chemspiderData.molformula != null ? chemspiderData.molformula : molformula;
 
-            // provenance 
+            // provenance
             chemspiderLinkOut = csURI;
             chemspiderProvenance = {};
             chemspiderProvenance['source'] = 'chemspider';
