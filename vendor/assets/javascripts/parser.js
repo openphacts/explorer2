@@ -12,6 +12,8 @@ Openphacts.Constants.prototype.SRC_CLS_MAPPINGS = {
     'http://www.conceptwiki.org/': 'conceptWikiValue',
     'http://ops.conceptwiki.org': 'conceptWikiValue',
     'http://ops.conceptwiki.org/': 'conceptWikiValue',
+    'http://ops.conceptwiki.org/web-ws/concept': 'conceptWikiValue',
+    'http://ops.conceptwiki.org/web-ws/concept/': 'conceptWikiValue',
     'http://data.kasabi.com/dataset/chembl-rdf': 'chemblValue',
     'http://rdf.ebi.ac.uk/resource/chembl/molecule': 'chemblValue',
     'http://www.ebi.ac.uk/chembl': 'chemblValue',
