@@ -1,3 +1,13 @@
+{{#if closedForMaintenance}}
+<div>
+	<div class="left">{{getImage "ops_logo.png" 100 100 ""}}</div>
+	<div>
+	<p class="medium-padding-top small-margin-left huge-font">The Open PHACTS Explorer is temporarily closed for maintenance.</p>
+	<p>Please contact <a href="http://support.openphacts.org">support</a> for more details</p>
+	</div>
+</div>
+{{getImage "under-maintenance.jpg" null null ""}}
+{{else}}
 {{partial "alertsModal"}}
 {{#if notCookie}}
 <div class="alert alert-warning alert-dismissible" role="alert">
@@ -22,3 +32,4 @@ The Open PHACTS Explorer uses cookies and browser storage to enhance the user ex
 	{{partial "flashMessages"}}
 	{{outlet}}
 </div>
+{{/if}}

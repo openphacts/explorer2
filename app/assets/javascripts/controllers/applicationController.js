@@ -8,7 +8,7 @@ App.ApplicationController = Ember.Controller.extend({
     workersList: {},
     alertsAvailable: false,
     iex: false,
-
+    closedForMaintenance: false,
     // use for structure drawing
     molfile: null,
     cookieAcceptance: false,

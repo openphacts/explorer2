@@ -17,6 +17,8 @@ defaults: &defaults
     tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
     tree_compound_path: "/compound/tree/pharmacology/pages" # for compound class pharma
 
+  maintenance: FALSE
+
 development:
   <<: *defaults
 

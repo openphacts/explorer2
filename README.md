@@ -50,7 +50,7 @@ Setup
 * `rake assets:precompile` if running in `production` environment
   * If running webrick in production then change `config.serve_static_assets = false` to `config.serve_static_assets = true` in `config/environments/production.rb`
 * `rails s`
-
+* If your site is down for maintenance then change the app_settings.yml variable 'maintenance' to TRUE  
 Now navigate your browser to [http://localhost:3000/](http://localhost:3000/)
 
 Deploying on a sub-uri

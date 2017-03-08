@@ -106,7 +106,8 @@ App.ApplicationRoute = Ember.Route.extend({
 
     setupController: function(controller, model, params) {
         console.log('application route setup controller');
-        controller.set('iex', !oldIE);
+        controller.set('iex', !oldIE); 
+        controller.set('closedForMaintenance', closedForMaintenance === 'true' ? true : false);
 
         var name = "explorerCookieAcceptance" + "=";
         var ca = document.cookie.split(';');
