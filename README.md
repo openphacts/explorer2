@@ -27,6 +27,26 @@ The environment variables that can be set, together with their defaults:
 -e API_APP_KEY=cffc292726627ffc50ece1dccd15aeaf
 ```
 
+If you want to change the Dockerfile during test and development and build a local explorer docker image then try:
+
+```
+docker build -t my-docker-image/explorer .
+```
+
+To investigate the logs for the docker container you are running first list all the running containers with:
+
+```
+docker ps
+```
+
+Note the `CONTAINER ID` and run the following (replace `CONTAINER_ID` with actual ID):
+
+```
+docker exec -it CONTAINER_ID bash
+```
+
+This will allow you to navigate around the files inside the docker container and you can then look at the logs directory. Type `exit` to leave this container - the actual container will still keep running.
+
 Technology
 ==========
 
