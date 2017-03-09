@@ -13,12 +13,13 @@ group :assets do
   #gem 'compass-rails'
   gem 'uglifier'
   gem 'bootstrap-sass', '~> 3.2.0.1'
-  gem 'handlebars_assets'
+  gem 'handlebars_assets', '0.20.2'
 end
 
 group :development, :test do
   gem 'quiet_assets'
   gem 'qunit-rails'
+  gem 'webrick', '~> 1.3.1'
 end
 # sass 3.4.2 causes No such file or directory error due to some clash with bootstrap-sass 2.x
 gem 'sass', '3.4.1'

@@ -31,6 +31,7 @@ ENV API_URL https://beta.openphacts.org/2.1
 # Get your own key at https://dev.openphacts.org/admin/access_details
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
+ENV EXPLORER_MAINTENANCE FALSE
 
 EXPOSE 3000
 ENTRYPOINT ["/explorer2/docker/entrypoint.sh"]
