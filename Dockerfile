@@ -17,19 +17,20 @@ RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
 WORKDIR /explorer2/filestore
-RUN wget -q http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
-RUN sha1sum -c compounds.txt.bz2.sha1
-RUN bunzip2 compounds.txt.bz2
+#RUN wget -q http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
+#RUN sha1sum -c compounds.txt.bz2.sha1
+#RUN bunzip2 compounds.txt.bz2
 
 WORKDIR /explorer2
 
-RUN rake explorer:load_all_assets
+#RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
-ENV API_URL https://beta.openphacts.org/1.5
+ENV API_URL https://beta.openphacts.org/2.1
 # Get your own key at https://dev.openphacts.org/admin/access_details
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
+ENV EXPLORER_MAINTENANCE FALSE
 
 EXPOSE 3000
 ENTRYPOINT ["/explorer2/docker/entrypoint.sh"]
