@@ -19,7 +19,6 @@ end
 group :development, :test do
   gem 'quiet_assets'
   gem 'qunit-rails'
-  gem 'webrick', '~> 1.3.1'
 end
 # sass 3.4.2 causes No such file or directory error due to some clash with bootstrap-sass 2.x
 gem 'sass', '3.4.1'
