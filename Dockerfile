@@ -18,13 +18,13 @@ RUN rake db:migrate
 RUN rake assets:precompile
 WORKDIR /explorer2/filestore
 ## [2017.01.26] There is no 'explorer' directory in data.openphacts.org for any version newer than 1.4.
-RUN wget -q http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
-RUN sha1sum -c compounds.txt.bz2.sha1
-RUN bunzip2 compounds.txt.bz2
+#RUN wget -q http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2.sha1
+#RUN sha1sum -c compounds.txt.bz2.sha1
+#RUN bunzip2 compounds.txt.bz2
 
 WORKDIR /explorer2
 
-RUN rake explorer:load_all_assets
+#RUN rake explorer:load_all_assets
 
 # URI for API (without trailing /)
 ENV API_URL https://beta.openphacts.org/2.1
