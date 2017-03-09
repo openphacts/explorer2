@@ -22,12 +22,14 @@ The environment variables that can be set, together with their defaults:
 
 ```
 -e RAILS_ENV=production
--e API_URL=https://beta.openphacts.org/1.5
+-e API_URL=https://beta.openphacts.org/2.1
 -e API_APP_ID=161aeb7d
 -e API_APP_KEY=cffc292726627ffc50ece1dccd15aeaf
+-e EXPLORER_MAINTENANCE=FALSE
 ```
-
-If you want to change the Dockerfile during test and development and build a local explorer docker image then try:
+The `EXPLORER_MAINTENANCE` flag forces the explorer to display a `maintenance` page if set to `TRUE`.
+  
+If you want to change the Dockerfile during test and development and build an explorer docker image from your local clone of the explorer2 repository then try:
 
 ```
 docker build -t my-docker-image/explorer .
