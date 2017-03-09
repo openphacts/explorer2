@@ -1,12 +1,12 @@
 {{#if closedForMaintenance}}
 <div>
-	<div class="left">{{getImage "ops_logo.png" 100 100 ""}}</div>
-	<div>
+	<div class="maintenance-ops-image">{{getImage "ops_logo.png" 100 100 ""}}</div>
+	<div class="maintenance-words">
 	<p class="medium-padding-top small-margin-left huge-font">The Open PHACTS Explorer is temporarily closed for maintenance.</p>
 	<p>Please contact <a href="http://support.openphacts.org">support</a> for more details</p>
 	</div>
 </div>
-{{getImage "under-maintenance.jpg" null null ""}}
+{{getImage "under-maintenance.jpg" null null "maintenance-image"}}
 {{else}}
 {{partial "alertsModal"}}
 {{#if notCookie}}

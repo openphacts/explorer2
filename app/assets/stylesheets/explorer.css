@@ -568,3 +568,15 @@ div.page-error-message h1 {
     flex-wrap: wrap;
     flex-grow: 1;
 }
+.maintenance-ops-image {
+    float: left;
+    width: 20%;
+    margin-right: 3em;
+    padding: 1em;
+}
+.maintenance-words {
+    width: 70%
+}
+.maintenance-image {
+    width: 100%;
+}
