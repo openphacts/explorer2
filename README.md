@@ -74,6 +74,7 @@ Setup
 * `rails s`
 * If your site is down for maintenance then change the app_settings.yml variable 'maintenance' to TRUE  
 Now navigate your browser to [http://localhost:3000/](http://localhost:3000/)
+* To use the openphacts search API change the es_search_url setting to point to the search API location eg `http://localhost:8839/search`
 
 Deploying on a sub-uri
 ----------------------
