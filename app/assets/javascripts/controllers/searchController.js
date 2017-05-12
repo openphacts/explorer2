@@ -84,12 +84,12 @@ App.SearchController = Ember.ArrayController.extend({
                 me.get('controllers.application').set('fetching', false)
             });
             if (success && response) {
-                var results = searcher.parseResponse(response);
-                $.each(results, function(index, result) {
+                //var results = searcher.parseResponse(response);
+                response.uris.forEach(function(uri, index) {
                     //find the compound then check if the preferred label exactly matches the query when it returns from the 'promise'
                     //the promise is generated inside the store adapter for compound, see store.js
                     Ember.run(function() {
-                        me.store.findRecord('compound', result.uri).then(function(compound) {
+                        me.store.findRecord('compound', uri).then(function(compound) {
                             if (compound.get('prefLabel') != null && compound.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 compound.set('exactMatch', true);
                                 me.addExactMatch(compound);
@@ -296,7 +296,11 @@ App.SearchController = Ember.ArrayController.extend({
         //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
         searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
         //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '4', cwCompoundCallback);
+	$.ajax(esSearchURL + "?query=" + me.getCurrentQuery() + "&type=compound&limit=" + me.get('numberOfResults') + "&options=uris_only"
+	).done(function(data, status, XHR) {
+		  cwCompoundCallback(XHR.statusText, status, data);
+	});
+        //searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '4', cwCompoundCallback);
         //smiles for compounds
         structureSearcher.smilesToURL(me.getCurrentQuery(), structureCallback);
 

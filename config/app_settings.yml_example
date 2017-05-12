@@ -4,6 +4,7 @@ defaults: &defaults
   api:
     url : "where.the.api.is.located" #eg https://beta.openphacts.org remember to include the api version if available. ie https://beta.openphacts.org/1.5
     ebi_smiles_to_ctab: "https://www.ebi.ac.uk/chembl/api/utils/smiles2ctab" # used to convert smiles to mol for ketcher
+    es_search_url: "http://localhost:8839/search" #ops-search API
 
   keys:
     app_id: "blahblahblah" #app id from https://dev.openphacts.org
