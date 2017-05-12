@@ -135,11 +135,11 @@ App.SearchController = Ember.ArrayController.extend({
                 me.get('controllers.application').set('fetching', false)
             });
             if (success && response) {
-                var results = searcher.parseResponse(response);
-                $.each(results, function(index, result) {
+                //var results = searcher.parseResponse(response);
+                response["uris"].forEach(function(uri, index) {
                     //find the target then add to the search results when the 'promise' returns
                     Ember.run(function() {
-                        me.store.findRecord('target', result.uri).then(function(target) {
+                        me.store.findRecord('target', uri).then(function(target) {
                             if (target.get('prefLabel') != null && target.get('prefLabel').toLowerCase() === me.getCurrentQuery().toLowerCase()) {
                                 Ember.run(function() {
                                     target.set('exactMatch', true)
@@ -294,8 +294,13 @@ App.SearchController = Ember.ArrayController.extend({
         me.set('totalTargets', 0);
         me.get('controllers.application').set('fetching', true);
         //searching uses branch 3 for compounds and 4 for branches rather than byTag and semantic tag - caused issues due to there being multiple semantic tags for a branch
-        searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
+        //searcher.freeText(me.getCurrentQuery(), me.get('numberOfResults'), '3', cwTargetCallback);
         //searcher.byTag(me.getCurrentQuery(), '20', '3', 'a3b5c57e-8ac1-46ac-afef-3347d40c4d37', cwGeneTargetCallback);
+	$.ajax(esSearchURL + "?query=" + me.getCurrentQuery() + "&type=target&limit=" + me.get('numberOfResults') + "&options=uris_only"
+	).done(function(data, status, XHR) {
+		  cwTargetCallback(XHR.statusText, status, data);
+	});
+
 	$.ajax(esSearchURL + "?query=" + me.getCurrentQuery() + "&type=compound&limit=" + me.get('numberOfResults') + "&options=uris_only"
 	).done(function(data, status, XHR) {
 		  cwCompoundCallback(XHR.statusText, status, data);
