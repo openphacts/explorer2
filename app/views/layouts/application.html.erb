@@ -10,7 +10,8 @@
     var tsvCreateUrl = '<%= tab_separated_file_core_api_calls_url -%>?';
     var tsvStatusUrl = '<%= tsv_status_core_api_calls_url -%>?';
     var tsvDownloadUrl = '<%= tsv_download_core_api_calls_url -%>?';
-    var typeaheadUrl = '<%= typeahead_search_index_url -%>';
+    //    var typeaheadUrl = '<%= typeahead_search_index_url -%>';
+    var typeaheadUrl = '<%= AppSettings.config["api"]["autocomplete"] -%>'
     var organismsUrl = '<%= organisms_core_api_calls_url -%>?';
     var cs_download_url = '<%= chemspider_tab_separated_file_core_api_calls_url -%>';
     var closedForMaintenance = '<%= AppSettings.config["maintenance"] -%>';

@@ -9,7 +9,12 @@ App.ApplicationView = Ember.View.extend({
         });
         var engine = new Bloodhound({
             name: 'animals',
-            remote: typeaheadUrl + '?query=%QUERY',
+            remote: {
+                url: typeaheadUrl + '?query=%QUERY',
+                transform: function(data) {
+                    console.log(data);
+                }
+            },
             datumTokenizer: function(d) {
                 return Bloodhound.tokenizers.whitespace(d.val);
             },
