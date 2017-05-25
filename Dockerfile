@@ -1,11 +1,11 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER "Stian Soiland-Reyes <orcid.org/0000-0001-9842-9718>"
 WORKDIR /
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ruby1.9.3 bundler libsqlite3-dev nodejs wget
 COPY . /explorer2
 
-ENV RAILS_ENV developement
+ENV RAILS_ENV production
 WORKDIR /explorer2
 RUN bundle install
 #RUN cp config/database.yml_example config/database.yml
