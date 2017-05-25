@@ -5,11 +5,11 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ruby1.9.3 bundler libsqlite3-dev nodejs wget
 COPY . /explorer2
 
-ENV RAILS_ENV production
+ENV RAILS_ENV developement
 WORKDIR /explorer2
 RUN bundle install
-RUN cp config/database.yml_example config/database.yml
-RUN cp config/environments/production.rb_example config/environments/production.rb
+#RUN cp config/database.yml_example config/database.yml
+#RUN cp config/environments/development.rb_example config/environments/development.rb
 # We don't bother with an Apache/nginx for the assets
 RUN sed -i 's/config.serve_static_assets.*/config.serve_static_assets = true/' config/environments/production.rb
 RUN cp config/app_settings.yml_example config/app_settings.yml
