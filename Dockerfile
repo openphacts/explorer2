@@ -11,8 +11,8 @@ RUN bundle install
 #RUN cp config/database.yml_example config/database.yml
 #RUN cp config/environments/development.rb_example config/environments/development.rb
 # We don't bother with an Apache/nginx for the assets
-RUN sed -i 's/config.serve_static_assets.*/config.serve_static_assets = true/' config/environments/production.rb
-RUN cp config/app_settings.yml_example config/app_settings.yml
+#RUN sed -i 's/config.serve_static_assets.*/config.serve_static_assets = true/' config/environments/production.rb
+#RUN cp config/app_settings.yml_example config/app_settings.yml
 RUN rake db:create:all
 RUN rake db:migrate
 RUN rake assets:precompile
