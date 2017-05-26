@@ -9,5 +9,3 @@
 /explorer2/script/delayed_job start
 
 exec "$@"
-
-
