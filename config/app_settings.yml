@@ -19,7 +19,22 @@ defaults: &defaults
     tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
     tree_compound_path: "/compound/tree/pharmacology/pages" # for compound class pharma
 
+  ims:
+    lenses: "http://alpha.openphacts.org:3004/QueryExpander/Lens"
+
   maintenance: FALSE
+
+  ketcher:
+    port: "10000"
+
+  testing:
+    search_url: typeahead_search_index_url
+    tsv_core: tab_separated_file_core_api_calls_url
+    tsv_status: tsv_status_core_api_calls_url
+    tsv_download: tsv_download_core_api_calls_url
+    organism: organisms_core_api_calls_url
+    chemspider: chemspider_tab_separated_file_core_api_calls_url
+    ketcher: ketcher_index_url
 
 development:
   <<: *defaults
