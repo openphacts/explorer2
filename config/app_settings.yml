@@ -2,7 +2,7 @@
 defaults: &defaults
 
   api:
-    url : "http://api:80" #eg https://beta.openphacts.org remember to include the api version if available. ie https://beta.openphacts.org/1.5
+    url : "http://alpha.openphacts.org:3002" #eg https://beta.openphacts.org remember to include the api version if available. ie https://beta.openphacts.org/1.5
     ebi_smiles_to_ctab: "https://www.ebi.ac.uk/chembl/api/utils/smiles2ctab" # used to convert smiles to mol for ketcher
     es_search_url: "http://alpha.openphacts.org:8839/search" #ops-search API
     autocomplete: "http://alpha.openphacts.org:8839/autocomplete" #ops-search autocomplete API
@@ -13,7 +13,7 @@ defaults: &defaults
 
   tsv:
     api_version: "2.2" # this only works for 1.3 on, 1.2 cannot handle the /1.2 verison number bit, however it can be empty ie "" if required
-    url: "api" # no protocol eg beta.openphacts.org
+    url: "alpha.openphacts.org:3002" # no protocol eg beta.openphacts.org
     target_path : "/target/pharmacology/pages" # or equivalent for target pharma paginated
     compound_path: "/compound/pharmacology/pages" # or equivalent for compound pharma paginated
     tree_path: "/target/tree/pharmacology/pages" # or equivalent for target class pharma paginated
