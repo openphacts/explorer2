@@ -32,6 +32,8 @@ ENV API_URL https://beta.openphacts.org/2.1
 ENV API_APP_ID 161aeb7d
 ENV API_APP_KEY cffc292726627ffc50ece1dccd15aeaf
 ENV EXPLORER_MAINTENANCE FALSE
+ENV ES_SEARCH_URL http://localhost:8839/search
+ENV AUTOCOMPLETE_URL http://localhost:8839/autocomplete
 
 EXPOSE 3000
 ENTRYPOINT ["/explorer2/docker/entrypoint.sh"]
