@@ -8,15 +8,13 @@ The Open PHACTS Explorer is an HTML5 & CSS3 application for chemical information
 Docker image
 ============
 
-The experimental [Docker](https://www.docker.com/) image [openphacts/explorer2](https://registry.hub.docker.com/u/openphacts/explorer2/)
+The [Docker](https://www.docker.com/) image [openphacts/explorer2](https://registry.hub.docker.com/u/openphacts/explorer2/)
 can be used to run the explorer2 on any Linux host with Docker:
 
     docker pull openphacts/explorer2
     docker run -p 3000:3000 -e RAILS_ENV=development -it openphacts/explorer2 
 
 This will start Explorer2 on [http://localhost:3000/](http://localhost:3000/)
-
-FIXME: The autocomplete data for the search is not loaded.
 
 The environment variables that can be set, together with their defaults:
 
@@ -26,13 +24,15 @@ The environment variables that can be set, together with their defaults:
 -e API_APP_ID=161aeb7d
 -e API_APP_KEY=cffc292726627ffc50ece1dccd15aeaf
 -e EXPLORER_MAINTENANCE=FALSE
+-e ES_SEARCH_URL=http://localhost:8839/search
+-e AUTOCOMPLETE_URL=http://localhost:8839/autocomplete
 ```
 The `EXPLORER_MAINTENANCE` flag forces the explorer to display a `maintenance` page if set to `TRUE`.
   
 If you want to change the Dockerfile during test and development and build an explorer docker image from your local clone of the explorer2 repository then try:
 
 ```
-docker build -t my-docker-image/explorer .
+docker build -t explorer .
 ```
 
 To investigate the logs for the docker container you are running first list all the running containers with:
@@ -41,7 +41,7 @@ To investigate the logs for the docker container you are running first list all 
 docker ps
 ```
 
-Note the `CONTAINER ID` and run the following (replace `CONTAINER_ID` with actual ID):
+Note the `CONTAINER ID` (or name) and run the following (replace `CONTAINER_ID` with actual ID or name):
 
 ```
 docker exec -it CONTAINER_ID bash
@@ -91,23 +91,8 @@ There is a handlebars helper called `getImage` which should be used instead of `
 
 Autocompleter
 -------------
-There are now too many compounds to do the autocomplete by reading a text file from disk and searching it line by line so you need to load the compounds into the database using the following steps.  
 
-* `wget -o filestore/compounds.txt.bz2 http://data.openphacts.org/1.4/explorer2/compounds.txt.bz2`
-* `bunzip2 filestore/compounds.txt.bz2`
-* Run `rake explorer:load_all_assets`. To load in to production db prepend with `RAILS_ENV=production`
-  * Or start a rails console (rails c) and enter the following commands to add compound models to the database  
-
-    file = File.new(File.join(Rails.root, "filestore", "compounds.txt"), "r")  
-    file.each_line do |line|  
-    c = Compound.new  
-    c.label = line.chomp  
-    c.save  
-    end
-
-  It will probably take the console a few hours to get through them all (there are now over 1 million!). 
-
-  Do the same for `targets.txt` and `organisms.txt` which are already in `filestore/`.
+This uses Elastic Search via the [Open PHACTS Search service](https://github.com/openphacts/ops-search "Open PHACTS search").See env variables to pass in the URL above.
 
 Testing
 -------
