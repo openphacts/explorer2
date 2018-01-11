@@ -3047,6 +3047,10 @@ CompoundSearch.prototype.parseCompoundResponse = function(response) {
             conceptWikiData = me.parseConceptwikiBlock(match);
         }
     });
+    // Edge case if source URI is chemistry.openphacts
+    if (chemspiderData.URI == null && response.primaryTopic[constants.ABOUT].includes("chemistry.openphacts")) {
+        chemspiderData.URI = response.primaryTopic[constants.ABOUT];
+    }
     return {
         "id": id,
         "cwURI": conceptWikiData.URI != null ? conceptWikiData.URI : null,
