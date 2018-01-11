@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.22'
 
-#gem 'rake', '10.1.1'
+gem 'rake', '10.1.1'
 
 #change to your db of choice here
 gem 'sqlite3'
