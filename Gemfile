@@ -31,4 +31,4 @@ gem 'execjs'
 gem 'uuidtools'
 gem 'font-awesome-rails'
 gem "activerecord-import", ">= 0.2.0"
-
+gem 'rack-cache', '1.7.1'
