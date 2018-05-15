@@ -206,7 +206,7 @@ Ember.Handlebars.registerBoundHelper('cs_image_src', function(csURL, height, wid
 });
 Ember.Handlebars.registerBoundHelper('target_image_src', function(target, options) {
   if (options && target && target.length >= 1) {
-      return new Handlebars.SafeString('<img width="128" height="128" src="http://www.rcsb.org/pdb/images/' + target[0].split('/').pop() + '_asr_r_250.jpg"&amp;w=128&amp;h=128/>');
+      return new Handlebars.SafeString('<img width="128" height="128" src="https://cdn.rcsb.org/images/rutgers/' + target[0].split('/').pop().substr(1,2).toLowerCase() + '/' + target[0].split('/').pop().toLowerCase() + '/' + target[0].split('/').pop().toLowerCase() + '.pdb1-250.jpg"&amp;w=128&amp;h=128/>');
   } else {
       return new Handlebars.SafeString('<img width="128" height="128" src="' + asset_path + '/target_placeholder.png"/>');
   }
